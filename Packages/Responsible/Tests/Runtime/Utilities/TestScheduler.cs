@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UniRx;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.Utilities
 {
 	/// <summary>
 	/// Test scheduler assuming use from a single thread

@@ -38,6 +38,12 @@ namespace Responsible
 			=> new WaitForInstruction(TimeSpan.FromSeconds(seconds));
 
 		[Pure]
+		public static ITestWaitCondition<T> WaitForLast<T>(
+			string description,
+			IObservable<T> observable)
+			=> new ObservableWaitCondition<T>(description, observable);
+
+		[Pure]
 		public static ITestWaitCondition<T> WaitForAllOf<T>(
 			ITestWaitCondition<T> primary,
 			params ITestWaitCondition<Unit>[] secondaries)

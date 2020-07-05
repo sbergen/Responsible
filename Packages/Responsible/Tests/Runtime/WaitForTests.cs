@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections;
 using NUnit.Framework;
+using Responsible.Tests.Runtime.Utilities;
 using UniRx;
 using UnityEngine.TestTools;
 using static Responsible.RF;
-using static Responsible.Tests.Runtime.TestInstances;
 // ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime
 {
-	public class WaitForTests
+	public class WaitForTests : ResponsibleTestBase
 	{
 		[UnityTest]
 		public IEnumerator WaitForCondition_Completes_WhenConditionMet()
@@ -41,6 +41,60 @@ namespace Responsible.Tests.Runtime
 				.Wait(TimeSpan.Zero);
 
 			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void WaitForLast_Completes_WhenCompleted()
+		{
+			Subject<int> subject = new Subject<int>();
+			int? result = null;
+
+			using (WaitForLast("Wait for last", subject)
+				.ExpectWithinSeconds(10)
+				.Execute()
+				.Subscribe(r => result = r))
+			{
+				Assert.IsNull(result);
+				subject.OnNext(1);
+				Assert.IsNull(result);
+				subject.OnNext(2);
+				Assert.IsNull(result);
+				subject.OnCompleted();
+				Assert.AreEqual(2, result);
+			}
+		}
+
+		[Test]
+		public void WaitForLast_PublishesError_OnEmpty()
+		{
+			Exception error = null;
+
+			using (WaitForLast("Wait for last on empty", Observable.Empty<int>())
+				.ExpectWithinSeconds(10)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e))
+			{
+				Assert.IsInstanceOf<AssertionException>(error);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForLast_TimesOut_WhenTimeoutExceeded()
+		{
+			Exception error = null;
+
+			using (WaitForLast("Wait for last on never", Observable.Never<int>())
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e))
+			{
+				yield return null;
+				Assert.IsNull(error);
+
+				this.Scheduler.AdvanceBy(OneSecond);
+				yield return null;
+				Assert.IsInstanceOf<AssertionException>(error);
+			}
 		}
 
 		[Test]
