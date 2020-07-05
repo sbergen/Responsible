@@ -49,5 +49,46 @@ namespace Responsible.Tests.Runtime
 
 			Assert.IsTrue(completed);
 		}
+
+		[UnityTest]
+		public IEnumerator Until_DoesNotExecute_IfConditionIsMetFirst()
+		{
+			var cond1 = false;
+			var untilCond = false;
+			var cond2 = false;
+
+			var firstCompleted = false;
+			var secondCompleted = false;
+
+			WaitForCondition("First cond", () => cond1)
+				.ThenRespondWith("Complete first", Do(() => firstCompleted = true))
+				.Optionally()
+				.Until(WaitForCondition("Until cond", () => untilCond))
+				.ThenRespondWith("Second", WaitForCondition("Second cond", () => cond2)
+					.ExpectWithinSeconds(1)
+					.ContinueWith(_ => Do(() => secondCompleted = true)))
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(_ => secondCompleted = true);
+
+			untilCond = true;
+			yield return null;
+
+			cond1 = true;
+
+			// A couple of extra yields to be safe
+			yield return null;
+			yield return null;
+			yield return null;
+			Assert.IsFalse(firstCompleted);
+			Assert.IsFalse(secondCompleted);
+
+			cond2 = true;
+			yield return null;
+
+			Assert.AreEqual(
+				(false, true),
+				(firstCompleted, secondCompleted));
+		}
 	}
 }
