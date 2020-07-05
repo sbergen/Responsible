@@ -8,6 +8,10 @@ namespace Responsible
 {
 	public static class ResponderExtensions
 	{
+		/// <summary>
+		/// Expects the responder to start responding within the given timeout,
+		/// and then continues executing the instruction of the responder.
+		/// </summary>
 		[Pure]
 		public static ITestInstruction<TResult> ExpectWithin<TResult>(
 			this ITestResponder<TResult> responder,
@@ -19,8 +23,12 @@ namespace Responsible
 				TimeSpan.FromSeconds(timeoutSeconds),
 				new SourceContext(sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Converts a test responder to an optional test responder.
+		/// An alias for <see cref="RF.RespondToAnyOf{t}"/> with a single argument.
+		/// </summary>
 		[Pure]
-		public static IOptionalTestResponder RespondOptionally<T>(this ITestResponder<T> responder) =>
+		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
 			RF.RespondToAnyOf(responder);
 	}
 }
