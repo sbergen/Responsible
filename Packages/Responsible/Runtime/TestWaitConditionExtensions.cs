@@ -29,7 +29,7 @@ namespace Responsible
 		public static ITestWaitCondition<TSecond> AndThen<TFirst, TSecond>(
 			this ITestWaitCondition<TFirst> first,
 			Func<TFirst, ITestWaitCondition<TSecond>> continuation)
-			=> new SequencedWaitCondition<TFirst, TSecond>(first, continuation);
+			=> new ContinuedWaitCondition<TFirst,TSecond>(first, continuation);
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,

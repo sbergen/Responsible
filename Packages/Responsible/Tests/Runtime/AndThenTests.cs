@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
@@ -67,6 +68,50 @@ namespace Responsible.Tests.Runtime
 			yield return null;
 			yield return null; // TODO check why this is needed
 			Assert.IsTrue(completed);
+		}
+
+		[UnityTest]
+		public IEnumerator AndThen_TimesOutOnFirst_WithReadySecondCondition()
+		{
+			Exception error = null;
+			Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).Execute()
+				.Subscribe(_ => { }, e => error = e);
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+			Assert.IsInstanceOf<AssertionException>(error);
+		}
+
+		[UnityTest]
+		public IEnumerator AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
+		{
+			Exception error = null;
+			Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).Execute()
+				.Subscribe(_ => { }, e => error = e);
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+			Assert.IsInstanceOf<AssertionException>(error);
+		}
+
+		[UnityTest]
+		public IEnumerator AndThen_TimesOutOnSecond_WithReadySecondCondition()
+		{
+			Exception error = null;
+			ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).Execute()
+				.Subscribe(_ => { }, e => error = e);
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+			Assert.IsInstanceOf<AssertionException>(error);
+		}
+
+		[UnityTest]
+		public IEnumerator AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
+		{
+			Exception error = null;
+			ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).Execute()
+				.Subscribe(_ => { }, e => error = e);
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+			Assert.IsInstanceOf<AssertionException>(error);
 		}
 	}
 }

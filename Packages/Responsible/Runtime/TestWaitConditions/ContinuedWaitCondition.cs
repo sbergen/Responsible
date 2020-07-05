@@ -4,26 +4,26 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class SequencedWaitCondition<TFirst, TSecond> : ITestWaitCondition<TSecond>
+	public class ContinuedWaitCondition<TFirst, TSecond> : ITestWaitCondition<TSecond>
 	{
 		private readonly ITestWaitCondition<TFirst> first;
-		private readonly ITestWaitCondition<TSecond> second;
+		private readonly Func<TFirst, ITestWaitCondition<TSecond>> continuation;
 
-		public SequencedWaitCondition(
-			ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
+		public ContinuedWaitCondition(
+			ITestWaitCondition<TFirst> first, Func<TFirst, ITestWaitCondition<TSecond>> continuation)
 		{
 			this.first = first;
-			this.second = second;
+			this.continuation = continuation;
 		}
 
 		public IObservable<TSecond> WaitForResult(RunContext runContext, WaitContext waitContext) => this.first
 			.WaitForResult(runContext, waitContext)
-			.ContinueWith(_ => this.second.WaitForResult(runContext, waitContext));
+			.ContinueWith(result => this.continuation(result).WaitForResult(runContext, waitContext));
 
 		public void BuildDescription(ContextStringBuilder builder)
 		{
 			builder.Add("FIRST", this.first);
-			builder.Add("AND THEN",  this.second);
+			builder.Add("AND THEN ...");
 		}
 
 		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
