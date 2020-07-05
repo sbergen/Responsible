@@ -11,16 +11,32 @@ namespace Responsible
 {
 	public static class TestInstructionExtensions
 	{
-		private static readonly TestInstructionExecutor Executor = new TestInstructionExecutor(
-			Scheduler.MainThread,
-			Observable.EveryUpdate().AsUnitObservable());
+		private static readonly IScheduler DefaultScheduler = Scheduler.MainThread;
+		private static readonly IObservable<Unit> DefaultPoll = Observable.EveryUpdate().AsUnitObservable();
+		private static readonly TestInstructionExecutor DefaultExecutor =
+			new TestInstructionExecutor(DefaultScheduler, DefaultPoll);
+
+		private static TestInstructionExecutor executor = DefaultExecutor;
+
+		/// <summary>
+		/// Override the executor scheduler and poll observable.
+		/// Mostly for testing the framework itself, but might be useful elsewhere also?
+		/// </summary>
+		/// <remarks>
+		/// Does not support being called multiple times (not intended for common use).
+		/// </remarks>
+		public static IDisposable OverrideExecutor(IScheduler scheduler = null, IObservable<Unit> poll = null)
+		{
+			executor = new TestInstructionExecutor(scheduler ?? DefaultScheduler, poll ?? DefaultPoll);
+			return Disposable.Create(() =>  executor = DefaultExecutor);
+		}
 
 		[Pure]
 		public static IObservable<T> Execute<T>(
 			this ITestInstruction<T> instruction,
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> instruction.Run(new RunContext(Executor, new SourceContext(sourceFilePath, sourceLineNumber)));
+			=> instruction.Run(new RunContext(executor, new SourceContext(sourceFilePath, sourceLineNumber)));
 
 		[Pure]
 		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
@@ -28,7 +44,7 @@ namespace Responsible
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> instruction
-				.Run(new RunContext(Executor, new SourceContext(sourceFilePath, sourceLineNumber)))
+				.Run(new RunContext(executor, new SourceContext(sourceFilePath, sourceLineNumber)))
 				.ToYieldInstruction();
 
 		[Pure]
