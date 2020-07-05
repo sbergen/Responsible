@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.Context;
@@ -48,6 +50,13 @@ namespace Responsible
 		[Pure]
 		internal static string InstructionStack(SourceContext context) => $"Test instruction stack: \n{context}";
 
+		internal IObservable<T> LogMessageAndMakeError<T>(string message)
+		{
+			// The Unity test runner can swallow exceptions, so both log an error and throw an exception
+			this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
+			return Observable.Throw<T>(new AssertionException(message));
+		}
+
 		[Pure]
 		private IObservable<TResult> WaitFor<TResult>(
 			Func<WaitContext, IObservable<TResult>> makeOperation,
@@ -65,12 +74,13 @@ namespace Responsible
 						$"Finished waiting for operation in {waitContext.ElapsedTime}",
 						ContextStringBuilder.MakeDescription(opContext))))
 				.Timeout(timeout, this.Scheduler)
-				.Catch((TimeoutException _) =>
+				.Catch((Exception e) =>
 				{
 					// The Unity test runner can swallow exceptions, so both log an error and throw an exception
-					var message = MakeTimeoutMessage(opContext, waitContext, sourceContext);
-					this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
-					return Observable.Throw<TResult>(new AssertionException(message));
+					var message = e is TimeoutException
+						? MakeTimeoutMessage(opContext, waitContext, sourceContext)
+						: MakeErrorMessage(opContext, waitContext, sourceContext, e);
+					return this.LogMessageAndMakeError<TResult>(message);
 				})
 				.Finally(logWaits.Dispose);
 		});
@@ -90,10 +100,32 @@ namespace Responsible
 			SourceContext sourceContext)
 			=> string.Join(
 				UnityEmptyLine,
-				ContextStringBuilder.MakeDescription(opContext),
-				$"Timed out after {waitContext.ElapsedTime}",
+				FailureLines(opContext, waitContext, sourceContext, "Timed out"));
+
+		[Pure]
+		private static string MakeErrorMessage(
+			ITestOperationContext opContext,
+			WaitContext waitContext,
+			SourceContext sourceContext,
+			Exception exception)
+			=> string.Join(
+				UnityEmptyLine,
+				FailureLines(opContext, waitContext, sourceContext, "Failed")
+					.Append($"Error: {exception}"));
+
+		[Pure]
+		private static IEnumerable<string> FailureLines(
+			ITestOperationContext opContext,
+			WaitContext waitContext,
+			SourceContext sourceContext,
+			string what)
+			=> new[]
+			{
+				ContextStringBuilder.MakeDescription(opContext).ToString(),
+				$"{what} after {waitContext.ElapsedTime}",
 				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext)}",
 				$"Completed waits: \n{ContextStringBuilder.MakeCompletedList(waitContext)}",
-				InstructionStack(sourceContext));
+				InstructionStack(sourceContext),
+			};
 	}
 }

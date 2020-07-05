@@ -11,7 +11,7 @@ using static Responsible.Tests.Runtime.TestInstances;
 
 namespace Responsible.Tests.Runtime
 {
-	public class TimeoutTests
+	public class ErrorTests
 	{
 		private ILogger logger;
 		private TestScheduler scheduler;
@@ -59,13 +59,11 @@ namespace Responsible.Tests.Runtime
 			WaitForAllOf(
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
-				.ExpectWithinSeconds(2)
+				.ExpectWithinSeconds(1)
 				.Execute()
 				.CatchIgnore()
 				.Subscribe();
 
-			this.scheduler.AdvanceBy(OneSecond);
-			yield return null;
 			this.scheduler.AdvanceBy(OneSecond);
 			yield return null;
 
@@ -75,6 +73,37 @@ namespace Responsible.Tests.Runtime
 					log,
 					"NO.*YES.*Timed out.*Completed.*YES",
 					RegexOptions.Singleline)));
+		}
+
+		[Test]
+		public void Executor_PublishesAndLogsError_WhenWaitThrows()
+		{
+			Exception error = null;
+			WaitForCondition(
+					"FAIL",
+					() => throw new Exception("THE ERROR"))
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			Assert.IsInstanceOf<AssertionException>(error);
+			this.logger.Received(1).Log(
+				LogType.Error,
+				Arg.Is<string>(str => str.Contains("THE ERROR")));
+		}
+
+		[Test]
+		public void Executor_PublishesAndLogsError_WhenInstructionThrows()
+		{
+			Exception error = null;
+			Do(() => throw new Exception("THE ERROR"))
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			Assert.IsInstanceOf<AssertionException>(error);
+			this.logger.Received(1).Log(
+				LogType.Error,
+				Arg.Is<string>(str => str.Contains("THE ERROR")));
 		}
 	}
 }

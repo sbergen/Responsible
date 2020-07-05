@@ -24,13 +24,12 @@ namespace Responsible.TestInstructions
 			}
 			catch (Exception e)
 			{
-				runContext.Executor.Logger.Log(
-					LogType.Error,
-					string.Join(
-						TestInstructionExecutor.UnityEmptyLine,
-						$"Synchronous test action failed: {e}",
-						TestInstructionExecutor.InstructionStack(runContext.SourceContext(this.sourceContext))));
-				throw;
+				var message = string.Join(
+					TestInstructionExecutor.UnityEmptyLine,
+					"Synchronous test action failed:",
+					e,
+					TestInstructionExecutor.InstructionStack(runContext.SourceContext(this.sourceContext)));
+				return runContext.Executor.LogMessageAndMakeError<T>(message);
 			}
 		}
 	}
