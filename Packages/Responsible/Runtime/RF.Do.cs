@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using UniRx;
@@ -8,14 +9,17 @@ using UniRx;
 
 namespace Responsible
 {
-	public static class Synchronously
+	// See RF.WaitFor.cs for documentation
+	public static partial class RF
 	{
+		[Pure]
 		public static ITestInstruction<T> Do<T>(
 			Func<T> action,
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new SynchronousTestInstruction<T>(action, new SourceContext(sourceFilePath, sourceLineNumber));
 
+		[Pure]
 		public static ITestInstruction<Unit> Do(
 			Action action,
 			[CallerFilePath] string sourceFilePath = "",
@@ -28,6 +32,7 @@ namespace Responsible
 				},
 				new SourceContext(sourceFilePath, sourceLineNumber));
 
+		[Pure]
 		public static Func<TResult, ITestInstruction<Unit>> DoWithResult<TResult>(
 			Action<TResult> action,
 			[CallerFilePath] string sourceFilePath = "",

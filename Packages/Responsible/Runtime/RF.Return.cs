@@ -1,14 +1,18 @@
 using System;
+using JetBrains.Annotations;
 using Responsible.TestInstructions;
 
 namespace Responsible
 {
-	public static class TestInstruction
+	// See RF.WaitFor.cs for documentation
+	public static partial class RF
 	{
+		[Pure]
 		public static ITestInstruction<T> Return<T>(T value) =>
 			new FuncTestInstruction<T>(() => value);
 
-		public static ITestInstruction<T> Defer<T>(Func<T> create) =>
+		[Pure]
+		public static ITestInstruction<T> ReturnDeferred<T>(Func<T> create) =>
 			new FuncTestInstruction<T>(create);
 	}
 }

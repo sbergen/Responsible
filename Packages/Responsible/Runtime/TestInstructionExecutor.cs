@@ -75,6 +75,7 @@ namespace Responsible
 				.Finally(logWaits.Dispose);
 		});
 
+		[Pure]
 		private IObservable<Unit> LogWaitFor(ITestOperationContext context) => Observable
 			.Interval(TimeSpan.FromSeconds(1), this.Scheduler)
 			.Do(_ => Logger.Log(
@@ -82,6 +83,7 @@ namespace Responsible
 				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context)}"))
 			.AsUnitObservable();
 
+		[Pure]
 		private static string MakeTimeoutMessage(
 			ITestOperationContext opContext,
 			WaitContext waitContext,

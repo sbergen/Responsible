@@ -4,7 +4,7 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible
 {
-	public static class MultipleResponderExtensions
+	public static class OptionalTestResponderExtensions
 	{
 		[Pure]
 		public static ITestWaitCondition<T> Until<T>(

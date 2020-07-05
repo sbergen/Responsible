@@ -18,5 +18,9 @@ namespace Responsible
 				responder,
 				TimeSpan.FromSeconds(timeoutSeconds),
 				new SourceContext(sourceFilePath, sourceLineNumber));
+
+		[Pure]
+		public static IOptionalTestResponder RespondOptionally<T>(this ITestResponder<T> responder) =>
+			RF.RespondToAnyOf(responder);
 	}
 }

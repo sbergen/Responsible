@@ -8,10 +8,11 @@ using UniRx;
 
 namespace Responsible
 {
-	public static class Run
+	// See RF.WaitFor.cs for documentation
+	public static partial class RF
 	{
 		[Pure]
-		public static ITestInstruction<Unit> Coroutine(
+		public static ITestInstruction<Unit> RunCoroutine(
 			string description,
 			int timeoutSeconds,
 			Func<IEnumerator> startCoroutine,

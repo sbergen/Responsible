@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UniRx;
+using static Responsible.RF;
 
 namespace Responsible.Tests.Editor
 {
@@ -13,8 +14,8 @@ namespace Responsible.Tests.Editor
 		{
 			var fulfilled = false;
 			var completed = false;
-			using (WaitFor
-				.Condition("Wait for fulfilled", () => fulfilled)
+			// ReSharper disable once AccessToModifiedClosure
+			using (WaitForCondition("Wait for fulfilled", () => fulfilled)
 				.ExpectWithinSeconds(1)
 				.Execute()
 				.Subscribe(_ => completed = true))
@@ -33,8 +34,7 @@ namespace Responsible.Tests.Editor
 		[Test]
 		public void WaitForCondition_CompletesImmediately_WhenSynchronouslyMet()
 		{
-			var result = WaitFor
-				.Condition("Wait for true", () => true, () => true)
+			var result = WaitForCondition("Wait for true", () => true, () => true)
 				.ExpectWithinSeconds(1)
 				.Execute()
 				.Wait(TimeSpan.Zero);

@@ -7,10 +7,19 @@ using UniRx;
 
 namespace Responsible
 {
-	public static class WaitFor
+	/// <summary>
+	/// Main class for constructing primitive wait conditions and instructions.
+	/// </summary>
+	/// <remarks>
+	/// RF stands for Responsible Framework.
+	/// Instead of using a class like <c>WaitFor</c>, we try to avoid conflicting class names by having this class.
+	/// It also allows you to use either <c>RF.WaitForCondition</c> or
+	/// <c>using static Responsible.RF</c> and simply <c>WaitFor</c>.
+	/// </remarks>
+	public static partial class RF
 	{
 		[Pure]
-		public static ITestWaitCondition<T> Condition<T>(
+		public static ITestWaitCondition<T> WaitForCondition<T>(
 			string description,
 			Func<bool> condition,
 			Func<T> makeResult,
@@ -18,30 +27,30 @@ namespace Responsible
 			=> new PollingWaitCondition<T>(condition, description, makeResult, extraContext);
 
 		[Pure]
-		public static ITestWaitCondition<Unit> Condition(
+		public static ITestWaitCondition<Unit> WaitForCondition(
 			string description,
 			Func<bool> condition,
 			Action<ContextStringBuilder> extraContext = null)
 			=> new PollingWaitCondition<Unit>(condition, description, () => Unit.Default, extraContext);
 
 		[Pure]
-		public static ITestInstruction<Unit> Seconds(int seconds)
+		public static ITestInstruction<Unit> WaitForSeconds(int seconds)
 			=> new WaitForInstruction(TimeSpan.FromSeconds(seconds));
 
 		[Pure]
-		public static ITestWaitCondition<T> AllOf<T>(
+		public static ITestWaitCondition<T> WaitForAllOf<T>(
 			ITestWaitCondition<T> primary,
 			params ITestWaitCondition<Unit>[] secondaries)
 			=> new AllOfWaitCondition<T>(primary, secondaries);
 
 		[Pure]
-		public static ITestWaitCondition<T> AllOf<T, T2>(
+		public static ITestWaitCondition<T> WaitForAllOf<T, T2>(
 			ITestWaitCondition<T> primary,
 			ITestWaitCondition<T2> secondary)
 			=> new AllOfWaitCondition<T>(primary, secondary.AsUnitCondition());
 
 		[Pure]
-		public static ITestWaitCondition<T> AllOf<T, T2, T3>(
+		public static ITestWaitCondition<T> WaitForAllOf<T, T2, T3>(
 			ITestWaitCondition<T> primary,
 			ITestWaitCondition<T2> secondary1,
 			ITestWaitCondition<T3> secondary2)
@@ -51,7 +60,7 @@ namespace Responsible
 				secondary2.AsUnitCondition());
 
 		[Pure]
-		public static ITestWaitCondition<T> AllOf<T, T2, T3, T4>(
+		public static ITestWaitCondition<T> WaitForAllOf<T, T2, T3, T4>(
 			ITestWaitCondition<T> primary,
 			ITestWaitCondition<T2> secondary1,
 			ITestWaitCondition<T3> secondary2,
