@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using UniRx;
+using UnityEngine;
 
 namespace Responsible
 {
@@ -13,21 +14,29 @@ namespace Responsible
 	{
 		private static readonly IScheduler DefaultScheduler = Scheduler.MainThread;
 		private static readonly IObservable<Unit> DefaultPoll = Observable.EveryUpdate().AsUnitObservable();
+		private static readonly ILogger DefaultLogger = UnityEngine.Debug.unityLogger;
+
 		private static readonly TestInstructionExecutor DefaultExecutor =
-			new TestInstructionExecutor(DefaultScheduler, DefaultPoll);
+			new TestInstructionExecutor(DefaultScheduler, DefaultPoll, DefaultLogger);
 
 		private static TestInstructionExecutor executor = DefaultExecutor;
 
 		/// <summary>
-		/// Override the executor scheduler and poll observable.
+		/// Override the executor parameters
 		/// Mostly for testing the framework itself, but might be useful elsewhere also?
 		/// </summary>
 		/// <remarks>
 		/// Does not support being called multiple times (not intended for common use).
 		/// </remarks>
-		public static IDisposable OverrideExecutor(IScheduler scheduler = null, IObservable<Unit> poll = null)
+		public static IDisposable OverrideExecutor(
+			IScheduler scheduler = null,
+			IObservable<Unit> poll = null,
+			ILogger logger = null)
 		{
-			executor = new TestInstructionExecutor(scheduler ?? DefaultScheduler, poll ?? DefaultPoll);
+			executor = new TestInstructionExecutor(
+				scheduler ?? DefaultScheduler,
+				poll ?? DefaultPoll,
+				logger ?? DefaultLogger);
 			return Disposable.Create(() =>  executor = DefaultExecutor);
 		}
 

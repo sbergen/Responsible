@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UniRx;
 using UnityEngine.TestTools;
 using static Responsible.RF;
+using static Responsible.Tests.Runtime.TestInstances;
 // ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime
@@ -34,7 +35,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void WaitForCondition_CompletesImmediately_WhenSynchronouslyMet()
 		{
-			var result = WaitForCondition("Wait for true", () => true, () => true)
+			var result = ImmediateTrue
 				.ExpectWithinSeconds(10)
 				.Execute()
 				.Wait(TimeSpan.Zero);
@@ -51,9 +52,9 @@ namespace Responsible.Tests.Runtime
 			using (WaitForSeconds(2).Execute().Subscribe(_ => completed = true))
 			{
 				Assert.IsFalse(completed);
-				scheduler.AdvanceBy(TimeSpan.FromSeconds(1));
+				scheduler.AdvanceBy(OneSecond);
 				Assert.IsFalse(completed);
-				scheduler.AdvanceBy(TimeSpan.FromSeconds(1));
+				scheduler.AdvanceBy(OneSecond);
 				Assert.IsTrue(completed);
 			}
 		}
@@ -98,9 +99,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void WaitForAllOf_Completes_WhenSynchronouslyMet()
 		{
-			var trueCondition = WaitForCondition("True", () => true, () => true);
-
-			var result = WaitForAllOf(trueCondition, trueCondition, trueCondition)
+			var result = WaitForAllOf(ImmediateTrue, ImmediateTrue, ImmediateTrue)
 				.ExpectWithinSeconds(10)
 				.Execute()
 				.Wait(TimeSpan.Zero);

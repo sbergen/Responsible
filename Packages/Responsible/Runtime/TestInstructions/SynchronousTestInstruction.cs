@@ -24,7 +24,7 @@ namespace Responsible.TestInstructions
 			}
 			catch (Exception e)
 			{
-				TestInstructionExecutor.Logger.Log(
+				runContext.Executor.Logger.Log(
 					LogType.Error,
 					string.Join(
 						TestInstructionExecutor.UnityEmptyLine,
