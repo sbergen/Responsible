@@ -1,6 +1,6 @@
-using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using Responsible.TestInstructions;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Responsible
 {
@@ -11,16 +11,17 @@ namespace Responsible
 		/// Constructs a test instruction that return a value synchronously.
 		/// Wouldn't be a monad without this ;)
 		/// </summary>
-		[Pure]
-		public static ITestInstruction<T> Return<T>(T value) =>
-			new FuncTestInstruction<T>(() => value);
-
 		/// <summary>
-		/// Constructs a test instruction that return a value deferredly.
-		/// Useful when sequencing things.
+		/// Constructs a test instruction that return a value synchronously.
+		/// Wouldn't be a monad without this ;)
 		/// </summary>
 		[Pure]
-		public static ITestInstruction<T> ReturnDeferred<T>(Func<T> create) =>
-			new FuncTestInstruction<T>(create);
+		public static ITestInstruction<T> Return<T>(
+			T value,
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> Do(() => value,
+				sourceFilePath,
+				sourceLineNumber);
 	}
 }

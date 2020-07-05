@@ -33,7 +33,7 @@ namespace Responsible
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing the given instruction.
+		/// and then construct an instruction and continue executing it.
 		/// </summary>
 		[Pure]
 		public static ITestResponder<TResult> ThenRespondWith<TWait, TResult>(
@@ -41,6 +41,17 @@ namespace Responsible
 			string description,
 			Func<TWait, ITestInstruction<TResult>> selector)
 			=> new TestResponder<TWait, TResult>(description, condition, selector);
+
+		/// <summary>
+		/// Constructs a test responder, which will wait for the given condition,
+		/// and then continue executing the given instruction.
+		/// </summary>
+		[Pure]
+		public static ITestResponder<TResult> ThenRespondWith<TWait, TResult>(
+			this ITestWaitCondition<TWait> condition,
+			string description,
+			ITestInstruction<TResult> instruction)
+			=> new TestResponder<TWait, TResult>(description, condition, _ => instruction);
 
 		/// <summary>
 		/// Converts a wait condition to an instruction, by enforcing a timeout on it.

@@ -13,7 +13,7 @@ namespace Responsible
 		/// and then continues executing the instruction of the responder.
 		/// </summary>
 		[Pure]
-		public static ITestInstruction<TResult> ExpectWithin<TResult>(
+		public static ITestInstruction<TResult> ExpectWithinSeconds<TResult>(
 			this ITestResponder<TResult> responder,
 			int timeoutSeconds,
 			[CallerFilePath] string sourceFilePath = "",

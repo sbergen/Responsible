@@ -14,10 +14,10 @@ namespace Responsible
 	{
 		[Pure]
 		public static ITestInstruction<T> Do<T>(
-			Func<T> action,
+			Func<T> func,
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SynchronousTestInstruction<T>(action, new SourceContext(sourceFilePath, sourceLineNumber));
+			=> new SynchronousTestInstruction<T>(func, new SourceContext(sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> Do(
