@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
@@ -89,6 +90,28 @@ namespace Responsible.Tests.Runtime
 			Assert.AreEqual(
 				(false, true),
 				(firstCompleted, secondCompleted));
+		}
+
+		[UnityTest]
+		public IEnumerator Until_TimesOut_AsExpected()
+		{
+			var completed = false;
+			Exception error = null;
+
+			Never
+				.ThenRespondWith("complete", Do(() => completed = true))
+				.Optionally()
+				.Until(Never)
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			yield return null;
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+
+			Assert.IsFalse(completed);
+			Assert.IsInstanceOf<AssertionException>(error);
 		}
 	}
 }

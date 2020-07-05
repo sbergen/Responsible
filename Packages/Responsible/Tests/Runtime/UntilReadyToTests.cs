@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
@@ -7,7 +8,7 @@ using static Responsible.RF;
 
 namespace Responsible.Tests.Runtime
 {
-	public class UntilAbleToTests : ResponsibleTestBase
+	public class UntilReadyToTests : ResponsibleTestBase
 	{
 		[UnityTest]
 		public IEnumerator UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
@@ -27,7 +28,7 @@ namespace Responsible.Tests.Runtime
 					.ThenRespondWith("Complete 2", _ => Do(() => executed2 = true))
 					.ExpectWithinSeconds(1));
 
-			first.Optionally().UntilAbleTo(second).ExpectWithinSeconds(1).Execute().Subscribe();
+			first.Optionally().UntilReadyTo(second).ExpectWithinSeconds(1).Execute().Subscribe();
 
 			cond2 = true;
 			yield return null;
@@ -44,6 +45,29 @@ namespace Responsible.Tests.Runtime
 			Assert.AreEqual(
 				(false, true),
 				(executed1, executed2));
+		}
+
+		[UnityTest]
+		public IEnumerator UntilReadyToRespond_TimesOut_AsExpected()
+		{
+			var completed = false;
+			Exception error = null;
+
+			var responder = Never.ThenRespondWith("complete", Do(() => completed = true));
+
+			responder
+				.Optionally()
+				.UntilReadyTo(responder)
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			yield return null;
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+
+			Assert.IsFalse(completed);
+			Assert.IsInstanceOf<AssertionException>(error);
 		}
 	}
 }

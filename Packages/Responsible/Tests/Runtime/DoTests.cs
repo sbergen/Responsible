@@ -21,5 +21,13 @@ namespace Responsible.Tests.Runtime
 			Do(() => { executed = true; }).Execute().Wait(TimeSpan.Zero);
 			Assert.IsTrue(executed);
 		}
+
+		[Test]
+		public void DoWithResult_ExecutesWithCorrectData()
+		{
+			int? result = null;
+			Do(() => 2).ContinueWith(DoWithResult<int>(x => result = x * 2)).Execute().Wait(TimeSpan.Zero);
+			Assert.AreEqual(4, result);
+		}
 	}
 }

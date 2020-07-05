@@ -86,5 +86,22 @@ namespace Responsible.Tests.Runtime
 				LogType.Error,
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
 		}
+
+		[Test]
+		public void Executor_LogsExtraWaitContext_WhenWaitTimesOut()
+		{
+			WaitForCondition(
+					"Never",
+					() => false,
+					builder => builder.Add("Should be in logs"))
+				.ExpectWithinSeconds(0)
+				.Execute()
+				.CatchIgnore()
+				.Subscribe();
+
+			this.Logger.Received(1).Log(
+				LogType.Error,
+				Arg.Is<string>(str => str.Contains("Should be in logs")));
+		}
 	}
 }

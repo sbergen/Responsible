@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using UniRx;
+using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.RF;
 // ReSharper disable AccessToModifiedClosure
@@ -148,6 +149,27 @@ namespace Responsible.Tests.Runtime
 				yield return null;
 				Assert.IsTrue(completed);
 			}
+		}
+
+		[Test]
+		public void WaitForAll4_SanityCheck()
+		{
+			Assert.DoesNotThrow(() =>
+				WaitForAllOf(ImmediateTrue, ImmediateTrue, ImmediateTrue, ImmediateTrue)
+					.ExpectWithinSeconds(1)
+					.Execute()
+					.Wait(TimeSpan.Zero));
+		}
+
+		[Test]
+		public void WaitForAllParams_SanityCheck()
+		{
+			var immediateUnit = ImmediateTrue.AsUnitCondition();
+			Assert.DoesNotThrow(() =>
+				WaitForAllOf(ImmediateTrue, immediateUnit, immediateUnit, immediateUnit, immediateUnit)
+					.ExpectWithinSeconds(1)
+					.Execute()
+					.Wait(TimeSpan.Zero));
 		}
 
 		[Test]

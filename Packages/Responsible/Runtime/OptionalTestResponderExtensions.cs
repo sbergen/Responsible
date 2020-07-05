@@ -23,7 +23,7 @@ namespace Responsible
 		/// No responders are required to execute.
 		/// </summary>
 		[Pure]
-		public static ITestResponder<T> UntilAbleTo<T>(
+		public static ITestResponder<T> UntilReadyTo<T>(
 			this IOptionalTestResponder respondTo,
 			ITestResponder<T> untilReady)
 			=> new UntilReadyToResponder<T>(respondTo, untilReady);
