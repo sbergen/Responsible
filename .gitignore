@@ -1,5 +1,11 @@
 Temp
 Library
 Logs
+obj
+
+.idea
 
 *.sln
+*.csproj
+*.DotSettings.user
+
