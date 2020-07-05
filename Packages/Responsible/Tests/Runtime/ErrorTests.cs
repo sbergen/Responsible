@@ -13,6 +13,8 @@ namespace Responsible.Tests.Runtime
 {
 	public class ErrorTests
 	{
+		private const string ExceptionMessage = "THE ERROR";
+
 		private ILogger logger;
 		private TestScheduler scheduler;
 		private IDisposable setup;
@@ -81,7 +83,7 @@ namespace Responsible.Tests.Runtime
 			Exception error = null;
 			WaitForCondition(
 					"FAIL",
-					() => throw new Exception("THE ERROR"))
+					() => throw new Exception(ExceptionMessage))
 				.ExpectWithinSeconds(1)
 				.Execute()
 				.Subscribe(_ => { }, e => error = e);
@@ -89,21 +91,79 @@ namespace Responsible.Tests.Runtime
 			Assert.IsInstanceOf<AssertionException>(error);
 			this.logger.Received(1).Log(
 				LogType.Error,
-				Arg.Is<string>(str => str.Contains("THE ERROR")));
+				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
 		}
 
 		[Test]
 		public void Executor_PublishesAndLogsError_WhenInstructionThrows()
 		{
 			Exception error = null;
-			Do(() => throw new Exception("THE ERROR"))
+			Do(() => throw new Exception(ExceptionMessage))
 				.Execute()
 				.Subscribe(_ => { }, e => error = e);
 
 			Assert.IsInstanceOf<AssertionException>(error);
 			this.logger.Received(1).Log(
 				LogType.Error,
-				Arg.Is<string>(str => str.Contains("THE ERROR")));
+				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
 		}
+
+		[UnityTest]
+		public IEnumerator Executor_PublishesAndLogsError_WhenCoroutineThrows()
+		{
+			IEnumerator ThrowFromCoroutine()
+			{
+				yield return null;
+				throw new Exception(ExceptionMessage);
+			}
+
+			Exception error = null;
+			RunCoroutine(
+					"Throw from coroutine",
+					10,
+					ThrowFromCoroutine)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			yield return null;
+
+			Assert.IsInstanceOf<AssertionException>(error);
+			this.logger.Received(1).Log(
+				LogType.Error,
+				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
+		}
+
+		[UnityTest]
+		public IEnumerator Executor_PublishesAndLogsError_WhenCoroutineTimesOut()
+		{
+			IEnumerator ThrowFromCoroutine()
+			{
+				while (true)
+				{
+					yield return null;
+				}
+				// ReSharper disable once IteratorNeverReturns
+			}
+
+			Exception error = null;
+			RunCoroutine(
+					"Infinite coroutine",
+					1,
+					ThrowFromCoroutine)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			yield return null;
+			this.scheduler.AdvanceBy(OneSecond);
+			yield return null;
+
+			Assert.IsInstanceOf<AssertionException>(error);
+			this.logger.Received(1).Log(
+				LogType.Error,
+				Arg.Is<string>(str =>
+					str.Contains("Timed out") &&
+					str.Contains("Infinite coroutine")));
+		}
+
 	}
 }
