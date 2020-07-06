@@ -37,7 +37,6 @@ namespace Responsible.Tests.Runtime
 			// A few yields to be safe
 			yield return null;
 			yield return null;
-			yield return null;
 
 			mayComplete2 = true;
 			yield return null;

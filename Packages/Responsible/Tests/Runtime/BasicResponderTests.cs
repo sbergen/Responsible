@@ -48,8 +48,6 @@ namespace Responsible.Tests.Runtime
 
 			this.readyToReact = true;
 
-			// TODO check out why two frames need to be skipped here!
-			yield return null;
 			yield return null;
 			Assert.IsTrue(this.startedToReact);
 			Assert.IsFalse(completed);

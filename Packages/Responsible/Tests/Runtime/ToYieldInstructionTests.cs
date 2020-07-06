@@ -14,16 +14,19 @@ namespace Responsible.Tests.Runtime
 		{
 			var cond = false;
 
-			Observable.TimerFrame(1).Subscribe(_ => cond = true);
-			var framesBefore = Time.frameCount;
+			int completedOnFrame = default;
+			Observable.TimerFrame(1).Subscribe(_ =>
+			{
+				completedOnFrame = Time.frameCount;
+				cond = true;
+			});
 
 			yield return WaitForCondition("cond", () => cond)
 				.ExpectWithinSeconds(1)
 				.ToYieldInstruction();
 
-			// There's a one frame delay with completion
-			Assert.AreEqual(framesBefore + 2, Time.frameCount);
-
+			// Completes one frame after
+			Assert.AreEqual(completedOnFrame + 1, Time.frameCount);
 		}
 
 	}

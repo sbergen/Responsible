@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
@@ -36,13 +35,11 @@ namespace Responsible.Tests.Runtime
 			readyToReact = true;
 
 			yield return null;
-			yield return null;
 			Assert.IsTrue(startedToReact);
 
 			shouldContinue = true;
 
-			// Yield a few times just to be safe :D
-			yield return null;
+			// Yield a few times just to be safe
 			yield return null;
 			yield return null;
 

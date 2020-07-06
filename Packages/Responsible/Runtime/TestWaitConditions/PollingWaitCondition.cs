@@ -19,7 +19,7 @@ namespace Responsible.TestWaitConditions
 			builder.AddWithNested(this.description, this.extraContext);
 
 		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
-			runContext.Executor.PollObservable
+			waitContext.PollObservable
 				.StartWith(Unit.Default) // Allow immediate completion
 				.Select(_ => this.condition())
 				.Where(fulfilled => fulfilled)

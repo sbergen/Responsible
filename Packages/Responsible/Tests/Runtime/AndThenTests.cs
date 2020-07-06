@@ -36,7 +36,6 @@ namespace Responsible.Tests.Runtime
 
 			cond2 = true;
 			yield return null;
-			yield return null; // TODO check why this is needed
 			Assert.IsTrue(completed);
 		}
 
@@ -66,7 +65,6 @@ namespace Responsible.Tests.Runtime
 
 			cond2 = true;
 			yield return null;
-			yield return null; // TODO check why this is needed
 			Assert.IsTrue(completed);
 		}
 

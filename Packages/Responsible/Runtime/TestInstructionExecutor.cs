@@ -10,20 +10,32 @@ using UnityEngine;
 
 namespace Responsible
 {
-	internal class TestInstructionExecutor
+	internal class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
 		internal const string UnityEmptyLine = "\n \n";
 
-		internal readonly ILogger Logger;
+		private readonly IObservable<Unit> pollObservable;
+		private readonly IDisposable pollSubscription;
+		private readonly ILogger logger;
+
 		internal readonly IScheduler Scheduler;
-		internal readonly IObservable<Unit> PollObservable;
 
 		internal TestInstructionExecutor(IScheduler scheduler, IObservable<Unit> pollObservable, ILogger logger)
 		{
 			this.Scheduler = scheduler;
-			this.PollObservable = pollObservable;
-			this.Logger = logger;
+			this.logger = logger;
+
+			// Workaround for how EveryUpdate works in Unity.
+			// When nobody is subscribed to it, there will be a one-frame delay on the next Subscribe.
+			var pollSubject = new Subject<Unit>();
+			this.pollObservable = pollSubject;
+			this.pollSubscription = pollObservable.Subscribe(pollSubject);
+		}
+
+		public void Dispose()
+		{
+			this.pollSubscription.Dispose();
 		}
 
 		[Pure]
@@ -57,13 +69,13 @@ namespace Responsible
 			ITestOperationContext opContext,
 			SourceContext sourceContext) => Observable.Defer(() =>
 		{
-			var waitContext = new WaitContext(this.Scheduler, this.PollObservable);
+			var waitContext = new WaitContext(this.Scheduler, this.pollObservable);
 			var disposables = new CompositeDisposable(
 				waitContext,
 				this.LogWaitFor(opContext, waitContext).Subscribe());
 
 			return makeOperation(waitContext)
-				.Do(_ => this.Logger.Log(
+				.Do(_ => this.logger.Log(
 					LogType.Log,
 					string.Join(
 						"\n",
@@ -76,7 +88,7 @@ namespace Responsible
 					var message = e is TimeoutException
 						? MakeTimeoutMessage(opContext, waitContext, sourceContext)
 						: MakeErrorMessage(opContext, waitContext, sourceContext, e);
-					this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
+					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
 					return Observable.Throw<TResult>(new AssertionException(message));
 				})
 				.Finally(disposables.Dispose);
@@ -85,7 +97,7 @@ namespace Responsible
 		[Pure]
 		private IObservable<Unit> LogWaitFor(ITestOperationContext context, WaitContext waitContext) => Observable
 			.Interval(TimeSpan.FromSeconds(1), this.Scheduler)
-			.Do(_ => this.Logger.Log(
+			.Do(_ => this.logger.Log(
 				LogType.Log,
 				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context, waitContext)}"))
 			.AsUnitObservable();

@@ -16,10 +16,8 @@ namespace Responsible
 		private static readonly IObservable<Unit> DefaultPoll = Observable.EveryUpdate().AsUnitObservable();
 		private static readonly ILogger DefaultLogger = Debug.unityLogger;
 
-		private static readonly TestInstructionExecutor DefaultExecutor =
+		private static TestInstructionExecutor executor =
 			new TestInstructionExecutor(DefaultScheduler, DefaultPoll, DefaultLogger);
-
-		private static TestInstructionExecutor executor = DefaultExecutor;
 
 		/// <summary>
 		/// Override the executor parameters
@@ -33,11 +31,12 @@ namespace Responsible
 			IObservable<Unit> poll = null,
 			ILogger logger = null)
 		{
+			executor.Dispose();
 			executor = new TestInstructionExecutor(
 				scheduler ?? DefaultScheduler,
 				poll ?? DefaultPoll,
 				logger ?? DefaultLogger);
-			return Disposable.Create(() =>  executor = DefaultExecutor);
+			return Disposable.Create(() => OverrideExecutor(DefaultScheduler, DefaultPoll, DefaultLogger));
 		}
 
 		/// <summary>

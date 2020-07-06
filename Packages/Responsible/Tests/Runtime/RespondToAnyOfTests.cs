@@ -46,14 +46,10 @@ namespace Responsible.Tests.Runtime
 				this.responder2.MayRespond = true;
 			}
 
-			// TODO, check why multiple yields are needed
-
-			yield return null;
 			yield return null;
 
 			this.mayComplete = true;
 
-			yield return null;
 			yield return null;
 
 			Assert.AreEqual(
@@ -72,12 +68,10 @@ namespace Responsible.Tests.Runtime
 			this.mayComplete = true;
 
 			yield return null;
-			yield return null;
 
 			this.responder1.MayRespond = true;
 			this.responder2.MayRespond = true;
 
-			yield return null;
 			yield return null;
 
 			Assert.AreEqual(
@@ -88,20 +82,20 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator RespondToAnyOf_ExecutesRespondersSequentially_WhenMultipleReadyToRespond()
 		{
-			// Allow both to start. The first one should take precedence.
 			this.responder1.MayRespond = true;
 			this.responder2.MayRespond = true;
 
 			// Yield a few times to be safe
 			yield return null;
 			yield return null;
-			Assert.IsFalse(this.responder2.StartedToRespond, "Second responder should not start while first is executing");
+			Assert.IsFalse(
+				this.responder1.StartedToRespond && this.responder2.StartedToRespond,
+				"Only one responder should start while the other is executing");
 
 			// Complete everything
 			this.mayComplete = true;
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
-			yield return null;
 			yield return null;
 
 			Assert.AreEqual(

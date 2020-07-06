@@ -11,7 +11,7 @@ namespace Responsible.TestWaitConditions
 		private readonly ITestWaitCondition<T> primary;
 		private readonly IReadOnlyList<ITestWaitCondition<Unit>> secondaries;
 
-		private IEnumerable<ITestOperationContext> AllConditions => this.secondaries
+		private IEnumerable<ITestOperationContext> AllContexts => this.secondaries
 			.Cast<ITestOperationContext>()
 			.Prepend(this.primary);
 
@@ -26,7 +26,7 @@ namespace Responsible.TestWaitConditions
 		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 
 		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add("ALL OF", this.AllConditions);
+			builder.Add("ALL OF", this.AllContexts);
 
 		public AllOfWaitCondition(
 			ITestWaitCondition<T> primary,

@@ -10,14 +10,14 @@ namespace Responsible.TestInstructions
 	/// </summary>
 	internal class UnitTestInstruction<T> : ITestInstruction<Unit>
 	{
-		private readonly ITestInstruction<T> instruction;
+		public readonly ITestInstruction<T> Instruction;
 
 		public UnitTestInstruction(ITestInstruction<T> instruction)
 		{
-			this.instruction = instruction;
+			this.Instruction = instruction;
 		}
 
 		public IObservable<Unit> Run(RunContext runContext) =>
-			this.instruction.Run(runContext).AsUnitObservable();
+			this.Instruction.Run(runContext).AsUnitObservable();
 	}
 }
