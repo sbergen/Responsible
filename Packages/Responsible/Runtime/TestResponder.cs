@@ -16,12 +16,13 @@ namespace Responsible
 		public static ITestInstruction<TResult> ExpectWithinSeconds<TResult>(
 			this ITestResponder<TResult> responder,
 			int timeoutSeconds,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new ExpectTestResponse<TResult>(
 				responder,
 				TimeSpan.FromSeconds(timeoutSeconds),
-				new SourceContext(sourceFilePath, sourceLineNumber));
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a test responder to an optional test responder.

@@ -15,13 +15,17 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<T> Do<T>(
 			Func<T> func,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SynchronousTestInstruction<T>(func, new SourceContext(sourceFilePath, sourceLineNumber));
+			=> new SynchronousTestInstruction<T>(
+				func,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> Do(
 			Action action,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new SynchronousTestInstruction<Unit>(
@@ -30,13 +34,14 @@ namespace Responsible
 					action();
 					return Unit.Default;
 				},
-				new SourceContext(sourceFilePath, sourceLineNumber));
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static Func<TResult, ITestInstruction<Unit>> DoWithResult<TResult>(
 			Action<TResult> action,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0) =>
-			result => Do(() => action(result), sourceFilePath, sourceLineNumber);
+			result => Do(() => action(result), memberName, sourceFilePath, sourceLineNumber);
 	}
 }

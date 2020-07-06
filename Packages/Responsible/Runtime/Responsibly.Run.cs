@@ -16,12 +16,13 @@ namespace Responsible
 			string description,
 			int timeoutSeconds,
 			Func<IEnumerator> startCoroutine,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new CoroutineTestInstruction(
 				startCoroutine,
 				description,
 				TimeSpan.FromSeconds(timeoutSeconds),
-				new SourceContext(sourceFilePath, sourceLineNumber));
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 	}
 }

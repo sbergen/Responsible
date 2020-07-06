@@ -18,9 +18,11 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<T> Return<T>(
 			T value,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> Do(() => value,
+				memberName,
 				sourceFilePath,
 				sourceLineNumber);
 	}

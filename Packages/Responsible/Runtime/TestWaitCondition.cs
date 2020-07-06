@@ -60,12 +60,13 @@ namespace Responsible
 		public static ITestInstruction<T> ExpectWithinSeconds<T>(
 			this ITestWaitCondition<T> condition,
 			int timeout,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new WaitInstruction<T>(
 				condition,
 				TimeSpan.FromSeconds(timeout),
-				new SourceContext(sourceFilePath, sourceLineNumber));
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition returning any return type to one returning <see cref="Unit"/>.

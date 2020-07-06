@@ -23,6 +23,14 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
+		public void Do_DoesNotExecute_UntilSubscribedTo()
+		{
+			var executed = false;
+			var unused = Do(() => { executed = true; }).Execute();
+			Assert.IsFalse(executed, "Instruction should not execute until subscribed to");
+		}
+
+		[Test]
 		public void DoWithResult_ExecutesWithCorrectData()
 		{
 			int? result = null;

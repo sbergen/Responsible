@@ -46,9 +46,12 @@ namespace Responsible
 		[Pure]
 		public static IObservable<T> Execute<T>(
 			this ITestInstruction<T> instruction,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> instruction.Run(new RunContext(executor, new SourceContext(sourceFilePath, sourceLineNumber)));
+			=> instruction.Run(new RunContext(
+				executor,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber)));
 
 		/// <summary>
 		/// Starts executing an instruction, and returns a yield instruction which can be waited upon.
@@ -56,10 +59,11 @@ namespace Responsible
 		[Pure]
 		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestInstruction<T> instruction,
+			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> instruction
-				.Run(new RunContext(executor, new SourceContext(sourceFilePath, sourceLineNumber)))
+				.Run(new RunContext(executor, new SourceContext(memberName, sourceFilePath, sourceLineNumber)))
 				.ToYieldInstruction();
 
 		/// <summary>

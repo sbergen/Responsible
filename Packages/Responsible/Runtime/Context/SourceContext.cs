@@ -1,15 +1,26 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Responsible.Context
 {
 	internal readonly struct SourceContext
 	{
+		private static readonly int StripFromPaths;
 		private readonly IReadOnlyList<string> sourceLines;
 
-		internal SourceContext(string sourceFilePath, int sourceLineNumber)
+		static SourceContext()
 		{
-			this.sourceLines = new[] { Format(sourceFilePath, sourceLineNumber) };
+			// If this were to be run in a player, using these paths would not be reliable.
+			// Could be fixed with some build processor maybe, but is it worth it?
+#if UNITY_EDITOR
+			StripFromPaths = Application.dataPath.Length - "/Assets/".Length;
+#endif
+		}
+
+		internal SourceContext(string memberName, string sourceFilePath, int sourceLineNumber)
+		{
+			this.sourceLines = new[] { Format(memberName, sourceFilePath, sourceLineNumber) };
 		}
 
 		private SourceContext(SourceContext parent, SourceContext child)
@@ -21,7 +32,7 @@ namespace Responsible.Context
 
 		public override string ToString() => string.Join("\n", this.sourceLines);
 
-		private static string Format(string sourceFilePath, int sourceLineNumber)
-			=> $"{sourceFilePath}:{sourceLineNumber}";
+		private static string Format(string memberName, string sourceFilePath, int sourceLineNumber)
+			=> $"{memberName} (at {sourceFilePath.Substring(StripFromPaths)}:{sourceLineNumber})";
 	}
 }

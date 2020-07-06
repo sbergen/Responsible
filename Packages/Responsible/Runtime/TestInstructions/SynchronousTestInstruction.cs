@@ -16,11 +16,12 @@ namespace Responsible.TestInstructions
 			this.sourceContext = sourceContext;
 		}
 
-		public IObservable<T> Run(RunContext runContext)
+		public IObservable<T> Run(RunContext runContext) => Observable.Create<T>(observer =>
 		{
 			try
 			{
-				return Observable.Return(this.action());
+				observer.OnNext(this.action());
+				observer.OnCompleted();
 			}
 			catch (Exception e)
 			{
@@ -29,8 +30,10 @@ namespace Responsible.TestInstructions
 					"Synchronous test action failed:",
 					e,
 					TestInstructionExecutor.InstructionStack(runContext.SourceContext(this.sourceContext)));
-				return Observable.Throw<T>(new AssertionException(message));
+				observer.OnError(new AssertionException(message));
 			}
-		}
+
+			return Disposable.Empty;
+		});
 	}
 }

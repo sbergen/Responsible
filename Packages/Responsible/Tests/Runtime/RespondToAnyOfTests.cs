@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UniRx;
+using UniRx.Diagnostics;
+using UnityEngine;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -14,24 +17,33 @@ namespace Responsible.Tests.Runtime
 		private bool reacted1;
 		private bool reacted2;
 
-		private bool complete;
+		private bool mayComplete1;
+
+		private bool mayComplete;
 		bool completed;
 
 		[SetUp]
 		public void SetUp()
 		{
-			this.cond1 = this.cond2 = this.reacted1 = this.reacted2 = this.complete = this.completed = false;
+			this.cond1 = this.cond2 =
+				this.reacted1 = this.reacted2 =
+					this.mayComplete = this.completed =
+						this.mayComplete1 = false;
+
+			var firstResponder = WaitForCondition(
+					"May complete first",
+					() => this.mayComplete1)
+				.ExpectWithinSeconds(1)
+				.ContinueWith(Do(() => this.reacted1 = true));
 
 			RespondToAnyOf(
 					WaitForCondition("First", () => cond1)
-						.ThenRespondWith(
-							"Complete first",
-							_ => Do(() => this.reacted1 = true)),
+						.ThenRespondWith("Complete first", firstResponder),
 					WaitForCondition("Second", () => this.cond2)
 						.ThenRespondWith(
 							"Complete second",
 							_ => Do(() => this.reacted2 = true)))
-				.Until(WaitForCondition("Complete", () => this.complete))
+				.Until(WaitForCondition("Complete", () => this.mayComplete))
 				.ExpectWithinSeconds(1)
 				.Execute()
 				.Subscribe(_ => this.completed = true);
@@ -40,6 +52,8 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
 		{
+			this.mayComplete1 = true;
+
 			if (completeFirst)
 			{
 				this.cond1 = true;
@@ -54,7 +68,7 @@ namespace Responsible.Tests.Runtime
 			yield return null;
 			yield return null;
 
-			this.complete = true;
+			this.mayComplete = true;
 
 			yield return null;
 			yield return null;
@@ -67,9 +81,11 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
 		{
+			this.mayComplete1 = true;
+
 			yield return null;
 
-			this.complete = true;
+			this.mayComplete = true;
 
 			yield return null;
 			yield return null;
@@ -82,6 +98,29 @@ namespace Responsible.Tests.Runtime
 
 			Assert.AreEqual(
 				(true, false, false),
+				(this.completed, this.reacted1, this.reacted2));
+		}
+
+		[UnityTest]
+		public IEnumerator RespondToAnyOf_ExecutesRespondersSequentially_WhenMultipleReadyToRespond()
+		{
+			// Allow both to start. The first one should take precedence.
+			this.cond1 = true;
+			this.cond2 = true;
+
+			// Yield a few times to be safe
+			yield return null;
+			yield return null;
+			Assert.IsFalse(this.reacted2, "Second responder should not start while first is executing");
+
+			// Complete everything
+			this.mayComplete = true;
+			this.mayComplete1 = true;
+			yield return null;
+			yield return null;
+
+			Assert.AreEqual(
+				(true, true, true),
 				(this.completed, this.reacted1, this.reacted2));
 		}
 	}
