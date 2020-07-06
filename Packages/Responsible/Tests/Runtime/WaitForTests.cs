@@ -67,33 +67,29 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void WaitForLast_PublishesError_OnEmpty()
 		{
-			Exception error = null;
-
 			using (WaitForLast("Wait for last on empty", Observable.Empty<int>())
 				.ExpectWithinSeconds(10)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e))
+				.Subscribe(Nop, this.StoreError))
 			{
-				Assert.IsInstanceOf<AssertionException>(error);
+				Assert.IsInstanceOf<AssertionException>(this.Error);
 			}
 		}
 
 		[UnityTest]
 		public IEnumerator WaitForLast_TimesOut_WhenTimeoutExceeded()
 		{
-			Exception error = null;
-
 			using (WaitForLast("Wait for last on never", Observable.Never<int>())
 				.ExpectWithinSeconds(1)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e))
+				.Subscribe(Nop, this.StoreError))
 			{
 				yield return null;
-				Assert.IsNull(error);
+				Assert.IsNull(this.Error);
 
 				this.Scheduler.AdvanceBy(OneSecond);
 				yield return null;
-				Assert.IsInstanceOf<AssertionException>(error);
+				Assert.IsInstanceOf<AssertionException>(this.Error);
 			}
 		}
 

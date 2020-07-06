@@ -25,11 +25,20 @@ namespace Responsible.Tests.Runtime
 		protected ILogger Logger { get; private set; }
 		protected TestScheduler Scheduler { get; private set; }
 
+		protected Exception Error { get; private set; }
+
+		protected static void Nop<T>(T unused)
+		{
+		}
+
+		protected void StoreError(Exception e) => this.Error = e;
+
 		[SetUp]
 		public void BaseSetUp()
 		{
 			this.Logger = Substitute.For<ILogger>();
 			this.Scheduler = new TestScheduler();
+			this.Error = null;
 			this.setup = TestInstruction.OverrideExecutor(this.Scheduler, logger: this.Logger);
 		}
 

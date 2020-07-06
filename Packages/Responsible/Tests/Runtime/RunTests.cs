@@ -50,17 +50,16 @@ namespace Responsible.Tests.Runtime
 				throw new Exception(ExceptionMessage);
 			}
 
-			Exception error = null;
 			RunCoroutine(
 					"Throw from coroutine",
 					10,
 					ThrowFromCoroutine)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
 
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
@@ -78,19 +77,18 @@ namespace Responsible.Tests.Runtime
 				// ReSharper disable once IteratorNeverReturns
 			}
 
-			Exception error = null;
 			RunCoroutine(
 					"Infinite coroutine",
 					1,
 					ThrowFromCoroutine)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
 
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Is<string>(str =>

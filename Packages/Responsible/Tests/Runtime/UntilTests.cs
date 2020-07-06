@@ -98,7 +98,6 @@ namespace Responsible.Tests.Runtime
 		public IEnumerator Until_TimesOut_AsExpected()
 		{
 			var completed = false;
-			Exception error = null;
 
 			Never
 				.ThenRespondWith("complete", Do(() => completed = true))
@@ -106,14 +105,14 @@ namespace Responsible.Tests.Runtime
 				.Until(Never)
 				.ExpectWithinSeconds(1)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
 
 			Assert.IsFalse(completed);
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 	}
 }

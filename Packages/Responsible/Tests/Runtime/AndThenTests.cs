@@ -73,45 +73,41 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnFirst_WithReadySecondCondition()
 		{
-			Exception error = null;
 			Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
 		{
-			Exception error = null;
 			Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnSecond_WithReadySecondCondition()
 		{
-			Exception error = null;
 			ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
 		{
-			Exception error = null;
 			ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 	}
 }

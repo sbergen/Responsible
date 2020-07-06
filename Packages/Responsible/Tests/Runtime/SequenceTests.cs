@@ -34,7 +34,6 @@ namespace Responsible.Tests.Runtime
 		{
 			var completed1 = false;
 			var completed2 = false;
-			Exception error = null;
 
 			TestInstruction
 				.Sequence(new[]
@@ -44,12 +43,12 @@ namespace Responsible.Tests.Runtime
 					Do(() => completed2 = true).AsUnitInstruction(),
 				})
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			Assert.AreEqual(
 				(true, false),
 				(completed1, completed2));
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 	}
 }

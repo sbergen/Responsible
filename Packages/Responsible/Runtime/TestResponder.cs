@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
+using Responsible.TestResponders;
+using UniRx;
 
 namespace Responsible
 {
@@ -31,5 +33,12 @@ namespace Responsible
 		[Pure]
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
 			Responsibly.RespondToAnyOf(responder);
+
+		/// <summary>
+		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
+		/// </summary>
+		[Pure]
+		public static ITestResponder<Unit> AsUnitResponder<T>(this ITestResponder<T> responder) =>
+			new UnitTestResponder<T>(responder);
 	}
 }

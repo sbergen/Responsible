@@ -15,20 +15,19 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator Executor_PublishesAndLogsError_WhenOperationTimesOut()
 		{
-			Exception error = null;
 			Never
 				.ExpectWithinSeconds(2)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
-			Assert.IsNull(error);
+			Assert.IsNull(this.Error);
 
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
 
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Any<string>());
@@ -59,15 +58,14 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Executor_PublishesAndLogsError_WhenWaitThrows()
 		{
-			Exception error = null;
 			WaitForCondition(
 					"FAIL",
 					() => throw new Exception(ExceptionMessage))
 				.ExpectWithinSeconds(1)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
@@ -79,13 +77,12 @@ namespace Responsible.Tests.Runtime
 			// If a synchronous instruction is executed on its own, it should be enough to just publish an error,
 			// as you shouldn't need to use Do at the top level of a test method.
 
-			Exception error = null;
 			Do(() => throw new Exception(ExceptionMessage))
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
-			Assert.IsInstanceOf<AssertionException>(error);
-			Assert.That(error.Message, Contains.Substring(ExceptionMessage));
+			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.That(this.Error.Message, Contains.Substring(ExceptionMessage));
 			this.Logger.DidNotReceive().Log(
 				LogType.Error,
 				Arg.Any<string>());
@@ -100,18 +97,17 @@ namespace Responsible.Tests.Runtime
 				yield return Do(() => throw new Exception(ExceptionMessage)).ToYieldInstruction();
 			}
 
-			Exception error = null;
 			RunCoroutine(
 					"Run throwing coroutine",
 					1,
 					Coroutine)
 				.Execute()
-				.Subscribe(_ => { }, e => error = e);
+				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
 			yield return null;
 
-			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Is<string>(msg => msg.Contains(ExceptionMessage)));
