@@ -11,12 +11,11 @@ namespace Responsible
 	/// Main class for constructing primitive wait conditions and instructions.
 	/// </summary>
 	/// <remarks>
-	/// RF stands for Responsible Framework.
 	/// Instead of using a class like <c>WaitFor</c>, we try to avoid conflicting class names by having this class.
-	/// It also allows you to use either <c>RF.WaitForCondition</c> or
-	/// <c>using static Responsible.RF</c> and simply <c>WaitFor</c>.
+	/// It also allows you to use either <c>Responsibly.WaitForCondition</c> or
+	/// <c>using static Responsible.Responsibly</c> and simply <c>WaitFor</c>.
 	/// </remarks>
-	public static partial class RF
+	public static partial class Responsibly
 	{
 		[Pure]
 		public static ITestWaitCondition<T> WaitForCondition<T>(

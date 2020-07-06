@@ -6,7 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UniRx;
 using UnityEngine.TestTools;
-using static Responsible.RF;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {

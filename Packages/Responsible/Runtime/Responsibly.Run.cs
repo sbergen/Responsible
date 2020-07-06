@@ -8,8 +8,8 @@ using UniRx;
 
 namespace Responsible
 {
-	// See RF.WaitFor.cs for documentation
-	public static partial class RF
+	// See Responsibly.WaitFor.cs for documentation
+	public static partial class Responsibly
 	{
 		[Pure]
 		public static ITestInstruction<Unit> RunCoroutine(

@@ -3,9 +3,8 @@ using System.Collections;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using UniRx;
-using UnityEngine;
 using UnityEngine.TestTools;
-using static Responsible.RF;
+using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime

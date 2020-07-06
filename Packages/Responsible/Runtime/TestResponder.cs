@@ -25,10 +25,10 @@ namespace Responsible
 
 		/// <summary>
 		/// Converts a test responder to an optional test responder.
-		/// An alias for <see cref="RF.RespondToAnyOf{t}"/> with a single argument.
+		/// An alias for <see cref="Responsibly.RespondToAnyOf{t}"/> with a single argument.
 		/// </summary>
 		[Pure]
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
-			RF.RespondToAnyOf(responder);
+			Responsibly.RespondToAnyOf(responder);
 	}
 }

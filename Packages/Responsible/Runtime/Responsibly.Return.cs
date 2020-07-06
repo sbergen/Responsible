@@ -4,8 +4,8 @@ using JetBrains.Annotations;
 
 namespace Responsible
 {
-	// See RF.WaitFor.cs for documentation
-	public static partial class RF
+	// See Responsibly.WaitFor.cs for documentation
+	public static partial class Responsibly
 	{
 		/// <summary>
 		/// Constructs a test instruction that return a value synchronously.

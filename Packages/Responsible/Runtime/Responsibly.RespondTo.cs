@@ -3,8 +3,8 @@ using Responsible.TestResponders;
 
 namespace Responsible
 {
-	// See RF.WaitFor.cs for documentation
-	public static partial class RF
+	// See Responsibly.WaitFor.cs for documentation
+	public static partial class Responsibly
 	{
 		/// <summary>
 		/// Constructs an optional test responder, which will respond to any of the given responder.

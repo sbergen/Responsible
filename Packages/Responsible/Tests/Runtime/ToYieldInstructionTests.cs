@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using UniRx;
 using UnityEngine;
-using static Responsible.RF;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {

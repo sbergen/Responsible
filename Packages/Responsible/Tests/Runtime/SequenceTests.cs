@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using UniRx;
-using static Responsible.RF;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {

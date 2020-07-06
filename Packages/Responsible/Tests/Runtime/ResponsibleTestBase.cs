@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using UniRx;
 using UnityEngine;
-using static Responsible.RF;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
