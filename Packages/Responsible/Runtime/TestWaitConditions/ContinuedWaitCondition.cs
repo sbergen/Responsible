@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Responsible.Context;
 using UniRx;
 
@@ -18,12 +19,26 @@ namespace Responsible.TestWaitConditions
 
 		public IObservable<TSecond> WaitForResult(RunContext runContext, WaitContext waitContext) => this.first
 			.WaitForResult(runContext, waitContext)
-			.ContinueWith(result => this.continuation(result).WaitForResult(runContext, waitContext));
+			.ContinueWith(result =>
+			{
+				var next = this.continuation(result);
+				waitContext.AddRelation(this, next);
+				return next.WaitForResult(runContext, waitContext);
+			});
 
 		public void BuildDescription(ContextStringBuilder builder)
 		{
 			builder.Add("FIRST", this.first);
-			builder.Add("AND THEN ...");
+			var next = builder.WaitContext.RelatedContexts(this).SingleOrDefault();
+			if (next != null)
+			{
+				builder.Add("AND THEN", next);
+			}
+			else
+			{
+				builder.Add("AND THEN ...");
+			}
+
 		}
 
 		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);

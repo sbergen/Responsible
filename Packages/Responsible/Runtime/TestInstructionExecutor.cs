@@ -65,14 +65,14 @@ namespace Responsible
 			SourceContext sourceContext) => Observable.Defer(() =>
 		{
 			var waitContext = new WaitContext(this.Scheduler);
-			var logWaits = this.LogWaitFor(opContext).Subscribe();
+			var logWaits = this.LogWaitFor(opContext, waitContext).Subscribe();
 			return makeOperation(waitContext)
 				.Do(_ => this.Logger.Log(
 					LogType.Log,
 					string.Join(
 						"\n",
 						$"Finished waiting for operation in {waitContext.ElapsedTime}",
-						ContextStringBuilder.MakeDescription(opContext))))
+						ContextStringBuilder.MakeDescription(opContext, waitContext))))
 				.Timeout(timeout, this.Scheduler)
 				.Catch((Exception e) =>
 				{
@@ -86,11 +86,11 @@ namespace Responsible
 		});
 
 		[Pure]
-		private IObservable<Unit> LogWaitFor(ITestOperationContext context) => Observable
+		private IObservable<Unit> LogWaitFor(ITestOperationContext context, WaitContext waitContext) => Observable
 			.Interval(TimeSpan.FromSeconds(1), this.Scheduler)
 			.Do(_ => this.Logger.Log(
 				LogType.Log,
-				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context)}"))
+				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context, waitContext)}"))
 			.AsUnitObservable();
 
 		[Pure]
@@ -121,9 +121,9 @@ namespace Responsible
 			string what)
 			=> new[]
 			{
-				ContextStringBuilder.MakeDescription(opContext).ToString(),
+				ContextStringBuilder.MakeDescription(opContext, waitContext).ToString(),
 				$"{what} after {waitContext.ElapsedTime}",
-				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext)}",
+				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, waitContext)}",
 				$"Completed waits: \n{ContextStringBuilder.MakeCompletedList(waitContext)}",
 				InstructionStack(sourceContext),
 			};

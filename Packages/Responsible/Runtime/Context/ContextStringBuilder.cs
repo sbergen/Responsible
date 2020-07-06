@@ -8,8 +8,8 @@ namespace Responsible.Context
 	public class ContextStringBuilder
 	{
 		private const int IndentChars = 2;
-		private const string NoDescription = "No description";
-		private const string NoFailureContext = "No failureContext";
+		private const string DescriptionNotAvailable = "No description";
+		private const string FailureContextNotAvailable = "No failure context";
 
 		private static readonly Action<ITestOperationContext, ContextStringBuilder> DescriptionBuilder =
 			(context, builder) => context.BuildDescription(builder);
@@ -23,23 +23,29 @@ namespace Responsible.Context
 
 		private int indentAmount;
 
-		internal static ContextStringBuilder MakeDescription(ITestOperationContext rootContext)
+		internal WaitContext WaitContext { get; }
+
+		internal static ContextStringBuilder MakeDescription(
+			ITestOperationContext rootContext,
+			WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(DescriptionBuilder, NoDescription);
+			var builder = new ContextStringBuilder(waitContext, DescriptionBuilder, DescriptionNotAvailable);
 			builder.AddRoot(rootContext);
 			return builder;
 		}
 
-		internal static ContextStringBuilder MakeFailureContext(ITestOperationContext rootContext)
+		internal static ContextStringBuilder MakeFailureContext(
+			ITestOperationContext rootContext,
+			WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(FailureBuilder, NoFailureContext);
+			var builder = new ContextStringBuilder(waitContext, FailureBuilder, FailureContextNotAvailable);
 			builder.AddRoot(rootContext);
 			return builder;
 		}
 
 		internal static ContextStringBuilder MakeCompletedList(WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(DescriptionBuilder, NoDescription);
+			var builder = new ContextStringBuilder(waitContext, DescriptionBuilder, DescriptionNotAvailable);
 			foreach (var (context, elapsed) in waitContext.CompletedWaits)
 			{
 				builder.Add($"- Completed in {elapsed}", context);
@@ -49,9 +55,11 @@ namespace Responsible.Context
 		}
 
 		private ContextStringBuilder(
+			WaitContext waitContext,
 			Action<ITestOperationContext, ContextStringBuilder> contextBuilder,
 			string notAvailableText)
 		{
+			this.WaitContext = waitContext;
 			this.contextBuilder = contextBuilder;
 			this.notAvailableText = notAvailableText;
 		}
