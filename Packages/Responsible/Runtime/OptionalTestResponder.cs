@@ -15,7 +15,7 @@ namespace Responsible
 		public static ITestWaitCondition<T> Until<T>(
 			this IOptionalTestResponder responder,
 			ITestWaitCondition<T> condition)
-			=> new MultipleResponderWait<T>(responder, condition);
+			=> new OptionalResponderWait<T>(responder, condition);
 
 		/// <summary>
 		/// Executes responders until another responder is ready to execute.

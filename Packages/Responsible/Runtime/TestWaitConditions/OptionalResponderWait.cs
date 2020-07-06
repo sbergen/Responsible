@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class MultipleResponderWait<T> : ITestWaitCondition<T>
+	internal class OptionalResponderWait<T> : ITestWaitCondition<T>
 	{
 		private readonly IOptionalTestResponder responder;
 		private readonly ITestWaitCondition<T> condition;
@@ -36,7 +36,7 @@ namespace Responsible.TestWaitConditions
 				.Concat(replayedResult);
 		});
 
-		public MultipleResponderWait(
+		public OptionalResponderWait(
 			IOptionalTestResponder responder,
 			ITestWaitCondition<T> condition)
 		{

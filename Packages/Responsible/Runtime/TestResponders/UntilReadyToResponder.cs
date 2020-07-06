@@ -22,7 +22,7 @@ namespace Responsible.TestResponders
 
 		public UntilReadyToResponder(IOptionalTestResponder respondTo, ITestResponder<T> untilReady)
 		{
-			this.respondTo = new MultipleResponderWait<ITestInstruction<T>>(respondTo, untilReady);
+			this.respondTo = new OptionalResponderWait<ITestInstruction<T>>(respondTo, untilReady);
 			this.untilReady = untilReady;
 		}
 	}
