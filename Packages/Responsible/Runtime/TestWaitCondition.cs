@@ -72,7 +72,9 @@ namespace Responsible
 		/// Converts a wait condition returning any return type to one returning <see cref="Unit"/>.
 		/// </summary>
 		[Pure]
-		public static ITestWaitCondition<Unit> AsUnitCondition<T>(this ITestWaitCondition<T> condition)
-			=> new UnitWaitCondition<T>(condition);
+		public static ITestWaitCondition<Unit> AsUnitCondition<T>(this ITestWaitCondition<T> condition) =>
+			typeof(T) == typeof(Unit)
+				? (ITestWaitCondition<Unit>)condition
+				: new UnitWaitCondition<T>(condition);
 	}
 }

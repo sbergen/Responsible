@@ -39,6 +39,8 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		public static ITestResponder<Unit> AsUnitResponder<T>(this ITestResponder<T> responder) =>
-			new UnitTestResponder<T>(responder);
+			typeof(T) == typeof(Unit)
+				? (ITestResponder<Unit>)responder
+				: new UnitTestResponder<T>(responder);
 	}
 }

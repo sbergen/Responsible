@@ -45,6 +45,13 @@ namespace Responsible.Tests.Runtime
 				this.throwError.AsUnitInstruction().Execute().Wait(TimeSpan.Zero));
 		}
 
+		[Test]
+		public void AsUnitInstruction_ReturnsSelf_WhenAlreadyUnit()
+		{
+			var instruction = Do(() => Unit.Default);
+			Assert.AreSame(instruction, instruction.AsUnitInstruction());
+		}
+
 		[UnityTest]
 		public IEnumerator UnitWaitCondition_Completes_WhenCompleted()
 		{
@@ -77,6 +84,13 @@ namespace Responsible.Tests.Runtime
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
 			Assert.IsInstanceOf<AssertionException>(this.Error);
+		}
+
+		[Test]
+		public void AsUnitCondition_ReturnsSelf_WhenAlreadyUnit()
+		{
+			var condition = WaitForCondition("Unit", () => false, () => Unit.Default);
+			Assert.AreSame(condition, condition.AsUnitCondition());
 		}
 
 		[UnityTest]
@@ -113,6 +127,13 @@ namespace Responsible.Tests.Runtime
 			this.complete = true;
 			yield return null;
 			Assert.IsInstanceOf<AssertionException>(this.Error);
+		}
+
+		[Test]
+		public void AsUnitResponder_ReturnsSelf_WhenAlreadyUnit()
+		{
+			var responder = Never.ThenRespondWith("Return Unit", Return(Unit.Default));
+			Assert.AreSame(responder, responder.AsUnitResponder());
 		}
 	}
 }

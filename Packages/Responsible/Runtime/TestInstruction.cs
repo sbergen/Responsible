@@ -98,7 +98,9 @@ namespace Responsible
 		/// Can be useful for example for using <see cref="Sequence"/>.
 		/// </summary>
 		[Pure]
-		public static ITestInstruction<Unit> AsUnitInstruction<T>(this ITestInstruction<T> instruction)
-			=> new UnitTestInstruction<T>(instruction);
+		public static ITestInstruction<Unit> AsUnitInstruction<T>(this ITestInstruction<T> instruction) =>
+			typeof(T) == typeof(Unit)
+				? (ITestInstruction<Unit>)instruction
+				: new UnitTestInstruction<T>(instruction);
 	}
 }
