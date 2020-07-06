@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using Responsible.Context;
 using UniRx;
 
@@ -28,7 +29,7 @@ namespace Responsible.TestInstructions
 					"Synchronous test action failed:",
 					e,
 					TestInstructionExecutor.InstructionStack(runContext.SourceContext(this.sourceContext)));
-				return runContext.Executor.LogMessageAndMakeError<T>(message);
+				return Observable.Throw<T>(new AssertionException(message));
 			}
 		}
 	}

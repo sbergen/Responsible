@@ -74,17 +74,47 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void Executor_PublishesAndLogsError_WhenInstructionThrows()
+		public void Executor_OnlyPublishesError_WhenSynchronousInstructionThrows()
 		{
+			// If a synchronous instruction is executed on its own, it should be enough to just publish an error,
+			// as you shouldn't need to use Do at the top level of a test method.
+
 			Exception error = null;
 			Do(() => throw new Exception(ExceptionMessage))
 				.Execute()
 				.Subscribe(_ => { }, e => error = e);
 
 			Assert.IsInstanceOf<AssertionException>(error);
+			Assert.That(error.Message, Contains.Substring(ExceptionMessage));
+			this.Logger.DidNotReceive().Log(
+				LogType.Error,
+				Arg.Any<string>());
+		}
+
+		[UnityTest]
+		public IEnumerator Executor_PublishesAndLogsError_WhenSynchronousInstructionThrowsInAsyncContext()
+		{
+			IEnumerator Coroutine()
+			{
+				yield return null;
+				yield return Do(() => throw new Exception(ExceptionMessage)).ToYieldInstruction();
+			}
+
+			Exception error = null;
+			RunCoroutine(
+					"Run throwing coroutine",
+					1,
+					Coroutine)
+				.Execute()
+				.Subscribe(_ => { }, e => error = e);
+
+			yield return null;
+			yield return null;
+
+			Assert.IsInstanceOf<AssertionException>(error);
 			this.Logger.Received(1).Log(
 				LogType.Error,
-				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
+				Arg.Is<string>(msg => msg.Contains(ExceptionMessage)));
 		}
 
 		[Test]

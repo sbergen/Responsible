@@ -50,13 +50,6 @@ namespace Responsible
 		[Pure]
 		internal static string InstructionStack(SourceContext context) => $"Test instruction stack: \n{context}";
 
-		internal IObservable<T> LogMessageAndMakeError<T>(string message)
-		{
-			// The Unity test runner can swallow exceptions, so both log an error and throw an exception
-			this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
-			return Observable.Throw<T>(new AssertionException(message));
-		}
-
 		[Pure]
 		private IObservable<TResult> WaitFor<TResult>(
 			Func<WaitContext, IObservable<TResult>> makeOperation,
@@ -80,7 +73,8 @@ namespace Responsible
 					var message = e is TimeoutException
 						? MakeTimeoutMessage(opContext, waitContext, sourceContext)
 						: MakeErrorMessage(opContext, waitContext, sourceContext, e);
-					return this.LogMessageAndMakeError<TResult>(message);
+					this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
+					return Observable.Throw<TResult>(new AssertionException(message));
 				})
 				.Finally(logWaits.Dispose);
 		});

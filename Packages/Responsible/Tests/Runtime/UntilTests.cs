@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UniRx;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
+// ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime
 {
@@ -48,6 +49,7 @@ namespace Responsible.Tests.Runtime
 			mayCompleteReaction = true;
 			yield return null;
 
+			Assert.IsTrue(reactionCompleted);
 			Assert.IsTrue(completed);
 		}
 
