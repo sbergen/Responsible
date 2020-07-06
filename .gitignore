@@ -10,3 +10,5 @@ obj
 *.csproj
 *.DotSettings.user
 
+# Ignore coverage settings, as they are changed often
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
