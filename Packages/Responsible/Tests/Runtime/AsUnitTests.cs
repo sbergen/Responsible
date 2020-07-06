@@ -129,6 +129,25 @@ namespace Responsible.Tests.Runtime
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
+		[UnityTest]
+		public IEnumerator UnitTestResponder_PublishesError_OnTimeout()
+		{
+			this.waitForComplete
+				.ThenRespondWith("Respond", this.setCompleted)
+				.AsUnitResponder()
+				.ExpectWithinSeconds(1)
+				.Execute()
+				.Subscribe(Nop, this.StoreError);
+
+			yield return null;
+			Assert.IsNull(this.Error);
+
+			this.Scheduler.AdvanceBy(OneSecond);
+
+			yield return null;
+			Assert.IsInstanceOf<AssertionException>(this.Error);
+		}
+
 		[Test]
 		public void AsUnitResponder_ReturnsSelf_WhenAlreadyUnit()
 		{
