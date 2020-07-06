@@ -6,7 +6,7 @@ using Responsible.TestInstructions;
 
 namespace Responsible
 {
-	public static class ResponderExtensions
+	public static class TestResponder
 	{
 		/// <summary>
 		/// Expects the responder to start responding within the given timeout,

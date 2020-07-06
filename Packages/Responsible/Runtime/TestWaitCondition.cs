@@ -9,7 +9,7 @@ using UniRx;
 
 namespace Responsible
 {
-	public static class WaitConditionExtensions
+	public static class TestWaitCondition
 	{
 		/// <summary>
 		/// Constructs wait condition, which will first wait for the first condition to be fulfilled,

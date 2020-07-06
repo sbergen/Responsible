@@ -103,7 +103,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var scheduler = new TestScheduler();
 			var completed = false;
-			using (TestInstructionExtensions.OverrideExecutor(scheduler))
+			using (TestInstruction.OverrideExecutor(scheduler))
 			using (WaitForSeconds(2).Execute().Subscribe(_ => completed = true))
 			{
 				Assert.IsFalse(completed);

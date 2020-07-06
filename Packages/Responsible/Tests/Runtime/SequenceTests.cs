@@ -14,7 +14,7 @@ namespace Responsible.Tests.Runtime
 			var completed2 = false;
 			var completed3 = false;
 
-			TestInstructionExtensions
+			TestInstruction
 				.Sequence(new[]
 				{
 					Do(() => completed1 = true).AsUnitInstruction(),
@@ -36,7 +36,7 @@ namespace Responsible.Tests.Runtime
 			var completed2 = false;
 			Exception error = null;
 
-			TestInstructionExtensions
+			TestInstruction
 				.Sequence(new[]
 				{
 					Do(() => completed1 = true).AsUnitInstruction(),

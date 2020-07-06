@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace Responsible
 {
-	public static class TestInstructionExtensions
+	public static class TestInstruction
 	{
 		private static readonly IScheduler DefaultScheduler = Scheduler.MainThread;
 		private static readonly IObservable<Unit> DefaultPoll = Observable.EveryUpdate().AsUnitObservable();
-		private static readonly ILogger DefaultLogger = UnityEngine.Debug.unityLogger;
+		private static readonly ILogger DefaultLogger = Debug.unityLogger;
 
 		private static readonly TestInstructionExecutor DefaultExecutor =
 			new TestInstructionExecutor(DefaultScheduler, DefaultPoll, DefaultLogger);

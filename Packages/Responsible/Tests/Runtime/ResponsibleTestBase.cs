@@ -30,7 +30,7 @@ namespace Responsible.Tests.Runtime
 		{
 			this.Logger = Substitute.For<ILogger>();
 			this.Scheduler = new TestScheduler();
-			this.setup = TestInstructionExtensions.OverrideExecutor(this.Scheduler, logger: this.Logger);
+			this.setup = TestInstruction.OverrideExecutor(this.Scheduler, logger: this.Logger);
 		}
 
 		[TearDown]

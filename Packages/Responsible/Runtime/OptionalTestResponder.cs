@@ -4,7 +4,7 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible
 {
-	public static class OptionalTestResponderExtensions
+	public static class OptionalTestResponder
 	{
 		/// <summary>
 		/// Executes responders until a condition is met.
