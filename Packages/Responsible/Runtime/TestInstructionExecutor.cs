@@ -57,8 +57,11 @@ namespace Responsible
 			ITestOperationContext opContext,
 			SourceContext sourceContext) => Observable.Defer(() =>
 		{
-			var waitContext = new WaitContext(this.Scheduler);
-			var logWaits = this.LogWaitFor(opContext, waitContext).Subscribe();
+			var waitContext = new WaitContext(this.Scheduler, this.PollObservable);
+			var disposables = new CompositeDisposable(
+				waitContext,
+				this.LogWaitFor(opContext, waitContext).Subscribe());
+
 			return makeOperation(waitContext)
 				.Do(_ => this.Logger.Log(
 					LogType.Log,
@@ -76,7 +79,7 @@ namespace Responsible
 					this.Logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
 					return Observable.Throw<TResult>(new AssertionException(message));
 				})
-				.Finally(logWaits.Dispose);
+				.Finally(disposables.Dispose);
 		});
 
 		[Pure]
