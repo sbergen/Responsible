@@ -25,7 +25,7 @@ namespace Responsible.TestResponders
 
 		public IObservable<IObservable<Unit>> Instructions(RunContext runContext, WaitContext waitContext) =>
 			this.responders
-				.Select(responder => responder
+				.Select(responder => responder.InstructionWaitCondition
 					.WaitForResult(runContext, waitContext))
 				.Merge()
 				.Select(instruction => instruction

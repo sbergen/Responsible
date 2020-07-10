@@ -4,11 +4,12 @@ using UniRx;
 
 namespace Responsible.TestResponders
 {
-	internal class TestResponder<TArg, T> : ITestResponder<T>
+	internal class TestResponder<TArg, T> : ITestResponder<T>, ITestWaitCondition<ITestInstruction<T>>
 	{
 		private readonly ITestWaitCondition<TArg> waitCondition;
 		private readonly Func<TArg, ITestInstruction<T>> makeInstruction;
 		private readonly string description;
+		public ITestWaitCondition<ITestInstruction<T>> InstructionWaitCondition => this;
 
 		public IObservable<ITestInstruction<T>> WaitForResult(RunContext runContext, WaitContext waitContext) =>
 			this.waitCondition

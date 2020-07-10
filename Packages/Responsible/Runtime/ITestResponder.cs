@@ -7,7 +7,8 @@ namespace Responsible
 	/// <remarks>
 	/// This is really just an alias to make code look cleaner and add semantics.
 	/// </remarks>
-	public interface ITestResponder<out T> : ITestWaitCondition<ITestInstruction<T>>
+	public interface ITestResponder<out T> : ITestOperationContext
 	{
+		ITestWaitCondition<ITestInstruction<T>> InstructionWaitCondition { get; }
 	}
 }

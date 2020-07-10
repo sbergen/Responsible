@@ -22,7 +22,10 @@ namespace Responsible.TestInstructions
 
 		public IObservable<T> Run(RunContext runContext)
 			=> runContext.Executor
-			.WaitFor(this.responder, this.timeout, runContext.SourceContext(this.sourceContext))
+			.WaitFor(
+				this.responder.InstructionWaitCondition,
+				this.timeout,
+				runContext.SourceContext(this.sourceContext))
 			.ContinueWith(instruction => instruction.Run(runContext));
 	}
 }

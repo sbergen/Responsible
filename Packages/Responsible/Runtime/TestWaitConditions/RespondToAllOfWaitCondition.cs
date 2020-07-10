@@ -22,11 +22,11 @@ namespace Responsible.TestWaitConditions
 		}
 
 		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
-			this.primary
+			this.primary.InstructionWaitCondition
 				.WaitForResult(runContext, waitContext)
 				.Select(instruction => (isPrimary: true, instruction: instruction.AsUnitInstruction()))
 				.Merge(this.secondaries
-					.Select(secondary => secondary
+					.Select(secondary => secondary.InstructionWaitCondition
 						.WaitForResult(runContext, waitContext)
 						.Select(instruction => (isPrimary: false, instruction)))
 					.Merge())

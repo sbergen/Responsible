@@ -4,10 +4,12 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible.TestResponders
 {
-	internal class UntilReadyToResponder<T> : ITestResponder<T>
+	internal class UntilReadyToResponder<T> : ITestResponder<T>, ITestWaitCondition<ITestInstruction<T>>
 	{
 		private readonly ITestWaitCondition<ITestInstruction<T>> respondTo;
 		private readonly ITestResponder<T> untilReady;
+
+		public ITestWaitCondition<ITestInstruction<T>> InstructionWaitCondition => this;
 
 		public IObservable<ITestInstruction<T>> WaitForResult(RunContext runContext, WaitContext waitContext)
 			=> this.respondTo.WaitForResult(runContext, waitContext);
@@ -22,7 +24,9 @@ namespace Responsible.TestResponders
 
 		public UntilReadyToResponder(IOptionalTestResponder respondTo, ITestResponder<T> untilReady)
 		{
-			this.respondTo = new OptionalResponderWait<ITestInstruction<T>>(respondTo, untilReady);
+			this.respondTo = new OptionalResponderWait<ITestInstruction<T>>(
+				respondTo,
+				untilReady.InstructionWaitCondition);
 			this.untilReady = untilReady;
 		}
 	}
