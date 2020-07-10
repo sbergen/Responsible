@@ -2,44 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Responsible.Context;
-using Responsible.TestInstructions;
 using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	public class RespondToAllOfWaitCondition<T> : ITestWaitCondition<T>
+	public class RespondToAllOfWaitCondition<T> : ITestWaitCondition<T[]>
 	{
-		private readonly ITestResponder<T> primary;
-		private readonly IReadOnlyList<ITestResponder<Unit>> secondaries;
+		private readonly IReadOnlyList<ITestResponder<T>> responders;
 
-		private IEnumerable<ITestOperationContext> AllContexts =>
-			this.secondaries.Cast<ITestOperationContext>().Prepend(this.primary);
-
-		public RespondToAllOfWaitCondition(ITestResponder<T> primary, params ITestResponder<Unit>[] secondaries)
+		public RespondToAllOfWaitCondition(IReadOnlyList<ITestResponder<T>> responders)
 		{
-			this.primary = primary;
-			this.secondaries = secondaries;
+			this.responders = responders;
 		}
 
-		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
-			this.primary.InstructionWaitCondition
-				.WaitForResult(runContext, waitContext)
-				.Select(instruction => (isPrimary: true, instruction: instruction.AsUnitInstruction()))
-				.Merge(this.secondaries
-					.Select(secondary => secondary.InstructionWaitCondition
-						.WaitForResult(runContext, waitContext)
-						.Select(instruction => (isPrimary: false, instruction)))
-					.Merge())
-				.Select(data => data.isPrimary
-					? ((UnitTestInstruction<T>)data.instruction).Instruction.Run(runContext)
-					: data.instruction.Run(runContext).SelectMany(_ => Observable.Empty<T>()))
-				.Concat() // Sequence execution
-				.Last(); // Defer publishing value until completed
+		public IObservable<T[]> WaitForResult(RunContext runContext, WaitContext waitContext) =>
+			this.responders
+				.Select((responder, i) => responder.InstructionWaitCondition
+					.WaitForResult(runContext, waitContext)
+					.Select(instruction => (instruction, i)))
+				.Merge() // Allow instructions to become ready in any order,
+				.Select(indexedInstruction => indexedInstruction.instruction
+					.Run(runContext)
+					.Select(result => (result, indexedInstruction.i)))
+				.Concat() // ...but sequence execution of instruction
+				.Aggregate(new T[this.responders.Count], AssignResult);
 
 		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add("RESPOND TO ALL OF", this.AllContexts);
+			builder.Add("RESPOND TO ALL OF", this.responders);
 
 		public void BuildFailureContext(ContextStringBuilder builder) =>
 			this.BuildDescription(builder);
+
+		private static T[] AssignResult(T[] results, (T result, int index) indexedResult)
+		{
+			results[indexedResult.index] = indexedResult.result;
+			return results;
+		}
 	}
 }

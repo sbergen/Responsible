@@ -18,8 +18,7 @@ namespace Responsible.TestWaitConditions
 		public void BuildDescription(ContextStringBuilder builder) =>
 			builder.Add("ALL OF", this.conditions);
 
-		public AllOfWaitCondition(
-			params ITestWaitCondition<T>[] conditions)
+		public AllOfWaitCondition(IReadOnlyList<ITestWaitCondition<T>> conditions)
 		{
 			this.conditions = conditions;
 		}

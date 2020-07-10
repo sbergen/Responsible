@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using UnityEngine.TestTools;
@@ -11,113 +11,94 @@ namespace Responsible.Tests.Runtime
 {
 	public class RespondToAllOfTests : ResponsibleTestBase
 	{
-		private ConditionResponder<int> responder1;
-		private ConditionResponder<bool> responder2;
-		private ConditionResponder<float> responder3;
+		private ConditionResponder<TestDataBase> responder1;
+		private ConditionResponder<TestDataDerived> responder2;
 
-		private bool completed;
+		TestDataBase[] result;
+		private bool Completed => this.result != null;
 
 		[SetUp]
 		public void SetUp()
 		{
-			this.responder1 = new ConditionResponder<int>(1, 1);
-			this.responder2 = new ConditionResponder<bool>(1, true);
-			this.responder3 = new ConditionResponder<float>(1, 0);
+			this.responder1 = new ConditionResponder<TestDataBase>(1, new TestDataBase(1));
+			this.responder2 = new ConditionResponder<TestDataDerived>(1, new TestDataDerived(2));
+			this.result = null;
 
-			this.completed = false;
+			RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(r => this.result = r, this.StoreError);
 		}
 
 		[UnityTest]
 		public IEnumerator RespondToAllOf_Completes_WhenAllCompleted()
 		{
-
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
+			RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
 				.ExpectWithinSeconds(1)
 				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
+				.Subscribe(r => this.result = r, this.StoreError);
 
 			Assert.AreEqual(
-				(false, false, false, false),
-				(this.responder1.CompletedRespond,
-					this.responder2.CompletedRespond,
-					this.responder3.CompletedRespond,
-					this.completed),
+				(false, false, false),
+				(this.responder1.CompletedRespond, this.responder2.CompletedRespond, this.Completed),
 				"None should have completed");
 
 			this.responder1.AllowFullCompletion();
 			this.responder2.AllowFullCompletion();
-			this.responder3.AllowFullCompletion();
 			yield return null;
 			Assert.AreEqual(
-				(true, true, true, true),
+				(true, true, true),
 				(this.responder1.CompletedRespond,
 					this.responder2.CompletedRespond,
-					this.responder3.CompletedRespond,
-					this.completed),
+					this.Completed),
 				"Everything should have completed");
 		}
 
 		[UnityTest]
-		public IEnumerator RespondToAllOf_ExecutesOnlyOneResponderAtOnce([Values(0, 1, 2)] int firstToRespond)
+		public IEnumerator RespondToAllOf_ExecutesOnlyOneResponderAtOnce([Values] bool reverseOrder)
 		{
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
-
-			var first = this.SelectResponder(firstToRespond);
-			var second = this.SelectResponder(firstToRespond + 1);
-			var third = this.SelectResponder(firstToRespond + 2);
+			var first = reverseOrder ? (IConditionResponder)this.responder2 : this.responder1;
+			var second = reverseOrder ? (IConditionResponder)this.responder1 : this.responder2;
 
 			first.MayRespond = true;
 			yield return null;
 
 			second.MayRespond = true;
-			third.MayRespond = true;
 			yield return null;
 
 			Assert.AreEqual(
-				(firstToRespond == 0, firstToRespond == 1, firstToRespond == 2),
-				(this.responder1.StartedToRespond, this.responder2.StartedToRespond, this.responder3.StartedToRespond),
-				"Others should not have started to respond");
+				(true, false, false),
+				(first.StartedToRespond, second.StartedToRespond, this.Completed),
+				"Second should not have started to respond");
 
 			first.MayComplete = true;
 			yield return null;
 
-			// Order from here is undetermined
-			var next = second.StartedToRespond ? second : third;
-			var last = second.StartedToRespond ? third : second;
-			Assert.IsTrue(next.StartedToRespond, "Next should have started to respond");
-			Assert.IsFalse(last.StartedToRespond, "Last should not yet respond");
-			next.MayComplete = true;
-
+			Assert.IsTrue(second.StartedToRespond, "Second should have started to respond");
 			yield return null;
 
-			Assert.IsTrue(next.CompletedRespond, "Next should have completed");
-			Assert.IsTrue(last.StartedToRespond, "Last should have started to respond");
-			last.MayComplete = true;
-
+			second.MayComplete = true;
 			yield return null;
 
 			Assert.AreEqual(
-				(true, true, true, true),
-				(this.responder1.CompletedRespond,
-					this.responder2.CompletedRespond,
-					this.responder3.CompletedRespond,
-					this.completed),
+				(true, true, true),
+				(first.CompletedRespond, second.CompletedRespond, this.Completed),
 				"Everything should have completed");
+
+			this.AssertResult();
 		}
 
 		[UnityTest]
-		public IEnumerator RespondToAllOf_PublishesError_OnTimeout([Values(0, 1, 2)] int dontComplete)
+		public IEnumerator RespondToAllOf_PublishesError_OnTimeout([Values] bool completeFirst)
 		{
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
-
-			this.SelectResponder(dontComplete + 1).AllowFullCompletion();
-			this.SelectResponder(dontComplete + 2).AllowFullCompletion();
+			if (completeFirst)
+			{
+				this.responder1.AllowFullCompletion();
+			}
+			else
+			{
+				this.responder2.AllowFullCompletion();
+			}
 
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
@@ -125,87 +106,37 @@ namespace Responsible.Tests.Runtime
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAllOfTwo_SanityCheck()
-		{
-			RespondToAllOf(
-					this.responder2.Responder,
-					this.responder1.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
 
-			for (int i = 0; i < 2; ++i)
+		[UnityTest]
+		public IEnumerator RespondToAllOf_PublishesError_OnAnyResponderError([Values] bool throwFromFirst)
+		{
+			var error = new Exception("Fail!");
+			if (throwFromFirst)
 			{
-				yield return null;
-				this.SelectResponder(i).AllowFullCompletion();
-				Assert.IsFalse(this.completed);
+				this.responder1.AllowCompletionWithError(error);
+			}
+			else
+			{
+				this.responder2.AllowCompletionWithError(error);
 			}
 
 			yield return null;
-			Assert.IsTrue(this.completed);
+
+			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAllOfFour_SanityCheck()
+		private void AssertResult()
 		{
-			RespondToAllOf(
-					this.responder3.Responder,
-					this.responder1.Responder,
-					this.responder2.Responder,
-					this.responder2.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
+			Assert.IsNull(this.Error);
+			Assert.IsNotNull(this.result);
 
-			for (int i = 0; i < 3; ++i)
-			{
-				yield return null;
-				this.SelectResponder(i).AllowFullCompletion();
-				Assert.IsFalse(this.completed);
-			}
+			Assert.AreEqual(
+				new[] { typeof(TestDataBase), typeof(TestDataDerived)},
+				this.result.Select(r => r.GetType()));
 
-			yield return null;
-			Assert.IsTrue(this.completed);
-		}
-
-		[UnityTest]
-		public IEnumerator RespondToAllOfParams_SanityCheck()
-		{
-			RespondToAllOf(
-					this.responder3.Responder,
-					this.responder1.Responder.AsUnitResponder(),
-					this.responder2.Responder.AsUnitResponder(),
-					this.responder2.Responder.AsUnitResponder(),
-					this.responder2.Responder.AsUnitResponder())
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
-
-			for (int i = 0; i < 3; ++i)
-			{
-				yield return null;
-				this.SelectResponder(i).AllowFullCompletion();
-				Assert.IsFalse(this.completed);
-			}
-
-			yield return null;
-			Assert.IsTrue(this.completed);
-		}
-
-		private IConditionResponder SelectResponder(int i)
-		{
-			switch (i % 3)
-			{
-				case 0:
-					return this.responder1;
-				case 1:
-					return this.responder2;
-				case 2:
-					return this.responder3;
-				default:
-					throw new Exception("Invalid responder index");
-			}
+			Assert.AreEqual(
+				new[] { 1, 2 },
+				this.result.Select(r => r.Value));
 		}
 
 	}

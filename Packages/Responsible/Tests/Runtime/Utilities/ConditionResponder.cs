@@ -1,3 +1,4 @@
+using System;
 using UniRx;
 using static Responsible.Responsibly;
 
@@ -5,6 +6,8 @@ namespace Responsible.Tests.Runtime.Utilities
 {
 	public class ConditionResponder<T> : IConditionResponder
 	{
+		private Exception exception;
+
 		public bool MayRespond { get; set; }
 		public bool MayComplete { get; set; }
 
@@ -18,6 +21,12 @@ namespace Responsible.Tests.Runtime.Utilities
 			this.MayRespond = this.MayComplete = true;
 		}
 
+		public void AllowCompletionWithError(Exception e)
+		{
+			this.exception = e;
+			this.AllowFullCompletion();
+		}
+
 		public ConditionResponder(int responseTimeout, T returnValue)
 		{
 			this.Responder = WaitForCondition("Wait to be ready", () => this.MayRespond)
@@ -29,7 +38,9 @@ namespace Responsible.Tests.Runtime.Utilities
 								.ContinueWith(Do(() =>
 								{
 									this.CompletedRespond = true;
-									return returnValue;
+									return this.exception != null
+										? throw this.exception
+										: returnValue;
 								}))));
 		}
 	}
