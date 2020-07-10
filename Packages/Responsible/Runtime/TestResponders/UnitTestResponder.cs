@@ -14,7 +14,6 @@ namespace Responsible.TestResponders
 			this.responder.InstructionWaitCondition
 				.WaitForResult(runContext, waitContext)
 				.Select(instruction => instruction.AsUnitInstruction());
-
 		public void BuildDescription(ContextStringBuilder builder) => this.responder.BuildDescription(builder);
 		public void BuildFailureContext(ContextStringBuilder builder) => this.responder.BuildFailureContext(builder);
 

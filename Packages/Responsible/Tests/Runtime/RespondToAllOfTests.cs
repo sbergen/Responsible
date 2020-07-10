@@ -25,16 +25,17 @@ namespace Responsible.Tests.Runtime
 			this.responder3 = new ConditionResponder<float>(1, 0);
 
 			this.completed = false;
-
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(_ => this.completed = true, this.StoreError);
 		}
 
 		[UnityTest]
 		public IEnumerator RespondToAllOf_Completes_WhenAllCompleted()
 		{
+
+			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
 			Assert.AreEqual(
 				(false, false, false, false),
 				(this.responder1.CompletedRespond,
@@ -59,6 +60,11 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator RespondToAllOf_ExecutesOnlyOneResponderAtOnce([Values(0, 1, 2)] int firstToRespond)
 		{
+			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
 			var first = this.SelectResponder(firstToRespond);
 			var second = this.SelectResponder(firstToRespond + 1);
 			var third = this.SelectResponder(firstToRespond + 2);
@@ -100,6 +106,91 @@ namespace Responsible.Tests.Runtime
 					this.responder3.CompletedRespond,
 					this.completed),
 				"Everything should have completed");
+		}
+
+		[UnityTest]
+		public IEnumerator RespondToAllOf_PublishesError_OnTimeout([Values(0, 1, 2)] int dontComplete)
+		{
+			RespondToAllOf(this.responder1.Responder, this.responder2.Responder, this.responder3.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
+			this.SelectResponder(dontComplete + 1).AllowFullCompletion();
+			this.SelectResponder(dontComplete + 2).AllowFullCompletion();
+
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+
+			Assert.IsInstanceOf<AssertionException>(this.Error);
+		}
+
+		[UnityTest]
+		public IEnumerator RespondToAllOfTwo_SanityCheck()
+		{
+			RespondToAllOf(
+					this.responder2.Responder,
+					this.responder1.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
+			for (int i = 0; i < 2; ++i)
+			{
+				yield return null;
+				this.SelectResponder(i).AllowFullCompletion();
+				Assert.IsFalse(this.completed);
+			}
+
+			yield return null;
+			Assert.IsTrue(this.completed);
+		}
+
+		[UnityTest]
+		public IEnumerator RespondToAllOfFour_SanityCheck()
+		{
+			RespondToAllOf(
+					this.responder3.Responder,
+					this.responder1.Responder,
+					this.responder2.Responder,
+					this.responder2.Responder)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
+			for (int i = 0; i < 3; ++i)
+			{
+				yield return null;
+				this.SelectResponder(i).AllowFullCompletion();
+				Assert.IsFalse(this.completed);
+			}
+
+			yield return null;
+			Assert.IsTrue(this.completed);
+		}
+
+		[UnityTest]
+		public IEnumerator RespondToAllOfParams_SanityCheck()
+		{
+			RespondToAllOf(
+					this.responder3.Responder,
+					this.responder1.Responder.AsUnitResponder(),
+					this.responder2.Responder.AsUnitResponder(),
+					this.responder2.Responder.AsUnitResponder(),
+					this.responder2.Responder.AsUnitResponder())
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(_ => this.completed = true, this.StoreError);
+
+			for (int i = 0; i < 3; ++i)
+			{
+				yield return null;
+				this.SelectResponder(i).AllowFullCompletion();
+				Assert.IsFalse(this.completed);
+			}
+
+			yield return null;
+			Assert.IsTrue(this.completed);
 		}
 
 		private IConditionResponder SelectResponder(int i)
