@@ -27,7 +27,7 @@ namespace Responsible.Tests.Runtime
 					this.responder2.Responder)
 				.Until(WaitForCondition("Complete", () => this.mayComplete))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => this.completed = true);
 		}
 

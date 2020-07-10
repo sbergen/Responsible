@@ -28,7 +28,7 @@ namespace Responsible.Tests.Runtime
 					.ThenRespondWith("Complete 2", _ => Do(() => executed2 = true))
 					.ExpectWithinSeconds(1));
 
-			first.Optionally().UntilReadyTo(second).ExpectWithinSeconds(1).Execute().Subscribe();
+			first.Optionally().UntilReadyTo(second).ExpectWithinSeconds(1).ToObservable().Subscribe();
 
 			cond2 = true;
 			yield return null;
@@ -57,7 +57,7 @@ namespace Responsible.Tests.Runtime
 				.Optionally()
 				.UntilReadyTo(responder)
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;

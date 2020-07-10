@@ -43,7 +43,7 @@ namespace Responsible
 		/// Returns an observable which executes the instruction when subscribed to.
 		/// </summary>
 		[Pure]
-		public static IObservable<T> Execute<T>(
+		public static IObservable<T> ToObservable<T>(
 			this ITestInstruction<T> instruction,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",

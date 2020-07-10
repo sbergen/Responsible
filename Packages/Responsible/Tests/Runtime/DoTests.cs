@@ -10,7 +10,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Do_Executes_WithFunc()
 		{
-			var result = Do(() => 42).Execute().Wait(TimeSpan.Zero);
+			var result = Do(() => 42).ToObservable().Wait(TimeSpan.Zero);
 			Assert.AreEqual(42, result);
 		}
 
@@ -18,7 +18,7 @@ namespace Responsible.Tests.Runtime
 		public void Do_Executes_WithAction()
 		{
 			var executed = false;
-			Do(() => { executed = true; }).Execute().Wait(TimeSpan.Zero);
+			Do(() => { executed = true; }).ToObservable().Wait(TimeSpan.Zero);
 			Assert.IsTrue(executed);
 		}
 
@@ -26,7 +26,7 @@ namespace Responsible.Tests.Runtime
 		public void Do_DoesNotExecute_UntilSubscribedTo()
 		{
 			var executed = false;
-			var unused = Do(() => { executed = true; }).Execute();
+			var unused = Do(() => { executed = true; }).ToObservable();
 			Assert.IsFalse(executed, "Instruction should not execute until subscribed to");
 		}
 
@@ -34,7 +34,7 @@ namespace Responsible.Tests.Runtime
 		public void DoWithResult_ExecutesWithCorrectData()
 		{
 			int? result = null;
-			Do(() => 2).ContinueWith(DoWithResult<int>(x => result = x * 2)).Execute().Wait(TimeSpan.Zero);
+			Do(() => 2).ContinueWith(DoWithResult<int>(x => result = x * 2)).ToObservable().Wait(TimeSpan.Zero);
 			Assert.AreEqual(4, result);
 		}
 	}

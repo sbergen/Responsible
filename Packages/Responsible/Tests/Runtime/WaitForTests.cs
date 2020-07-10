@@ -18,7 +18,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 			using (WaitForCondition("Wait for fulfilled", () => fulfilled)
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true))
 			{
 				Assert.IsFalse(completed);
@@ -37,7 +37,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var result = ImmediateTrue
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Wait(TimeSpan.Zero);
 
 			Assert.IsTrue(result);
@@ -51,7 +51,7 @@ namespace Responsible.Tests.Runtime
 
 			using (WaitForLast("Wait for last", subject)
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Subscribe(r => result = r))
 			{
 				Assert.IsNull(result);
@@ -69,7 +69,7 @@ namespace Responsible.Tests.Runtime
 		{
 			using (WaitForLast("Wait for last on empty", Observable.Empty<int>())
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError))
 			{
 				Assert.IsInstanceOf<AssertionException>(this.Error);
@@ -81,7 +81,7 @@ namespace Responsible.Tests.Runtime
 		{
 			using (WaitForLast("Wait for last on never", Observable.Never<int>())
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError))
 			{
 				yield return null;
@@ -99,7 +99,7 @@ namespace Responsible.Tests.Runtime
 			var scheduler = new TestScheduler();
 			var completed = false;
 			using (TestInstruction.OverrideExecutor(scheduler))
-			using (WaitForSeconds(2).Execute().Subscribe(_ => completed = true))
+			using (WaitForSeconds(2).ToObservable().Subscribe(_ => completed = true))
 			{
 				Assert.IsFalse(completed);
 				scheduler.AdvanceBy(OneSecond);
@@ -122,7 +122,7 @@ namespace Responsible.Tests.Runtime
 				WaitForCondition("cond 2", () => fulfilled2, () => false),
 					WaitForCondition("cond 3", () => fulfilled3, () => false))
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Subscribe(val => completed = val))
 			{
 				Assert.IsNull(completed);
@@ -152,7 +152,7 @@ namespace Responsible.Tests.Runtime
 			Assert.DoesNotThrow(() =>
 				WaitForAllOf(ImmediateTrue, ImmediateTrue, ImmediateTrue, ImmediateTrue)
 					.ExpectWithinSeconds(1)
-					.Execute()
+					.ToObservable()
 					.Wait(TimeSpan.Zero));
 		}
 
@@ -163,7 +163,7 @@ namespace Responsible.Tests.Runtime
 			Assert.DoesNotThrow(() =>
 				WaitForAllOf(ImmediateTrue, immediateUnit, immediateUnit, immediateUnit, immediateUnit)
 					.ExpectWithinSeconds(1)
-					.Execute()
+					.ToObservable()
 					.Wait(TimeSpan.Zero));
 		}
 
@@ -172,7 +172,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var result = WaitForAllOf(ImmediateTrue, ImmediateTrue, ImmediateTrue)
 				.ExpectWithinSeconds(10)
-				.Execute()
+				.ToObservable()
 				.Wait(TimeSpan.Zero);
 
 			Assert.IsTrue(result);

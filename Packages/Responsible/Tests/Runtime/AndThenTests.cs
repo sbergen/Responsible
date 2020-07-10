@@ -24,7 +24,7 @@ namespace Responsible.Tests.Runtime
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true);
 
 			yield return null;
@@ -53,7 +53,7 @@ namespace Responsible.Tests.Runtime
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true);
 
 			yield return null;
@@ -71,7 +71,7 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnFirst_WithReadySecondCondition()
 		{
-			Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).Execute()
+			Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToObservable()
 				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
@@ -81,7 +81,7 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
 		{
-			Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).Execute()
+			Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToObservable()
 				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
@@ -91,7 +91,7 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnSecond_WithReadySecondCondition()
 		{
-			ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).Execute()
+			ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToObservable()
 				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
@@ -101,7 +101,7 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
 		{
-			ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).Execute()
+			ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToObservable()
 				.Subscribe(Nop, this.StoreError);
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;

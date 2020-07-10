@@ -21,7 +21,7 @@ namespace Responsible.Tests.Runtime
 					Do(() => completed2 = true).AsUnitInstruction(),
 					Do(() => completed3 = true).AsUnitInstruction(),
 				})
-				.Execute()
+				.ToObservable()
 				.Subscribe();
 
 			Assert.AreEqual(
@@ -42,7 +42,7 @@ namespace Responsible.Tests.Runtime
 					Do(() => throw new Exception()).AsUnitInstruction(),
 					Do(() => completed2 = true).AsUnitInstruction(),
 				})
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.AreEqual(

@@ -39,7 +39,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 			this.respondToConditions
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true);
 
 			yield return null;
@@ -64,7 +64,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 			this.respondToConditions
 				.ExpectWithinSeconds(3)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true);
 
 			// Timeout for condition is 3 seconds

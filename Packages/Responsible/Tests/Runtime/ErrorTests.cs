@@ -17,7 +17,7 @@ namespace Responsible.Tests.Runtime
 		{
 			Never
 				.ExpectWithinSeconds(2)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			this.Scheduler.AdvanceBy(OneSecond);
@@ -40,7 +40,7 @@ namespace Responsible.Tests.Runtime
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.CatchIgnore()
 				.Subscribe();
 
@@ -62,7 +62,7 @@ namespace Responsible.Tests.Runtime
 					"FAIL",
 					() => throw new Exception(ExceptionMessage))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
@@ -78,7 +78,7 @@ namespace Responsible.Tests.Runtime
 			// as you shouldn't need to use Do at the top level of a test method.
 
 			Do(() => throw new Exception(ExceptionMessage))
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
@@ -101,7 +101,7 @@ namespace Responsible.Tests.Runtime
 					"Run throwing coroutine",
 					1,
 					Coroutine)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
@@ -121,7 +121,7 @@ namespace Responsible.Tests.Runtime
 					() => false,
 					builder => builder.Add("Should be in logs"))
 				.ExpectWithinSeconds(0)
-				.Execute()
+				.ToObservable()
 				.CatchIgnore()
 				.Subscribe();
 

@@ -65,7 +65,7 @@ namespace Responsible.Tests.Runtime
 				};
 
 				MakeInstruction(state1, state2)
-					.Execute()
+					.ToObservable()
 					.CatchIgnore()
 					.Subscribe();
 

@@ -30,7 +30,7 @@ namespace Responsible.Tests.Runtime
 				.Until(WaitForCondition("Continue", () => shouldContinue))
 				.ExpectWithinSeconds(1);
 
-			respondUntil.Execute().Subscribe(_ => completed = true);
+			respondUntil.ToObservable().Subscribe(_ => completed = true);
 
 			readyToReact = true;
 
@@ -68,7 +68,7 @@ namespace Responsible.Tests.Runtime
 					.ExpectWithinSeconds(1)
 					.ContinueWith(_ => Do(() => secondCompleted = true)))
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => secondCompleted = true);
 
 			untilCond = true;
@@ -101,7 +101,7 @@ namespace Responsible.Tests.Runtime
 				.Optionally()
 				.Until(Never)
 				.ExpectWithinSeconds(1)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;

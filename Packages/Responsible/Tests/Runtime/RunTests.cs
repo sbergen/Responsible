@@ -30,7 +30,7 @@ namespace Responsible.Tests.Runtime
 					"Wait for completion",
 					10,
 					WaitForComplete)
-				.Execute()
+				.ToObservable()
 				.Subscribe(_ => completed = true);
 
 			yield return null;
@@ -54,7 +54,7 @@ namespace Responsible.Tests.Runtime
 					"Throw from coroutine",
 					10,
 					ThrowFromCoroutine)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
@@ -81,7 +81,7 @@ namespace Responsible.Tests.Runtime
 					"Infinite coroutine",
 					1,
 					ThrowFromCoroutine)
-				.Execute()
+				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
