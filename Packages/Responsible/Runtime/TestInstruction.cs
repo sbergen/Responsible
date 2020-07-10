@@ -7,6 +7,8 @@ using Responsible.Context;
 using Responsible.TestInstructions;
 using UniRx;
 using UnityEngine;
+using static Responsible.Responsibly;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Responsible
 {
@@ -91,6 +93,23 @@ namespace Responsible
 			this ITestInstruction<T1> first,
 			ITestInstruction<T2> second)
 			=> new AggregateTestInstruction<T1, T2>(first, _ => second);
+
+		/// <summary>
+		/// Shorthand for ContinueWith + Do
+		/// </summary>
+		[Pure]
+		public static ITestInstruction<T2> Select<T1, T2>(
+			this ITestInstruction<T1> first,
+			Func<T1, T2> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> first.ContinueWith(
+				result => Do(
+					() => selector(result),
+					memberName,
+					sourceFilePath,
+					sourceLineNumber));
 
 		/// <summary>
 		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
