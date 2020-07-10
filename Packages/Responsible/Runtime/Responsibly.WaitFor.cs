@@ -42,38 +42,11 @@ namespace Responsible
 			IObservable<T> observable)
 			=> new ObservableWaitCondition<T>(description, observable);
 
+		/// <summary>
+		/// Wait for all conditions to complete, and return their results as an array.
+		/// </summary>
 		[Pure]
-		public static ITestWaitCondition<T> WaitForAllOf<T>(
-			ITestWaitCondition<T> primary,
-			params ITestWaitCondition<Unit>[] secondaries)
-			=> new AllOfWaitCondition<T>(primary, secondaries);
-
-		[Pure]
-		public static ITestWaitCondition<T> WaitForAllOf<T, T2>(
-			ITestWaitCondition<T> primary,
-			ITestWaitCondition<T2> secondary)
-			=> new AllOfWaitCondition<T>(primary, secondary.AsUnitCondition());
-
-		[Pure]
-		public static ITestWaitCondition<T> WaitForAllOf<T, T2, T3>(
-			ITestWaitCondition<T> primary,
-			ITestWaitCondition<T2> secondary1,
-			ITestWaitCondition<T3> secondary2)
-			=> new AllOfWaitCondition<T>(
-				primary,
-				secondary1.AsUnitCondition(),
-				secondary2.AsUnitCondition());
-
-		[Pure]
-		public static ITestWaitCondition<T> WaitForAllOf<T, T2, T3, T4>(
-			ITestWaitCondition<T> primary,
-			ITestWaitCondition<T2> secondary1,
-			ITestWaitCondition<T3> secondary2,
-			ITestWaitCondition<T4> secondary3)
-			=> new AllOfWaitCondition<T>(
-				primary,
-				secondary1.AsUnitCondition(),
-				secondary2.AsUnitCondition(),
-				secondary3.AsUnitCondition());
+		public static ITestWaitCondition<T[]> WaitForAllOf<T>(params ITestWaitCondition<T>[] conditions)
+			=> new AllOfWaitCondition<T>(conditions);
 	}
 }

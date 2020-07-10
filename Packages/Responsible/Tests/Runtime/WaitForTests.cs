@@ -115,7 +115,7 @@ namespace Responsible.Tests.Runtime
 			var fulfilled1 = false;
 			var fulfilled2 = false;
 			var fulfilled3 = false;
-			bool? completed = null;
+			bool[] results = null;
 
 			using (WaitForAllOf(
 				WaitForCondition("cond 1", () => fulfilled1, () => true),
@@ -123,48 +123,29 @@ namespace Responsible.Tests.Runtime
 					WaitForCondition("cond 3", () => fulfilled3, () => false))
 				.ExpectWithinSeconds(10)
 				.ToObservable()
-				.Subscribe(val => completed = val))
+				.Subscribe(val => results = val))
 			{
-				Assert.IsNull(completed);
+				Assert.IsNull(results);
 				yield return null;
 
 				fulfilled1 = true;
-				Assert.IsNull(completed);
+				Assert.IsNull(results);
 				yield return null;
 
 				fulfilled2 = true;
-				Assert.IsNull(completed);
+				Assert.IsNull(results);
 				yield return null;
 
 				fulfilled3 = true;
-				Assert.IsNull(completed);
+				Assert.IsNull(results);
 				yield return null;
 
 				// Completes on next frame
 				yield return null;
-				Assert.IsTrue(completed);
+				Assert.AreEqual(
+					new[] { true, false, false },
+					results);
 			}
-		}
-
-		[Test]
-		public void WaitForAll4_SanityCheck()
-		{
-			Assert.DoesNotThrow(() =>
-				WaitForAllOf(ImmediateTrue, ImmediateTrue, ImmediateTrue, ImmediateTrue)
-					.ExpectWithinSeconds(1)
-					.ToObservable()
-					.Wait(TimeSpan.Zero));
-		}
-
-		[Test]
-		public void WaitForAllParams_SanityCheck()
-		{
-			var immediateUnit = ImmediateTrue.AsUnitCondition();
-			Assert.DoesNotThrow(() =>
-				WaitForAllOf(ImmediateTrue, immediateUnit, immediateUnit, immediateUnit, immediateUnit)
-					.ExpectWithinSeconds(1)
-					.ToObservable()
-					.Wait(TimeSpan.Zero));
 		}
 
 		[Test]
@@ -175,7 +156,9 @@ namespace Responsible.Tests.Runtime
 				.ToObservable()
 				.Wait(TimeSpan.Zero);
 
-			Assert.IsTrue(result);
+			Assert.AreEqual(
+				new[] { true, true, true },
+				result);
 		}
 	}
 }

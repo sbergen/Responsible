@@ -6,34 +6,22 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class AllOfWaitCondition<T> : ITestWaitCondition<T>
+	internal class AllOfWaitCondition<T> : ITestWaitCondition<T[]>
 	{
-		private readonly ITestWaitCondition<T> primary;
-		private readonly IReadOnlyList<ITestWaitCondition<Unit>> secondaries;
+		private readonly IReadOnlyList<ITestWaitCondition<T>> conditions;
 
-		private IEnumerable<ITestOperationContext> AllContexts => this.secondaries
-			.Cast<ITestOperationContext>()
-			.Prepend(this.primary);
-
-		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) => Observable
-			.CombineLatest(
-				this.primary.WaitForResult(runContext, waitContext),
-				this.secondaries
-					.Select(s => s.WaitForResult(runContext, waitContext))
-					.WhenAll(),
-				(result, _) => result);
-
+		public IObservable<T[]> WaitForResult(RunContext runContext, WaitContext waitContext) => this.conditions
+			.Select(cond => cond.WaitForResult(runContext, waitContext))
+			.WhenAll();
 		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 
 		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add("ALL OF", this.AllContexts);
+			builder.Add("ALL OF", this.conditions);
 
 		public AllOfWaitCondition(
-			ITestWaitCondition<T> primary,
-			params ITestWaitCondition<Unit>[] secondaries)
+			params ITestWaitCondition<T>[] conditions)
 		{
-			this.primary = primary;
-			this.secondaries = secondaries;
+			this.conditions = conditions;
 		}
 	}
 }
