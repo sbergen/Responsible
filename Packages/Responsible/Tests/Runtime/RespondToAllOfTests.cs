@@ -132,11 +132,11 @@ namespace Responsible.Tests.Runtime
 
 			Assert.AreEqual(
 				new[] { typeof(TestDataBase), typeof(TestDataDerived)},
-				this.result.Select(r => r.GetType()));
+				this.result.Select(r => r.GetType()).ToArray());
 
 			Assert.AreEqual(
 				new[] { 1, 2 },
-				this.result.Select(r => r.Value));
+				this.result.Select(r => r.Value).ToArray());
 		}
 
 	}

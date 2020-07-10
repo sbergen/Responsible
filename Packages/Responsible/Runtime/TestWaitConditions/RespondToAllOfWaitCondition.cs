@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Responsible.Context;
+using Responsible.Utilities;
 using UniRx;
 
 namespace Responsible.TestWaitConditions
@@ -19,24 +20,18 @@ namespace Responsible.TestWaitConditions
 			this.responders
 				.Select((responder, i) => responder.InstructionWaitCondition
 					.WaitForResult(runContext, waitContext)
-					.Select(instruction => (instruction, i)))
+					.WithIndex(i))
 				.Merge() // Allow instructions to become ready in any order,
-				.Select(indexedInstruction => indexedInstruction.instruction
+				.Select(indexedInstruction => indexedInstruction.Value
 					.Run(runContext)
-					.Select(result => (result, indexedInstruction.i)))
+					.WithIndexFrom(indexedInstruction))
 				.Concat() // ...but sequence execution of instruction
-				.Aggregate(new T[this.responders.Count], AssignResult);
+				.Aggregate(new T[this.responders.Count], Indexed.AssignToArray);
 
 		public void BuildDescription(ContextStringBuilder builder) =>
 			builder.Add("RESPOND TO ALL OF", this.responders);
 
 		public void BuildFailureContext(ContextStringBuilder builder) =>
 			this.BuildDescription(builder);
-
-		private static T[] AssignResult(T[] results, (T result, int index) indexedResult)
-		{
-			results[indexedResult.index] = indexedResult.result;
-			return results;
-		}
 	}
 }
