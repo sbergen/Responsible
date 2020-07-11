@@ -33,11 +33,6 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator RespondToAllOf_Completes_WhenAllCompleted()
 		{
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
-				.ExpectWithinSeconds(1)
-				.ToObservable()
-				.Subscribe(r => this.result = r, this.StoreError);
-
 			Assert.AreEqual(
 				(false, false, false),
 				(this.responder1.CompletedRespond, this.responder2.CompletedRespond, this.Completed),
