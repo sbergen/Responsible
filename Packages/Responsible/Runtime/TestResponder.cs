@@ -25,14 +25,14 @@ namespace Responsible
 				responder,
 				TimeSpan.FromSeconds(timeoutSeconds),
 				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
-
+		/* TODO
 		/// <summary>
 		/// Converts a test responder to an optional test responder.
 		/// An alias for <see cref="Responsibly.RespondToAnyOf{t}"/> with a single argument.
 		/// </summary>
 		[Pure]
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
-			Responsibly.RespondToAnyOf(responder);
+			Responsibly.RespondToAnyOf(responder);*/
 
 		/// <summary>
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.

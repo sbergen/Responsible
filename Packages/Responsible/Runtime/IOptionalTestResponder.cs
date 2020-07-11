@@ -8,7 +8,7 @@ namespace Responsible
 	/// <summary>
 	/// Represents one or more test responders, which can optionally execute when they are ready.
 	/// </summary>
-	public interface IOptionalTestResponder : ITestOperationContext
+	/* TODO public interface IOptionalTestResponder : ITestOperationContext
 	{
 		/// <summary>
 		/// When subscribed to, starts waiting for all conditions, and publishes instructions
@@ -16,5 +16,5 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		IObservable<IObservable<Unit>> Instructions(RunContext runContext, WaitContext waitContext);
-	}
+	} */
 }

@@ -50,9 +50,9 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> instruction.Run(new RunContext(
-				executor,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber)));
+			=> executor.RunInstruction(
+				instruction,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Starts executing an instruction, and returns a yield instruction which can be waited upon.
@@ -62,9 +62,8 @@ namespace Responsible
 			this ITestInstruction<T> instruction,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> instruction
-				.Run(new RunContext(executor, new SourceContext(memberName, sourceFilePath, sourceLineNumber)))
+			[CallerLineNumber] int sourceLineNumber = 0) =>
+			ToObservable(instruction, memberName, sourceFilePath, sourceLineNumber)
 				.ToYieldInstruction();
 
 		/// <summary>

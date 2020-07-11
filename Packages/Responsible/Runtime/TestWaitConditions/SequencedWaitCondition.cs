@@ -1,31 +1,35 @@
 using System;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class SequencedWaitCondition<TFirst, TSecond> : ITestWaitCondition<TSecond>
+	internal class SequencedWaitCondition<TFirst, TSecond> : TestWaitConditionBase<TSecond>
 	{
-		private readonly ITestWaitCondition<TFirst> first;
-		private readonly ITestWaitCondition<TSecond> second;
-
-		public SequencedWaitCondition(
-			ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
+		public SequencedWaitCondition(ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
+			: base(() => new State(first, second))
 		{
-			this.first = first;
-			this.second = second;
 		}
 
-		public IObservable<TSecond> WaitForResult(RunContext runContext, WaitContext waitContext) => this.first
-			.WaitForResult(runContext, waitContext)
-			.ContinueWith(_ => this.second.WaitForResult(runContext, waitContext));
-
-		public void BuildDescription(ContextStringBuilder builder)
+		private class State : OperationState<TSecond>
 		{
-			builder.Add("FIRST", this.first);
-			builder.Add("AND THEN",  this.second);
-		}
+			private readonly IOperationState<TFirst> first;
+			private readonly IOperationState<TSecond> second;
 
-		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
+			public State(ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
+			{
+				this.first = first.CreateState();
+				this.second = second.CreateState();
+			}
+
+			protected override IObservable<TSecond> ExecuteInner(RunContext runContext) =>
+				this.first
+					.Execute(runContext)
+					.ContinueWith(_ => this.second.Execute(runContext));
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddContinuation(this.first, this.second);
+		}
 	}
 }

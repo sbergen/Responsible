@@ -1,40 +1,43 @@
 using System;
+using JetBrains.Annotations;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class AggregateTestInstruction<T1, T2> : ITestInstruction<T2>
+	internal class AggregateTestInstruction<T1, T2> : TestInstructionBase<T2>
 	{
-		private readonly ITestInstruction<T1> first;
-		private readonly Func<T1, ITestInstruction<T2>> selector;
-
 		public AggregateTestInstruction(
 			ITestInstruction<T1> first,
 			Func<T1, ITestInstruction<T2>> selector)
+			: base(() => new State(first, selector))
 		{
-			this.first = first;
-			this.selector = selector;
 		}
 
-		public IObservable<T2> Run(RunContext runContext) => this.first
-			.Run(runContext)
-			.ContinueWith(result =>
+		private class State : OperationState<T2>
+		{
+			private readonly IOperationState<T1> first;
+			private readonly Func<T1, ITestInstruction<T2>> selector;
+
+			[CanBeNull] private IOperationState<T2> nextInstruction;
+
+			public State(ITestInstruction<T1> first, Func<T1, ITestInstruction<T2>> selector)
 			{
-				var instruction = this.selector(result);
-				runContext.AddRelation(this, instruction);
-				return instruction.Run(runContext);
-			})
-			.Do(_ => runContext.MarkAsCompleted(this));
+				this.first = first.CreateState();
+				this.selector = selector;
+			}
 
-		public void BuildDescription(ContextStringBuilder builder)
-		{
-			builder.Add("FIRST", this.first);
-			builder.AddOptional(
-				"AND THEN",
-				builder.RunContext.RelatedContexts(this));
+			protected override IObservable<T2> ExecuteInner(RunContext runContext) => this.first
+				.Execute(runContext)
+				.ContinueWith(result =>
+				{
+					this.nextInstruction = this.selector(result).CreateState();
+					return this.nextInstruction.Execute(runContext);
+				});
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddContinuation(this.first, this.nextInstruction);
 		}
-
-		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 	}
 }

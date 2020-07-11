@@ -4,7 +4,7 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible.TestResponders
 {
-	internal class UntilReadyToResponder<T> : ITestResponder<T>, ITestWaitCondition<ITestInstruction<T>>
+	/* TODO internal class UntilReadyToResponder<T> : ITestResponder<T>, ITestWaitCondition<ITestInstruction<T>>
 	{
 		private readonly ITestWaitCondition<ITestInstruction<T>> respondTo;
 		private readonly ITestResponder<T> untilReady;
@@ -29,5 +29,5 @@ namespace Responsible.TestResponders
 				untilReady.InstructionWaitCondition);
 			this.untilReady = untilReady;
 		}
-	}
+	}*/
 }

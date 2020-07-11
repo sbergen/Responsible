@@ -4,7 +4,7 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible
 {
-	public static class OptionalTestResponder
+	/* TODO public static class OptionalTestResponder
 	{
 		/// <summary>
 		/// Executes responders until a condition is met.
@@ -27,5 +27,5 @@ namespace Responsible
 			this IOptionalTestResponder respondTo,
 			ITestResponder<T> untilReady)
 			=> new UntilReadyToResponder<T>(respondTo, untilReady);
-	}
+	}*/
 }

@@ -1,50 +1,34 @@
 using System;
-using NUnit.Framework;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class SynchronousTestInstruction<T> : ITestInstruction<T>
+	internal class SynchronousTestInstruction<T> : TestInstructionBase<T>
 	{
-		private readonly string description;
-		private readonly Func<T> action;
-		private readonly SourceContext sourceContext;
-
 		public SynchronousTestInstruction(string description, Func<T> action, SourceContext sourceContext)
+		: base(() => new State(description, action, sourceContext))
 		{
-			this.description = description;
-			this.action = action;
-			this.sourceContext = sourceContext;
 		}
 
-		public IObservable<T> Run(RunContext runContext) => Observable.Create<T>(observer =>
+		private class State : OperationState<T>
 		{
-			try
-			{
-				observer.OnNext(this.action());
-				runContext.MarkAsCompleted(this);
-				observer.OnCompleted();
-			}
-			catch (Exception e)
-			{
-				runContext.MarkAsFailed(this, e);
+			private readonly string description;
+			private readonly Func<T> action;
+			private readonly SourceContext sourceContext;
 
-				var message = string.Join(
-					TestInstructionExecutor.UnityEmptyLine,
-					"Synchronous test action failed:",
-					e,
-					TestInstructionExecutor.InstructionStack(runContext.SourceContext(this.sourceContext)));
-				observer.OnError(new AssertionException(message));
+			public State(string description, Func<T> action, SourceContext sourceContext)
+			{
+				this.description = description;
+				this.action = action;
+				this.sourceContext = sourceContext;
 			}
 
-			return Disposable.Empty;
-		});
+			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Return(this.action());
 
-		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.AddWithNested(this.description, this.sourceContext.ToString());
-
-		public void BuildFailureContext(ContextStringBuilder builder)
-			=> builder.AddInstructionStatus(this, this.sourceContext, this.description);
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddInstruction(this, this.description, this.sourceContext);
+		}
 	}
 }

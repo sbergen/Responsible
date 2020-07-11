@@ -1,6 +1,8 @@
 using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.Context;
+using Responsible.State;
 using Responsible.TestInstructions;
 using Responsible.TestWaitConditions;
 using UniRx;
@@ -22,19 +24,25 @@ namespace Responsible
 			string description,
 			Func<bool> condition,
 			Func<T> makeResult,
-			Action<ContextStringBuilder> extraContext = null)
-			=> new PollingWaitCondition<T>(condition, description, makeResult, extraContext);
+			Action<StateStringBuilder> extraContext = null)
+			=> new PollingWaitCondition<T>(description, condition, makeResult, extraContext);
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCondition(
 			string description,
 			Func<bool> condition,
-			Action<ContextStringBuilder> extraContext = null)
-			=> new PollingWaitCondition<Unit>(condition, description, () => Unit.Default, extraContext);
+			Action<StateStringBuilder> extraContext = null)
+			=> new PollingWaitCondition<Unit>(description, condition, () => Unit.Default, extraContext);
 
 		[Pure]
-		public static ITestInstruction<Unit> WaitForSeconds(int seconds)
-			=> new WaitForInstruction(TimeSpan.FromSeconds(seconds));
+		public static ITestInstruction<Unit> WaitForSeconds(
+			int seconds,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new WaitForInstruction(
+				TimeSpan.FromSeconds(seconds),
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<T> WaitForLast<T>(

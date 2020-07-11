@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace Responsible.Context
 {
+	/* TODO
 	public class ContextStringBuilder
 	{
 		private const int IndentChars = 2;
@@ -219,5 +220,5 @@ namespace Responsible.Context
 		private static string CompletedString(string description) => $"[✓] {description}";
 		private static string WaitingString(string description) => $"[.] {description}";
 		private static string ErrorString(string description) => $"[!] {description}";
-	}
+	}*/
 }

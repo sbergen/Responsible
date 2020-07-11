@@ -9,6 +9,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
+	/*
 	public class RunTests : ResponsibleTestBase
 	{
 		[UnityTest]
@@ -95,5 +96,5 @@ namespace Responsible.Tests.Runtime
 					str.Contains("Timed out") &&
 					str.Contains("Infinite coroutine")));
 		}
-	}
+	}*/
 }

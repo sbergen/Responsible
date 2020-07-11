@@ -10,6 +10,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
+	/*
 	public class ErrorTests : ResponsibleTestBase
 	{
 		[UnityTest]
@@ -129,5 +130,5 @@ namespace Responsible.Tests.Runtime
 				LogType.Error,
 				Arg.Is<string>(str => str.Contains("Should be in logs")));
 		}
-	}
+	}*/
 }

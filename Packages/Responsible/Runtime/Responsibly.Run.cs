@@ -11,6 +11,7 @@ namespace Responsible
 	// See Responsibly.WaitFor.cs for documentation
 	public static partial class Responsibly
 	{
+		/* TODO
 		[Pure]
 		public static ITestInstruction<Unit> RunCoroutine(
 			string description,
@@ -23,6 +24,6 @@ namespace Responsible
 				startCoroutine,
 				description,
 				TimeSpan.FromSeconds(timeoutSeconds),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));*/
 	}
 }

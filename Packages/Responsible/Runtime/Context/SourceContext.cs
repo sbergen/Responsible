@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Responsible.Context
 {
-	internal readonly struct SourceContext
+	public readonly struct SourceContext
 	{
 		private static readonly int StripFromPaths;
 		private readonly IReadOnlyList<string> sourceLines;

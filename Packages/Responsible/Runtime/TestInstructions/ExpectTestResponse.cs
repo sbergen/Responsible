@@ -1,43 +1,40 @@
 using System;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class ExpectTestResponse<T> : ITestInstruction<T>
+	internal class ExpectTestResponse<T> : TestInstructionBase<T>
 	{
-		private readonly ITestResponder<T> responder;
-		private readonly TimeSpan timeout;
-		private readonly SourceContext sourceContext;
-
 		public ExpectTestResponse(
 			ITestResponder<T> responder,
 			TimeSpan timeout,
 			SourceContext sourceContext)
+		: base(() => new State(responder, timeout, sourceContext))
 		{
-			this.responder = responder;
-			this.timeout = timeout;
-			this.sourceContext = sourceContext;
 		}
 
-		public IObservable<T> Run(RunContext runContext)
-			=> runContext.Executor
-			.WaitFor(
-				this.responder.InstructionWaitCondition,
-				this.timeout,
-				runContext.SourceContext(this.sourceContext))
-			.ContinueWith(instruction => instruction.Run(runContext))
-			.Do(_ => runContext.MarkAsCompleted(this));
-
-		public void BuildDescription(ContextStringBuilder builder) => this.responder.BuildDescription(builder);
-
-		public void BuildFailureContext(ContextStringBuilder builder)
+		private class State : OperationState<T>
 		{
-			builder.AddInstructionStatus(
-				this,
-				this.sourceContext,
-				$"EXPECT WITHIN {this.timeout:g}",
-				this.responder);
+			private readonly IOperationState<IOperationState<T>> responder;
+			private readonly TimeSpan timeout;
+			private readonly SourceContext sourceContext;
+
+			public State(ITestResponder<T> responder, TimeSpan timeout, SourceContext sourceContext)
+			{
+				this.responder = responder.CreateState();
+				this.timeout = timeout;
+				this.sourceContext = sourceContext;
+			}
+
+			protected override IObservable<T> ExecuteInner(RunContext runContext) => this.responder
+				.Execute(runContext)
+				.Timeout(this.timeout, runContext.Executor.Scheduler)
+				.ContinueWith(instruction => instruction.Execute(runContext));
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddExpectWithin(this.timeout, this.responder, this.sourceContext);
 		}
 	}
 }

@@ -1,39 +1,51 @@
 using System;
 using JetBrains.Annotations;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class PollingWaitCondition<T> : ITestWaitCondition<T>
+	internal class PollingWaitCondition<T> : TestWaitConditionBase<T>
 	{
-		private readonly Func<bool> condition;
-		private readonly Func<T> makeResult;
-		private readonly string description;
-		[CanBeNull] private readonly Action<ContextStringBuilder> extraContext;
+		public PollingWaitCondition(
+			string description,
+			Func<bool> condition,
+			Func<T> makeResult,
+			Action<StateStringBuilder> extraContext = null)
+			: base(() => new State(description, condition, makeResult, extraContext))
+		{
+		}
 
-		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
+		private class State : OperationState<T>
+		{
+			private readonly string description;
+			private readonly Func<bool> condition;
+			private readonly Func<T> makeResult;
+			[CanBeNull] private readonly Action<StateStringBuilder> extraContext;
 
-		public void BuildFailureContext(ContextStringBuilder builder) =>
-			builder.AddWaitStatus(this, this.description, this.extraContext);
+			public State(
+				string description,
+				Func<bool> condition,
+				Func<T> makeResult,
+				[CanBeNull] Action<StateStringBuilder> extraContext)
+			{
+				this.description = description;
+				this.condition = condition;
+				this.makeResult = makeResult;
+				this.extraContext = extraContext;
+			}
 
-		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
-			waitContext.PollObservable
+			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext
+				.PollObservable
 				.StartWith(Unit.Default) // Allow immediate completion
 				.Select(_ => this.condition())
 				.Where(fulfilled => fulfilled)
 				.Take(1)
-				.Select(_ => this.makeResult())
-				.Do(_ => waitContext.MarkAsCompleted(this))
-				.DoOnSubscribe(() => waitContext.MarkAsStarted(this));
+				.Select(_ => this.makeResult());
 
-		public PollingWaitCondition(
-			Func<bool> condition, string description, Func<T> makeResult, Action<ContextStringBuilder> extraContext = null)
-		{
-			this.description = description;
-			this.condition = condition;
-			this.makeResult = makeResult;
-			this.extraContext = extraContext;
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddWait(this.description, this, this.extraContext);
 		}
 	}
 }

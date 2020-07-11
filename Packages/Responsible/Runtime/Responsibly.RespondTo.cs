@@ -12,9 +12,9 @@ namespace Responsible
 		/// Constructs an optional test responder, which will respond to any of the given responder.
 		/// While all responders are waited for concurrently, only one will be responding at a time.
 		/// </summary>
-		[Pure]
+		/* TODO [Pure]
 		public static IOptionalTestResponder RespondToAnyOf<T>(params ITestResponder<T>[] responders) =>
-			new AnyOfResponder<T>(responders);
+			new AnyOfResponder<T>(responders);*/
 
 		/// <summary>
 		/// Constructs a wait condition that will will complete once all given responders have executed.

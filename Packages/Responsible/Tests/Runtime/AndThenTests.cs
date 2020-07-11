@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
+using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
@@ -107,5 +108,35 @@ namespace Responsible.Tests.Runtime
 			yield return null;
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
+
+		[UnityTest]
+		public IEnumerator Duplicates()
+		{
+			bool condition = true;
+
+			bool WaitForIt()
+			{
+				if (condition)
+				{
+					condition = false;
+					return true;
+				}
+
+				return condition;
+			}
+
+			var wait = WaitForCondition("Wait for it", WaitForIt);
+
+			wait.AndThen(wait).ExpectWithinSeconds(1).ToObservable().Subscribe(Nop, this.StoreError);
+
+			yield return null;
+
+			this.Scheduler.AdvanceBy(OneSecond);
+
+			yield return null;
+
+			Debug.Log(this.Error.Message);
+		}
+
 	}
 }

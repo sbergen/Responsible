@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.Context;
-using Responsible.TestInstructions;
+using Responsible.State;
 using UniRx;
 using UnityEngine;
 
@@ -15,11 +15,11 @@ namespace Responsible
 		// Add spaces to lines so that the Unity console doesn't strip them
 		internal const string UnityEmptyLine = "\n \n";
 
-		private readonly IObservable<Unit> pollObservable;
 		private readonly IDisposable pollSubscription;
 		private readonly ILogger logger;
 
 		internal readonly IScheduler Scheduler;
+		internal readonly IObservable<Unit> PollObservable;
 
 		internal TestInstructionExecutor(IScheduler scheduler, IObservable<Unit> pollObservable, ILogger logger)
 		{
@@ -29,7 +29,7 @@ namespace Responsible
 			// Workaround for how EveryUpdate works in Unity.
 			// When nobody is subscribed to it, there will be a one-frame delay on the next Subscribe.
 			var pollSubject = new Subject<Unit>();
-			this.pollObservable = pollSubject;
+			this.PollObservable = pollSubject;
 			this.pollSubscription = pollObservable.Subscribe(pollSubject);
 		}
 
@@ -38,6 +38,24 @@ namespace Responsible
 			this.pollSubscription.Dispose();
 		}
 
+		internal IObservable<T> RunInstruction<T>(
+			ITestInstruction<T> instruction,
+			SourceContext sourceContext)
+		{
+			var runContext = new RunContext(this, sourceContext);
+			var rootState = instruction.CreateState();
+			return rootState
+				.Execute(runContext)
+				.Catch((Exception e) =>
+				{
+					// The Unity test runner can swallow exceptions, so both log an error and throw an exception
+					var message = StateStringBuilder.MakeState(rootState);
+					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
+					return Observable.Throw<T>(new AssertionException(message));
+				});
+		}
+
+		/* TODO
 		[Pure]
 		internal IObservable<T> WaitFor<T>(
 			ITestWaitCondition<T> condition,
@@ -66,7 +84,7 @@ namespace Responsible
 			SourceContext sourceContext) => Observable.Defer(() =>
 		{
 			var runContext = new RunContext(this, sourceContext);
-			var waitContext = new WaitContext(this.Scheduler, this.pollObservable);
+			var waitContext = new WaitContext(this.Scheduler, this.PollObservable);
 			var disposables = new CompositeDisposable(
 				waitContext,
 				this.LogWaitFor(opContext, runContext, waitContext).Subscribe());
@@ -137,6 +155,6 @@ namespace Responsible
 				$"{what} after {waitContext.ElapsedTime}",
 				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, runContext, waitContext)}",
 				InstructionStack(sourceContext),
-			};
+			};*/
 	}
 }

@@ -5,6 +5,7 @@ using UniRx;
 
 namespace Responsible.TestInstructions
 {
+	/*
 	internal class CoroutineTestInstruction : ITestInstruction<Unit>, ITestOperationContext
 	{
 		private readonly SourceContext sourceContext;
@@ -30,5 +31,5 @@ namespace Responsible.TestInstructions
 
 		public IObservable<Unit> Run(RunContext runContext)
 			=> runContext.Executor.WaitFor(this, runContext.SourceContext(this.sourceContext));
-	}
+	}*/
 }

@@ -7,6 +7,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
+	/*
 	public class RespondToAnyOfTests : ResponsibleTestBase
 	{
 		private ConditionResponder responder1;
@@ -102,5 +103,5 @@ namespace Responsible.Tests.Runtime
 				(true, true, true),
 				(this.completed, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
 		}
-	}
+	}*/
 }

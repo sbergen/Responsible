@@ -1,24 +1,33 @@
 using System;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class WaitForInstruction : ITestInstruction<Unit>
+	internal class WaitForInstruction : TestInstructionBase<Unit>
 	{
-		private readonly TimeSpan waitTime;
-
-		public IObservable<Unit> Run(RunContext runContext)
-			=> Observable.Timer(this.waitTime, runContext.Executor.Scheduler).AsUnitObservable();
-
-		public WaitForInstruction(TimeSpan waitTime)
+		public WaitForInstruction(TimeSpan waitTime, SourceContext sourceContext)
+		: base(() => new State(waitTime, sourceContext))
 		{
-			this.waitTime = waitTime;
 		}
 
-		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add($"WAIT FOR {this.waitTime:g}");
+		private class State : OperationState<Unit>
+		{
+			private readonly TimeSpan waitTime;
+			private readonly SourceContext sourceContext;
 
-		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
+			public State(TimeSpan waitTime, SourceContext sourceContext)
+			{
+				this.waitTime = waitTime;
+				this.sourceContext = sourceContext;
+			}
+
+			protected override IObservable<Unit> ExecuteInner(RunContext runContext)
+				=> Observable.Timer(this.waitTime, runContext.Executor.Scheduler).AsUnitObservable();
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddInstruction(this, $"WAIT FOR {this.waitTime:g}", this.sourceContext);
+		}
 	}
 }

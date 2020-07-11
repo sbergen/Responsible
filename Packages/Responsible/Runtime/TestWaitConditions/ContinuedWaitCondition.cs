@@ -1,38 +1,43 @@
 using System;
+using JetBrains.Annotations;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	public class ContinuedWaitCondition<TFirst, TSecond> : ITestWaitCondition<TSecond>
+	internal class ContinuedWaitCondition<TFirst, TSecond> : TestWaitConditionBase<TSecond>
 	{
-		private readonly ITestWaitCondition<TFirst> first;
-		private readonly Func<TFirst, ITestWaitCondition<TSecond>> continuation;
-
 		public ContinuedWaitCondition(
-			ITestWaitCondition<TFirst> first, Func<TFirst, ITestWaitCondition<TSecond>> continuation)
+			ITestWaitCondition<TFirst> first,
+			Func<TFirst, ITestWaitCondition<TSecond>> continuation)
+			: base(() => new State(first, continuation))
 		{
-			this.first = first;
-			this.continuation = continuation;
 		}
 
-		public IObservable<TSecond> WaitForResult(RunContext runContext, WaitContext waitContext) => this.first
-			.WaitForResult(runContext, waitContext)
-			.ContinueWith(result =>
+		private class State : OperationState<TSecond>
+		{
+			private readonly IOperationState<TFirst> first;
+			private readonly Func<TFirst, ITestWaitCondition<TSecond>> continuation;
+
+			[CanBeNull] private IOperationState<TSecond> second;
+
+			public State(ITestWaitCondition<TFirst> first, Func<TFirst, ITestWaitCondition<TSecond>> continuation)
 			{
-				var next = this.continuation(result);
-				waitContext.AddRelation(this, next);
-				return next.WaitForResult(runContext, waitContext);
-			});
+				this.first = first.CreateState();
+				this.continuation = continuation;
+			}
 
-		public void BuildDescription(ContextStringBuilder builder)
-		{
-			builder.Add("FIRST", this.first);
-			builder.AddOptional(
-				"AND THEN",
-				builder.WaitContext.RelatedContexts(this));
+			protected override IObservable<TSecond> ExecuteInner(RunContext runContext) => this.first
+				.Execute(runContext)
+				.ContinueWith(result =>
+				{
+					this.second = this.continuation(result).CreateState();
+					return this.second.Execute(runContext);
+				});
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddContinuation(this.first, this.second);
 		}
-
-		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 	}
 }

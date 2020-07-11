@@ -1,6 +1,5 @@
-using System;
 using JetBrains.Annotations;
-using Responsible.Context;
+using Responsible.State;
 
 namespace Responsible
 {
@@ -13,6 +12,7 @@ namespace Responsible
 		/// Waits for the condition to be fulfilled, an returns the result of the wait.
 		/// </summary>
 		[Pure]
-		IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext);
+		[NotNull]
+		IOperationState<T> CreateState();
 	}
 }

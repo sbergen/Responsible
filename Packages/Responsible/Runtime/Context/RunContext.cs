@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 
 namespace Responsible.Context
 {
@@ -14,6 +15,10 @@ namespace Responsible.Context
 		private readonly SourceContext sourceContext;
 
 		internal readonly TestInstructionExecutor Executor;
+
+		public IObservable<Unit> PollObservable => this.Executor.PollObservable;
+
+		public WaitContext MakeWaitContext() => new WaitContext(this.Executor.Scheduler, this.PollObservable);
 
 		public void MarkAsCompleted(ITestOperationContext context) => this.completedOperations.Add(context);
 

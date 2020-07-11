@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class OptionalResponderWait<T> : ITestWaitCondition<T>
+	/* TODO internal class OptionalResponderWait<T> : ITestWaitCondition<T>
 	{
 		private readonly IOptionalTestResponder responder;
 		private readonly ITestWaitCondition<T> condition;
@@ -43,5 +43,5 @@ namespace Responsible.TestWaitConditions
 			this.responder = responder;
 			this.condition = condition;
 		}
-	}
+	}*/
 }

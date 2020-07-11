@@ -1,25 +1,31 @@
 using System;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestResponders
 {
-	public class UnitTestResponder<T> : ITestResponder<Unit>, ITestWaitCondition<ITestInstruction<Unit>>
+	internal class UnitTestResponder<T> : TestResponderBase<Unit>
 	{
-		private readonly ITestResponder<T> responder;
-
-		public ITestWaitCondition<ITestInstruction<Unit>> InstructionWaitCondition => this;
-
-		public IObservable<ITestInstruction<Unit>> WaitForResult(RunContext runContext, WaitContext waitContext) =>
-			this.responder.InstructionWaitCondition
-				.WaitForResult(runContext, waitContext)
-				.Select(instruction => instruction.AsUnitInstruction());
-		public void BuildDescription(ContextStringBuilder builder) => this.responder.BuildDescription(builder);
-		public void BuildFailureContext(ContextStringBuilder builder) => this.responder.BuildFailureContext(builder);
-
 		public UnitTestResponder(ITestResponder<T> responder)
+		: base(() => new State(responder))
 		{
-			this.responder = responder;
+		}
+
+		private class State : OperationState<IOperationState<Unit>>
+		{
+			private readonly IOperationState<IOperationState<T>> responder;
+
+			public State(ITestResponder<T> responder)
+			{
+				this.responder = responder.CreateState();
+			}
+
+			protected override IObservable<IOperationState<Unit>> ExecuteInner(RunContext runContext) =>
+				this.responder.Execute(runContext).Select(state => state.AsUnitOperationState());
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				this.responder.BuildFailureContext(builder);
 		}
 	}
 }

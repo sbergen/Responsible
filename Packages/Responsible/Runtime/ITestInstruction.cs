@@ -1,6 +1,6 @@
-using System;
 using JetBrains.Annotations;
 using Responsible.Context;
+using Responsible.State;
 
 namespace Responsible
 {
@@ -11,6 +11,7 @@ namespace Responsible
 	public interface ITestInstruction<out T> : ITestOperationContext
 	{
 		[Pure]
-		IObservable<T> Run(RunContext runContext);
+		[NotNull]
+		IOperationState<T> CreateState();
 	}
 }

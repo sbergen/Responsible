@@ -1,3 +1,5 @@
+using Responsible.State;
+
 namespace Responsible
 {
 	/// <summary>
@@ -9,6 +11,6 @@ namespace Responsible
 		// Design note: This interface is not just an alias for ITestWaitCondition<ITestInstruction<T>>
 		// in order to make it less easy to end up accidentally waiting for an ITestInstruction<T>.
 		// This property should almost always be used only internally.
-		ITestWaitCondition<ITestInstruction<T>> InstructionWaitCondition { get; }
+		IOperationState<IOperationState<T>> CreateState();
 	}
 }

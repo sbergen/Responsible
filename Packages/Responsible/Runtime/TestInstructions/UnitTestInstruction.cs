@@ -1,5 +1,6 @@
 using System;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestInstructions
@@ -8,19 +9,27 @@ namespace Responsible.TestInstructions
 	/// Provides "type erasure" for test instructions. We can't use Object as the generic type,
 	/// as value types don't derive from it (no Any-type in C#)
 	/// </summary>
-	internal class UnitTestInstruction<T> : ITestInstruction<Unit>
+	internal class UnitTestInstruction<T> : TestInstructionBase<Unit>
 	{
-		private readonly ITestInstruction<T> instruction;
-
 		public UnitTestInstruction(ITestInstruction<T> instruction)
+			: base(() => new State(instruction))
 		{
-			this.instruction = instruction;
 		}
 
-		public IObservable<Unit> Run(RunContext runContext) =>
-			this.instruction.Run(runContext).AsUnitObservable();
+		private class State : OperationState<Unit>
+		{
+			private readonly IOperationState<T> state;
 
-		public void BuildDescription(ContextStringBuilder builder) => this.instruction.BuildDescription(builder);
-		public void BuildFailureContext(ContextStringBuilder builder) => this.instruction.BuildFailureContext(builder);
+			public State(ITestInstruction<T> instruction)
+			{
+				this.state = instruction.CreateState();
+			}
+
+			protected override IObservable<Unit> ExecuteInner(RunContext runContext) =>
+				this.state.Execute(runContext).AsUnitObservable();
+
+			public override void BuildFailureContext(StateStringBuilder builder)
+				=> this.state.BuildFailureContext(builder);
+		}
 	}
 }

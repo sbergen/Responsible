@@ -155,17 +155,5 @@ namespace Responsible.Tests.Runtime
 			var responder = Never.ThenRespondWith("Return Unit", Return(Unit.Default));
 			Assert.AreSame(responder, responder.AsUnitResponder());
 		}
-
-		[Test]
-		public void AsUnitCondition_ForwardsBuildFailureContextCalls()
-		{
-			// As the UnitWaitCondition just forwards the wait,
-			// its BuildFailureContext should never get called.
-			// So let's just mock this to get coverage.
-
-			var primaryCondition = Substitute.For<ITestWaitCondition<int>>();
-			primaryCondition.AsUnitCondition().BuildFailureContext(null);
-			primaryCondition.Received(1).BuildFailureContext(null);
-		}
 	}
 }

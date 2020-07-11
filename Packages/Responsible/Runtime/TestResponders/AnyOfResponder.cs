@@ -6,7 +6,7 @@ using UniRx;
 
 namespace Responsible.TestResponders
 {
-	internal class AnyOfResponder<T> : IOptionalTestResponder
+	/* TODO internal class AnyOfResponder<T> : IOptionalTestResponder
 	{
 		private const string ContextDescription = "ANY OF";
 
@@ -31,5 +31,5 @@ namespace Responsible.TestResponders
 				.Select(instruction => instruction
 					.Run(runContext)
 					.AsUnitObservable());
-	}
+	}*/
 }
