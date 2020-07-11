@@ -16,8 +16,6 @@ namespace Responsible.Tests.Runtime
 		private bool mayComplete;
 		private bool completed;
 
-		private IOperationState<Unit> state;
-
 		[SetUp]
 		public void SetUp()
 		{
@@ -25,21 +23,13 @@ namespace Responsible.Tests.Runtime
 			this.responder1 = new ConditionResponder(1);
 			this.responder2 = new ConditionResponder(1);
 
-			this.state = RespondToAnyOf(
+			RespondToAnyOf(
 					this.responder1.Responder,
 					this.responder2.Responder)
 				.Until(WaitForCondition("Complete", () => this.mayComplete))
 				.ExpectWithinSeconds(1)
-				.CreateState();
-
-			this.state.ToObservable()
+				.ToObservable()
 				.Subscribe(_ => this.completed = true);
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-			UnityEngine.Debug.Log(this.state);
 		}
 
 		[UnityTest]
