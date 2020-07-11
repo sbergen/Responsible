@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UniRx;
 
 namespace Responsible.Context
 {
-	public class WaitContext : IDisposable
+	public class WaitContext : ContextBase, IDisposable
 	{
 		private readonly List<(ITestOperationContext, string)> completedWaits =
 			new List<(ITestOperationContext, string)>();
-
-		private readonly List<(ITestOperationContext from, ITestOperationContext to)> relations =
-			new List<(ITestOperationContext, ITestOperationContext)>();
 
 		private readonly Subject<Unit> pollSubject = new Subject<Unit>();
 		private readonly DateTimeOffset startTime;
@@ -28,17 +24,11 @@ namespace Responsible.Context
 
 		internal IEnumerable<(ITestOperationContext context, string elapsed)> CompletedWaits => this.completedWaits;
 
-		internal IEnumerable<ITestOperationContext> RelatedContexts(ITestOperationContext context) =>
-			this.relations.Where(r => r.from == context).Select(r => r.to);
-
 		public void MarkAsCompleted(ITestOperationContext context)
 		{
 			this.completedWaits.Add((context, this.ElapsedTime));
 			this.anyWaitsCompleted = true;
 		}
-
-		public void AddRelation(ITestOperationContext from, ITestOperationContext to) =>
-			this.relations.Add((from, to));
 
 		internal WaitContext(IScheduler scheduler, IObservable<Unit> frameObservable)
 		{

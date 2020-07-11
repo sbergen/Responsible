@@ -15,5 +15,10 @@ namespace Responsible.TestInstructions
 		{
 			this.waitTime = waitTime;
 		}
+
+		public void BuildDescription(ContextStringBuilder builder) =>
+			builder.Add($"WAIT FOR {this.waitTime:g}");
+
+		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 	}
 }

@@ -27,5 +27,14 @@ namespace Responsible.TestInstructions
 				this.timeout,
 				runContext.SourceContext(this.sourceContext))
 			.ContinueWith(instruction => instruction.Run(runContext));
+
+		public void BuildDescription(ContextStringBuilder builder) => this.responder.BuildDescription(builder);
+
+		public void BuildFailureContext(ContextStringBuilder builder)
+		{
+			builder.Add(
+				$"EXPECT WITHIN {this.timeout:g}",
+				this.responder);
+		}
 	}
 }

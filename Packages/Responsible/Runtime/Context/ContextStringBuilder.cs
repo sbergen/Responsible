@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -23,29 +24,44 @@ namespace Responsible.Context
 
 		private int indentAmount;
 
+		internal RunContext RunContext { get; }
 		internal WaitContext WaitContext { get; }
 
 		internal static ContextStringBuilder MakeDescription(
 			ITestOperationContext rootContext,
+			RunContext runContext,
 			WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(waitContext, DescriptionBuilder, DescriptionNotAvailable);
+			var builder = new ContextStringBuilder(
+				runContext,
+				waitContext,
+				DescriptionBuilder,
+				DescriptionNotAvailable);
 			builder.AddRoot(rootContext);
 			return builder;
 		}
 
 		internal static ContextStringBuilder MakeFailureContext(
 			ITestOperationContext rootContext,
+			RunContext runContext,
 			WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(waitContext, FailureBuilder, FailureContextNotAvailable);
+			var builder = new ContextStringBuilder(
+				runContext,
+				waitContext,
+				FailureBuilder,
+				FailureContextNotAvailable);
 			builder.AddRoot(rootContext);
 			return builder;
 		}
 
-		internal static ContextStringBuilder MakeCompletedList(WaitContext waitContext)
+		internal static ContextStringBuilder MakeCompletedList(RunContext runContext, WaitContext waitContext)
 		{
-			var builder = new ContextStringBuilder(waitContext, DescriptionBuilder, DescriptionNotAvailable);
+			var builder = new ContextStringBuilder(
+				runContext,
+				waitContext,
+				DescriptionBuilder,
+				DescriptionNotAvailable);
 			foreach (var (context, elapsed) in waitContext.CompletedWaits)
 			{
 				builder.Add($"- Completed in {elapsed}", context);
@@ -55,10 +71,12 @@ namespace Responsible.Context
 		}
 
 		private ContextStringBuilder(
+			RunContext runContext,
 			WaitContext waitContext,
 			Action<ITestOperationContext, ContextStringBuilder> contextBuilder,
 			string notAvailableText)
 		{
+			this.RunContext = runContext;
 			this.WaitContext = waitContext;
 			this.contextBuilder = contextBuilder;
 			this.notAvailableText = notAvailableText;
@@ -71,6 +89,9 @@ namespace Responsible.Context
 			this.stringBuilder.Append(' ', this.indentAmount);
 			this.stringBuilder.AppendLine(content);
 		}
+
+		public void AddWithNested(string content, string nestedContent) =>
+			this.AddWithNested(content, b => b.Add(nestedContent));
 
 		public void AddWithNested(string content, [CanBeNull] Action<ContextStringBuilder> contextAdder)
 		{
@@ -87,6 +108,19 @@ namespace Responsible.Context
 
 		public void Add(string content, ITestOperationContext child)
 			=> this.Add(content, new[] { child });
+
+		public void AddOptional(string description, IEnumerable<ITestOperationContext> children)
+		{
+			var childList = children.ToList();
+			if (childList.Count > 0)
+			{
+				this.Add(description, childList);
+			}
+			else
+			{
+				this.Add(description + " ...");
+			}
+		}
 
 		public void Add(string content, IEnumerable<ITestOperationContext> children)
 		{

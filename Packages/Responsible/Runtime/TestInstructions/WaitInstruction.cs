@@ -22,5 +22,10 @@ namespace Responsible.TestInstructions
 		public IObservable<T> Run(RunContext runContext)
 			=> runContext.Executor
 				.WaitFor(this.condition, this.timeout, runContext.SourceContext(this.sourceContext));
+
+		public void BuildDescription(ContextStringBuilder builder) => this.condition.BuildDescription(builder);
+
+		public void BuildFailureContext(ContextStringBuilder builder)
+			=> builder.Add($"EXPECT WITHIN {this.timeout:g}", this.condition);
 	}
 }

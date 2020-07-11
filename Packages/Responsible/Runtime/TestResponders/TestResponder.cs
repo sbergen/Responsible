@@ -14,12 +14,23 @@ namespace Responsible.TestResponders
 		public IObservable<ITestInstruction<T>> WaitForResult(RunContext runContext, WaitContext waitContext) =>
 			this.waitCondition
 				.WaitForResult(runContext, waitContext)
-				.Select(this.makeInstruction);
+				.Select(this.makeInstruction)
+				.Do(instruction => waitContext.AddRelation(this, instruction));
 
 		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
 
-		public void BuildFailureContext(ContextStringBuilder builder) =>
-			builder.Add(this.description, this.waitCondition);
+		public void BuildFailureContext(ContextStringBuilder builder)
+		{
+			builder.AddWithNested(
+				this.description,
+				b =>
+				{
+					b.Add("WAIT FOR", this.waitCondition);
+					b.AddOptional(
+						"AND THEN RESPOND WITH",
+						b.WaitContext.RelatedContexts(this));
+				});
+		}
 
 		internal TestResponder(
 			string description,

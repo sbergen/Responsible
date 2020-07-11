@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Responsible.Context;
 using UniRx;
 
@@ -29,16 +28,9 @@ namespace Responsible.TestWaitConditions
 		public void BuildDescription(ContextStringBuilder builder)
 		{
 			builder.Add("FIRST", this.first);
-			var next = builder.WaitContext.RelatedContexts(this).SingleOrDefault();
-			if (next != null)
-			{
-				builder.Add("AND THEN", next);
-			}
-			else
-			{
-				builder.Add("AND THEN ...");
-			}
-
+			builder.AddOptional(
+				"AND THEN",
+				builder.WaitContext.RelatedContexts(this));
 		}
 
 		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);

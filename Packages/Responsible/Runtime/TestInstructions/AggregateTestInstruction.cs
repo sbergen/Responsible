@@ -19,6 +19,21 @@ namespace Responsible.TestInstructions
 
 		public IObservable<T2> Run(RunContext runContext) => this.first
 			.Run(runContext)
-			.ContinueWith(result => this.selector(result).Run(runContext));
+			.ContinueWith(result =>
+			{
+				var instruction = this.selector(result);
+				runContext.AddRelation(this, instruction);
+				return instruction.Run(runContext);
+			});
+
+		public void BuildDescription(ContextStringBuilder builder)
+		{
+			builder.Add("FIRST", this.first);
+			builder.AddOptional(
+				"AND THEN",
+				builder.RunContext.RelatedContexts(this));
+		}
+
+		public void BuildFailureContext(ContextStringBuilder builder) => this.BuildDescription(builder);
 	}
 }

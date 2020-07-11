@@ -43,18 +43,14 @@ namespace Responsible
 			ITestWaitCondition<T> condition,
 			TimeSpan timeout,
 			SourceContext context) =>
-			this.WaitFor(
-				waitContext => condition.WaitForResult(new RunContext(this, context), waitContext),
-				timeout,
-				condition,
-				context);
+			this.WaitFor(condition.WaitForResult, timeout, condition, context);
 
 		[Pure]
 		internal IObservable<Unit> WaitFor(
 			CoroutineTestInstruction instruction,
 			SourceContext context)
 			=> this.WaitFor(
-				_ => Observable.FromCoroutine(instruction.StartCoroutine),
+				(r, w) => Observable.FromCoroutine(instruction.StartCoroutine),
 				instruction.Timeout,
 				instruction,
 				context);
@@ -64,30 +60,31 @@ namespace Responsible
 
 		[Pure]
 		private IObservable<TResult> WaitFor<TResult>(
-			Func<WaitContext, IObservable<TResult>> makeOperation,
+			Func<RunContext, WaitContext, IObservable<TResult>> makeOperation,
 			TimeSpan timeout,
 			ITestOperationContext opContext,
 			SourceContext sourceContext) => Observable.Defer(() =>
 		{
+			var runContext = new RunContext(this, sourceContext);
 			var waitContext = new WaitContext(this.Scheduler, this.pollObservable);
 			var disposables = new CompositeDisposable(
 				waitContext,
-				this.LogWaitFor(opContext, waitContext).Subscribe());
+				this.LogWaitFor(opContext, runContext, waitContext).Subscribe());
 
-			return makeOperation(waitContext)
+			return makeOperation(runContext, waitContext)
 				.Do(_ => this.logger.Log(
 					LogType.Log,
 					string.Join(
 						"\n",
 						$"Finished waiting for operation in {waitContext.ElapsedTime}",
-						ContextStringBuilder.MakeDescription(opContext, waitContext))))
+						ContextStringBuilder.MakeDescription(opContext, runContext, waitContext))))
 				.Timeout(timeout, this.Scheduler)
 				.Catch((Exception e) =>
 				{
 					// The Unity test runner can swallow exceptions, so both log an error and throw an exception
 					var message = e is TimeoutException
-						? MakeTimeoutMessage(opContext, waitContext, sourceContext)
-						: MakeErrorMessage(opContext, waitContext, sourceContext, e);
+						? MakeTimeoutMessage(opContext, runContext, waitContext, sourceContext)
+						: MakeErrorMessage(opContext, runContext, waitContext, sourceContext, e);
 					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
 					return Observable.Throw<TResult>(new AssertionException(message));
 				})
@@ -95,45 +92,51 @@ namespace Responsible
 		});
 
 		[Pure]
-		private IObservable<Unit> LogWaitFor(ITestOperationContext context, WaitContext waitContext) => Observable
+		private IObservable<Unit> LogWaitFor(
+			ITestOperationContext context,
+			RunContext runContext,
+			WaitContext waitContext) => Observable
 			.Interval(TimeSpan.FromSeconds(1), this.Scheduler)
 			.Do(_ => this.logger.Log(
 				LogType.Log,
-				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context, waitContext)}"))
+				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context, runContext, waitContext)}"))
 			.AsUnitObservable();
 
 		[Pure]
 		private static string MakeTimeoutMessage(
 			ITestOperationContext opContext,
+			RunContext runContext,
 			WaitContext waitContext,
 			SourceContext sourceContext)
 			=> string.Join(
 				UnityEmptyLine,
-				FailureLines(opContext, waitContext, sourceContext, "Timed out"));
+				FailureLines(opContext, runContext, waitContext, sourceContext, "Timed out"));
 
 		[Pure]
 		private static string MakeErrorMessage(
 			ITestOperationContext opContext,
+			RunContext runContext,
 			WaitContext waitContext,
 			SourceContext sourceContext,
 			Exception exception)
 			=> string.Join(
 				UnityEmptyLine,
-				FailureLines(opContext, waitContext, sourceContext, "Failed")
+				FailureLines(opContext, runContext, waitContext, sourceContext, "Failed")
 					.Append($"Error: {exception}"));
 
 		[Pure]
 		private static IEnumerable<string> FailureLines(
 			ITestOperationContext opContext,
+			RunContext runContext,
 			WaitContext waitContext,
 			SourceContext sourceContext,
 			string what)
 			=> new[]
 			{
-				ContextStringBuilder.MakeDescription(opContext, waitContext).ToString(),
+				ContextStringBuilder.MakeDescription(opContext, runContext, waitContext).ToString(),
 				$"{what} after {waitContext.ElapsedTime}",
-				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, waitContext)}",
-				$"Completed waits: \n{ContextStringBuilder.MakeCompletedList(waitContext)}",
+				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, runContext, waitContext)}",
+				$"Completed waits: \n{ContextStringBuilder.MakeCompletedList(runContext, waitContext)}",
 				InstructionStack(sourceContext),
 			};
 	}

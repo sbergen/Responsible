@@ -19,5 +19,8 @@ namespace Responsible.TestInstructions
 
 		public IObservable<Unit> Run(RunContext runContext) =>
 			this.instruction.Run(runContext).AsUnitObservable();
+
+		public void BuildDescription(ContextStringBuilder builder) => this.instruction.BuildDescription(builder);
+		public void BuildFailureContext(ContextStringBuilder builder) => this.instruction.BuildFailureContext(builder);
 	}
 }
