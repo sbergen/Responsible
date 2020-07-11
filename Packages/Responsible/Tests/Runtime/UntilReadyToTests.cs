@@ -21,11 +21,11 @@ namespace Responsible.Tests.Runtime
 			var executed2 = false;
 
 			var first = WaitForCondition("1", () => cond1)
-				.ThenRespondWith("Do 1", Do(() => executed1 = true));
+				.ThenRespondWith("Do 1", _ => executed1 = true);
 
 			var second = WaitForCondition("2", () => cond2)
 				.ThenRespondWith("Do 2", WaitForCondition("May complete 2", () => mayComplete2)
-					.ThenRespondWith("Complete 2", _ => Do(() => executed2 = true))
+					.ThenRespondWith("Complete 2", _  => executed2 = true)
 					.ExpectWithinSeconds(1));
 
 			first.Optionally().UntilReadyTo(second).ExpectWithinSeconds(1).ToObservable().Subscribe();
@@ -51,7 +51,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var completed = false;
 
-			var responder = Never.ThenRespondWith("complete", Do(() => completed = true));
+			var responder = Never.ThenRespondWith("complete", _ => completed = true);
 
 			responder
 				.Optionally()

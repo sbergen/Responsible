@@ -19,10 +19,10 @@ namespace Responsible.Tests.Runtime
 			var shouldContinue = false;
 			var completed = false;
 
-			var react = Do(() => startedToReact = true)
+			var react = Do("Set started to react", () => startedToReact = true)
 				.ContinueWith(WaitForCondition("May complete", () => mayCompleteReaction)
 					.ExpectWithinSeconds(1)
-					.ContinueWith(Do(() => reactionCompleted = true)));
+					.ContinueWith(Do("Set reaction completed", () => reactionCompleted = true)));
 
 			var respondUntil = WaitForCondition("Ready", () => readyToReact)
 				.ThenRespondWith("React", react)
@@ -61,12 +61,12 @@ namespace Responsible.Tests.Runtime
 			var secondCompleted = false;
 
 			WaitForCondition("First cond", () => cond1)
-				.ThenRespondWith("Complete first", Do(() => firstCompleted = true))
+				.ThenRespondWith("Complete first", _ => firstCompleted = true)
 				.Optionally()
 				.Until(WaitForCondition("Until cond", () => untilCond))
 				.ThenRespondWith("Second", WaitForCondition("Second cond", () => cond2)
 					.ExpectWithinSeconds(1)
-					.ContinueWith(_ => Do(() => secondCompleted = true)))
+					.ContinueWith(_ => Do("Set second completed", () => secondCompleted = true)))
 				.ExpectWithinSeconds(1)
 				.ToObservable()
 				.Subscribe(_ => secondCompleted = true);
@@ -97,7 +97,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 
 			Never
-				.ThenRespondWith("complete", Do(() => completed = true))
+				.ThenRespondWith("complete", _ => completed = true)
 				.Optionally()
 				.Until(Never)
 				.ExpectWithinSeconds(1)

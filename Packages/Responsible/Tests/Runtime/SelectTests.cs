@@ -10,7 +10,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Select_GetApplied_WhenSuccessful()
 		{
-			var result = Do(() => 2)
+			var result = Do("Return two", () => 2)
 				.Select(val => val * 2)
 				.ToObservable()
 				.Wait();
@@ -20,7 +20,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Select_PublishesCorrectError_WhenExceptionThrown()
 		{
-			var observable = Do(() => 2)
+			var observable = Do("Return two", () => 2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
 				.ToObservable();
 			Assert.Throws<AssertionException>(() => observable.Wait());

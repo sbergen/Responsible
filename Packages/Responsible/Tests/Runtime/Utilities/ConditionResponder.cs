@@ -30,19 +30,26 @@ namespace Responsible.Tests.Runtime.Utilities
 		public ConditionResponder(int responseTimeout, T returnValue)
 		{
 			this.Responder = WaitForCondition("Wait to be ready", () => this.MayRespond)
-				.ThenRespondWith("Respond",
-					Do(() => this.StartedToRespond = true)
-						.ContinueWith(
-							WaitForCondition("Wait for completion", () => this.MayComplete)
-								.ExpectWithinSeconds(responseTimeout)
-								.ContinueWith(Do(() =>
-								{
-									this.CompletedRespond = true;
-									return this.exception != null
-										? throw this.exception
-										: returnValue;
-								}))));
+				.ThenRespondWith(
+					"Respond",
+					Do("Set started to respond", () => this.StartedToRespond = true)
+						.ContinueWith(this.WaitAndComplete(responseTimeout, returnValue)));
+
 		}
+
+		private ITestInstruction<T> WaitAndComplete(int responseTimeout, T returnValue) => WaitForCondition(
+				"Wait for completion",
+				() => this.MayComplete)
+			.ExpectWithinSeconds(responseTimeout)
+			.ContinueWith(Do(
+				"Set complete or throw",
+				() =>
+				{
+					this.CompletedRespond = true;
+					return this.exception != null
+						? throw this.exception
+						: returnValue;
+				}));
 	}
 
 	public class ConditionResponder : ConditionResponder<Unit>

@@ -29,7 +29,7 @@ namespace Responsible.TestResponders
 				{
 					b.Add("WAIT FOR", this.waitCondition);
 					b.AddOptional(
-						"AND THEN RESPOND WITH",
+						"THEN RESPOND WITH",
 						b.WaitContext.RelatedContexts(this));
 				});
 		}

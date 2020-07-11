@@ -7,13 +7,13 @@ namespace Responsible.TestInstructions
 {
 	internal class SynchronousTestInstruction<T> : ITestInstruction<T>
 	{
+		private readonly string description;
 		private readonly Func<T> action;
 		private readonly SourceContext sourceContext;
 
-		private string Description => $"DO<{typeof(T).Name}>";
-
-		public SynchronousTestInstruction(Func<T> action, SourceContext sourceContext)
+		public SynchronousTestInstruction(string description, Func<T> action, SourceContext sourceContext)
 		{
+			this.description = description;
 			this.action = action;
 			this.sourceContext = sourceContext;
 		}
@@ -42,9 +42,9 @@ namespace Responsible.TestInstructions
 		});
 
 		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.AddWithNested(this.Description, this.sourceContext.ToString());
+			builder.AddWithNested(this.description, this.sourceContext.ToString());
 
 		public void BuildFailureContext(ContextStringBuilder builder)
-			=> builder.AddInstructionStatus(this, this.sourceContext, this.Description);
+			=> builder.AddInstructionStatus(this, this.sourceContext, this.description);
 	}
 }

@@ -106,6 +106,7 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> first.ContinueWith(
 				result => Do(
+					$"Select {typeof(T1).Name} -> {typeof(T2).Name}",
 					() => selector(result),
 					memberName,
 					sourceFilePath,

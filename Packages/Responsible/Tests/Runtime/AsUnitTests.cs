@@ -21,8 +21,8 @@ namespace Responsible.Tests.Runtime
 		public void OneTimeSetUp()
 		{
 			this.waitForComplete = WaitForCondition("Wait", () => this.complete, () => this.complete);
-			this.setCompleted = Do(() => this.completed = true);
-			this.throwError = Do<int>(() => throw new Exception(""));
+			this.setCompleted = Do("Set completed", () => this.completed = true);
+			this.throwError = Do<int>("Throw error", () => throw new Exception(""));
 		}
 
 		[SetUp]
@@ -49,7 +49,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void AsUnitInstruction_ReturnsSelf_WhenAlreadyUnit()
 		{
-			var instruction = Do(() => Unit.Default);
+			var instruction = Return(Unit.Default);
 			Assert.AreSame(instruction, instruction.AsUnitInstruction());
 		}
 

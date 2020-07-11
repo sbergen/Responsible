@@ -17,9 +17,9 @@ namespace Responsible.Tests.Runtime
 			TestInstruction
 				.Sequence(new[]
 				{
-					Do(() => completed1 = true).AsUnitInstruction(),
-					Do(() => completed2 = true).AsUnitInstruction(),
-					Do(() => completed3 = true).AsUnitInstruction(),
+					Do("Set completed1", () => completed1 = true).AsUnitInstruction(),
+					Do("Set completed2", () => completed2 = true).AsUnitInstruction(),
+					Do("Set completed3", () => completed3 = true).AsUnitInstruction(),
 				})
 				.ToObservable()
 				.Subscribe();
@@ -38,9 +38,9 @@ namespace Responsible.Tests.Runtime
 			TestInstruction
 				.Sequence(new[]
 				{
-					Do(() => completed1 = true).AsUnitInstruction(),
-					Do(() => throw new Exception()).AsUnitInstruction(),
-					Do(() => completed2 = true).AsUnitInstruction(),
+					Do("Set completed1", () => completed1 = true).AsUnitInstruction(),
+					Do("Throw error", () => throw new Exception()).AsUnitInstruction(),
+					Do("Set completed2", () => completed2 = true).AsUnitInstruction(),
 				})
 				.ToObservable()
 				.Subscribe(Nop, this.StoreError);

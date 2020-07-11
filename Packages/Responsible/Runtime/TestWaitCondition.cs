@@ -6,6 +6,8 @@ using Responsible.TestInstructions;
 using Responsible.TestResponders;
 using Responsible.TestWaitConditions;
 using UniRx;
+using static Responsible.Responsibly;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Responsible
 {
@@ -52,6 +54,50 @@ namespace Responsible
 			string description,
 			ITestInstruction<TResult> instruction)
 			=> new TestResponder<TWait, TResult>(description, condition, _ => instruction);
+
+		/// <summary>
+		/// Constructs a test responder, which will wait for the given condition,
+		/// and then continue executing a synchronous action.
+		/// </summary>
+		[Pure]
+		public static ITestResponder<TResult> ThenRespondWith<TWait, TResult>(
+			this ITestWaitCondition<TWait> condition,
+			string description,
+			Func<TWait,TResult> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new TestResponder<TWait, TResult>(
+				description,
+				condition,
+				waitResult => Do(
+					description,
+					() => selector(waitResult),
+					memberName,
+					sourceFilePath,
+					sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a test responder, which will wait for the given condition,
+		/// and then continue executing a synchronous action.
+		/// </summary>
+		[Pure]
+		public static ITestResponder<Unit> ThenRespondWith<TWait>(
+			this ITestWaitCondition<TWait> condition,
+			string description,
+			Action<TWait> action,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new TestResponder<TWait, Unit>(
+				description,
+				condition,
+				waitResult => Do(
+					description,
+					() => action(waitResult),
+					memberName,
+					sourceFilePath,
+					sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition to an instruction, by enforcing a timeout on it.

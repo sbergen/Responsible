@@ -27,7 +27,7 @@ namespace Responsible.Tests.Runtime
 		private static ITestResponder<Unit> MakeResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.AndThen(_ => WaitForCondition(state.Condition2Name, () => state.Condition2))
-				.ThenRespondWith(state.ResponseName, Do(state.ResponseAction));
+				.ThenRespondWith(state.ResponseName, _ => state.ResponseAction());
 
 		private static ITestInstruction<Unit> MakeInstruction(ResponderState state1, ResponderState state2) =>
 			RespondToAnyOf(MakeResponder(state1), MakeResponder(state2))
@@ -109,8 +109,8 @@ RESPOND TO
           [✓] Cond 1.1 (Completed in: 1.50s and 2 frames)
         AND THEN
           [✓] Cond 1.2 (Completed in: 3.00s and 4 frames)
-      AND THEN RESPOND WITH
-        [!] DO<Unit>
+      THEN RESPOND WITH
+        [!] Response 1
           FAILED WITH: Exception
           MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:30)
     [.] Response 2
@@ -118,7 +118,7 @@ RESPOND TO
         FIRST
           [.] Cond 2.1
         AND THEN ...
-      AND THEN RESPOND WITH ...
+      THEN RESPOND WITH ...
 UNTIL
   [.] Never
  

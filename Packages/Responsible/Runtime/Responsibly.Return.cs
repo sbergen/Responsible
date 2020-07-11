@@ -21,7 +21,9 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> Do(() => value,
+			=> Do(
+				"Return '{value}'",
+				() => value,
 				memberName,
 				sourceFilePath,
 				sourceLineNumber);

@@ -77,7 +77,7 @@ namespace Responsible.Tests.Runtime
 			// If a synchronous instruction is executed on its own, it should be enough to just publish an error,
 			// as you shouldn't need to use Do at the top level of a test method.
 
-			Do(() => throw new Exception(ExceptionMessage))
+			Do("Throw Error", () => throw new Exception(ExceptionMessage))
 				.ToObservable()
 				.Subscribe(Nop, this.StoreError);
 
@@ -94,7 +94,7 @@ namespace Responsible.Tests.Runtime
 			IEnumerator Coroutine()
 			{
 				yield return null;
-				yield return Do(() => throw new Exception(ExceptionMessage)).ToYieldInstruction();
+				yield return Do("Throw exception", () => throw new Exception(ExceptionMessage)).ToYieldInstruction();
 			}
 
 			RunCoroutine(
