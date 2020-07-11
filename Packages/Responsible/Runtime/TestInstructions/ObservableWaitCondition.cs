@@ -17,8 +17,8 @@ namespace Responsible.TestInstructions
 
 		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
 
-		public void BuildFailureContext(ContextStringBuilder builder) => builder
-			.Add(builder.DescriptionForWait(this, this.description));
+		public void BuildFailureContext(ContextStringBuilder builder)
+			=> builder.AddWaitStatus(this, this.description);
 
 		public ObservableWaitCondition(
 			string description,

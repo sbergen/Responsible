@@ -24,7 +24,8 @@ namespace Responsible.TestInstructions
 				var instruction = this.selector(result);
 				runContext.AddRelation(this, instruction);
 				return instruction.Run(runContext);
-			});
+			})
+			.Do(_ => runContext.MarkAsCompleted(this));
 
 		public void BuildDescription(ContextStringBuilder builder)
 		{

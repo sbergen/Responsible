@@ -136,7 +136,6 @@ namespace Responsible
 				ContextStringBuilder.MakeDescription(opContext, runContext, waitContext).ToString(),
 				$"{what} after {waitContext.ElapsedTime}",
 				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, runContext, waitContext)}",
-				$"Completed waits: \n{ContextStringBuilder.MakeCompletedList(runContext, waitContext)}",
 				InstructionStack(sourceContext),
 			};
 	}

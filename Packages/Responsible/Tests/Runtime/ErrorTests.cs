@@ -51,7 +51,7 @@ namespace Responsible.Tests.Runtime
 				LogType.Error,
 				Arg.Is<string>(log => Regex.IsMatch(
 					log,
-					"NO.*YES.*Timed out.*Completed.*YES",
+					@"Timed out.*\[\.\] NO.*\[✓\] YES",
 					RegexOptions.Singleline)));
 		}
 

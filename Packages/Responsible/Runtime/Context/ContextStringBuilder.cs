@@ -55,21 +55,6 @@ namespace Responsible.Context
 			return builder;
 		}
 
-		internal static ContextStringBuilder MakeCompletedList(RunContext runContext, WaitContext waitContext)
-		{
-			var builder = new ContextStringBuilder(
-				runContext,
-				waitContext,
-				DescriptionBuilder,
-				DescriptionNotAvailable);
-			foreach (var (context, elapsed) in waitContext.CompletedWaits)
-			{
-				builder.Add($"- Completed in {elapsed}", context);
-			}
-
-			return builder;
-		}
-
 		private ContextStringBuilder(
 			RunContext runContext,
 			WaitContext waitContext,
@@ -82,7 +67,8 @@ namespace Responsible.Context
 			this.notAvailableText = notAvailableText;
 		}
 
-		public override string ToString() => this.stringBuilder.ToString();
+		// Trim out last newline when converting to final string
+		public override string ToString() => this.stringBuilder.ToString(0, this.stringBuilder.Length - 1);
 
 		public void Add(string content)
 		{
@@ -90,20 +76,74 @@ namespace Responsible.Context
 			this.stringBuilder.AppendLine(content);
 		}
 
-		public string DescriptionForWait(ITestOperationContext context, string baseDescription)
+		internal void AddWaitStatus<T>(ITestWaitCondition<T> condition, string description)
+			=> this.AddWaitStatus(condition, description, this.Add);
+
+		internal void AddWaitStatus<T>(
+			ITestWaitCondition<T> condition,
+			string description,
+			IEnumerable<ITestOperationContext> children)
+			=> this.AddWaitStatus(
+				condition,
+				description,
+				fullDescription => this.Add(fullDescription, children));
+
+		internal void AddWaitStatus<T>(
+			ITestWaitCondition<T> condition,
+			string description,
+			Action<ContextStringBuilder> extraContext)
+			=> this.AddWaitStatus(
+				condition,
+				description,
+				fullDescription => this.AddWithNested(fullDescription, extraContext));
+
+		private void AddWaitStatus<T>(
+			ITestWaitCondition<T> condition,
+			string description,
+			Action<string> addFullContextFromDescription)
 		{
-			var completionTime = this.WaitContext.ElapsedTimeIfCompleted(context);
-			return completionTime != null
-				? $"{baseDescription} (Completed in: {completionTime})"
-				: this.WaitContext.HasStarted(context)
-					? $"[...] {baseDescription}"
-					: baseDescription;
+			var completionTime = this.WaitContext.ElapsedTimeIfCompleted(condition);
+			var hasCompleted = completionTime != null;
+			var fullDescription = hasCompleted
+				? $"{CompletedString(description)} (Completed in: {completionTime})"
+				: this.WaitContext.HasStarted(condition)
+					? WaitingString(description)
+					: description;
+			if (hasCompleted)
+			{
+				this.Add(fullDescription);
+			}
+			else
+			{
+				addFullContextFromDescription(fullDescription);
+			}
+		}
+
+		internal void AddResponderStatus<T>(
+			ITestResponder<T> responder,
+			string description,
+			Action<ContextStringBuilder> buildFullNestedContext)
+		{
+			var instruction = this.WaitContext.RelatedContexts(responder).FirstOrDefault() as ITestInstruction<T>;
+			var fullyCompleted = instruction != null && this.RunContext.HasCompleted(instruction);
+			if (fullyCompleted)
+			{
+				this.Add(CompletedString(description));
+			}
+			else
+			{
+				var fullDescription = this.WaitContext.HasStarted(responder)
+					? WaitingString(description)
+					: description;
+				this.AddWithNested(fullDescription, buildFullNestedContext);
+			}
 		}
 
 		internal void AddInstructionStatus<T>(
 			ITestInstruction<T> instruction,
 			SourceContext sourceContext,
-			string description)
+			string description,
+			[CanBeNull] ITestOperationContext child = null)
 		{
 			var e = this.RunContext.ErrorIfFailed(instruction);
 			var fullDescription = e != null
@@ -115,6 +155,8 @@ namespace Responsible.Context
 				fullDescription,
 				b =>
 				{
+					child?.BuildFailureContext(this);
+
 					if (e != null)
 					{
 						this.Add($"FAILED WITH: {e.GetType().Name}");
@@ -127,7 +169,7 @@ namespace Responsible.Context
 		public void AddWithNested(string content, string nestedContent) =>
 			this.AddWithNested(content, b => b.Add(nestedContent));
 
-		public void AddWithNested(string content, [CanBeNull] Action<ContextStringBuilder> contextAdder)
+		private void AddWithNested(string content, [CanBeNull] Action<ContextStringBuilder> contextAdder)
 		{
 			this.Add(content);
 			if (contextAdder != null)

@@ -97,32 +97,30 @@ RESPOND TO
     Response 2
 UNTIL
   Never
-
  
 Failed after 3.00s and 4 frames
  
 Failure context:
 RESPOND TO
   ANY OF
-    Response 1
-      FIRST
-        Cond 1.1
-      AND THEN
-        Cond 1.2
-    Response 2
-      FIRST
-        Cond 2.1
-      AND THEN ...
+    [.] Response 1
+      WAIT FOR
+        FIRST
+          [✓] Cond 1.1 (Completed in: 1.50s and 2 frames)
+        AND THEN
+          [✓] Cond 1.2 (Completed in: 3.00s and 4 frames)
+      AND THEN RESPOND WITH
+        [!] DO<Unit>
+          FAILED WITH: Exception
+          MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:30)
+    [.] Response 2
+      WAIT FOR
+        FIRST
+          [.] Cond 2.1
+        AND THEN ...
+      AND THEN RESPOND WITH ...
 UNTIL
-  Never
-
- 
-Completed waits: 
-- Completed in 1.50s and 2 frames
-  Cond 1.1
-- Completed in 3.00s and 4 frames
-  Cond 1.2
-
+  [.] Never
  
 Test instruction stack: 
 MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)

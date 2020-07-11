@@ -14,10 +14,8 @@ namespace Responsible.TestWaitConditions
 
 		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
 
-		public void BuildFailureContext(ContextStringBuilder builder) => builder
-			.AddWithNested(
-				builder.DescriptionForWait(this, this.description),
-				this.extraContext);
+		public void BuildFailureContext(ContextStringBuilder builder) =>
+			builder.AddWaitStatus(this, this.description, this.extraContext);
 
 		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
 			waitContext.PollObservable

@@ -15,13 +15,15 @@ namespace Responsible.TestResponders
 			this.waitCondition
 				.WaitForResult(runContext, waitContext)
 				.Select(this.makeInstruction)
-				.Do(instruction => waitContext.AddRelation(this, instruction));
+				.Do(instruction => waitContext.AddRelation(this, instruction))
+				.DoOnSubscribe(() => waitContext.MarkAsStarted(this));
 
 		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
 
 		public void BuildFailureContext(ContextStringBuilder builder)
 		{
-			builder.AddWithNested(
+			builder.AddResponderStatus(
+				this,
 				this.description,
 				b =>
 				{

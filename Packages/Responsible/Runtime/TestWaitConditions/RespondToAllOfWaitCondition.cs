@@ -34,9 +34,7 @@ namespace Responsible.TestWaitConditions
 		public void BuildDescription(ContextStringBuilder builder) =>
 			builder.Add(BaseDescription, this.responders);
 
-		public void BuildFailureContext(ContextStringBuilder builder) => builder.
-			Add(
-				builder.DescriptionForWait(this, BaseDescription),
-				this.responders);
+		public void BuildFailureContext(ContextStringBuilder builder) =>
+			builder.AddWaitStatus(this, BaseDescription, this.responders);
 	}
 }
