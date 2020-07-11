@@ -6,6 +6,7 @@ namespace Responsible.Context
 {
 	public class RunContext : ContextBase
 	{
+		private readonly HashSet<ITestOperationContext> completedOperations = new HashSet<ITestOperationContext>();
 		private readonly List<(ITestOperationContext context, Exception error)> failedOperations =
 			new List<(ITestOperationContext, Exception)>();
 
@@ -14,8 +15,12 @@ namespace Responsible.Context
 
 		internal readonly TestInstructionExecutor Executor;
 
+		public void MarkAsCompleted(ITestOperationContext context) => this.completedOperations.Add(context);
+
 		public void MarkAsFailed(ITestOperationContext context, Exception e) =>
 			this.failedOperations.Add((context, e));
+
+		public bool HasCompleted(ITestOperationContext context) => this.completedOperations.Contains(context);
 
 		internal Exception ErrorIfFailed(ITestOperationContext context) =>
 			this.failedOperations

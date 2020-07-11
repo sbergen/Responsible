@@ -23,6 +23,7 @@ namespace Responsible.TestInstructions
 			try
 			{
 				observer.OnNext(this.action());
+				runContext.MarkAsCompleted(this);
 				observer.OnCompleted();
 			}
 			catch (Exception e)
@@ -44,18 +45,6 @@ namespace Responsible.TestInstructions
 			builder.AddWithNested(this.Description, this.sourceContext.ToString());
 
 		public void BuildFailureContext(ContextStringBuilder builder)
-		{
-			void ExtraContext(ContextStringBuilder b)
-			{
-				var e = builder.RunContext.ErrorIfFailed(this);
-				if (e != null)
-				{
-					builder.Add($"FAILED WITH: {e.GetType().Name}");
-				}
-				builder.Add(this.sourceContext.ToString());
-			}
-
-			builder.AddWithNested($"<!!!> {this.Description}", ExtraContext);
-		}
+			=> builder.AddInstructionStatus(this, this.sourceContext, this.Description);
 	}
 }

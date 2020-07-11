@@ -90,6 +90,40 @@ namespace Responsible.Context
 			this.stringBuilder.AppendLine(content);
 		}
 
+		public string DescriptionForWait(ITestOperationContext context, string baseDescription)
+		{
+			var completionTime = this.WaitContext.ElapsedTimeIfCompleted(context);
+			return completionTime != null
+				? $"{baseDescription} (Completed in: {completionTime})"
+				: this.WaitContext.HasStarted(context)
+					? $"[...] {baseDescription}"
+					: baseDescription;
+		}
+
+		internal void AddInstructionStatus<T>(
+			ITestInstruction<T> instruction,
+			SourceContext sourceContext,
+			string description)
+		{
+			var e = this.RunContext.ErrorIfFailed(instruction);
+			var fullDescription = e != null
+				? ErrorString(description)
+				: this.RunContext.HasCompleted(instruction)
+					? CompletedString(description)
+					: NotCompletedString(description);
+			this.AddWithNested(
+				fullDescription,
+				b =>
+				{
+					if (e != null)
+					{
+						this.Add($"FAILED WITH: {e.GetType().Name}");
+					}
+
+					this.Add(sourceContext.ToString());
+				});
+		}
+
 		public void AddWithNested(string content, string nestedContent) =>
 			this.AddWithNested(content, b => b.Add(nestedContent));
 
@@ -138,5 +172,10 @@ namespace Responsible.Context
 		{
 			this.contextBuilder(root, this);
 		}
+
+		private static string NotCompletedString(string description) => $"[ ] {description}";
+		private static string CompletedString(string description) => $"[✓] {description}";
+		private static string WaitingString(string description) => $"[.] {description}";
+		private static string ErrorString(string description) => $"[!] {description}";
 	}
 }

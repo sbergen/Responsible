@@ -114,9 +114,11 @@ namespace Responsible.Tests.Runtime
 			if (throwFromFirst)
 			{
 				this.responder1.AllowCompletionWithError(error);
+				this.responder2.AllowFullCompletion();
 			}
 			else
 			{
+				this.responder1.AllowFullCompletion();
 				this.responder2.AllowCompletionWithError(error);
 			}
 

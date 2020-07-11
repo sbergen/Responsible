@@ -9,6 +9,7 @@ namespace Responsible.TestWaitConditions
 {
 	public class RespondToAllOfWaitCondition<T> : ITestWaitCondition<T[]>
 	{
+		private const string BaseDescription = "RESPOND TO ALL OF";
 		private readonly IReadOnlyList<ITestResponder<T>> responders;
 
 		public RespondToAllOfWaitCondition(IReadOnlyList<ITestResponder<T>> responders)
@@ -26,12 +27,16 @@ namespace Responsible.TestWaitConditions
 					.Run(runContext)
 					.WithIndexFrom(indexedInstruction))
 				.Concat() // ...but sequence execution of instruction
-				.Aggregate(new T[this.responders.Count], Indexed.AssignToArray);
+				.Aggregate(new T[this.responders.Count], Indexed.AssignToArray)
+				.DoOnSubscribe(() => waitContext.MarkAsStarted(this))
+				.Do(_ => waitContext.MarkAsCompleted(this));
 
 		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add("RESPOND TO ALL OF", this.responders);
+			builder.Add(BaseDescription, this.responders);
 
-		public void BuildFailureContext(ContextStringBuilder builder) =>
-			this.BuildDescription(builder);
+		public void BuildFailureContext(ContextStringBuilder builder) => builder.
+			Add(
+				builder.DescriptionForWait(this, BaseDescription),
+				this.responders);
 	}
 }

@@ -14,9 +14,10 @@ namespace Responsible.TestWaitConditions
 
 		public void BuildDescription(ContextStringBuilder builder) => builder.Add(this.description);
 
-		// This is useful when waiting for multiple conditions
-		public void BuildFailureContext(ContextStringBuilder builder) =>
-			builder.AddWithNested(this.description, this.extraContext);
+		public void BuildFailureContext(ContextStringBuilder builder) => builder
+			.AddWithNested(
+				builder.DescriptionForWait(this, this.description),
+				this.extraContext);
 
 		public IObservable<T> WaitForResult(RunContext runContext, WaitContext waitContext) =>
 			waitContext.PollObservable
@@ -24,8 +25,9 @@ namespace Responsible.TestWaitConditions
 				.Select(_ => this.condition())
 				.Where(fulfilled => fulfilled)
 				.Take(1)
+				.Select(_ => this.makeResult())
 				.Do(_ => waitContext.MarkAsCompleted(this))
-				.Select(_ => this.makeResult());
+				.DoOnSubscribe(() => waitContext.MarkAsStarted(this));
 
 		public PollingWaitCondition(
 			Func<bool> condition, string description, Func<T> makeResult, Action<ContextStringBuilder> extraContext = null)
