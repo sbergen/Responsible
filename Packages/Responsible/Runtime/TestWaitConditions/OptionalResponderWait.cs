@@ -2,13 +2,12 @@ using System;
 using Responsible.Context;
 using Responsible.State;
 using UniRx;
-using UnityEngine;
 
 namespace Responsible.TestWaitConditions
 {
 	internal class OptionalResponderWait<T> : TestWaitConditionBase<T>
 	{
-		public OptionalResponderWait(IOptionalTestResponder responder, ITestWaitCondition<T> condition)
+		public OptionalResponderWait(IOptionalTestResponder responder, IOperationState<T> condition)
 			: base(() => new State(responder, condition))
 		{
 		}
@@ -18,10 +17,10 @@ namespace Responsible.TestWaitConditions
 			private readonly IOperationState<IOperationState<Unit>> responder;
 			private readonly IOperationState<T> condition;
 
-			public State(IOptionalTestResponder responder, ITestWaitCondition<T> condition)
+			public State(IOptionalTestResponder responder, IOperationState<T> condition)
 			{
 				this.responder = responder.CreateState();
-				this.condition = condition.CreateState();
+				this.condition = condition;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
@@ -46,7 +45,7 @@ namespace Responsible.TestWaitConditions
 			});
 
 			public override void BuildFailureContext(StateStringBuilder builder) =>
-				builder.AddOptionalResponder(
+				builder.AddUntilResponder(
 					"RESPOND TO",
 					this.responder,
 					"UNTIL",

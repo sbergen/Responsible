@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Responsible.TestResponders;
 using Responsible.TestWaitConditions;
 
 namespace Responsible
@@ -14,9 +15,8 @@ namespace Responsible
 		public static ITestWaitCondition<T> Until<T>(
 			this IOptionalTestResponder responder,
 			ITestWaitCondition<T> condition)
-			=> new OptionalResponderWait<T>(responder, condition);
+			=> new OptionalResponderWait<T>(responder, condition.CreateState());
 
-		/* TODO
 		/// <summary>
 		/// Executes responders until another responder is ready to execute.
 		/// All responders are guaranteed to either not execute or complete.
@@ -26,6 +26,6 @@ namespace Responsible
 		public static ITestResponder<T> UntilReadyTo<T>(
 			this IOptionalTestResponder respondTo,
 			ITestResponder<T> untilReady)
-			=> new UntilReadyToResponder<T>(respondTo, untilReady);*/
+			=> new UntilReadyToResponder<T>(respondTo, untilReady);
 	}
 }

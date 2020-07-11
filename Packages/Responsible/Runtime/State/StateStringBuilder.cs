@@ -56,11 +56,11 @@ namespace Responsible.State
 					.AddOptional("WAIT FOR", wait)
 					.AddOptional("THEN RESPOND WITH", instruction));
 
-		public void AddOptionalResponder<T>(
+		public void AddUntilResponder<T1, T2>(
 			string respondToDescription,
-			IOperationState<IOperationState<Unit>> responder,
+			IOperationState<IOperationState<T1>> responder,
 			string untilDescription,
-			IOperationState<T> condition)
+			IOperationState<T2> condition)
 			=> this
 				.AddOptional(respondToDescription, responder)
 				.AddOptional(untilDescription, condition);
