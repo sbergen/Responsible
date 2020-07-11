@@ -39,21 +39,56 @@ namespace Responsible
 		}
 
 		internal IObservable<T> RunInstruction<T>(
-			ITestInstruction<T> instruction,
+			IOperationState<T> rootState,
 			SourceContext sourceContext)
 		{
 			var runContext = new RunContext(this, sourceContext);
-			var rootState = instruction.CreateState();
 			return rootState
 				.Execute(runContext)
 				.Catch((Exception e) =>
 				{
+					// TODO: Stack is lost! (but is it needed?)
 					// The Unity test runner can swallow exceptions, so both log an error and throw an exception
-					var message = StateStringBuilder.MakeState(rootState);
+					var message = e is TimeoutException
+						? MakeTimeoutMessage(rootState, sourceContext)
+						: MakeErrorMessage(rootState, sourceContext, e);
 					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
 					return Observable.Throw<T>(new AssertionException(message));
 				});
 		}
+
+		[Pure]
+		private static string MakeTimeoutMessage<T>(
+			IOperationState<T> rootOperation,
+			SourceContext sourceContext)
+			=> string.Join(
+				UnityEmptyLine,
+				FailureLines(rootOperation, sourceContext, "timed out"));
+
+		[Pure]
+		private static string MakeErrorMessage<T>(
+			IOperationState<T> rootOperation,
+			SourceContext sourceContext,
+			Exception exception)
+			=> string.Join(
+				UnityEmptyLine,
+				FailureLines(rootOperation, sourceContext, "failed")
+					.Append($"Error: {exception}"));
+
+		[Pure]
+		private static IEnumerable<string> FailureLines<T>(
+			IOperationState<T> rootOperation,
+			SourceContext sourceContext,
+			string what)
+			=> new[]
+			{
+				$"Test instruction {what}!",
+				$"Failure context:\n{StateStringBuilder.MakeState(rootOperation)}",
+				InstructionStack(sourceContext),
+			};
+
+		[Pure]
+		internal static string InstructionStack(SourceContext context) => $"Test instruction stack: \n{context}";
 
 		/* TODO
 		[Pure]
@@ -72,9 +107,6 @@ namespace Responsible
 				instruction.Timeout,
 				instruction,
 				context);
-
-		[Pure]
-		internal static string InstructionStack(SourceContext context) => $"Test instruction stack: \n{context}";
 
 		[Pure]
 		private IObservable<TResult> WaitFor<TResult>(
@@ -119,42 +151,6 @@ namespace Responsible
 				LogType.Log,
 				$"Waiting for test operation:\n{ContextStringBuilder.MakeDescription(context, runContext, waitContext)}"))
 			.AsUnitObservable();
-
-		[Pure]
-		private static string MakeTimeoutMessage(
-			ITestOperationContext opContext,
-			RunContext runContext,
-			WaitContext waitContext,
-			SourceContext sourceContext)
-			=> string.Join(
-				UnityEmptyLine,
-				FailureLines(opContext, runContext, waitContext, sourceContext, "Timed out"));
-
-		[Pure]
-		private static string MakeErrorMessage(
-			ITestOperationContext opContext,
-			RunContext runContext,
-			WaitContext waitContext,
-			SourceContext sourceContext,
-			Exception exception)
-			=> string.Join(
-				UnityEmptyLine,
-				FailureLines(opContext, runContext, waitContext, sourceContext, "Failed")
-					.Append($"Error: {exception}"));
-
-		[Pure]
-		private static IEnumerable<string> FailureLines(
-			ITestOperationContext opContext,
-			RunContext runContext,
-			WaitContext waitContext,
-			SourceContext sourceContext,
-			string what)
-			=> new[]
-			{
-				ContextStringBuilder.MakeDescription(opContext, runContext, waitContext).ToString(),
-				$"{what} after {waitContext.ElapsedTime}",
-				$"Failure context:\n{ContextStringBuilder.MakeFailureContext(opContext, runContext, waitContext)}",
-				InstructionStack(sourceContext),
-			};*/
+*/
 	}
 }

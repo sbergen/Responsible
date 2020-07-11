@@ -2,34 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Responsible.Context;
+using Responsible.State;
 using UniRx;
 
 namespace Responsible.TestResponders
 {
-	/* TODO internal class AnyOfResponder<T> : IOptionalTestResponder
+	internal class AnyOfResponder<T> : OptionalTestResponderBase
 	{
-		private const string ContextDescription = "ANY OF";
-
-		private readonly IReadOnlyList<ITestResponder<T>> responders;
-
 		public AnyOfResponder(IReadOnlyList<ITestResponder<T>> responders)
+		: base(() => new State(responders))
 		{
-			this.responders = responders;
 		}
 
-		public void BuildDescription(ContextStringBuilder builder) =>
-			builder.Add(ContextDescription, this.responders);
+		private class State : OperationState<IOperationState<Unit>>
+		{
+			private readonly IReadOnlyList<IOperationState<IOperationState<T>>> responders;
 
-		public void BuildFailureContext(ContextStringBuilder builder) =>
-			builder.Add(ContextDescription, this.responders);
+			public State(IReadOnlyList<ITestResponder<T>> responders)
+			{
+				this.responders = responders.Select(r => r.CreateState()).ToList();
+			}
 
-		public IObservable<IObservable<Unit>> Instructions(RunContext runContext, WaitContext waitContext) =>
-			this.responders
-				.Select(responder => responder.InstructionWaitCondition
-					.WaitForResult(runContext, waitContext))
+
+			protected override IObservable<IOperationState<Unit>> ExecuteInner(RunContext runContext) => this.responders
+				.Select(responder => responder.Execute(runContext))
 				.Merge()
-				.Select(instruction => instruction
-					.Run(runContext)
-					.AsUnitObservable());
-	}*/
+				.Select(instruction => instruction.AsUnitOperationState());
+
+			public override void BuildFailureContext(StateStringBuilder builder) =>
+				builder.AddParentWithChildren("RESPOND TO ANY OF", this, this.responders);
+		}
+	}
 }

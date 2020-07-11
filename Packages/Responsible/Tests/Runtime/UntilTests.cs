@@ -7,7 +7,6 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
-	/*
 	public class UntilTests : ResponsibleTestBase
 	{
 		[UnityTest]
@@ -61,18 +60,22 @@ namespace Responsible.Tests.Runtime
 			var firstCompleted = false;
 			var secondCompleted = false;
 
-			WaitForCondition("First cond", () => cond1)
-				.ThenRespondWith("Complete first", _ => firstCompleted = true)
+			var state = WaitForCondition("Wait for first cond", () => cond1)
+				.ThenRespondWith("First response", _ => firstCompleted = true)
 				.Optionally()
 				.Until(WaitForCondition("Until cond", () => untilCond))
-				.ThenRespondWith("Second", WaitForCondition("Second cond", () => cond2)
+				.ThenRespondWith("Second response", WaitForCondition("Second cond", () => cond2)
 					.ExpectWithinSeconds(1)
 					.ContinueWith(_ => Do("Set second completed", () => secondCompleted = true)))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.CreateState();
+
+			state.ToObservable()
 				.Subscribe(_ => secondCompleted = true);
 
 			untilCond = true;
+			yield return null;
+			yield return null;
 			yield return null;
 
 			cond1 = true;
@@ -86,6 +89,8 @@ namespace Responsible.Tests.Runtime
 
 			cond2 = true;
 			yield return null;
+
+			UnityEngine.Debug.Log(state);
 
 			Assert.AreEqual(
 				(false, true),
@@ -112,5 +117,5 @@ namespace Responsible.Tests.Runtime
 			Assert.IsFalse(completed);
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
-	}*/
+	}
 }

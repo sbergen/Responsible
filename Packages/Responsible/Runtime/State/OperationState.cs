@@ -1,6 +1,7 @@
 using System;
 using Responsible.Context;
 using UniRx;
+using UnityEngine;
 
 namespace Responsible.State
 {
@@ -23,13 +24,14 @@ namespace Responsible.State
 
 			return this.ExecuteInner(runContext)
 				.DoOnSubscribe(() => this.Status = new OperationStatus.Waiting(this.Status, runContext))
-				.Do(
-					_ => this.Status = new OperationStatus.Completed(this.Status),
-					e => this.Status = new OperationStatus.Failed(this.Status, e));
+				.DoOnCompleted(() => this.Status = new OperationStatus.Completed(this.Status))
+				.DoOnError(e => this.Status = new OperationStatus.Failed(this.Status, e));
 		});
 
 		protected abstract IObservable<T> ExecuteInner(RunContext runContext);
 
 		public abstract void BuildFailureContext(StateStringBuilder builder);
+
+		public override string ToString() => StateStringBuilder.MakeState(this);
 	}
 }

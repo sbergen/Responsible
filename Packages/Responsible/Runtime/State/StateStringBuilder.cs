@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.Utilities;
+using UniRx;
 
 namespace Responsible.State
 {
@@ -54,6 +55,15 @@ namespace Responsible.State
 				.AddIndented(description, b => b
 					.AddOptional("WAIT FOR", wait)
 					.AddOptional("THEN RESPOND WITH", instruction));
+
+		public void AddOptionalResponder<T>(
+			string respondToDescription,
+			IOperationState<IOperationState<Unit>> responder,
+			string untilDescription,
+			IOperationState<T> condition)
+			=> this
+				.AddOptional(respondToDescription, responder)
+				.AddOptional(untilDescription, condition);
 
 		public void AddExpectWithin<T>(
 			TimeSpan timeout,

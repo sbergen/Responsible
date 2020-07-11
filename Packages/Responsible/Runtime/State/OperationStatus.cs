@@ -61,7 +61,8 @@ namespace Responsible.State
 				this.WaitContext = runContext.MakeWaitContext();
 			}
 
-			public override string MakeStatusLine(string description) => $"[.] {description}";
+			public override string MakeStatusLine(string description) =>
+				$"[.] {description} (Started {this.WaitContext.ElapsedTime} ago)";
 		}
 
 		public class Completed : OperationStatus

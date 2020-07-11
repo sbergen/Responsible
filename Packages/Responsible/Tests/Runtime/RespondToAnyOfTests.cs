@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using Responsible.State;
 using Responsible.Tests.Runtime.Utilities;
 using UnityEngine.TestTools;
 using UniRx;
@@ -7,7 +8,6 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
-	/*
 	public class RespondToAnyOfTests : ResponsibleTestBase
 	{
 		private ConditionResponder responder1;
@@ -16,6 +16,8 @@ namespace Responsible.Tests.Runtime
 		private bool mayComplete;
 		private bool completed;
 
+		private IOperationState<Unit> state;
+
 		[SetUp]
 		public void SetUp()
 		{
@@ -23,13 +25,21 @@ namespace Responsible.Tests.Runtime
 			this.responder1 = new ConditionResponder(1);
 			this.responder2 = new ConditionResponder(1);
 
-			RespondToAnyOf(
+			this.state = RespondToAnyOf(
 					this.responder1.Responder,
 					this.responder2.Responder)
 				.Until(WaitForCondition("Complete", () => this.mayComplete))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.CreateState();
+
+			this.state.ToObservable()
 				.Subscribe(_ => this.completed = true);
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			UnityEngine.Debug.Log(this.state);
 		}
 
 		[UnityTest]
@@ -51,6 +61,7 @@ namespace Responsible.Tests.Runtime
 
 			this.mayComplete = true;
 
+			yield return null;
 			yield return null;
 
 			Assert.AreEqual(
@@ -103,5 +114,5 @@ namespace Responsible.Tests.Runtime
 				(true, true, true),
 				(this.completed, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
 		}
-	}*/
+	}
 }
