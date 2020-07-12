@@ -23,7 +23,7 @@ namespace Responsible
 			=> new OptionalResponderWait<T>(
 				responder,
 				condition.CreateState(),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(Until), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Executes responders until another responder is ready to execute.
@@ -40,6 +40,6 @@ namespace Responsible
 			=> new UntilReadyToResponder<T>(
 				respondTo,
 				untilReady,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(UntilReadyTo), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

@@ -35,7 +35,7 @@ namespace Responsible
 				condition,
 				makeResult,
 				extraContext,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCondition(
@@ -50,7 +50,7 @@ namespace Responsible
 				condition,
 				() => Unit.Default,
 				extraContext,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConstraint<T>(
@@ -64,7 +64,7 @@ namespace Responsible
 				objectDescription,
 				getObject,
 				constraint,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
 
 
 		[Pure]
@@ -78,7 +78,7 @@ namespace Responsible
 			description,
 			startCoroutine,
 			() => Unit.Default,
-			new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+			new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<T> WaitForCoroutine<T>(
@@ -92,7 +92,7 @@ namespace Responsible
 				description,
 				startCoroutine,
 				makeResult,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> WaitForSeconds(
@@ -102,7 +102,7 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new WaitForInstruction(
 				TimeSpan.FromSeconds(seconds),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<T> WaitForLast<T>(
@@ -114,7 +114,7 @@ namespace Responsible
 			=> new ObservableWaitCondition<T>(
 				description,
 				observable,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForLast), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Wait for all conditions to complete, and return their results as an array.

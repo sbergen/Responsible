@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-// ReSharper disable ExplicitCallerInfoArgument
+using Responsible.Context;
+using Responsible.TestInstructions;
 
 namespace Responsible
 {
@@ -21,11 +22,9 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> Do(
+			=> new SynchronousTestInstruction<T>(
 				"Return '{value}'",
 				() => value,
-				memberName,
-				sourceFilePath,
-				sourceLineNumber);
+				new SourceContext(nameof(Return), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

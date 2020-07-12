@@ -21,7 +21,7 @@ namespace Responsible
 			=> new SynchronousTestInstruction<T>(
 				description,
 				func,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> Do(
@@ -33,6 +33,6 @@ namespace Responsible
 			=> new SynchronousTestInstruction<Unit>(
 				description,
 				action.AsUnitFunc(),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

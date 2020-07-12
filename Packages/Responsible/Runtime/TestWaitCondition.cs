@@ -26,7 +26,7 @@ namespace Responsible
 			=> new SequencedWaitCondition<TFirst, TSecond>(
 				first,
 				second,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs wait condition, which will first wait for the first condition to be fulfilled,
@@ -42,7 +42,7 @@ namespace Responsible
 			=> new ContinuedWaitCondition<TFirst,TSecond>(
 				first,
 				continuation,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
@@ -60,7 +60,7 @@ namespace Responsible
 				description,
 				condition,
 				selector,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
@@ -78,7 +78,7 @@ namespace Responsible
 				description,
 				condition,
 				_ => instruction,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
@@ -98,8 +98,8 @@ namespace Responsible
 				waitResult => new SynchronousTestInstruction<TResult>(
 					description,
 					() => selector(waitResult),
-					new SourceContext(memberName, sourceFilePath, sourceLineNumber)),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber)),
+				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
@@ -119,8 +119,8 @@ namespace Responsible
 				waitResult => new SynchronousTestInstruction<Unit>(
 					description,
 					action.AsUnitFunc(waitResult),
-					new SourceContext(memberName, sourceFilePath, sourceLineNumber)),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber)),
+				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition to an instruction, by enforcing a timeout on it.
@@ -135,7 +135,7 @@ namespace Responsible
 			=> new WaitInstruction<T>(
 				condition,
 				TimeSpan.FromSeconds(timeout),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition returning any return type to one returning <see cref="Unit"/>.
@@ -150,6 +150,6 @@ namespace Responsible
 				? (ITestWaitCondition<Unit>)condition
 				: new UnitWaitCondition<T>(
 					condition,
-					new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(AsUnitCondition), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

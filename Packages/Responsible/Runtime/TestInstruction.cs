@@ -8,8 +8,6 @@ using Responsible.State;
 using Responsible.TestInstructions;
 using UniRx;
 using UnityEngine;
-using static Responsible.Responsibly;
-// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Responsible
 {
@@ -53,7 +51,7 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> executor.RunInstruction(
 				instruction.CreateState(),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Starts executing an instruction, and returns a yield instruction which can be waited upon.
@@ -63,8 +61,10 @@ namespace Responsible
 			this ITestInstruction<T> instruction,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0) =>
-			ToObservable(instruction, memberName, sourceFilePath, sourceLineNumber)
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> executor.RunInstruction(
+				instruction.CreateState(),
+				new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber))
 				.ToYieldInstruction();
 
 		/// <summary>
@@ -78,7 +78,7 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> executor.RunInstruction(
 				state,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.
@@ -102,7 +102,7 @@ namespace Responsible
 			=> new AggregateTestInstruction<T1, T2>(
 				first,
 				continuation,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Sequences to test instructions to be executed in order. Returns the result of the second instruction.
@@ -117,10 +117,10 @@ namespace Responsible
 			=> new AggregateTestInstruction<T1, T2>(
 				first,
 				_ => second,
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Shorthand for ContinueWith + Do
+		/// Applies selector to result of test instruction
 		/// </summary>
 		[Pure]
 		public static ITestInstruction<T2> Select<T1, T2>(
@@ -129,13 +129,10 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> first.ContinueWith(
-				result => Do(
-					$"Select {typeof(T1).Name} -> {typeof(T2).Name}",
-					() => selector(result),
-					memberName,
-					sourceFilePath,
-					sourceLineNumber));
+			=> new SelectTestInstruction<T1, T2>(
+				first,
+				selector,
+				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
@@ -151,6 +148,6 @@ namespace Responsible
 				? (ITestInstruction<Unit>)instruction
 				: new UnitTestInstruction<T>(
 					instruction,
-					new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(AsUnitInstruction), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

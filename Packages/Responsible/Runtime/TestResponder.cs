@@ -24,7 +24,7 @@ namespace Responsible
 			=> new ExpectTestResponse<TResult>(
 				responder,
 				TimeSpan.FromSeconds(timeoutSeconds),
-				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a test responder to an optional test responder.
@@ -45,6 +45,8 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			typeof(T) == typeof(Unit)
 				? (ITestResponder<Unit>)responder
-				: new UnitTestResponder<T>(responder, new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+				: new UnitTestResponder<T>(
+					responder,
+					new SourceContext(nameof(AsUnitResponder), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

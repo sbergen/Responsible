@@ -117,7 +117,7 @@ namespace Responsible.State
 
 					this.AddEmptyLine();
 
-					this.AddIndented("Test Instruction stack:", b =>
+					this.AddIndented("Test operation stack:", b =>
 					{
 						foreach (var sourceLine in failed.SourceContext.SourceLines)
 						{

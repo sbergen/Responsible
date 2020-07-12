@@ -20,9 +20,9 @@ namespace Responsible.Context
 #endif
 		}
 
-		internal SourceContext(string memberName, string sourceFilePath, int sourceLineNumber)
+		internal SourceContext(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
 		{
-			this.SourceLines = new[] { Format(memberName, sourceFilePath, sourceLineNumber) };
+			this.SourceLines = new[] { Format(operationName, memberName, sourceFilePath, sourceLineNumber) };
 		}
 
 		private SourceContext(SourceContext parent, SourceContext child)
@@ -35,7 +35,7 @@ namespace Responsible.Context
 
 		public override string ToString() => string.Join("\n", this.SourceLines);
 
-		private static string Format(string memberName, string sourceFilePath, int sourceLineNumber)
-			=> $"{memberName} (at {sourceFilePath.Substring(StripFromPaths)}:{sourceLineNumber})";
+		private static string Format(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
+			=> $"[{operationName}] {memberName} (at {sourceFilePath.Substring(StripFromPaths)}:{sourceLineNumber})";
 	}
 }
