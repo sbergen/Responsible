@@ -1,4 +1,5 @@
 using Responsible.Context;
+using Responsible.State;
 using Responsible.TestResponders;
 
 namespace Responsible.TestWaitConditions

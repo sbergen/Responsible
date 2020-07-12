@@ -1,9 +1,8 @@
 using System;
 using Responsible.Context;
-using Responsible.State;
 using UniRx;
 
-namespace Responsible.TestResponders
+namespace Responsible.State
 {
 	internal class UntilResponderState<T> : OperationState<T>
 	{

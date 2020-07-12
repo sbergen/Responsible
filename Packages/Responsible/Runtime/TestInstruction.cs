@@ -148,14 +148,9 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		public static ITestInstruction<Unit> AsUnitInstruction<T>(
-			this ITestInstruction<T> instruction,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0) =>
+			this ITestInstruction<T> instruction) =>
 			typeof(T) == typeof(Unit)
 				? (ITestInstruction<Unit>)instruction
-				: new UnitTestInstruction<T>(
-					instruction,
-					new SourceContext(nameof(AsUnitInstruction), memberName, sourceFilePath, sourceLineNumber));
+				: new UnitTestInstruction<T>(instruction);
 	}
 }

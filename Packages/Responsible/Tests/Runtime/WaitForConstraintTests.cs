@@ -65,7 +65,6 @@ namespace Responsible.Tests.Runtime
 		[UnityTest]
 		public IEnumerator WaitForConstraint_HandlesErrorGracefully()
 		{
-			var str = "BAR";
 			WaitForConstraint<string>(
 					"Some string",
 					() => throw new Exception("Fail!"),

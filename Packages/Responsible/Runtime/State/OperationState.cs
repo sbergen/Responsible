@@ -7,7 +7,7 @@ namespace Responsible.State
 	internal static class OperationState
 	{
 		public static IOperationState<Unit> AsUnitOperationState<T>(this IOperationState<T> state)
-			=> new UnitOperationState<T>(state);
+			=> new UnitOperationState<T, Unit>(state, _ => Unit.Default);
 	}
 
 	internal abstract class OperationState<T> : IOperationState<T>

@@ -39,14 +39,9 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		public static ITestResponder<Unit> AsUnitResponder<T>(
-			this ITestResponder<T> responder,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0) =>
+			this ITestResponder<T> responder) =>
 			typeof(T) == typeof(Unit)
 				? (ITestResponder<Unit>)responder
-				: new UnitTestResponder<T>(
-					responder,
-					new SourceContext(nameof(AsUnitResponder), memberName, sourceFilePath, sourceLineNumber));
+				: new UnitTestResponder<T>(responder);
 	}
 }

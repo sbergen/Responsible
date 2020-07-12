@@ -138,18 +138,28 @@ namespace Responsible
 				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
+		/// Applies selector to result of wait condition
+		/// </summary>
+		[Pure]
+		public static ITestWaitCondition<T2> Select<T1, T2>(
+			this ITestWaitCondition<T1> first,
+			Func<T1, T2> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new SelectWaitCondition<T1, T2>(
+				first,
+				selector,
+				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
 		/// Converts a wait condition returning any return type to one returning <see cref="Unit"/>.
 		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<Unit> AsUnitCondition<T>(
-			this ITestWaitCondition<T> condition,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0) =>
+			this ITestWaitCondition<T> condition) =>
 			typeof(T) == typeof(Unit)
 				? (ITestWaitCondition<Unit>)condition
-				: new UnitWaitCondition<T>(
-					condition,
-					new SourceContext(nameof(AsUnitCondition), memberName, sourceFilePath, sourceLineNumber));
+				: new UnitWaitCondition<T>(condition);
 	}
 }
