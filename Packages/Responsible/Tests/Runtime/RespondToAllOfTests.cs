@@ -98,7 +98,6 @@ namespace Responsible.Tests.Runtime
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;
 
-			UnityEngine.Debug.Log(this.Error.Message);
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 
@@ -121,7 +120,6 @@ namespace Responsible.Tests.Runtime
 			yield return null;
 			yield return null;
 
-			UnityEngine.Debug.Log(this.Error.Message);
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 		}
 

@@ -90,8 +90,6 @@ namespace Responsible.Tests.Runtime
 			cond2 = true;
 			yield return null;
 
-			UnityEngine.Debug.Log(state);
-
 			Assert.AreEqual(
 				(false, true),
 				(firstCompleted, secondCompleted));
