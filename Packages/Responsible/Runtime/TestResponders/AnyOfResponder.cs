@@ -29,7 +29,7 @@ namespace Responsible.TestResponders
 				.Merge()
 				.Select(instruction => instruction.AsUnitOperationState());
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren("RESPOND TO ANY OF", this, this.responders);
 		}
 	}

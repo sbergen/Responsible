@@ -37,7 +37,7 @@ namespace Responsible.TestResponders
 					.Select(arg => this.makeInstruction(arg).CreateState())
 					.Do(instruction => this.instructionState = instruction);
 
-			public override void BuildFailureContext(StateStringBuilder builder)
+			public override void BuildDescription(StateStringBuilder builder)
 				=> builder.AddResponder(this.description, this, this.waitCondition, this.instructionState);
 		}
 	}

@@ -36,7 +36,7 @@ namespace Responsible.TestInstructions
 					return this.nextInstruction.Execute(runContext);
 				});
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.nextInstruction);
 		}
 	}

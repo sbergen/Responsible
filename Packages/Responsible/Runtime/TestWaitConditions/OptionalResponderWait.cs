@@ -44,7 +44,7 @@ namespace Responsible.TestWaitConditions
 					});
 			});
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddUntilResponder(
 					"RESPOND TO",
 					this.responder,

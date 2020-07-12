@@ -27,7 +27,7 @@ namespace Responsible.TestWaitConditions
 				.Select(cond => cond.Execute(runContext))
 				.WhenAll();
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren(
 					"WAIT FOR ALL OF",
 					this,

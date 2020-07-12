@@ -28,8 +28,8 @@ namespace Responsible.TestInstructions
 			protected override IObservable<Unit> ExecuteInner(RunContext runContext) =>
 				this.state.Execute(runContext).AsUnitObservable();
 
-			public override void BuildFailureContext(StateStringBuilder builder)
-				=> this.state.BuildFailureContext(builder);
+			public override void BuildDescription(StateStringBuilder builder)
+				=> this.state.BuildDescription(builder);
 		}
 	}
 }

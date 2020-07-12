@@ -36,7 +36,7 @@ namespace Responsible.TestWaitConditions
 					.Concat() // ...but sequence execution of instruction
 					.Aggregate(new T[this.responders.Count], Indexed.AssignToArray);
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren("RESPOND TO ALL OF", this, this.responders);
 		}
 	}

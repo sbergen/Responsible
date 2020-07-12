@@ -28,8 +28,8 @@ namespace Responsible.TestWaitConditions
 			protected override IObservable<Unit> ExecuteInner(RunContext runContext) =>
 				this.condition.Execute(runContext).AsUnitObservable();
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
-				this.condition.BuildFailureContext(builder);
+			public override void BuildDescription(StateStringBuilder builder) =>
+				this.condition.BuildDescription(builder);
 		}
 	}
 }

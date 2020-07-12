@@ -11,7 +11,7 @@ namespace Responsible.State
 		public static string MakeState(IOperationState state)
 		{
 			var builder = new StateStringBuilder();
-			state.BuildFailureContext(builder);
+			state.BuildDescription(builder);
 			return builder.ToString();
 		}
 
@@ -30,8 +30,8 @@ namespace Responsible.State
 			IOperationState first,
 			[CanBeNull] IOperationState second)
 		{
-			first.BuildFailureContext(this);
-			second?.BuildFailureContext(this);
+			first.BuildDescription(this);
+			second?.BuildDescription(this);
 		}
 
 		public void AddResponder(
@@ -67,7 +67,7 @@ namespace Responsible.State
 			IOperationState operation)
 			=> this.AddIndented(
 				$"EXPECT WITHIN {timeout:g}",
-				operation.BuildFailureContext);
+				operation.BuildDescription);
 
 		public void AddParentWithChildren(
 			string parentDescription,
@@ -79,7 +79,7 @@ namespace Responsible.State
 				{
 					foreach (var child in children)
 					{
-						child.BuildFailureContext(b);
+						child.BuildDescription(b);
 					}
 				});
 
@@ -87,7 +87,7 @@ namespace Responsible.State
 			string description,
 			[CanBeNull] IOperationState child)
 			=> child != null
-				? this.AddIndented(description, child.BuildFailureContext)
+				? this.AddIndented(description, child.BuildDescription)
 				: this.Add($"{description} ...");
 
 		private StateStringBuilder AddStatus(IOperationState state, string description) => this.AddIndented(

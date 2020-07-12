@@ -38,7 +38,7 @@ namespace Responsible.State
 
 		protected abstract IObservable<T> ExecuteInner(RunContext runContext);
 
-		public abstract void BuildFailureContext(StateStringBuilder builder);
+		public abstract void BuildDescription(StateStringBuilder builder);
 
 		public override string ToString() => StateStringBuilder.MakeState(this);
 	}

@@ -36,7 +36,7 @@ namespace Responsible.TestInstructions
 				}
 			});
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddInstruction(this, this.description);
 		}
 	}

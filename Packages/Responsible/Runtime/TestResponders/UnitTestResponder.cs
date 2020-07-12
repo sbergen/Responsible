@@ -24,8 +24,8 @@ namespace Responsible.TestResponders
 			protected override IObservable<IOperationState<Unit>> ExecuteInner(RunContext runContext) =>
 				this.responder.Execute(runContext).Select(state => state.AsUnitOperationState());
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
-				this.responder.BuildFailureContext(builder);
+			public override void BuildDescription(StateStringBuilder builder) =>
+				this.responder.BuildDescription(builder);
 		}
 	}
 }

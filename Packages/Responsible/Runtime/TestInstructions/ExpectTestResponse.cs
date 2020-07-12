@@ -33,7 +33,7 @@ namespace Responsible.TestInstructions
 				.ContinueWith(instruction =>
 					instruction.Execute(runContext));
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddExpectWithin(this.timeout, this.responder);
 		}
 	}

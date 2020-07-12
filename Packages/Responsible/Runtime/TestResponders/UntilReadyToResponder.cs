@@ -29,7 +29,7 @@ namespace Responsible.TestResponders
 			protected override IObservable<IOperationState<T>> ExecuteInner(RunContext runContext) =>
 				this.respondTo.Execute(runContext);
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddUntilResponder(
 					"RESPONDING TO",
 					this.respondTo,

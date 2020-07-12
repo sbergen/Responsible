@@ -28,7 +28,7 @@ namespace Responsible.TestWaitConditions
 					.Execute(runContext)
 					.ContinueWith(_ => this.second.Execute(runContext));
 
-			public override void BuildFailureContext(StateStringBuilder builder) =>
+			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.second);
 		}
 	}

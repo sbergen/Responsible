@@ -11,7 +11,7 @@ namespace Responsible.State
 		/// Adds a detailed description of the operation to the builder, which might help debugging failures.
 		/// This can include a lot of detail, as it's only used when an operation fails.
 		/// </summary>
-		void BuildFailureContext(StateStringBuilder builder);
+		void BuildDescription(StateStringBuilder builder);
 	}
 
 	public interface IOperationState<out T> : IOperationState

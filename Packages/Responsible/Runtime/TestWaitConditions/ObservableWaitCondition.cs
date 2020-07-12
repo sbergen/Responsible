@@ -28,7 +28,7 @@ namespace Responsible.TestWaitConditions
 			protected override IObservable<T> ExecuteInner(RunContext runContext)
 				=> this.observable.Last();
 
-			public override void BuildFailureContext(StateStringBuilder builder)
+			public override void BuildDescription(StateStringBuilder builder)
 				=> builder.AddWait(this.description, this);
 		}
 	}
