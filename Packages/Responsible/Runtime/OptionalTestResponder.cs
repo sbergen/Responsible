@@ -20,9 +20,9 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new OptionalResponderWait<T>(
+			=> new UntilResponder<T>(
 				responder,
-				condition.CreateState(),
+				condition,
 				new SourceContext(nameof(Until), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
