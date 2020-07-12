@@ -6,6 +6,8 @@ namespace Responsible.Tests.Runtime.Utilities
 {
 	public class ConditionResponder<T> : IConditionResponder
 	{
+		public const string WaitForCompletionDescription = "Wait for completion";
+
 		private Exception exception;
 
 		public bool MayRespond { get; set; }
@@ -38,7 +40,7 @@ namespace Responsible.Tests.Runtime.Utilities
 		}
 
 		private ITestInstruction<T> WaitAndComplete(int responseTimeout, T returnValue) => WaitForCondition(
-				"Wait for completion",
+				WaitForCompletionDescription,
 				() => this.MayComplete)
 			.ExpectWithinSeconds(responseTimeout)
 			.ContinueWith(Do(

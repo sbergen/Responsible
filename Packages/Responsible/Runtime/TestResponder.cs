@@ -35,6 +35,21 @@ namespace Responsible
 			new AnyOfResponder<T>(new[] { responder });
 
 		/// <summary>
+		/// Applies selector to result of test responder
+		/// </summary>
+		[Pure]
+		public static ITestResponder<T2> Select<T1, T2>(
+			this ITestResponder<T1> first,
+			Func<T1, T2> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new SelectResponder<T1, T2>(
+				first,
+				selector,
+				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
 		/// </summary>
 		[Pure]

@@ -9,7 +9,7 @@ namespace Responsible.State
 		private readonly ITestOperationState<T1> first;
 		private readonly Func<T1, T2> selector;
 
-		public SelectOperationState(ITestOperationState<T1> first, Func<T1, T2> selector, SourceContext sourceContext)
+		public SelectOperationState(ITestOperationState<T1> first, Func<T1, T2> selector, SourceContext? sourceContext)
 			: base(sourceContext)
 		{
 			this.first = first;
@@ -17,11 +17,11 @@ namespace Responsible.State
 		}
 
 		protected override IObservable<T2> ExecuteInner(RunContext runContext) =>
-			this.first.Execute(runContext).Select(this.selector);
+			this.first
+				.Execute(runContext)
+				.Select(this.selector);
 
 		public override void BuildDescription(StateStringBuilder builder) =>
-			builder.AddInstruction(
-				this,
-				$"Select {typeof(T1).Name} -> {typeof(T2).Name}");
+			builder.AddSelect<T1, T2>(this.first, this);
 	}
 }

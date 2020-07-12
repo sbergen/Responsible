@@ -29,6 +29,16 @@ namespace Responsible.State
 			string description) =>
 			this.AddStatus(operation, description);
 
+		internal void AddSelect<T1, T2>(
+			ITestOperationState primaryState,
+			ITestOperationState selectState)
+		{
+			primaryState.BuildDescription(this);
+			this.AddStatus(
+				selectState,
+				$"SELECT {typeof(T1).Name} -> {typeof(T2).Name}");
+		}
+
 		internal void AddWait(
 			string description,
 			ITestOperationState operation,
