@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using NUnit.Framework.Constraints;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.TestInstructions;
@@ -34,6 +35,21 @@ namespace Responsible
 			Func<bool> condition,
 			Action<StateStringBuilder> extraContext = null)
 			=> new PollingWaitCondition<Unit>(description, condition, () => Unit.Default, extraContext);
+
+		[Pure]
+		public static ITestWaitCondition<T> WaitForConstraint<T>(
+			string objectDescription,
+			Func<T> getObject,
+			IResolveConstraint constraint,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new ConstraintWaitCondition<T>(
+				objectDescription,
+				getObject,
+				constraint,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCoroutine(

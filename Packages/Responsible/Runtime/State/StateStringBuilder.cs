@@ -8,25 +8,34 @@ namespace Responsible.State
 {
 	public class StateStringBuilder : IndentedStringBuilder<StateStringBuilder>
 	{
-		public static string MakeState(IOperationState state)
+		public void AddDetails(string details)
+		{
+			// Respect indentation by splitting to lines
+			foreach (var line in details.Split('\n'))
+			{
+				this.Add(line);
+			}
+		}
+
+		internal static string MakeState(IOperationState state)
 		{
 			var builder = new StateStringBuilder();
 			state.BuildDescription(builder);
 			return builder.ToString();
 		}
 
-		public void AddInstruction(
+		internal void AddInstruction(
 			IOperationState operation,
 			string description) =>
 			this.AddStatus(operation, description);
 
-		public void AddWait(
+		internal void AddWait(
 			string description,
 			IOperationState operation,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null)
 			=> this.AddStatus(operation, description, extraContext);
 
-		public void AddContinuation(
+		internal void AddContinuation(
 			IOperationState first,
 			[CanBeNull] IOperationState second)
 		{
@@ -34,7 +43,7 @@ namespace Responsible.State
 			second?.BuildDescription(this);
 		}
 
-		public void AddResponder(
+		internal void AddResponder(
 			string description,
 			IOperationState responder,
 			IOperationState wait,
@@ -53,7 +62,7 @@ namespace Responsible.State
 			}
 		}
 
-		public void AddUntilResponder(
+		internal void AddUntilResponder(
 			string respondToDescription,
 			IOperationState<IOperationState> responder,
 			string untilDescription,
@@ -62,14 +71,14 @@ namespace Responsible.State
 				.AddOptional(untilDescription, condition)
 				.AddOptional(respondToDescription, responder);
 
-		public void AddExpectWithin(
+		internal void AddExpectWithin(
 			TimeSpan timeout,
 			IOperationState operation)
 			=> this.AddIndented(
 				operation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
 				operation.BuildDescription);
 
-		public void AddParentWithChildren(
+		internal void AddParentWithChildren(
 			string parentDescription,
 			IOperationState parentState,
 			IEnumerable<IOperationState> children)

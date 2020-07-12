@@ -1,0 +1,85 @@
+using System;
+using System.Collections;
+using NUnit.Framework;
+using UniRx;
+using UnityEngine.TestTools;
+using static Responsible.Responsibly;
+// ReSharper disable AccessToModifiedClosure
+
+namespace Responsible.Tests.Runtime
+{
+	public class WaitForConstraintTests : ResponsibleTestBase
+	{
+		[UnityTest]
+		public IEnumerator WaitForConstraint_Completed_WhenConstraintTrue()
+		{
+			var mayComplete = false;
+			var completed = false;
+			WaitForConstraint(
+					"mayComplete",
+					() => mayComplete, Is.True)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(r => completed = r);
+
+			yield return null;
+			Assert.IsFalse(completed, "Should not complete until constraint is true");
+
+			mayComplete = true;
+			yield return null;
+
+			Assert.IsTrue(completed, "Should complete after constraint is true");
+		}
+
+		[Test]
+		public void WaitForConstraint_HasExpectedDescription()
+		{
+			var str = "BAR";
+			var state = WaitForConstraint(
+				"Some string",
+				() => str,
+				Does.StartWith("FOO")).CreateState();
+			Assert.AreEqual(
+				@"[ ] Some string: String starting with ""FOO""",
+				state.ToString());
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForConstraint_HasDetails_OnTimeout()
+		{
+			var str = "BAR";
+			WaitForConstraint(
+				"Some string",
+				() => str,
+				Does.StartWith("FOO"))
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(Nop, this.StoreError);
+
+			this.Scheduler.AdvanceBy(OneSecond);
+			yield return null;
+
+			Assert.That(this.Error.Message, Does.Contain("Expected").And.Contain("But was"));
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForConstraint_HandlesErrorGracefully()
+		{
+			var str = "BAR";
+			WaitForConstraint<string>(
+					"Some string",
+					() => throw new Exception("Fail!"),
+					Does.StartWith("FOO"))
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(Nop, this.StoreError);
+
+			yield return null;
+
+			Assert.That(
+				this.Error.Message,
+				Does.Contain("[!] Some string").And.Contain("Fail!"));
+		}
+
+	}
+}
