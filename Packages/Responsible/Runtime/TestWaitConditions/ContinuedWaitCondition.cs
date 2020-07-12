@@ -10,8 +10,9 @@ namespace Responsible.TestWaitConditions
 	{
 		public ContinuedWaitCondition(
 			ITestWaitCondition<TFirst> first,
-			Func<TFirst, ITestWaitCondition<TSecond>> continuation)
-			: base(() => new State(first, continuation))
+			Func<TFirst, ITestWaitCondition<TSecond>> continuation,
+			SourceContext sourceContext)
+			: base(() => new State(first, continuation, sourceContext))
 		{
 		}
 
@@ -22,7 +23,11 @@ namespace Responsible.TestWaitConditions
 
 			[CanBeNull] private IOperationState<TSecond> second;
 
-			public State(ITestWaitCondition<TFirst> first, Func<TFirst, ITestWaitCondition<TSecond>> continuation)
+			public State(
+				ITestWaitCondition<TFirst> first,
+				Func<TFirst, ITestWaitCondition<TSecond>> continuation,
+				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.first = first.CreateState();
 				this.continuation = continuation;

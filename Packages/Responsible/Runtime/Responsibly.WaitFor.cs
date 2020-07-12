@@ -26,15 +26,31 @@ namespace Responsible
 			string description,
 			Func<bool> condition,
 			Func<T> makeResult,
-			Action<StateStringBuilder> extraContext = null)
-			=> new PollingWaitCondition<T>(description, condition, makeResult, extraContext);
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<T>(
+				description,
+				condition,
+				makeResult,
+				extraContext,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCondition(
 			string description,
 			Func<bool> condition,
-			Action<StateStringBuilder> extraContext = null)
-			=> new PollingWaitCondition<Unit>(description, condition, () => Unit.Default, extraContext);
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<Unit>(
+				description,
+				condition,
+				() => Unit.Default,
+				extraContext,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConstraint<T>(
@@ -91,8 +107,14 @@ namespace Responsible
 		[Pure]
 		public static ITestWaitCondition<T> WaitForLast<T>(
 			string description,
-			IObservable<T> observable)
-			=> new ObservableWaitCondition<T>(description, observable);
+			IObservable<T> observable,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new ObservableWaitCondition<T>(
+				description,
+				observable,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Wait for all conditions to complete, and return their results as an array.

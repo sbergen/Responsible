@@ -29,11 +29,11 @@ namespace Responsible.TestWaitConditions
 				Func<IEnumerator> startCoroutine,
 				Func<T> makeResult,
 				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.description = description ?? startCoroutine.Method.Name;
 				this.startCoroutine = startCoroutine;
 				this.makeResult = makeResult;
-				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable

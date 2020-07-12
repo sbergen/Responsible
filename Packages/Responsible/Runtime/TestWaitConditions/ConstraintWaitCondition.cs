@@ -29,11 +29,11 @@ namespace Responsible.TestWaitConditions
 				Func<T> getObject,
 				IResolveConstraint constraint,
 				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.getObject = getObject;
 				this.constraint = constraint.Resolve();
 				this.description = $"{objectDescription}: {this.constraint.Description}";
-				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext

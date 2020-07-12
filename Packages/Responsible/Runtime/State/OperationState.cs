@@ -12,9 +12,14 @@ namespace Responsible.State
 
 	internal abstract class OperationState<T> : IOperationState<T>
 	{
+		private readonly SourceContext? sourceContext;
+
 		public OperationStatus Status { get; private set; } = OperationStatus.NotExecuted.Instance;
 
-		protected SourceContext? SourceContext { private get; set; }
+		protected OperationState(SourceContext? sourceContext)
+		{
+			this.sourceContext = sourceContext;
+		}
 
 		public IObservable<T> Execute(RunContext runContext) => Observable.Defer(() =>
 		{
@@ -24,12 +29,13 @@ namespace Responsible.State
 			}
 
 			var waitContext = runContext.MakeWaitContext();
-			var nestedRunContext = this.SourceContext != null
-				? runContext.MakeNested(this.SourceContext.Value)
+			var nestedRunContext = this.sourceContext != null
+				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;
 			this.Status = new OperationStatus.Waiting(this.Status, waitContext);
 
-			return this.ExecuteInner(nestedRunContext)
+			return this
+				.ExecuteInner(nestedRunContext)
 				.DoOnCompleted(() => this.Status = new OperationStatus.Completed(this.Status))
 				.DoOnError(exception => this.Status =
 					new OperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))

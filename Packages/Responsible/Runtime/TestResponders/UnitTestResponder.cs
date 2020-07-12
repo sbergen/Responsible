@@ -7,8 +7,8 @@ namespace Responsible.TestResponders
 {
 	internal class UnitTestResponder<T> : TestResponderBase<Unit>
 	{
-		public UnitTestResponder(ITestResponder<T> responder)
-		: base(() => new State(responder))
+		public UnitTestResponder(ITestResponder<T> responder, SourceContext sourceContext)
+		: base(() => new State(responder, sourceContext))
 		{
 		}
 
@@ -16,7 +16,8 @@ namespace Responsible.TestResponders
 		{
 			private readonly IOperationState<IOperationState<T>> responder;
 
-			public State(ITestResponder<T> responder)
+			public State(ITestResponder<T> responder, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.responder = responder.CreateState();
 			}

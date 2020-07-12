@@ -7,8 +7,11 @@ namespace Responsible.TestWaitConditions
 {
 	internal class SequencedWaitCondition<TFirst, TSecond> : TestWaitConditionBase<TSecond>
 	{
-		public SequencedWaitCondition(ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
-			: base(() => new State(first, second))
+		public SequencedWaitCondition(
+			ITestWaitCondition<TFirst> first,
+			ITestWaitCondition<TSecond> second,
+			SourceContext sourceContext)
+			: base(() => new State(first, second, sourceContext))
 		{
 		}
 
@@ -17,7 +20,11 @@ namespace Responsible.TestWaitConditions
 			private readonly IOperationState<TFirst> first;
 			private readonly IOperationState<TSecond> second;
 
-			public State(ITestWaitCondition<TFirst> first, ITestWaitCondition<TSecond> second)
+			public State(
+				ITestWaitCondition<TFirst> first,
+				ITestWaitCondition<TSecond> second,
+				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.first = first.CreateState();
 				this.second = second.CreateState();

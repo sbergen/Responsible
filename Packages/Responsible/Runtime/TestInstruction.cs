@@ -95,8 +95,14 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<T2> ContinueWith<T1, T2>(
 			this ITestInstruction<T1> first,
-			Func<T1, ITestInstruction<T2>> continuation)
-			=> new AggregateTestInstruction<T1, T2>(first, continuation);
+			Func<T1, ITestInstruction<T2>> continuation,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new AggregateTestInstruction<T1, T2>(
+				first,
+				continuation,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Sequences to test instructions to be executed in order. Returns the result of the second instruction.
@@ -104,8 +110,14 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<T2> ContinueWith<T1, T2>(
 			this ITestInstruction<T1> first,
-			ITestInstruction<T2> second)
-			=> new AggregateTestInstruction<T1, T2>(first, _ => second);
+			ITestInstruction<T2> second,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new AggregateTestInstruction<T1, T2>(
+				first,
+				_ => second,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Shorthand for ContinueWith + Do
@@ -130,9 +142,15 @@ namespace Responsible
 		/// Can be useful for example for using <see cref="Sequence"/>.
 		/// </summary>
 		[Pure]
-		public static ITestInstruction<Unit> AsUnitInstruction<T>(this ITestInstruction<T> instruction) =>
+		public static ITestInstruction<Unit> AsUnitInstruction<T>(
+			this ITestInstruction<T> instruction,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0) =>
 			typeof(T) == typeof(Unit)
 				? (ITestInstruction<Unit>)instruction
-				: new UnitTestInstruction<T>(instruction);
+				: new UnitTestInstruction<T>(
+					instruction,
+					new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 	}
 }

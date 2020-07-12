@@ -17,9 +17,9 @@ namespace Responsible.TestInstructions
 			private readonly TimeSpan waitTime;
 
 			public State(TimeSpan waitTime, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.waitTime = waitTime;
-				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<Unit> ExecuteInner(RunContext runContext)

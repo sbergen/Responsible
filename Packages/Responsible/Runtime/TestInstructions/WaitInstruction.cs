@@ -21,10 +21,10 @@ namespace Responsible.TestInstructions
 			private readonly TimeSpan timeout;
 
 			public State(ITestWaitCondition<T> condition, TimeSpan timeout, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.condition = condition.CreateState();
 				this.timeout = timeout;
-				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => this.condition

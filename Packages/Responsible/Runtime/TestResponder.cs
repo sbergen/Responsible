@@ -38,9 +38,13 @@ namespace Responsible
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
 		/// </summary>
 		[Pure]
-		public static ITestResponder<Unit> AsUnitResponder<T>(this ITestResponder<T> responder) =>
+		public static ITestResponder<Unit> AsUnitResponder<T>(
+			this ITestResponder<T> responder,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0) =>
 			typeof(T) == typeof(Unit)
 				? (ITestResponder<Unit>)responder
-				: new UnitTestResponder<T>(responder);
+				: new UnitTestResponder<T>(responder, new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 	}
 }

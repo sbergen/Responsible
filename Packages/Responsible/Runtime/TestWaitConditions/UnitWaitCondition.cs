@@ -11,8 +11,8 @@ namespace Responsible.TestWaitConditions
 	/// </summary>
 	internal class UnitWaitCondition<T> : TestWaitConditionBase<Unit>
 	{
-		public UnitWaitCondition(ITestWaitCondition<T> condition)
-			: base(() => new State(condition))
+		public UnitWaitCondition(ITestWaitCondition<T> condition, SourceContext sourceContext)
+			: base(() => new State(condition, sourceContext))
 		{
 		}
 
@@ -20,7 +20,8 @@ namespace Responsible.TestWaitConditions
 		{
 			private readonly IOperationState<T> condition;
 
-			public State(ITestWaitCondition<T> condition)
+			public State(ITestWaitCondition<T> condition, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.condition = condition.CreateState();
 			}

@@ -10,8 +10,9 @@ namespace Responsible.TestInstructions
 	{
 		public AggregateTestInstruction(
 			ITestInstruction<T1> first,
-			Func<T1, ITestInstruction<T2>> selector)
-			: base(() => new State(first, selector))
+			Func<T1, ITestInstruction<T2>> selector,
+			SourceContext sourceContext)
+			: base(() => new State(first, selector, sourceContext))
 		{
 		}
 
@@ -22,7 +23,11 @@ namespace Responsible.TestInstructions
 
 			[CanBeNull] private IOperationState<T2> nextInstruction;
 
-			public State(ITestInstruction<T1> first, Func<T1, ITestInstruction<T2>> selector)
+			public State(
+				ITestInstruction<T1> first,
+				Func<T1, ITestInstruction<T2>> selector,
+				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.first = first.CreateState();
 				this.selector = selector;

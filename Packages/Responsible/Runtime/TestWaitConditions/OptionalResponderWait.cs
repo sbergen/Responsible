@@ -7,8 +7,11 @@ namespace Responsible.TestWaitConditions
 {
 	internal class OptionalResponderWait<T> : TestWaitConditionBase<T>
 	{
-		public OptionalResponderWait(IOptionalTestResponder responder, IOperationState<T> condition)
-			: base(() => new State(responder, condition))
+		public OptionalResponderWait(
+			IOptionalTestResponder responder,
+			IOperationState<T> condition,
+			SourceContext sourceContext)
+			: base(() => new State(responder, condition, sourceContext))
 		{
 		}
 
@@ -17,7 +20,8 @@ namespace Responsible.TestWaitConditions
 			private readonly IOperationState<IOperationState<Unit>> responder;
 			private readonly IOperationState<T> condition;
 
-			public State(IOptionalTestResponder responder, IOperationState<T> condition)
+			public State(IOptionalTestResponder responder, IOperationState<T> condition, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.responder = responder.CreateState();
 				this.condition = condition;

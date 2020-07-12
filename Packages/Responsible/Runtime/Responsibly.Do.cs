@@ -3,9 +3,8 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
+using Responsible.Utilities;
 using UniRx;
-
-// ReSharper disable ExplicitCallerInfoArgument
 
 namespace Responsible
 {
@@ -33,11 +32,7 @@ namespace Responsible
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new SynchronousTestInstruction<Unit>(
 				description,
-				() =>
-				{
-					action();
-					return Unit.Default;
-				},
+				action.AsUnitFunc(),
 				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 	}
 }

@@ -19,6 +19,7 @@ namespace Responsible.TestWaitConditions
 			private readonly IReadOnlyList<IOperationState<T>> conditions;
 
 			public State(IReadOnlyList<ITestWaitCondition<T>> conditions)
+				: base(null)
 			{
 				this.conditions = conditions.Select(c => c.CreateState()).ToList();
 			}

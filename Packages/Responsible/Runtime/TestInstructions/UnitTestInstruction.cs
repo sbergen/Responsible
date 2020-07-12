@@ -11,8 +11,8 @@ namespace Responsible.TestInstructions
 	/// </summary>
 	internal class UnitTestInstruction<T> : TestInstructionBase<Unit>
 	{
-		public UnitTestInstruction(ITestInstruction<T> instruction)
-			: base(() => new State(instruction))
+		public UnitTestInstruction(ITestInstruction<T> instruction, SourceContext sourceContext)
+			: base(() => new State(instruction, sourceContext))
 		{
 		}
 
@@ -20,7 +20,8 @@ namespace Responsible.TestInstructions
 		{
 			private readonly IOperationState<T> state;
 
-			public State(ITestInstruction<T> instruction)
+			public State(ITestInstruction<T> instruction, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.state = instruction.CreateState();
 			}

@@ -19,6 +19,7 @@ namespace Responsible.TestResponders
 			private readonly IReadOnlyList<IOperationState<IOperationState<T>>> responders;
 
 			public State(IReadOnlyList<ITestResponder<T>> responders)
+				: base(null)
 			{
 				this.responders = responders.Select(r => r.CreateState()).ToList();
 			}

@@ -12,8 +12,9 @@ namespace Responsible.TestWaitConditions
 			string description,
 			Func<bool> condition,
 			Func<T> makeResult,
-			Action<StateStringBuilder> extraContext = null)
-			: base(() => new State(description, condition, makeResult, extraContext))
+			[CanBeNull] Action<StateStringBuilder> extraContext,
+			SourceContext sourceContext)
+			: base(() => new State(description, condition, makeResult, extraContext, sourceContext))
 		{
 		}
 
@@ -28,7 +29,9 @@ namespace Responsible.TestWaitConditions
 				string description,
 				Func<bool> condition,
 				Func<T> makeResult,
-				[CanBeNull] Action<StateStringBuilder> extraContext)
+				[CanBeNull] Action<StateStringBuilder> extraContext,
+				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.description = description;
 				this.condition = condition;

@@ -9,8 +9,9 @@ namespace Responsible.TestWaitConditions
 	{
 		public ObservableWaitCondition(
 			string description,
-			IObservable<T> observable)
-			: base(() => new State(description, observable))
+			IObservable<T> observable,
+			SourceContext sourceContext)
+			: base(() => new State(description, observable, sourceContext))
 		{
 		}
 
@@ -19,7 +20,8 @@ namespace Responsible.TestWaitConditions
 			private readonly string description;
 			private readonly IObservable<T> observable;
 
-			public State(string description, IObservable<T> observable)
+			public State(string description, IObservable<T> observable, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.description = description;
 				this.observable = observable;

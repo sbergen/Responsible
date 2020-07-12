@@ -7,8 +7,11 @@ namespace Responsible.TestResponders
 {
 	internal class UntilReadyToResponder<T> : TestResponderBase<T>
 	{
-		public UntilReadyToResponder(IOptionalTestResponder respondTo, ITestResponder<T> untilReady)
-		: base(() => new State(respondTo, untilReady))
+		public UntilReadyToResponder(
+			IOptionalTestResponder respondTo,
+			ITestResponder<T> untilReady,
+			SourceContext sourceContext)
+		: base(() => new State(respondTo, untilReady, sourceContext))
 		{
 		}
 
@@ -17,12 +20,14 @@ namespace Responsible.TestResponders
 			private readonly IOperationState<IOperationState<T>> respondTo;
 			private readonly IOperationState<IOperationState<T>> untilReady;
 
-			public State(IOptionalTestResponder respondTo, ITestResponder<T> untilReady)
+			public State(IOptionalTestResponder respondTo, ITestResponder<T> untilReady, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.untilReady = untilReady.CreateState();
 				this.respondTo = new OptionalResponderWait<IOperationState<T>>(
 						respondTo,
-						this.untilReady)
+						this.untilReady,
+						sourceContext)
 					.CreateState();
 			}
 

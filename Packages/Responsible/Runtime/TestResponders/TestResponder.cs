@@ -11,8 +11,9 @@ namespace Responsible.TestResponders
 		internal TestResponder(
 			string description,
 			ITestWaitCondition<TArg> waitCondition,
-			Func<TArg, ITestInstruction<T>> makeInstruction)
-			: base(() => new State(description, waitCondition, makeInstruction))
+			Func<TArg, ITestInstruction<T>> makeInstruction,
+			SourceContext sourceContext)
+			: base(() => new State(description, waitCondition, makeInstruction, sourceContext))
 		{
 		}
 
@@ -24,7 +25,12 @@ namespace Responsible.TestResponders
 
 			[CanBeNull] private IOperationState<T> instructionState;
 
-			public State(string description, ITestWaitCondition<TArg> waitCondition, Func<TArg, ITestInstruction<T>> makeInstruction)
+			public State(
+				string description,
+				ITestWaitCondition<TArg> waitCondition,
+				Func<TArg, ITestInstruction<T>> makeInstruction,
+				SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.description = description;
 				this.waitCondition = waitCondition.CreateState();

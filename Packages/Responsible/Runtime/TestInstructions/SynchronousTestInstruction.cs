@@ -18,10 +18,10 @@ namespace Responsible.TestInstructions
 			private readonly Func<T> action;
 
 			public State(string description, Func<T> action, SourceContext sourceContext)
+				: base(sourceContext)
 			{
 				this.description = description;
 				this.action = action;
-				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
