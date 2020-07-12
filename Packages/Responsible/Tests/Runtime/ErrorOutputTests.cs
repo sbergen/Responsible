@@ -116,6 +116,7 @@ Failure context:
       [.] Response 2 (Started 3.00s and 4 frames ago)
         WAIT FOR
           [.] Cond 2.1 (Started 3.00s and 4 frames ago)
+          [ ] ...
         THEN RESPOND WITH ...
  
 Error: System.Exception: Exception";

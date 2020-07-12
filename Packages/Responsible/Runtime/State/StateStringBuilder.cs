@@ -50,7 +50,14 @@ namespace Responsible.State
 			[CanBeNull] ITestOperationState second)
 		{
 			first.BuildDescription(this);
-			second?.BuildDescription(this);
+			if (second != null)
+			{
+				second.BuildDescription(this);
+			}
+			else
+			{
+				this.AddStatus(TestOperationStatus.NotExecuted.Instance, "...");
+			}
 		}
 
 		internal void AddResponder(
@@ -60,10 +67,10 @@ namespace Responsible.State
 			[CanBeNull] ITestOperationState instruction)
 		{
 			// Needs special handling, as the instruction execution is not part of the responder stream
-			var operationForStatus = instruction ?? responder;
-			var statusLine = operationForStatus.Status.MakeStatusLine(description);
-			if (operationForStatus.Status is TestOperationStatus.Completed ||
-				operationForStatus.Status is TestOperationStatus.NotExecuted)
+			var status = (instruction ?? responder).Status;
+			var statusLine = status.MakeStatusLine(description);
+			if (status is TestOperationStatus.Completed ||
+				status is TestOperationStatus.NotExecuted)
 			{
 				this.Add(statusLine);
 			}
