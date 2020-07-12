@@ -49,8 +49,11 @@ namespace Responsible.State
 			ITestOperationState wait,
 			[CanBeNull] ITestOperationState instruction)
 		{
-			var statusLine = responder.Status.MakeStatusLine(description);
-			if (responder.Status is TestOperationStatus.Completed || responder.Status is TestOperationStatus.NotExecuted)
+			// Needs special handling, as the instruction execution is not part of the responder stream
+			var operationForStatus = instruction ?? responder;
+			var statusLine = operationForStatus.Status.MakeStatusLine(description);
+			if (operationForStatus.Status is TestOperationStatus.Completed ||
+				operationForStatus.Status is TestOperationStatus.NotExecuted)
 			{
 				this.Add(statusLine);
 			}
@@ -72,10 +75,11 @@ namespace Responsible.State
 				.AddOptional(respondToDescription, responder);
 
 		internal void AddExpectWithin(
+			ITestOperationState expectOperation,
 			TimeSpan timeout,
 			ITestOperationState operation)
 			=> this.AddIndented(
-				operation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
+				expectOperation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
 				operation.BuildDescription);
 
 		internal void AddParentWithChildren(

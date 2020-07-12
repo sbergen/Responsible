@@ -34,7 +34,7 @@ namespace Responsible.TestInstructions
 					instruction.Execute(runContext));
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddExpectWithin(this.timeout, this.responder);
+				builder.AddExpectWithin(this, this.timeout, this.responder);
 		}
 	}
 }

@@ -32,7 +32,7 @@ namespace Responsible.TestInstructions
 				.Timeout(this.timeout, runContext.Scheduler);
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddExpectWithin(this.timeout, this.condition);
+				builder.AddExpectWithin(this, this.timeout, this.condition);
 		}
 	}
 }
