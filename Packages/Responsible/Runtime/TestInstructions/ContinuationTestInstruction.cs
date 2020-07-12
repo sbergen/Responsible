@@ -6,9 +6,9 @@ using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class AggregateTestInstruction<T1, T2> : TestInstructionBase<T2>
+	internal class ContinuationTestInstruction<T1, T2> : TestInstructionBase<T2>
 	{
-		public AggregateTestInstruction(
+		public ContinuationTestInstruction(
 			ITestInstruction<T1> first,
 			Func<T1, ITestInstruction<T2>> selector,
 			SourceContext sourceContext)

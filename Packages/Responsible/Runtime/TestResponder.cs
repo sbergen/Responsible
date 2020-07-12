@@ -32,7 +32,7 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
-			Responsibly.RespondToAnyOf(responder);
+			new AnyOfResponder<T>(new[] { responder });
 
 		/// <summary>
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.

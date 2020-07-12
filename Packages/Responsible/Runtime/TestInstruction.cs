@@ -84,8 +84,16 @@ namespace Responsible
 		/// Runs all provided test instructions in order, or until one of them fails.
 		/// </summary>
 		[Pure]
-		public static ITestInstruction<Unit> Sequence(this IEnumerable<ITestInstruction<Unit>> instructions) =>
-			instructions.Aggregate((acc, i) => acc.ContinueWith(_ => i));
+		public static ITestInstruction<Unit> Sequence(
+			this IEnumerable<ITestInstruction<Unit>> instructions,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0) =>
+			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
+				new SequencedTestInstruction<Unit, Unit>(
+					sequencedInstructions,
+					nextInstruction,
+					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
 
 		/// <summary>
 		/// Constructs a test instruction, which will construct another instruction using <c>continuation</c>
@@ -99,7 +107,7 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new AggregateTestInstruction<T1, T2>(
+			=> new ContinuationTestInstruction<T1, T2>(
 				first,
 				continuation,
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
@@ -114,9 +122,9 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new AggregateTestInstruction<T1, T2>(
+			=> new SequencedTestInstruction<T1, T2>(
 				first,
-				_ => second,
+				second,
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
