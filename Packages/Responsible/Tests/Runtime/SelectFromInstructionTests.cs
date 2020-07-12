@@ -38,5 +38,24 @@ namespace Responsible.Tests.Runtime
 				"[!] SELECT",
 				this.Error.Message);
 		}
+
+		[Test]
+		public void SelectFromInstruction_ContainsCorrectDetails_WhenInstructionFailed()
+		{
+			Do<int>("Throw", () => throw new Exception("Fail!"))
+				.Select(i => i)
+				.ToObservable()
+				.Subscribe(Nop, this.StoreError);
+
+			StringAssert.Contains(
+				"[ ] SELECT",
+				this.Error.Message,
+				"Should not contain error for select");
+
+			StringAssert.Contains(
+				"[!] Throw",
+				this.Error.Message,
+				"Should contain error for instruction");
+		}
 	}
 }

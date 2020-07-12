@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using UniRx;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
@@ -41,6 +42,26 @@ namespace Responsible.Tests.Runtime
 			StringAssert.Contains(
 				"[!] SELECT",
 				this.Error.Message);
+		}
+
+		[Test]
+		public void SelectFromCondition_ContainsCorrectDetails_WhenConditionFailed()
+		{
+			WaitForCondition("Throw", () => throw new Exception("Fail!"))
+				.Select(r => r)
+				.ExpectWithinSeconds(1)
+				.ToObservable()
+				.Subscribe(Nop, this.StoreError);
+
+			StringAssert.Contains(
+				"[ ] SELECT",
+				this.Error.Message,
+				"Should not contain error for Select");
+
+			StringAssert.Contains(
+				"[!] Throw",
+				this.Error.Message,
+				"Should contain error for condition");
 		}
 	}
 }

@@ -89,42 +89,35 @@ namespace Responsible.Tests.Runtime
 		}
 
 		private const string ExpectedOutput =
-			@"Test operation execution failed:
-RESPOND TO
-  ANY OF
-    Response 1
-    Response 2
-UNTIL
-  Never
- 
-Failed after 3.00s and 4 frames
+			@"Test operation execution failed!
  
 Failure context:
-RESPOND TO
-  ANY OF
-    [.] Response 1
-      WAIT FOR
-        FIRST
-          [✓] Cond 1.1 (Completed in: 1.50s and 2 frames)
-        AND THEN
-          [✓] Cond 1.2 (Completed in: 3.00s and 4 frames)
-      THEN RESPOND WITH
-        [!] Response 1
-          FAILED WITH: Exception
-          MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:30)
-    [.] Response 2
-      WAIT FOR
-        FIRST
-          [.] Cond 2.1
-        AND THEN ...
-      THEN RESPOND WITH ...
-UNTIL
-  [.] Never
+[!] EXPECT WITHIN 0:00:10 (Failed after 3.00s and 4 frames)
+  UNTIL
+    [.] Never (Started 3.00s and 4 frames ago)
+  RESPOND TO
+    [.] RESPOND TO ANY OF (Started 3.00s and 4 frames ago)
+      [!] Response 1 (Failed after 0.00s and 0 frames)
+        WAIT FOR
+          [✓] Cond 1.1 (Completed in 1.50s and 2 frames)
+          [.] Cond 1.2 (Started 1.50s and 2 frames ago)
+        THEN RESPOND WITH
+          [!] Response 1 (Failed after 0.00s and 0 frames)
  
-Test instruction stack: 
-MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)
-ErrorOutput_IsAsExpected (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:68)
+            Failed with:
+              System.Exception: 'Exception'
  
-Error: NUnit.Framework.AssertionException: Synchronous test action failed:";
+            Test operation stack:
+              [ThenRespondWith] MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:29)
+              [Until] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:33)
+              [ExpectWithinSeconds] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+              [ToObservable] ErrorOutput_IsAsExpected (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:67)
+ 
+      [.] Response 2 (Started 3.00s and 4 frames ago)
+        WAIT FOR
+          [.] Cond 2.1 (Started 3.00s and 4 frames ago)
+        THEN RESPOND WITH ...
+ 
+Error: System.Exception: Exception";
 	}
 }

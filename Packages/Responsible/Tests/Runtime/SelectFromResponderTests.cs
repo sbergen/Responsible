@@ -11,13 +11,15 @@ namespace Responsible.Tests.Runtime
 	{
 		private ConditionResponder<int> responder;
 		private int? result;
+		private Func<int, int> selector;
 
 		[SetUp]
 		public void SetUp()
 		{
+			this.selector = i => i * 2;
 			this.responder = new ConditionResponder<int>(1, 2);
 			this.responder.Responder
-				.Select(i => i * 2)
+				.Select(i => this.selector(i))
 				.ExpectWithinSeconds(1)
 				.ToObservable()
 				.Subscribe(r => this.result = r, this.StoreError);
@@ -32,7 +34,7 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator SelectFromResponder_PublishesCorrectError_WhenExceptionThrown()
+		public IEnumerator SelectFromResponder_PublishesCorrectError_WhenResponderFails()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			yield return null;
@@ -40,21 +42,43 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator SelectFromResponder_ContainsFailureDetails_WhenFailed()
+		public IEnumerator SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			yield return null;
 
-			// This is a bit curious, as the select didn't really fail, its source just failed...
+			StringAssert.Contains(
+				"[ ] SELECT",
+				this.Error.Message,
+				"Should Not have started select");
+
+			StringAssert.Contains(
+				ConditionResponder.WaitForCompletionDescription,
+				this.Error.Message,
+				"Should contain responder details");
+		}
+
+		[UnityTest]
+		public IEnumerator SelectFromResponder_ContainsCorrectDetails_WhenSelectFails()
+		{
+			this.selector = _ => throw new Exception("Fail!");
+			this.responder.AllowFullCompletion();
+			yield return null;
+
 			StringAssert.Contains(
 				"[!] SELECT",
 				this.Error.Message,
 				"Should contain error for select");
 
 			StringAssert.Contains(
+				"Failed with:",
+				this.Error.Message,
+				"Should contain failure details for select");
+
+			StringAssert.DoesNotContain(
 				ConditionResponder.WaitForCompletionDescription,
 				this.Error.Message,
-				"Should contain responder details");
+				"Should not contain responder details");
 		}
 	}
 }

@@ -27,15 +27,15 @@ namespace Responsible.State
 		internal void AddInstruction(
 			ITestOperationState operation,
 			string description) =>
-			this.AddStatus(operation, description);
+			this.AddStatus(operation.Status, description);
 
 		internal void AddSelect<T1, T2>(
 			ITestOperationState primaryState,
-			ITestOperationState selectState)
+			TestOperationStatus selectStatus)
 		{
 			primaryState.BuildDescription(this);
 			this.AddStatus(
-				selectState,
+				selectStatus,
 				$"SELECT {typeof(T1).Name} -> {typeof(T2).Name}");
 		}
 
@@ -43,7 +43,7 @@ namespace Responsible.State
 			string description,
 			ITestOperationState operation,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null)
-			=> this.AddStatus(operation, description, extraContext);
+			=> this.AddStatus(operation.Status, description, extraContext);
 
 		internal void AddContinuation(
 			ITestOperationState first,
@@ -114,13 +114,13 @@ namespace Responsible.State
 				: this.Add($"{description} ...");
 
 		private StateStringBuilder AddStatus(
-			ITestOperationState state,
+			TestOperationStatus status,
 			string description,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this.AddIndented(
-			state.Status.MakeStatusLine(description),
+			status.MakeStatusLine(description),
 			_ =>
 			{
-				if (state.Status is TestOperationStatus.Failed failed)
+				if (status is TestOperationStatus.Failed failed)
 				{
 					this.AddEmptyLine();
 
@@ -142,7 +142,7 @@ namespace Responsible.State
 					this.AddEmptyLine();
 				}
 
-				if (state.Status is TestOperationStatus.Failed || state.Status is TestOperationStatus.Waiting)
+				if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
 				{
 					extraContext?.Invoke(this);
 				}

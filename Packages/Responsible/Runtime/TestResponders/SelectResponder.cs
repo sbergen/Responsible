@@ -17,8 +17,9 @@ namespace Responsible.TestResponders
 		{
 			private readonly ITestOperationState<ITestOperationState<T1>> responder;
 			private readonly Func<T1, T2> selector;
+			private readonly SourceContext sourceContext;
 
-			[CanBeNull] private ITestOperationState<T2> selectState;
+			[CanBeNull] private SelectOperationState<T1, T2> selectState;
 
 			public State(
 				ITestResponder<T1> responder,
@@ -28,16 +29,19 @@ namespace Responsible.TestResponders
 			{
 				this.responder = responder.CreateState();
 				this.selector = selector;
+				this.sourceContext = sourceContext;
 			}
 
 			protected override IObservable<ITestOperationState<T2>> ExecuteInner(RunContext runContext) =>
 				this.responder
 					.Execute(runContext)
-					.Select(state => new SelectOperationState<T1, T2>(state, this.selector, null))
+					.Select(state => new SelectOperationState<T1, T2>(state, this.selector, this.sourceContext))
 					.Do(state => this.selectState = state);
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddSelect<T1, T2>(this.responder, this.selectState);
+				builder.AddSelect<T1, T2>(
+					this.responder,
+					this.selectState?.SelectStatus ?? TestOperationStatus.NotExecuted.Instance);
 		}
 	}
 }

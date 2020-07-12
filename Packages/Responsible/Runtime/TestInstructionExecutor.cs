@@ -50,7 +50,7 @@ namespace Responsible
 					var message = e is TimeoutException
 						? MakeTimeoutMessage(rootState)
 						: MakeErrorMessage(rootState, e);
-					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
+					this.logger.Log(LogType.Error, message);
 					return Observable.Throw<T>(new AssertionException(message));
 				});
 		}
@@ -73,7 +73,7 @@ namespace Responsible
 			string what)
 			=> new[]
 			{
-				$"Test instruction {what}!",
+				$"Test operation execution {what}!",
 				$"Failure context:\n{StateStringBuilder.MakeState(rootOperation)}",
 			};
 	}
