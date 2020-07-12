@@ -38,7 +38,7 @@ namespace Responsible.TestResponders
 					.Do(instruction => this.instructionState = instruction);
 
 			public override void BuildFailureContext(StateStringBuilder builder)
-				=> builder.AddResponder(this.description, this.waitCondition, this.instructionState);
+				=> builder.AddResponder(this.description, this, this.waitCondition, this.instructionState);
 		}
 	}
 }

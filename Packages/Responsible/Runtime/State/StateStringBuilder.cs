@@ -10,15 +10,15 @@ namespace Responsible.State
 {
 	public class StateStringBuilder : IndentedStringBuilder<StateStringBuilder>
 	{
-		public static string MakeState<T>(IOperationState<T> state)
+		public static string MakeState(IOperationState state)
 		{
 			var builder = new StateStringBuilder();
 			state.BuildFailureContext(builder);
 			return builder.ToString();
 		}
 
-		public void AddInstruction<T>(
-			IOperationState<T> operation,
+		public void AddInstruction(
+			IOperationState operation,
 			string description,
 			SourceContext sourceContext) => this
 			.AddIndented(
@@ -34,40 +34,51 @@ namespace Responsible.State
 					// TODO other details
 				});
 
-		public void AddWait<T>(
+		public void AddWait(
 			string description,
-			IOperationState<T> operation,
+			IOperationState operation,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null)
 			=> this.AddIndented(operation.Status.MakeStatusLine(description), extraContext);
 
-		public void AddContinuation<T1, T2>(
-			IOperationState<T1> first,
-			[CanBeNull] IOperationState<T2> second)
-			=> this
-				.AddIndented("FIRST", first.BuildFailureContext)
-				.AddOptional("AND THEN", second);
+		public void AddContinuation(
+			IOperationState first,
+			[CanBeNull] IOperationState second)
+		{
+			first.BuildFailureContext(this);
+			second?.BuildFailureContext(this);
+		}
 
-		public void AddResponder<T1, T2>(
+		public void AddResponder(
 			string description,
-			IOperationState<T1> wait,
-			[CanBeNull] IOperationState<T2> instruction)
-			=> this
-				.AddIndented(description, b => b
+			IOperationState responder,
+			IOperationState wait,
+			[CanBeNull] IOperationState instruction)
+		{
+			var statusLine = responder.Status.MakeStatusLine(description);
+			if (responder.Status is OperationStatus.Completed)
+			{
+				this.Add(statusLine);
+			}
+			else
+			{
+				this.AddIndented(statusLine, b => b
 					.AddOptional("WAIT FOR", wait)
 					.AddOptional("THEN RESPOND WITH", instruction));
+			}
+		}
 
-		public void AddUntilResponder<T1, T2>(
+		public void AddUntilResponder(
 			string respondToDescription,
-			IOperationState<IOperationState<T1>> responder,
+			IOperationState<IOperationState> responder,
 			string untilDescription,
-			IOperationState<T2> condition)
+			IOperationState condition)
 			=> this
 				.AddOptional(respondToDescription, responder)
 				.AddOptional(untilDescription, condition);
 
-		public void AddExpectWithin<T>(
+		public void AddExpectWithin(
 			TimeSpan timeout,
-			IOperationState<T> operation,
+			IOperationState operation,
 			SourceContext sourceContext)
 			=> this.AddIndented(
 				$"EXPECT WITHIN {timeout:g}",
@@ -77,10 +88,10 @@ namespace Responsible.State
 					operation.BuildFailureContext(b);
 				});
 
-		public void AddParentWithChildren<T1, T2>(
+		public void AddParentWithChildren(
 			string parentDescription,
-			IOperationState<T1> parentState,
-			IEnumerable<IOperationState<T2>> children)
+			IOperationState parentState,
+			IEnumerable<IOperationState> children)
 			=> this.AddIndented(
 				parentState.Status.MakeStatusLine(parentDescription),
 				b =>
@@ -91,9 +102,9 @@ namespace Responsible.State
 					}
 				});
 
-		private StateStringBuilder AddOptional<T>(
+		private StateStringBuilder AddOptional(
 			string description,
-			[CanBeNull] IOperationState<T> child)
+			[CanBeNull] IOperationState child)
 			=> child != null
 				? this.AddIndented(description, child.BuildFailureContext)
 				: this.Add($"{description} ...");

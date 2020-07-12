@@ -43,7 +43,8 @@ namespace Responsible.State
 			{
 			}
 
-			public override string MakeStatusLine(string description) => description;
+			public override string MakeStatusLine(string description) =>
+				$"[ ] {description}";
 		}
 
 		public class Waiting : OperationStatus
@@ -74,6 +75,7 @@ namespace Responsible.State
 				if (previous is Waiting waiting)
 				{
 					this.elapsedTime = waiting.WaitContext.ElapsedTime;
+					waiting.WaitContext.WaitCompleted();
 				}
 				else
 				{

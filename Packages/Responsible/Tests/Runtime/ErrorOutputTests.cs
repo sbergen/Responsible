@@ -1,7 +1,6 @@
 using System;
 using NSubstitute;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using Responsible.Tests.Runtime.Utilities;
 using UniRx;
 using UnityEngine;
@@ -9,7 +8,6 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
-	/* TODO
 	public class ErrorOutputTests
 	{
 		private class ResponderState
@@ -128,5 +126,5 @@ MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)
 ErrorOutput_IsAsExpected (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:68)
  
 Error: NUnit.Framework.AssertionException: Synchronous test action failed:";
-	}*/
+	}
 }

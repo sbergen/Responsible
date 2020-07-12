@@ -25,7 +25,17 @@ namespace Responsible.TestInstructions
 				this.sourceContext = sourceContext;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Return(this.action());
+			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
+			{
+				try
+				{
+					return Observable.Return(this.action());
+				}
+				catch (Exception e)
+				{
+					return Observable.Throw<T>(e);
+				}
+			});
 
 			public override void BuildFailureContext(StateStringBuilder builder) =>
 				builder.AddInstruction(this, this.description, this.sourceContext);
