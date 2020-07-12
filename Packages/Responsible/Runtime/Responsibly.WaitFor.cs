@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.Context;
@@ -33,6 +34,33 @@ namespace Responsible
 			Func<bool> condition,
 			Action<StateStringBuilder> extraContext = null)
 			=> new PollingWaitCondition<Unit>(description, condition, () => Unit.Default, extraContext);
+
+		[Pure]
+		public static ITestWaitCondition<Unit> WaitForCoroutine(
+			Func<IEnumerator> startCoroutine,
+			[CanBeNull] string description = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+		=> new CoroutineWaitCondition<Unit>(
+			description,
+			startCoroutine,
+			() => Unit.Default,
+			new SourceContext(memberName, sourceFilePath, sourceLineNumber));
+
+		[Pure]
+		public static ITestWaitCondition<T> WaitForCoroutine<T>(
+			Func<IEnumerator> startCoroutine,
+			Func<T> makeResult,
+			[CanBeNull] string description = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new CoroutineWaitCondition<T>(
+				description,
+				startCoroutine,
+				makeResult,
+				new SourceContext(memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> WaitForSeconds(

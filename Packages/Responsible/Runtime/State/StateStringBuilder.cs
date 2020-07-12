@@ -41,7 +41,7 @@ namespace Responsible.State
 			[CanBeNull] IOperationState instruction)
 		{
 			var statusLine = responder.Status.MakeStatusLine(description);
-			if (responder.Status is OperationStatus.Completed)
+			if (responder.Status is OperationStatus.Completed || responder.Status is OperationStatus.NotExecuted)
 			{
 				this.Add(statusLine);
 			}
