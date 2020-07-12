@@ -13,23 +13,22 @@ namespace Responsible
 	internal class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
-		internal const string UnityEmptyLine = "\n \n";
+		private const string UnityEmptyLine = "\n \n";
 
 		private readonly IDisposable pollSubscription;
 		private readonly ILogger logger;
-
-		internal readonly IScheduler Scheduler;
-		internal readonly IObservable<Unit> PollObservable;
+		private readonly IScheduler scheduler;
+		private readonly IObservable<Unit> pollObservable;
 
 		internal TestInstructionExecutor(IScheduler scheduler, IObservable<Unit> pollObservable, ILogger logger)
 		{
-			this.Scheduler = scheduler;
+			this.scheduler = scheduler;
 			this.logger = logger;
 
 			// Workaround for how EveryUpdate works in Unity.
 			// When nobody is subscribed to it, there will be a one-frame delay on the next Subscribe.
 			var pollSubject = new Subject<Unit>();
-			this.PollObservable = pollSubject;
+			this.pollObservable = pollSubject;
 			this.pollSubscription = pollObservable.Subscribe(pollSubject);
 		}
 
@@ -42,7 +41,7 @@ namespace Responsible
 			IOperationState<T> rootState,
 			SourceContext sourceContext)
 		{
-			var runContext = new RunContext(this, sourceContext);
+			var runContext = new RunContext(sourceContext, this.scheduler, this.pollObservable);
 			return rootState
 				.Execute(runContext)
 				.Catch((Exception e) =>
@@ -50,45 +49,34 @@ namespace Responsible
 					// TODO: Stack is lost! (but is it needed?)
 					// The Unity test runner can swallow exceptions, so both log an error and throw an exception
 					var message = e is TimeoutException
-						? MakeTimeoutMessage(rootState, sourceContext)
-						: MakeErrorMessage(rootState, sourceContext, e);
+						? MakeTimeoutMessage(rootState)
+						: MakeErrorMessage(rootState, e);
 					this.logger.Log(LogType.Error, $"Test operation execution failed:\n{message}");
 					return Observable.Throw<T>(new AssertionException(message));
 				});
 		}
 
 		[Pure]
-		private static string MakeTimeoutMessage<T>(
-			IOperationState<T> rootOperation,
-			SourceContext sourceContext)
-			=> string.Join(
-				UnityEmptyLine,
-				FailureLines(rootOperation, sourceContext, "timed out"));
+		private static string MakeTimeoutMessage<T>(IOperationState<T> rootOperation)
+			=> string.Join(UnityEmptyLine, FailureLines(rootOperation, "timed out"));
 
 		[Pure]
 		private static string MakeErrorMessage<T>(
 			IOperationState<T> rootOperation,
-			SourceContext sourceContext,
 			Exception exception)
 			=> string.Join(
 				UnityEmptyLine,
-				FailureLines(rootOperation, sourceContext, "failed")
-					.Append($"Error: {exception}"));
+				FailureLines(rootOperation,"failed").Append($"Error: {exception}"));
 
 		[Pure]
 		private static IEnumerable<string> FailureLines<T>(
 			IOperationState<T> rootOperation,
-			SourceContext sourceContext,
 			string what)
 			=> new[]
 			{
 				$"Test instruction {what}!",
 				$"Failure context:\n{StateStringBuilder.MakeState(rootOperation)}",
-				InstructionStack(sourceContext),
 			};
-
-		[Pure]
-		internal static string InstructionStack(SourceContext context) => $"Test instruction stack: \n{context}";
 
 		/* TODO
 		[Pure]

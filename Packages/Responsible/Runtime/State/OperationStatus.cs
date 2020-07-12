@@ -5,37 +5,9 @@ namespace Responsible.State
 {
 	public abstract class OperationStatus
 	{
-		public static void Update(ref OperationStatus previous, OperationStatus next)
-		{
-			if (next is NotExecuted)
-			{
-				throw new InvalidOperationException(
-					$"Can not go back to not executed from {previous.GetType().Name}");
-			}
-			else if (next is Waiting)
-			{
-				if (previous is Completed || previous is Failed)
-				{
-
-				}
-
-				previous = next;
-			}
-			else
-			{
-				if (previous is Completed || previous is Failed)
-				{
-					throw new InvalidOperationException(
-						$"Can not transition from {previous.GetType().Name} to {next.GetType().Name}");
-				}
-
-				previous = next;
-			}
-		}
-
 		public abstract string MakeStatusLine(string description);
 
-		public class NotExecuted : OperationStatus
+		internal class NotExecuted : OperationStatus
 		{
 			public static readonly NotExecuted Instance = new NotExecuted();
 
@@ -47,11 +19,11 @@ namespace Responsible.State
 				$"[ ] {description}";
 		}
 
-		public class Waiting : OperationStatus
+		internal class Waiting : OperationStatus
 		{
 			internal readonly WaitContext WaitContext;
 
-			public Waiting(OperationStatus previous, RunContext runContext)
+			public Waiting(OperationStatus previous, WaitContext waitContext)
 			{
 				if (previous != NotExecuted.Instance)
 				{
@@ -59,14 +31,14 @@ namespace Responsible.State
 						$"Can not go back to not waiting from {previous.GetType().Name}");
 				}
 
-				this.WaitContext = runContext.MakeWaitContext();
+				this.WaitContext = waitContext;
 			}
 
 			public override string MakeStatusLine(string description) =>
 				$"[.] {description} (Started {this.WaitContext.ElapsedTime} ago)";
 		}
 
-		public class Completed : OperationStatus
+		internal class Completed : OperationStatus
 		{
 			private readonly string elapsedTime;
 
@@ -88,18 +60,20 @@ namespace Responsible.State
 				$"[✓] {description} (Completed in {this.elapsedTime})";
 		}
 
-		public class Failed : OperationStatus
+		internal class Failed : OperationStatus
 		{
 			private readonly string elapsedTime;
 
 			public readonly Exception Error;
+			public readonly SourceContext SourceContext;
 
-			public Failed(OperationStatus previous, Exception error)
+			public Failed(OperationStatus previous, Exception error, SourceContext sourceContext)
 			{
 				if (previous is Waiting waiting)
 				{
 					this.elapsedTime = waiting.WaitContext.ElapsedTime;
 					this.Error = error;
+					this.SourceContext = sourceContext;
 				}
 				else
 				{

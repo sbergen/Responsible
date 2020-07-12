@@ -15,19 +15,18 @@ namespace Responsible.TestInstructions
 		private class State : OperationState<Unit>
 		{
 			private readonly TimeSpan waitTime;
-			private readonly SourceContext sourceContext;
 
 			public State(TimeSpan waitTime, SourceContext sourceContext)
 			{
 				this.waitTime = waitTime;
-				this.sourceContext = sourceContext;
+				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<Unit> ExecuteInner(RunContext runContext)
-				=> Observable.Timer(this.waitTime, runContext.Executor.Scheduler).AsUnitObservable();
+				=> Observable.Timer(this.waitTime, runContext.Scheduler).AsUnitObservable();
 
 			public override void BuildFailureContext(StateStringBuilder builder) =>
-				builder.AddInstruction(this, $"WAIT FOR {this.waitTime:g}", this.sourceContext);
+				builder.AddInstruction(this, $"WAIT FOR {this.waitTime:g}");
 		}
 	}
 }

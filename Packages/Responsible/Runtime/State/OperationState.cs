@@ -14,6 +14,8 @@ namespace Responsible.State
 	{
 		public OperationStatus Status { get; private set; } = OperationStatus.NotExecuted.Instance;
 
+		protected SourceContext? SourceContext { private get; set; }
+
 		public IObservable<T> Execute(RunContext runContext) => Observable.Defer(() =>
 		{
 			if (this.Status != OperationStatus.NotExecuted.Instance)
@@ -21,10 +23,17 @@ namespace Responsible.State
 				throw new InvalidOperationException("Operation already started");
 			}
 
-			return this.ExecuteInner(runContext)
-				.DoOnSubscribe(() => this.Status = new OperationStatus.Waiting(this.Status, runContext))
+			var waitContext = runContext.MakeWaitContext();
+			var nestedRunContext = this.SourceContext != null
+				? runContext.MakeNested(this.SourceContext.Value)
+				: runContext;
+			this.Status = new OperationStatus.Waiting(this.Status, waitContext);
+
+			return this.ExecuteInner(nestedRunContext)
 				.DoOnCompleted(() => this.Status = new OperationStatus.Completed(this.Status))
-				.DoOnError(e => this.Status = new OperationStatus.Failed(this.Status, e));
+				.DoOnError(exception => this.Status =
+					new OperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))
+				.Finally(() => waitContext?.Dispose());
 		});
 
 		protected abstract IObservable<T> ExecuteInner(RunContext runContext);

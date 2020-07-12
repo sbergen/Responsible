@@ -16,13 +16,12 @@ namespace Responsible.TestInstructions
 		{
 			private readonly string description;
 			private readonly Func<T> action;
-			private readonly SourceContext sourceContext;
 
 			public State(string description, Func<T> action, SourceContext sourceContext)
 			{
 				this.description = description;
 				this.action = action;
-				this.sourceContext = sourceContext;
+				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
@@ -38,7 +37,7 @@ namespace Responsible.TestInstructions
 			});
 
 			public override void BuildFailureContext(StateStringBuilder builder) =>
-				builder.AddInstruction(this, this.description, this.sourceContext);
+				builder.AddInstruction(this, this.description);
 		}
 	}
 }

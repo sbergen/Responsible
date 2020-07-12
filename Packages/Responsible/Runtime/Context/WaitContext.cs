@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UniRx;
 
 namespace Responsible.Context
 {
-	internal class WaitContext : ContextBase, IDisposable
+	internal class WaitContext : IDisposable
 	{
 		private readonly Subject<Unit> pollSubject = new Subject<Unit>();
 		private readonly DateTimeOffset startTime;

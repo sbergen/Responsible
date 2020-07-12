@@ -19,21 +19,20 @@ namespace Responsible.TestInstructions
 		{
 			private readonly IOperationState<T> condition;
 			private readonly TimeSpan timeout;
-			private readonly SourceContext sourceContext;
 
 			public State(ITestWaitCondition<T> condition, TimeSpan timeout, SourceContext sourceContext)
 			{
 				this.condition = condition.CreateState();
 				this.timeout = timeout;
-				this.sourceContext = sourceContext;
+				this.SourceContext = sourceContext;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => this.condition
 				.Execute(runContext)
-				.Timeout(this.timeout, runContext.Executor.Scheduler);
+				.Timeout(this.timeout, runContext.Scheduler);
 
 			public override void BuildFailureContext(StateStringBuilder builder) =>
-				builder.AddExpectWithin(this.timeout, this.condition, this.sourceContext);
+				builder.AddExpectWithin(this.timeout, this.condition);
 		}
 	}
 }

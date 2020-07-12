@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Responsible.Context;
 using Responsible.Utilities;
-using UniRx;
 
 namespace Responsible.State
 {
@@ -19,20 +17,8 @@ namespace Responsible.State
 
 		public void AddInstruction(
 			IOperationState operation,
-			string description,
-			SourceContext sourceContext) => this
-			.AddIndented(
-				operation.Status.MakeStatusLine(description),
-				b =>
-				{
-					b.Add(sourceContext.ToString());
-					if (operation.Status is OperationStatus.Failed failed)
-					{
-						b.Add(FailureMessage(failed.Error));
-					}
-
-					// TODO other details
-				});
+			string description) =>
+			this.AddStatus(operation, description);
 
 		public void AddWait(
 			string description,
@@ -78,15 +64,10 @@ namespace Responsible.State
 
 		public void AddExpectWithin(
 			TimeSpan timeout,
-			IOperationState operation,
-			SourceContext sourceContext)
+			IOperationState operation)
 			=> this.AddIndented(
 				$"EXPECT WITHIN {timeout:g}",
-				b =>
-				{
-					b.Add(sourceContext.ToString());
-					operation.BuildFailureContext(b);
-				});
+				operation.BuildFailureContext);
 
 		public void AddParentWithChildren(
 			string parentDescription,
@@ -109,12 +90,36 @@ namespace Responsible.State
 				? this.AddIndented(description, child.BuildFailureContext)
 				: this.Add($"{description} ...");
 
-		private static string FailureMessage(Exception e)
-			=> $"FAILED WITH: {e.GetType().Name}: '{TruncatedExceptionMessage(e)}'";
+		private StateStringBuilder AddStatus(IOperationState state, string description) => this.AddIndented(
+			state.Status.MakeStatusLine(description),
+			_ =>
+			{
+				if (state.Status is OperationStatus.Failed failed)
+				{
+					this.AddEmptyLine();
+
+					var e = failed.Error;
+					this.AddIndented(
+						"Failed with:",
+						b => b.Add($"{e.GetType().Name}: '{TruncatedExceptionMessage(e)}'"));
+
+					this.AddEmptyLine();
+
+					this.AddIndented("Test Instruction stack:", b =>
+					{
+						foreach (var sourceLine in failed.SourceContext.SourceLines)
+						{
+							b.Add(sourceLine);
+						}
+					});
+
+					this.AddEmptyLine();
+				}
+			});
 
 		private static string TruncatedExceptionMessage(Exception e) => new string(e.Message
 			.Select(Indexed.Make)
-			.TakeWhile(indexed => indexed.Index < 50 && indexed.Value != '\n')
+			.TakeWhile(indexed => indexed.Index < 100 && indexed.Value != '\n')
 			.Select(indexed => indexed.Value)
 			.ToArray());
 	}

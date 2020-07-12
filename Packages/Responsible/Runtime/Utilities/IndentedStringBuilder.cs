@@ -37,5 +37,11 @@ namespace Responsible.Utilities
 
 			return this.Self;
 		}
+
+		protected T AddEmptyLine()
+		{
+			this.stringBuilder.AppendLine(" "); // Add space so Unity doesn't strip it
+			return this.Self;
+		}
 	}
 }

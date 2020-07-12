@@ -3,23 +3,22 @@ using UniRx;
 
 namespace Responsible.Context
 {
-	public class RunContext : ContextBase
+	public readonly struct RunContext
 	{
-		// This is private to enforce appending of current context!
-		private readonly SourceContext sourceContext;
+		internal readonly SourceContext SourceContext;
+		internal readonly IScheduler Scheduler;
+		internal readonly IObservable<Unit> PollObservable;
 
-		internal readonly TestInstructionExecutor Executor;
+		internal WaitContext MakeWaitContext() => new WaitContext(this.Scheduler, this.PollObservable);
 
-		internal IObservable<Unit> PollObservable => this.Executor.PollObservable;
+		internal RunContext MakeNested(SourceContext sourceContext)
+			=> new RunContext(this.SourceContext.Append(sourceContext), this.Scheduler, this.PollObservable);
 
-		internal WaitContext MakeWaitContext() => new WaitContext(this.Executor.Scheduler, this.PollObservable);
-
-		internal SourceContext SourceContext(SourceContext current) => this.sourceContext.Append(current);
-
-		internal RunContext(TestInstructionExecutor executor, SourceContext sourceContext)
+		internal RunContext(SourceContext sourceContext, IScheduler scheduler, IObservable<Unit> pollObservable)
 		{
-			this.Executor = executor;
-			this.sourceContext = sourceContext;
+			this.SourceContext = sourceContext;
+			this.Scheduler = scheduler;
+			this.PollObservable = pollObservable;
 		}
 	}
 }
