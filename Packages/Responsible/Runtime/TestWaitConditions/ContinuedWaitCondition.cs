@@ -16,12 +16,12 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : OperationState<TSecond>
+		private class State : TestOperationState<TSecond>
 		{
-			private readonly IOperationState<TFirst> first;
+			private readonly ITestOperationState<TFirst> first;
 			private readonly Func<TFirst, ITestWaitCondition<TSecond>> continuation;
 
-			[CanBeNull] private IOperationState<TSecond> second;
+			[CanBeNull] private ITestOperationState<TSecond> second;
 
 			public State(
 				ITestWaitCondition<TFirst> first,

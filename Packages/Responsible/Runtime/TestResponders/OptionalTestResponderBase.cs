@@ -6,13 +6,13 @@ namespace Responsible.TestResponders
 {
 	public class OptionalTestResponderBase : IOptionalTestResponder
 	{
-		private readonly Func<IOperationState<IOperationState<Unit>>> createState;
+		private readonly Func<ITestOperationState<ITestOperationState<Unit>>> createState;
 
-		protected OptionalTestResponderBase(Func<IOperationState<IOperationState<Unit>>> createState)
+		protected OptionalTestResponderBase(Func<ITestOperationState<ITestOperationState<Unit>>> createState)
 		{
 			this.createState = createState;
 		}
 
-		public IOperationState<IOperationState<Unit>> CreateState() => this.createState();
+		public ITestOperationState<ITestOperationState<Unit>> CreateState() => this.createState();
 	}
 }

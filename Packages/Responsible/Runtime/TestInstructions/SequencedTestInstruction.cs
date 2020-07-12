@@ -15,10 +15,10 @@ namespace Responsible.TestInstructions
 		{
 		}
 
-		private class State : OperationState<T2>
+		private class State : TestOperationState<T2>
 		{
-			private readonly IOperationState<T1> first;
-			private readonly IOperationState<T2> second;
+			private readonly ITestOperationState<T1> first;
+			private readonly ITestOperationState<T2> second;
 
 			public State(
 				ITestInstruction<T1> first,

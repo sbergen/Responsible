@@ -6,7 +6,7 @@ namespace Responsible
 	/// <summary>
 	/// Represents one or more test responders, which can optionally execute when they are ready.
 	/// </summary>
-	public interface IOptionalTestResponder : ITestOperation<IOperationState<Unit>>
+	public interface IOptionalTestResponder : ITestOperation<ITestOperationState<Unit>>
 	{
 	}
 }

@@ -18,7 +18,7 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : OperationState<T>
+		private class State : TestOperationState<T>
 		{
 			private readonly string description;
 			private readonly Func<bool> condition;

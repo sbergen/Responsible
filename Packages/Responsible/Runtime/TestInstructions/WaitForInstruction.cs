@@ -12,7 +12,7 @@ namespace Responsible.TestInstructions
 		{
 		}
 
-		private class State : OperationState<Unit>
+		private class State : TestOperationState<Unit>
 		{
 			private readonly TimeSpan waitTime;
 

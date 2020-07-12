@@ -18,7 +18,7 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : OperationState<T>
+		private class State : TestOperationState<T>
 		{
 			private readonly Func<T> getObject;
 			private readonly IConstraint constraint;

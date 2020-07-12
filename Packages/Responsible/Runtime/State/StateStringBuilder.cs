@@ -17,7 +17,7 @@ namespace Responsible.State
 			}
 		}
 
-		internal static string MakeState(IOperationState state)
+		internal static string MakeState(ITestOperationState state)
 		{
 			var builder = new StateStringBuilder();
 			state.BuildDescription(builder);
@@ -25,19 +25,19 @@ namespace Responsible.State
 		}
 
 		internal void AddInstruction(
-			IOperationState operation,
+			ITestOperationState operation,
 			string description) =>
 			this.AddStatus(operation, description);
 
 		internal void AddWait(
 			string description,
-			IOperationState operation,
+			ITestOperationState operation,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null)
 			=> this.AddStatus(operation, description, extraContext);
 
 		internal void AddContinuation(
-			IOperationState first,
-			[CanBeNull] IOperationState second)
+			ITestOperationState first,
+			[CanBeNull] ITestOperationState second)
 		{
 			first.BuildDescription(this);
 			second?.BuildDescription(this);
@@ -45,12 +45,12 @@ namespace Responsible.State
 
 		internal void AddResponder(
 			string description,
-			IOperationState responder,
-			IOperationState wait,
-			[CanBeNull] IOperationState instruction)
+			ITestOperationState responder,
+			ITestOperationState wait,
+			[CanBeNull] ITestOperationState instruction)
 		{
 			var statusLine = responder.Status.MakeStatusLine(description);
-			if (responder.Status is OperationStatus.Completed || responder.Status is OperationStatus.NotExecuted)
+			if (responder.Status is TestOperationStatus.Completed || responder.Status is TestOperationStatus.NotExecuted)
 			{
 				this.Add(statusLine);
 			}
@@ -64,24 +64,24 @@ namespace Responsible.State
 
 		internal void AddUntilResponder(
 			string respondToDescription,
-			IOperationState<IOperationState> responder,
+			ITestOperationState<ITestOperationState> responder,
 			string untilDescription,
-			IOperationState condition)
+			ITestOperationState condition)
 			=> this
 				.AddOptional(untilDescription, condition)
 				.AddOptional(respondToDescription, responder);
 
 		internal void AddExpectWithin(
 			TimeSpan timeout,
-			IOperationState operation)
+			ITestOperationState operation)
 			=> this.AddIndented(
 				operation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
 				operation.BuildDescription);
 
 		internal void AddParentWithChildren(
 			string parentDescription,
-			IOperationState parentState,
-			IEnumerable<IOperationState> children)
+			ITestOperationState parentState,
+			IEnumerable<ITestOperationState> children)
 			=> this.AddIndented(
 				parentState.Status.MakeStatusLine(parentDescription),
 				b =>
@@ -94,19 +94,19 @@ namespace Responsible.State
 
 		private StateStringBuilder AddOptional(
 			string description,
-			[CanBeNull] IOperationState child)
+			[CanBeNull] ITestOperationState child)
 			=> child != null
 				? this.AddIndented(description, child.BuildDescription)
 				: this.Add($"{description} ...");
 
 		private StateStringBuilder AddStatus(
-			IOperationState state,
+			ITestOperationState state,
 			string description,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this.AddIndented(
 			state.Status.MakeStatusLine(description),
 			_ =>
 			{
-				if (state.Status is OperationStatus.Failed failed)
+				if (state.Status is TestOperationStatus.Failed failed)
 				{
 					this.AddEmptyLine();
 
@@ -128,7 +128,7 @@ namespace Responsible.State
 					this.AddEmptyLine();
 				}
 
-				if (state.Status is OperationStatus.Failed || state.Status is OperationStatus.Waiting)
+				if (state.Status is TestOperationStatus.Failed || state.Status is TestOperationStatus.Waiting)
 				{
 					extraContext?.Invoke(this);
 				}

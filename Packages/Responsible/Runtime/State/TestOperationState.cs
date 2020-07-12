@@ -4,26 +4,26 @@ using UniRx;
 
 namespace Responsible.State
 {
-	internal static class OperationState
+	internal static class TestOperationState
 	{
-		public static IOperationState<Unit> AsUnitOperationState<T>(this IOperationState<T> state)
+		public static ITestOperationState<Unit> AsUnitOperationState<T>(this ITestOperationState<T> state)
 			=> new UnitOperationState<T, Unit>(state, _ => Unit.Default);
 	}
 
-	internal abstract class OperationState<T> : IOperationState<T>
+	internal abstract class TestOperationState<T> : ITestOperationState<T>
 	{
 		private readonly SourceContext? sourceContext;
 
-		public OperationStatus Status { get; private set; } = OperationStatus.NotExecuted.Instance;
+		public TestOperationStatus Status { get; private set; } = TestOperationStatus.NotExecuted.Instance;
 
-		protected OperationState(SourceContext? sourceContext)
+		protected TestOperationState(SourceContext? sourceContext)
 		{
 			this.sourceContext = sourceContext;
 		}
 
 		public IObservable<T> Execute(RunContext runContext) => Observable.Defer(() =>
 		{
-			if (this.Status != OperationStatus.NotExecuted.Instance)
+			if (this.Status != TestOperationStatus.NotExecuted.Instance)
 			{
 				throw new InvalidOperationException("Operation already started");
 			}
@@ -32,13 +32,13 @@ namespace Responsible.State
 			var nestedRunContext = this.sourceContext != null
 				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;
-			this.Status = new OperationStatus.Waiting(this.Status, waitContext);
+			this.Status = new TestOperationStatus.Waiting(this.Status, waitContext);
 
 			return this
 				.ExecuteInner(nestedRunContext)
-				.DoOnCompleted(() => this.Status = new OperationStatus.Completed(this.Status))
+				.DoOnCompleted(() => this.Status = new TestOperationStatus.Completed(this.Status))
 				.DoOnError(exception => this.Status =
-					new OperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))
+					new TestOperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))
 				.Finally(() => waitContext?.Dispose());
 		});
 

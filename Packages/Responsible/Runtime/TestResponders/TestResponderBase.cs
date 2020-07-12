@@ -5,13 +5,13 @@ namespace Responsible.TestResponders
 {
 	internal abstract class TestResponderBase<T> : ITestResponder<T>
 	{
-		private readonly Func<IOperationState<IOperationState<T>>> createState;
+		private readonly Func<ITestOperationState<ITestOperationState<T>>> createState;
 
-		protected TestResponderBase(Func<IOperationState<IOperationState<T>>> createState)
+		protected TestResponderBase(Func<ITestOperationState<ITestOperationState<T>>> createState)
 		{
 			this.createState = createState;
 		}
 
-		public IOperationState<IOperationState<T>> CreateState() => this.createState();
+		public ITestOperationState<ITestOperationState<T>> CreateState() => this.createState();
 	}
 }

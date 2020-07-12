@@ -5,13 +5,13 @@ namespace Responsible.TestWaitConditions
 {
 	internal abstract class TestWaitConditionBase<T> : ITestWaitCondition<T>
 	{
-		private readonly Func<IOperationState<T>> createState;
+		private readonly Func<ITestOperationState<T>> createState;
 
-		protected TestWaitConditionBase(Func<IOperationState<T>> state)
+		protected TestWaitConditionBase(Func<ITestOperationState<T>> state)
 		{
 			this.createState = state;
 		}
 
-		public IOperationState<T> CreateState() => this.createState();
+		public ITestOperationState<T> CreateState() => this.createState();
 	}
 }

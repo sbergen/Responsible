@@ -3,9 +3,9 @@ using Responsible.Context;
 
 namespace Responsible.State
 {
-	public interface IOperationState
+	public interface ITestOperationState
 	{
-		OperationStatus Status { get; }
+		TestOperationStatus Status { get; }
 
 		/// <summary>
 		/// Adds a detailed description of the operation to the builder, which might help debugging failures.
@@ -14,7 +14,7 @@ namespace Responsible.State
 		void BuildDescription(StateStringBuilder builder);
 	}
 
-	public interface IOperationState<out T> : IOperationState
+	public interface ITestOperationState<out T> : ITestOperationState
 	{
 		IObservable<T> Execute(RunContext runContext);
 	}

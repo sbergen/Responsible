@@ -6,9 +6,9 @@ namespace Responsible.TestResponders
 	internal class UnitTestResponder<T> : TestResponderBase<Unit>
 	{
 		public UnitTestResponder(ITestResponder<T> responder)
-		: base(() => new UnitOperationState<IOperationState<T>,IOperationState<Unit>>(
+		: base(() => new UnitOperationState<ITestOperationState<T>,ITestOperationState<Unit>>(
 			responder.CreateState(),
-			OperationState.AsUnitOperationState))
+			TestOperationState.AsUnitOperationState))
 		{
 		}
 	}

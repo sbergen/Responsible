@@ -17,13 +17,13 @@ namespace Responsible.TestResponders
 		{
 		}
 
-		private class State : OperationState<IOperationState<T>>
+		private class State : TestOperationState<ITestOperationState<T>>
 		{
 			private readonly string description;
-			private readonly IOperationState<TArg> waitCondition;
+			private readonly ITestOperationState<TArg> waitCondition;
 			private readonly Func<TArg, ITestInstruction<T>> makeInstruction;
 
-			[CanBeNull] private IOperationState<T> instructionState;
+			[CanBeNull] private ITestOperationState<T> instructionState;
 
 			public State(
 				string description,
@@ -37,7 +37,7 @@ namespace Responsible.TestResponders
 				this.makeInstruction = makeInstruction;
 			}
 
-			protected override IObservable<IOperationState<T>> ExecuteInner(RunContext runContext) =>
+			protected override IObservable<ITestOperationState<T>> ExecuteInner(RunContext runContext) =>
 				this.waitCondition
 					.Execute(runContext)
 					.Select(arg => this.makeInstruction(arg).CreateState())

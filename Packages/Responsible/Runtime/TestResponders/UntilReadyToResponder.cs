@@ -11,7 +11,7 @@ namespace Responsible.TestResponders
 			IOptionalTestResponder respondTo,
 			ITestResponder<T> untilReady,
 			SourceContext sourceContext)
-			: base(() => new UntilResponderState<IOperationState<T>>(
+			: base(() => new UntilResponderState<ITestOperationState<T>>(
 				"UNTIL READY TO",
 				respondTo.CreateState(),
 				untilReady.CreateState(),

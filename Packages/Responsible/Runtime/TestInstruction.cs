@@ -72,7 +72,7 @@ namespace Responsible
 		/// </summary>
 		[Pure]
 		public static IObservable<T> ToObservable<T>(
-			this IOperationState<T> state,
+			this ITestOperationState<T> state,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

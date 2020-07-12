@@ -4,16 +4,16 @@ using UniRx;
 
 namespace Responsible.State
 {
-	internal class UntilResponderState<T> : OperationState<T>
+	internal class UntilResponderState<T> : TestOperationState<T>
 	{
 		private readonly string untilDescription;
-		private readonly IOperationState<IOperationState<Unit>> respondTo;
-		private readonly IOperationState<T> until;
+		private readonly ITestOperationState<ITestOperationState<Unit>> respondTo;
+		private readonly ITestOperationState<T> until;
 
 		public UntilResponderState(
 			string untilDescription,
-			IOperationState<IOperationState<Unit>> respondTo,
-			IOperationState<T> until,
+			ITestOperationState<ITestOperationState<Unit>> respondTo,
+			ITestOperationState<T> until,
 			SourceContext sourceContext)
 			: base(sourceContext)
 		{
@@ -30,7 +30,7 @@ namespace Responsible.State
 			return this.respondTo
 				.Execute(runContext)
 				// Keep waiting for condition even though the instruction stream completes
-				.Concat(Observable.Never<IOperationState<Unit>>())
+				.Concat(Observable.Never<ITestOperationState<Unit>>())
 				.TakeUntil(replayedResult)
 				.Select(state => state.Execute(runContext))
 				.Concat() // Execute the instructions

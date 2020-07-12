@@ -38,7 +38,7 @@ namespace Responsible
 		}
 
 		internal IObservable<T> RunInstruction<T>(
-			IOperationState<T> rootState,
+			ITestOperationState<T> rootState,
 			SourceContext sourceContext)
 		{
 			var runContext = new RunContext(sourceContext, this.scheduler, this.pollObservable);
@@ -56,12 +56,12 @@ namespace Responsible
 		}
 
 		[Pure]
-		private static string MakeTimeoutMessage<T>(IOperationState<T> rootOperation)
+		private static string MakeTimeoutMessage<T>(ITestOperationState<T> rootOperation)
 			=> string.Join(UnityEmptyLine, FailureLines(rootOperation, "timed out"));
 
 		[Pure]
 		private static string MakeErrorMessage<T>(
-			IOperationState<T> rootOperation,
+			ITestOperationState<T> rootOperation,
 			Exception exception)
 			=> string.Join(
 				UnityEmptyLine,
@@ -69,7 +69,7 @@ namespace Responsible
 
 		[Pure]
 		private static IEnumerable<string> FailureLines<T>(
-			IOperationState<T> rootOperation,
+			ITestOperationState<T> rootOperation,
 			string what)
 			=> new[]
 			{

@@ -15,10 +15,10 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : OperationState<TSecond>
+		private class State : TestOperationState<TSecond>
 		{
-			private readonly IOperationState<TFirst> first;
-			private readonly IOperationState<TSecond> second;
+			private readonly ITestOperationState<TFirst> first;
+			private readonly ITestOperationState<TSecond> second;
 
 			public State(
 				ITestWaitCondition<TFirst> first,

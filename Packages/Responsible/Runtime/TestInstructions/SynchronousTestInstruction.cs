@@ -12,7 +12,7 @@ namespace Responsible.TestInstructions
 		{
 		}
 
-		private class State : OperationState<T>
+		private class State : TestOperationState<T>
 		{
 			private readonly string description;
 			private readonly Func<T> action;

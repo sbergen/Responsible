@@ -5,13 +5,13 @@ namespace Responsible.TestInstructions
 {
 	internal abstract class TestInstructionBase<T> : ITestInstruction<T>
 	{
-		private readonly Func<IOperationState<T>> createState;
+		private readonly Func<ITestOperationState<T>> createState;
 
-		protected TestInstructionBase(Func<IOperationState<T>> createState)
+		protected TestInstructionBase(Func<ITestOperationState<T>> createState)
 		{
 			this.createState = createState;
 		}
 
-		public IOperationState<T> CreateState() => this.createState();
+		public ITestOperationState<T> CreateState() => this.createState();
 	}
 }

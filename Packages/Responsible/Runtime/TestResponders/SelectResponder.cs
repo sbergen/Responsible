@@ -7,7 +7,7 @@ namespace Responsible.TestResponders
 	internal class SelectResponder<T1, T2> : TestResponderBase<T2>
 	{
 		public SelectResponder(ITestResponder<T1> responder, Func<T1, T2> selector, SourceContext sourceContext)
-			: base(() => new SelectOperationState<IOperationState<T1>, IOperationState<T2>>(
+			: base(() => new SelectOperationState<ITestOperationState<T1>, ITestOperationState<T2>>(
 				responder.CreateState(),
 				state => new SelectOperationState<T1, T2>(state, selector, sourceContext),
 				sourceContext))

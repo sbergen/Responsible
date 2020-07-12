@@ -14,9 +14,9 @@ namespace Responsible.TestResponders
 		{
 		}
 
-		private class State : OperationState<IOperationState<Unit>>
+		private class State : TestOperationState<ITestOperationState<Unit>>
 		{
-			private readonly IReadOnlyList<IOperationState<IOperationState<T>>> responders;
+			private readonly IReadOnlyList<ITestOperationState<ITestOperationState<T>>> responders;
 
 			public State(IReadOnlyList<ITestResponder<T>> responders)
 				: base(null)
@@ -25,7 +25,7 @@ namespace Responsible.TestResponders
 			}
 
 
-			protected override IObservable<IOperationState<Unit>> ExecuteInner(RunContext runContext) => this.responders
+			protected override IObservable<ITestOperationState<Unit>> ExecuteInner(RunContext runContext) => this.responders
 				.Select(responder => responder.Execute(runContext))
 				.Merge()
 				.Select(instruction => instruction.AsUnitOperationState());

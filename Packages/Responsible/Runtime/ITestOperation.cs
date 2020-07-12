@@ -13,6 +13,6 @@ namespace Responsible
 		/// </remarks>
 		[Pure]
 		[NotNull]
-		IOperationState<T> CreateState();
+		ITestOperationState<T> CreateState();
 	}
 }

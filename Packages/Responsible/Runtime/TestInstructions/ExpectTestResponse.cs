@@ -15,9 +15,9 @@ namespace Responsible.TestInstructions
 		{
 		}
 
-		private class State : OperationState<T>
+		private class State : TestOperationState<T>
 		{
-			private readonly IOperationState<IOperationState<T>> responder;
+			private readonly ITestOperationState<ITestOperationState<T>> responder;
 			private readonly TimeSpan timeout;
 
 			public State(ITestResponder<T> responder, TimeSpan timeout, SourceContext sourceContext)

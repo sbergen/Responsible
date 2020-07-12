@@ -3,11 +3,11 @@ using Responsible.Context;
 
 namespace Responsible.State
 {
-	public abstract class OperationStatus
+	public abstract class TestOperationStatus
 	{
 		public abstract string MakeStatusLine(string description);
 
-		internal class NotExecuted : OperationStatus
+		internal class NotExecuted : TestOperationStatus
 		{
 			public static readonly NotExecuted Instance = new NotExecuted();
 
@@ -19,11 +19,11 @@ namespace Responsible.State
 				$"[ ] {description}";
 		}
 
-		internal class Waiting : OperationStatus
+		internal class Waiting : TestOperationStatus
 		{
 			internal readonly WaitContext WaitContext;
 
-			public Waiting(OperationStatus previous, WaitContext waitContext)
+			public Waiting(TestOperationStatus previous, WaitContext waitContext)
 			{
 				if (previous != NotExecuted.Instance)
 				{
@@ -38,11 +38,11 @@ namespace Responsible.State
 				$"[.] {description} (Started {this.WaitContext.ElapsedTime} ago)";
 		}
 
-		internal class Completed : OperationStatus
+		internal class Completed : TestOperationStatus
 		{
 			private readonly string elapsedTime;
 
-			public Completed(OperationStatus previous)
+			public Completed(TestOperationStatus previous)
 			{
 				if (previous is Waiting waiting)
 				{
@@ -60,14 +60,14 @@ namespace Responsible.State
 				$"[✓] {description} (Completed in {this.elapsedTime})";
 		}
 
-		internal class Failed : OperationStatus
+		internal class Failed : TestOperationStatus
 		{
 			private readonly string elapsedTime;
 
 			public readonly Exception Error;
 			public readonly SourceContext SourceContext;
 
-			public Failed(OperationStatus previous, Exception error, SourceContext sourceContext)
+			public Failed(TestOperationStatus previous, Exception error, SourceContext sourceContext)
 			{
 				if (previous is Waiting waiting)
 				{

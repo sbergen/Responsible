@@ -15,9 +15,9 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : OperationState<T[]>
+		private class State : TestOperationState<T[]>
 		{
-			private readonly IReadOnlyList<IOperationState<IOperationState<T>>> responders;
+			private readonly IReadOnlyList<ITestOperationState<ITestOperationState<T>>> responders;
 
 			public State(IReadOnlyList<ITestResponder<T>> responders)
 				: base(null)
