@@ -24,7 +24,7 @@ namespace Responsible.State
 			string description,
 			IOperationState operation,
 			[CanBeNull] Action<StateStringBuilder> extraContext = null)
-			=> this.AddIndented(operation.Status.MakeStatusLine(description), extraContext);
+			=> this.AddStatus(operation, description, extraContext);
 
 		public void AddContinuation(
 			IOperationState first,
@@ -59,14 +59,14 @@ namespace Responsible.State
 			string untilDescription,
 			IOperationState condition)
 			=> this
-				.AddOptional(respondToDescription, responder)
-				.AddOptional(untilDescription, condition);
+				.AddOptional(untilDescription, condition)
+				.AddOptional(respondToDescription, responder);
 
 		public void AddExpectWithin(
 			TimeSpan timeout,
 			IOperationState operation)
 			=> this.AddIndented(
-				$"EXPECT WITHIN {timeout:g}",
+				operation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
 				operation.BuildDescription);
 
 		public void AddParentWithChildren(
@@ -90,7 +90,10 @@ namespace Responsible.State
 				? this.AddIndented(description, child.BuildDescription)
 				: this.Add($"{description} ...");
 
-		private StateStringBuilder AddStatus(IOperationState state, string description) => this.AddIndented(
+		private StateStringBuilder AddStatus(
+			IOperationState state,
+			string description,
+			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this.AddIndented(
 			state.Status.MakeStatusLine(description),
 			_ =>
 			{
@@ -101,7 +104,7 @@ namespace Responsible.State
 					var e = failed.Error;
 					this.AddIndented(
 						"Failed with:",
-						b => b.Add($"{e.GetType().Name}: '{TruncatedExceptionMessage(e)}'"));
+						b => b.Add($"{e.GetType()}: '{TruncatedExceptionMessage(e)}'"));
 
 					this.AddEmptyLine();
 
@@ -114,6 +117,11 @@ namespace Responsible.State
 					});
 
 					this.AddEmptyLine();
+				}
+
+				if (state.Status is OperationStatus.Failed || state.Status is OperationStatus.Waiting)
+				{
+					extraContext?.Invoke(this);
 				}
 			});
 
