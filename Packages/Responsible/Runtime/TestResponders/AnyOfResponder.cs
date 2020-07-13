@@ -24,14 +24,13 @@ namespace Responsible.TestResponders
 				this.responders = responders.Select(r => r.CreateState()).ToList();
 			}
 
-
 			protected override IObservable<ITestOperationState<Unit>> ExecuteInner(RunContext runContext) => this.responders
 				.Select(responder => responder.Execute(runContext))
 				.Merge()
 				.Select(instruction => instruction.AsUnitOperationState());
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddParentWithChildren("RESPOND TO ANY OF", this, this.responders);
+				builder.AddParentWithNoStatusAndChildren("RESPOND TO ANY OF", this.responders);
 		}
 	}
 }

@@ -88,7 +88,7 @@ namespace Responsible
 		public static ITestResponder<TResult> ThenRespondWith<TWait, TResult>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
-			Func<TWait,TResult> selector,
+			Func<TWait, TResult> selector,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

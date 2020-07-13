@@ -39,7 +39,7 @@ namespace Responsible.State
 				.DoOnCompleted(() => this.Status = new TestOperationStatus.Completed(this.Status))
 				.DoOnError(exception => this.Status =
 					new TestOperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))
-				.Finally(() => waitContext?.Dispose());
+				.Finally(() => waitContext.Dispose());
 		});
 
 		protected abstract IObservable<T> ExecuteInner(RunContext runContext);
