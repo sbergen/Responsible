@@ -17,6 +17,11 @@ namespace Responsible.State
 			}
 		}
 
+		public void AddNestedDetails(string details, Action<StateStringBuilder> addNested)
+		{
+			this.AddIndented(details, addNested);
+		}
+
 		internal static string MakeState(ITestOperationState state)
 		{
 			var builder = new StateStringBuilder();
@@ -105,6 +110,19 @@ namespace Responsible.State
 			IEnumerable<ITestOperationState> children)
 			=> this.AddIndented(
 				parentState.Status.MakeStatusLine(parentDescription),
+				b =>
+				{
+					foreach (var child in children)
+					{
+						child.BuildDescription(b);
+					}
+				});
+
+		internal void AddParentWithNoStatusAndChildren(
+			string parentDescription,
+			IEnumerable<ITestOperationState> children)
+			=> this.AddIndented(
+				parentDescription,
 				b =>
 				{
 					foreach (var child in children)
