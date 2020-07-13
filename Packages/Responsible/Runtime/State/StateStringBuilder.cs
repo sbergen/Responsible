@@ -118,18 +118,16 @@ namespace Responsible.State
 					}
 				});
 
-		internal void AddParentWithNoStatusAndChildren(
-			string parentDescription,
+		internal void AddToPreviousLineWithChildren(
+			string addToPrevious,
 			IEnumerable<ITestOperationState> children)
-			=> this.AddIndented(
-				parentDescription,
-				b =>
-				{
-					foreach (var child in children)
-					{
-						child.BuildDescription(b);
-					}
-				});
+		{
+			this.AddToPreviousLine(addToPrevious);
+			foreach (var child in children)
+			{
+				child.BuildDescription(this);
+			}
+		}
 
 		private StateStringBuilder AddOptional(
 			string description,

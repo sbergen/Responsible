@@ -95,29 +95,28 @@ Failure context:
 [!] EXPECT WITHIN 0:00:10 (Failed after 3.00s and 4 frames)
   UNTIL
     [.] Never (Started 3.00s and 4 frames ago)
-  RESPOND TO
-    [.] RESPOND TO ANY OF (Started 3.00s and 4 frames ago)
-      [!] Response 1 (Failed after 0.00s and 0 frames)
-        WAIT FOR
-          [✓] Cond 1.1 (Completed in 1.50s and 2 frames)
-          [.] Cond 1.2 (Started 1.50s and 2 frames ago)
-        THEN RESPOND WITH
-          [!] Response 1 (Failed after 0.00s and 0 frames)
+  RESPOND TO ANY OF
+    [!] Response 1 (Failed after 0.00s and 0 frames)
+      WAIT FOR
+        [✓] Cond 1.1 (Completed in 1.50s and 2 frames)
+        [.] Cond 1.2 (Started 1.50s and 2 frames ago)
+      THEN RESPOND WITH
+        [!] Response 1 (Failed after 0.00s and 0 frames)
  
-            Failed with:
-              System.Exception: 'Exception'
+          Failed with:
+            System.Exception: 'Exception'
  
-            Test operation stack:
-              [ThenRespondWith] MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:29)
-              [Until] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:33)
-              [ExpectWithinSeconds] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
-              [ToObservable] ErrorOutput_IsAsExpected (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:67)
+          Test operation stack:
+            [ThenRespondWith] MakeResponder (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:29)
+            [Until] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:33)
+            [ExpectWithinSeconds] MakeInstruction (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+            [ToObservable] ErrorOutput_IsAsExpected (at Packages/Responsible/Tests/Runtime/ErrorOutputTests.cs:67)
  
-      [.] Response 2 (Started 3.00s and 4 frames ago)
-        WAIT FOR
-          [.] Cond 2.1 (Started 3.00s and 4 frames ago)
-          [ ] ...
-        THEN RESPOND WITH ...
+    [.] Response 2 (Started 3.00s and 4 frames ago)
+      WAIT FOR
+        [.] Cond 2.1 (Started 3.00s and 4 frames ago)
+        [ ] ...
+      THEN RESPOND WITH ...
  
 Error: System.Exception: Exception";
 	}

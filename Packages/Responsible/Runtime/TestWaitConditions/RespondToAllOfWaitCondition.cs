@@ -38,7 +38,7 @@ namespace Responsible.TestWaitConditions
 					.Aggregate(new T[this.responders.Count], Indexed.AssignToArray);
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddParentWithChildren("RESPOND TO ALL OF", this, this.responders);
+				builder.AddToPreviousLineWithChildren(" ALL OF", this.responders);
 		}
 	}
 }

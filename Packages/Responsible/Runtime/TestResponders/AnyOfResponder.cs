@@ -30,7 +30,7 @@ namespace Responsible.TestResponders
 				.Select(instruction => instruction.AsUnitOperationState());
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddParentWithNoStatusAndChildren("RESPOND TO ANY OF", this.responders);
+				builder.AddToPreviousLineWithChildren(" ANY OF", this.responders);
 		}
 	}
 }

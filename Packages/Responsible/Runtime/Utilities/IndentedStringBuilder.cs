@@ -38,6 +38,12 @@ namespace Responsible.Utilities
 			return this.Self;
 		}
 
+		protected T AddToPreviousLine(string addToEndOfPrevious)
+		{
+			this.stringBuilder.Insert(this.stringBuilder.Length - 1, addToEndOfPrevious);
+			return this.Self;
+		}
+
 		protected T AddEmptyLine()
 		{
 			this.stringBuilder.AppendLine(" "); // Add space so Unity doesn't strip it
