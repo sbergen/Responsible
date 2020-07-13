@@ -36,11 +36,7 @@ namespace Responsible.State
 				.Concat() // Execute the instructions
 				.SelectMany(_ => Observable.Empty<T>()) // Throw away instruction results
 				.Concat(replayedResult)
-				.Finally(() =>
-				{
-					resultSubscription.Dispose();
-					replayedResult.Dispose();
-				});
+				.Finally(resultSubscription.Dispose);
 		});
 
 		public override void BuildDescription(StateStringBuilder builder) =>
