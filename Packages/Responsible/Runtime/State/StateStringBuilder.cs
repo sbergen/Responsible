@@ -100,9 +100,10 @@ namespace Responsible.State
 			ITestOperationState expectOperation,
 			TimeSpan timeout,
 			ITestOperationState operation)
-			=> this.AddIndented(
-				expectOperation.Status.MakeStatusLine($"EXPECT WITHIN {timeout:g}"),
-				operation.BuildDescription);
+			=> this.AddParentWithChildren(
+				$"EXPECT WITHIN {timeout:g}",
+				expectOperation,
+				new[] { operation });
 
 		internal void AddParentWithChildren(
 			string parentDescription,
