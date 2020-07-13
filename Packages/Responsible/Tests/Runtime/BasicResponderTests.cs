@@ -22,7 +22,7 @@ namespace Responsible.Tests.Runtime
 			this.readyToReact = this.readyToComplete = this.startedToReact = false;
 
 			var react =
-				Do("Set started to react", () => this.startedToReact = true)
+				DoAndReturn("Set started to react", () => this.startedToReact = true)
 					.ContinueWith(_ => WaitForCondition(
 							"Ready to complete",
 							() => this.readyToComplete)

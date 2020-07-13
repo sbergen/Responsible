@@ -42,7 +42,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void SelectFromInstruction_ContainsCorrectDetails_WhenInstructionFailed()
 		{
-			Do<int>("Throw", () => throw new Exception("Fail!"))
+			DoAndReturn<int>("Throw", () => throw new Exception("Fail!"))
 				.Select(i => i)
 				.ToObservable()
 				.Subscribe(Nop, this.StoreError);

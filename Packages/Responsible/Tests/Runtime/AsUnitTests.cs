@@ -21,8 +21,8 @@ namespace Responsible.Tests.Runtime
 		public void OneTimeSetUp()
 		{
 			this.waitForComplete = WaitForCondition("Wait", () => this.complete, () => this.complete);
-			this.setCompleted = Do("Set completed", () => this.completed = true);
-			this.throwError = Do<int>("Throw error", () => throw new Exception(""));
+			this.setCompleted = DoAndReturn("Set completed", () => this.completed = true);
+			this.throwError = DoAndReturn<int>("Throw error", () => throw new Exception(""));
 		}
 
 		[SetUp]

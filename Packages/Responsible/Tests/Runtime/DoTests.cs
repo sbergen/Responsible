@@ -10,7 +10,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Do_Executes_WithFunc()
 		{
-			var result = Do("Meaning of life", () => 42).ToObservable().Wait(TimeSpan.Zero);
+			var result = DoAndReturn("Meaning of life", () => 42).ToObservable().Wait(TimeSpan.Zero);
 			Assert.AreEqual(42, result);
 		}
 

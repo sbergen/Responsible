@@ -11,8 +11,14 @@ namespace Responsible
 	// See Responsibly.WaitFor.cs for documentation
 	public static partial class Responsibly
 	{
+		/// <summary>
+		/// Do an action safely, and return a result.
+		/// </summary>
+		/// <remarks>
+		/// This is not an overload of Do, because C# is bad at overload resolution with lambdas.
+		/// </remarks>
 		[Pure]
-		public static ITestInstruction<T> Do<T>(
+		public static ITestInstruction<T> DoAndReturn<T>(
 			string description,
 			Func<T> func,
 			[CallerMemberName] string memberName = "",
@@ -21,8 +27,11 @@ namespace Responsible
 			=> new SynchronousTestInstruction<T>(
 				description,
 				func,
-				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(DoAndReturn), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Do an action safely, and don't return any resul.
+		/// </summary>
 		[Pure]
 		public static ITestInstruction<Unit> Do(
 			string description,
@@ -33,6 +42,6 @@ namespace Responsible
 			=> new SynchronousTestInstruction<Unit>(
 				description,
 				action.AsUnitFunc(),
-				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(DoAndReturn), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

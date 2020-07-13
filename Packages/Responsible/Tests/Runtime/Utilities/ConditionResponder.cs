@@ -34,7 +34,7 @@ namespace Responsible.Tests.Runtime.Utilities
 			this.Responder = WaitForCondition("Wait to be ready", () => this.MayRespond)
 				.ThenRespondWith(
 					"Respond",
-					Do("Set started to respond", () => this.StartedToRespond = true)
+					DoAndReturn("Set started to respond", () => this.StartedToRespond = true)
 						.ContinueWith(this.WaitAndComplete(responseTimeout, returnValue)));
 
 		}
@@ -43,7 +43,7 @@ namespace Responsible.Tests.Runtime.Utilities
 				WaitForCompletionDescription,
 				() => this.MayComplete)
 			.ExpectWithinSeconds(responseTimeout)
-			.ContinueWith(Do(
+			.ContinueWith(DoAndReturn(
 				"Set complete or throw",
 				() =>
 				{
