@@ -13,7 +13,7 @@ namespace Responsible.Tests.Runtime
 			var result = ImmediateTrue
 				.Select(r => r ? 1 : 0)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Wait();
 
 			Assert.AreEqual(1, result);
@@ -26,7 +26,7 @@ namespace Responsible.Tests.Runtime
 				ImmediateTrue
 					.Select<bool, int>(r => throw new Exception("Fail!"))
 					.ExpectWithinSeconds(1)
-					.ToObservable()
+					.ToObservable(this.Executor)
 					.Wait());
 		}
 
@@ -36,7 +36,7 @@ namespace Responsible.Tests.Runtime
 			ImmediateTrue
 				.Select<bool, int>(r => throw new Exception("Fail!"))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			StringAssert.Contains(
@@ -50,7 +50,7 @@ namespace Responsible.Tests.Runtime
 			WaitForCondition("Throw", () => throw new Exception("Fail!"))
 				.Select(r => r)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			StringAssert.Contains(

@@ -12,7 +12,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var result = Return(2)
 				.Select(val => val * 2)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Wait();
 			Assert.AreEqual(4, result);
 		}
@@ -22,7 +22,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var observable = Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
-				.ToObservable();
+				.ToObservable(this.Executor);
 			Assert.Throws<AssertionException>(() => observable.Wait());
 		}
 
@@ -31,7 +31,7 @@ namespace Responsible.Tests.Runtime
 		{
 			Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			StringAssert.Contains(
@@ -44,7 +44,7 @@ namespace Responsible.Tests.Runtime
 		{
 			DoAndReturn<int>("Throw", () => throw new Exception("Fail!"))
 				.Select(i => i)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			StringAssert.Contains(

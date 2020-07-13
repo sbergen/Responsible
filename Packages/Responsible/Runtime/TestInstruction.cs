@@ -13,39 +13,13 @@ namespace Responsible
 {
 	public static class TestInstruction
 	{
-		private static readonly IScheduler DefaultScheduler = Scheduler.MainThread;
-		private static readonly IObservable<Unit> DefaultPoll = Observable.EveryUpdate().AsUnitObservable();
-		private static readonly ILogger DefaultLogger = Debug.unityLogger;
-
-		private static TestInstructionExecutor executor =
-			new TestInstructionExecutor(DefaultScheduler, DefaultPoll, DefaultLogger);
-
-		/// <summary>
-		/// Override the executor parameters
-		/// Mostly for testing the framework itself, but might be useful elsewhere also?
-		/// </summary>
-		/// <remarks>
-		/// Does not support being called multiple times (not intended for common use).
-		/// </remarks>
-		public static IDisposable OverrideExecutor(
-			IScheduler scheduler = null,
-			IObservable<Unit> poll = null,
-			ILogger logger = null)
-		{
-			executor.Dispose();
-			executor = new TestInstructionExecutor(
-				scheduler ?? DefaultScheduler,
-				poll ?? DefaultPoll,
-				logger ?? DefaultLogger);
-			return Disposable.Create(() => OverrideExecutor(DefaultScheduler, DefaultPoll, DefaultLogger));
-		}
-
 		/// <summary>
 		/// Returns an observable which executes the instruction when subscribed to.
 		/// </summary>
 		[Pure]
 		public static IObservable<T> ToObservable<T>(
 			this ITestInstruction<T> instruction,
+			TestInstructionExecutor executor,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
@@ -59,6 +33,7 @@ namespace Responsible
 		[Pure]
 		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestInstruction<T> instruction,
+			TestInstructionExecutor executor,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
@@ -73,6 +48,7 @@ namespace Responsible
 		[Pure]
 		public static IObservable<T> ToObservable<T>(
 			this ITestOperationState<T> state,
+			TestInstructionExecutor executor,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

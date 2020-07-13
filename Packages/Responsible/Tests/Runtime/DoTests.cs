@@ -10,7 +10,9 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void Do_Executes_WithFunc()
 		{
-			var result = DoAndReturn("Meaning of life", () => 42).ToObservable().Wait(TimeSpan.Zero);
+			var result = DoAndReturn("Meaning of life", () => 42)
+				.ToObservable(this.Executor)
+				.Wait(TimeSpan.Zero);
 			Assert.AreEqual(42, result);
 		}
 
@@ -18,7 +20,7 @@ namespace Responsible.Tests.Runtime
 		public void Do_Executes_WithAction()
 		{
 			var executed = false;
-			Do("Set executed", () => { executed = true; }).ToObservable().Wait(TimeSpan.Zero);
+			Do("Set executed", () => { executed = true; }).ToObservable(this.Executor).Wait(TimeSpan.Zero);
 			Assert.IsTrue(executed);
 		}
 
@@ -26,7 +28,7 @@ namespace Responsible.Tests.Runtime
 		public void Do_DoesNotExecute_UntilSubscribedTo()
 		{
 			var executed = false;
-			var unused = Do("Set executed", () => { executed = true; }).ToObservable();
+			var unused = Do("Set executed", () => { executed = true; }).ToObservable(this.Executor);
 			Assert.IsFalse(executed, "Instruction should not execute until subscribed to");
 		}
 	}

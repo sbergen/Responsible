@@ -19,7 +19,7 @@ namespace Responsible.Tests.Runtime
 					"mayComplete",
 					() => mayComplete, Is.True)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(r => completed = r);
 
 			yield return null;
@@ -53,7 +53,7 @@ namespace Responsible.Tests.Runtime
 				() => str,
 				Does.StartWith("FOO"))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			this.Scheduler.AdvanceBy(OneSecond);
@@ -70,7 +70,7 @@ namespace Responsible.Tests.Runtime
 					() => throw new Exception("Fail!"),
 					Does.StartWith("FOO"))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;

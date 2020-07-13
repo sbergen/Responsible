@@ -21,7 +21,7 @@ namespace Responsible.Tests.Runtime
 					DoAndReturn("Set completed2", () => completed2 = true).AsUnitInstruction(),
 					DoAndReturn("Set completed3", () => completed3 = true).AsUnitInstruction(),
 				})
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe();
 
 			Assert.AreEqual(
@@ -42,7 +42,7 @@ namespace Responsible.Tests.Runtime
 					Do("Throw error", () => throw new Exception()).AsUnitInstruction(),
 					DoAndReturn("Set completed2", () => completed2 = true).AsUnitInstruction(),
 				})
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.AreEqual(

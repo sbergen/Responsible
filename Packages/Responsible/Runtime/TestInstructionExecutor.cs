@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Responsible
 {
-	internal class TestInstructionExecutor : IDisposable
+	public class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
@@ -20,10 +20,14 @@ namespace Responsible
 		private readonly IScheduler scheduler;
 		private readonly IObservable<Unit> pollObservable;
 
-		internal TestInstructionExecutor(IScheduler scheduler, IObservable<Unit> pollObservable, ILogger logger)
+		public TestInstructionExecutor(
+			IScheduler scheduler = null,
+			IObservable<Unit> pollObservable = null,
+			ILogger logger = null)
 		{
-			this.scheduler = scheduler;
-			this.logger = logger;
+			this.scheduler = scheduler ?? Scheduler.MainThread;
+			this.logger = logger ?? Debug.unityLogger;
+			pollObservable = pollObservable ?? Observable.EveryUpdate().AsUnitObservable();
 
 			// Workaround for how EveryUpdate works in Unity.
 			// When nobody is subscribed to it, there will be a one-frame delay on the next Subscribe.

@@ -32,7 +32,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 			WaitForCoroutine(CompleteAfterTwoFrames)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(_ => completed = true);
 
 			Assert.IsFalse(completed, "Should not complete before any yields");
@@ -48,7 +48,7 @@ namespace Responsible.Tests.Runtime
 			int? result = null;
 			WaitForCoroutine(CompleteAfterOneFrame, () => 42)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(r => result = r);
 
 			Assert.IsNull(result, "Should not publish result before any yields");
@@ -62,7 +62,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 			WaitForCoroutine(ThrowAfterOneFrame)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.IsFalse(completed, "Should not have error before yields");

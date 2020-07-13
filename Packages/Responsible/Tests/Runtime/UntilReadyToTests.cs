@@ -24,7 +24,7 @@ namespace Responsible.Tests.Runtime
 			this.first.Responder.Optionally()
 				.UntilReadyTo(this.second.Responder)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(_ => this.completed = true, this.StoreError);
 		}
 

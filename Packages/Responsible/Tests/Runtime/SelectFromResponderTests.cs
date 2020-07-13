@@ -21,7 +21,7 @@ namespace Responsible.Tests.Runtime
 			this.responder.Responder
 				.Select(i => this.selector(i))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(r => this.result = r, this.StoreError);
 		}
 

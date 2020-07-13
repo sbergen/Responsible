@@ -23,7 +23,7 @@ namespace Responsible.Tests.Runtime
 
 			yield return WaitForCondition("cond", () => cond)
 				.ExpectWithinSeconds(1)
-				.ToYieldInstruction();
+				.ToYieldInstruction(this.Executor);
 
 			// Completes one frame after
 			Assert.AreEqual(completedOnFrame + 1, Time.frameCount);

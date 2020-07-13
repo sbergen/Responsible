@@ -26,7 +26,7 @@ namespace Responsible.Tests.Runtime
 
 			RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(r => this.result = r, this.StoreError);
 		}
 

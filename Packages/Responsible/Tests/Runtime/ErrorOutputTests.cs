@@ -46,7 +46,7 @@ namespace Responsible.Tests.Runtime
 			var logger = Substitute.For<ILogger>();
 			var scheduler = new TestScheduler();
 			var poll = new Subject<Unit>();
-			using (TestInstruction.OverrideExecutor(scheduler, poll, logger))
+			using (var executor = new TestInstructionExecutor(scheduler, poll, logger))
 			{
 				var state1 = new ResponderState
 				{
@@ -64,7 +64,7 @@ namespace Responsible.Tests.Runtime
 				};
 
 				MakeInstruction(state1, state2)
-					.ToObservable()
+					.ToObservable(executor)
 					.CatchIgnore()
 					.Subscribe();
 

@@ -10,8 +10,6 @@ namespace Responsible.Tests.Runtime
 {
 	public class ResponsibleTestBase
 	{
-		protected const string ExceptionMessage = "THE ERROR";
-
 		protected static readonly ITestWaitCondition<bool> ImmediateTrue =
 			WaitForCondition("True", () => true, () => true);
 
@@ -20,12 +18,12 @@ namespace Responsible.Tests.Runtime
 
 		protected static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
 
-		private IDisposable setup;
-
 		protected ILogger Logger { get; private set; }
 		protected TestScheduler Scheduler { get; private set; }
 
 		protected Exception Error { get; private set; }
+
+		protected TestInstructionExecutor Executor { get; private set; }
 
 		protected static void Nop<T>(T unused)
 		{
@@ -39,13 +37,13 @@ namespace Responsible.Tests.Runtime
 			this.Logger = Substitute.For<ILogger>();
 			this.Scheduler = new TestScheduler();
 			this.Error = null;
-			this.setup = TestInstruction.OverrideExecutor(this.Scheduler, logger: this.Logger);
+			this.Executor = new TestInstructionExecutor(this.Scheduler, logger: this.Logger);
 		}
 
 		[TearDown]
 		public void BaseTearDown()
 		{
-			this.setup.Dispose();
+			this.Executor.Dispose();
 		}
 	}
 }

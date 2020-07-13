@@ -26,7 +26,10 @@ namespace Responsible.Tests.Runtime
 
 			var wait = WaitForCondition("Wait for it", WaitForIt);
 
-			wait.AndThen(wait).ExpectWithinSeconds(1).ToObservable().Subscribe(Nop, this.StoreError);
+			wait.AndThen(wait)
+				.ExpectWithinSeconds(1)
+				.ToObservable(this.Executor)
+				.Subscribe(Nop, this.StoreError);
 
 			this.Scheduler.AdvanceBy(OneSecond);
 			yield return null;

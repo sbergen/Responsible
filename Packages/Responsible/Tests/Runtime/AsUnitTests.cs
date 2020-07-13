@@ -36,14 +36,14 @@ namespace Responsible.Tests.Runtime
 		{
 			Assert.AreEqual(
 				Unit.Default,
-				this.setCompleted.AsUnitInstruction().ToObservable().Wait(TimeSpan.Zero));
+				this.setCompleted.AsUnitInstruction().ToObservable(this.Executor).Wait(TimeSpan.Zero));
 		}
 
 		[Test]
 		public void UnitTestInstruction_DoesNotThrow_WhenError()
 		{
 			Assert.Throws<AssertionException>(() =>
-				this.throwError.AsUnitInstruction().ToObservable().Wait(TimeSpan.Zero));
+				this.throwError.AsUnitInstruction().ToObservable(this.Executor).Wait(TimeSpan.Zero));
 		}
 
 		[Test]
@@ -59,7 +59,7 @@ namespace Responsible.Tests.Runtime
 			this.waitForComplete
 				.AsUnitCondition()
 				.ExpectWithinSeconds(10)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(_ => this.completed = true);
 
 			yield return null;
@@ -76,7 +76,7 @@ namespace Responsible.Tests.Runtime
 			Never
 				.AsUnitCondition()
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
@@ -101,7 +101,7 @@ namespace Responsible.Tests.Runtime
 				.ThenRespondWith("Respond", this.setCompleted)
 				.AsUnitResponder()
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe();
 
 			yield return null;
@@ -119,7 +119,7 @@ namespace Responsible.Tests.Runtime
 				.ThenRespondWith("Respond", this.throwError)
 				.AsUnitResponder()
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;
@@ -137,7 +137,7 @@ namespace Responsible.Tests.Runtime
 				.ThenRespondWith("Respond", this.setCompleted)
 				.AsUnitResponder()
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			yield return null;

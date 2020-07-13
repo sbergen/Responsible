@@ -12,7 +12,11 @@ namespace Responsible.Tests.Runtime
 		{
 			var value = 42;
 			var returnInstruction = Return(value);
-			Assert.AreEqual(42, returnInstruction.ToObservable().Wait(TimeSpan.Zero));
+			Assert.AreEqual(
+				42,
+				returnInstruction
+					.ToObservable(this.Executor)
+					.Wait(TimeSpan.Zero));
 		}
 	}
 }
