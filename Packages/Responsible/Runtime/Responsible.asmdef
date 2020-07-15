@@ -1,18 +1,16 @@
 {
-    "name": "Unity.Responsible.Runtime.Tests",
+    "name": "Responsible",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
         "UniRx",
-        "Unity.Responsible"
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "nunit.framework.dll",
-        "NSubstitute.dll"
+        "nunit.framework.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
