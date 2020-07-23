@@ -21,9 +21,10 @@ knowing Rx is not *necessary* for using Responsible.
 However, being familiar with reactive and/or functional programming in C# (e.g. LINQ)
 should ease the learning curve.
 
-## Usage example
+## Usage and Error Output Example
 
-Here's a simple example of what using Responsible could look like 
+Here's a simple example of what using Responsible could look like
+(with `using static Responsible.Responsibly;`) 
 
 ```cs
 yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
@@ -273,8 +274,23 @@ When building custom operations, ensure that you defer any stateful operations
 
 `ITestInstruction<T>` ended up being a monad,
 where `Return` is `return` (obviously), and `ContinueWith` is `bind`.
-This may not have any practical implications in C# though
-(unless you want to start using the LINQ query syntax for whatever reason).
+This may not have any practical implications in C# beyond being able to use the LINQ query syntax.
+
+## LINQ query syntax
+
+While not recommended, due to it muddling call-site details,
+it is possible to use the LINQ query syntax with test instructions.
+For example, the following query will return an instruction returning 10:
+```cs
+from a in Return(2)
+from b in Return(3)
+let c = a + b
+from result in Return(2 * c)
+select result;
+```
+
+While the example uses simple `Return` calls for brevity,
+this syntax will work for sequencing asynchronous instructions also.
 
 ## Portability
  
