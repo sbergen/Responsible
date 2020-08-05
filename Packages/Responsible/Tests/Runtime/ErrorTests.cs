@@ -10,15 +10,16 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
-	/*
 	public class ErrorTests : ResponsibleTestBase
 	{
+		private const string ExceptionMessage = "Test Exception";
+
 		[UnityTest]
 		public IEnumerator Executor_PublishesAndLogsError_WhenOperationTimesOut()
 		{
 			Never
 				.ExpectWithinSeconds(2)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			this.Scheduler.AdvanceBy(OneSecond);
@@ -41,7 +42,7 @@ namespace Responsible.Tests.Runtime
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.CatchIgnore()
 				.Subscribe();
 
@@ -52,7 +53,7 @@ namespace Responsible.Tests.Runtime
 				LogType.Error,
 				Arg.Is<string>(log => Regex.IsMatch(
 					log,
-					@"Timed out.*\[\.\] NO.*\[✓\] YES",
+					@"timed out.*\[\.\] NO.*\[✓\] YES",
 					RegexOptions.Singleline)));
 		}
 
@@ -63,7 +64,7 @@ namespace Responsible.Tests.Runtime
 					"FAIL",
 					() => throw new Exception(ExceptionMessage))
 				.ExpectWithinSeconds(1)
-				.ToObservable()
+				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
@@ -73,62 +74,22 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void Executor_OnlyPublishesError_WhenSynchronousInstructionThrows()
-		{
-			// If a synchronous instruction is executed on its own, it should be enough to just publish an error,
-			// as you shouldn't need to use Do at the top level of a test method.
-
-			Do("Throw Error", () => throw new Exception(ExceptionMessage))
-				.ToObservable()
-				.Subscribe(Nop, this.StoreError);
-
-			Assert.IsInstanceOf<AssertionException>(this.Error);
-			Assert.That(this.Error.Message, Contains.Substring(ExceptionMessage));
-			this.Logger.DidNotReceive().Log(
-				LogType.Error,
-				Arg.Any<string>());
-		}
-
-		[UnityTest]
-		public IEnumerator Executor_PublishesAndLogsError_WhenSynchronousInstructionThrowsInAsyncContext()
-		{
-			IEnumerator Coroutine()
-			{
-				yield return null;
-				yield return Do("Throw exception", () => throw new Exception(ExceptionMessage)).ToYieldInstruction();
-			}
-
-			RunCoroutine(
-					"Run throwing coroutine",
-					1,
-					Coroutine)
-				.ToObservable()
-				.Subscribe(Nop, this.StoreError);
-
-			yield return null;
-			yield return null;
-
-			Assert.IsInstanceOf<AssertionException>(this.Error);
-			this.Logger.Received(1).Log(
-				LogType.Error,
-				Arg.Is<string>(msg => msg.Contains(ExceptionMessage)));
-		}
-
-		[Test]
 		public void Executor_LogsExtraWaitContext_WhenWaitTimesOut()
 		{
 			WaitForCondition(
 					"Never",
 					() => false,
-					builder => builder.Add("Should be in logs"))
-				.ExpectWithinSeconds(0)
-				.ToObservable()
+					builder => builder.AddDetails("Should be in logs"))
+				.ExpectWithinSeconds(1)
+				.ToObservable(this.Executor)
 				.CatchIgnore()
 				.Subscribe();
+
+			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(2));
 
 			this.Logger.Received(1).Log(
 				LogType.Error,
 				Arg.Is<string>(str => str.Contains("Should be in logs")));
 		}
-	}*/
+	}
 }
