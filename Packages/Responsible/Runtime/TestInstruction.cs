@@ -4,10 +4,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.Context;
-using Responsible.State;
 using Responsible.TestInstructions;
 using UniRx;
-using UnityEngine;
 
 namespace Responsible
 {
@@ -41,20 +39,6 @@ namespace Responsible
 				instruction.CreateState(),
 				new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber))
 				.ToYieldInstruction();
-
-		/// <summary>
-		/// Dumping the state can be useful for debugging, so allow doing this also.
-		/// </summary>
-		[Pure]
-		public static IObservable<T> ToObservable<T>(
-			this ITestOperationState<T> state,
-			TestInstructionExecutor executor,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> executor.RunInstruction(
-				state,
-				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.

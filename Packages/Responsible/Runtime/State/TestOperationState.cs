@@ -4,12 +4,6 @@ using UniRx;
 
 namespace Responsible.State
 {
-	internal static class TestOperationState
-	{
-		public static ITestOperationState<Unit> AsUnitOperationState<T>(this ITestOperationState<T> state)
-			=> new UnitOperationState<T, Unit>(state, _ => Unit.Default);
-	}
-
 	internal abstract class TestOperationState<T> : ITestOperationState<T>
 	{
 		private readonly SourceContext? sourceContext;
