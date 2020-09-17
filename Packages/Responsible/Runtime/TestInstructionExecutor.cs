@@ -57,7 +57,7 @@ namespace Responsible
 			var runContext = new RunContext(sourceContext, this.scheduler, this.pollObservable);
 			return Observable
 				.Amb(
-					InterceptErrors<T>(),
+					this.InterceptErrors<T>(),
 					rootState.Execute(runContext))
 				.Catch((Exception e) =>
 				{

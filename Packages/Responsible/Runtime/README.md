@@ -207,6 +207,19 @@ The `TestInstructionExecutor` constructor takes three optional arguments:
   you may wish to not log these errors,
   which can be accomplished by implementing a no-op logger.
 
+### Unity Error Log Handling
+
+The Unity Tests Runner will fail tests on logged errors.
+While running a test instruction, Responsible will intercept this process,
+by listening to logged errors, and overriding the default behavior.
+The following points are worth noting:
+* If you are expecting an error, you must call `TestInstructionExecutor.ExpectLog` 
+  instead of only calling `LogAssert.Expect`.
+* Logging errors from any other thread but the main thread is **not** handled.
+  As test instructions are executed on the main thread,
+  it would be impossible to attribute a logged error to the correct test instruction.
+* `LogAssert.ignoreFailingMessages` is respected at the time of logging.
+
 ## Tips and Tricks
 
 If the method names in the `Responsibly` class do not conflict with anything else,
