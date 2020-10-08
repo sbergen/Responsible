@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using NSubstitute;
 using NUnit.Framework;
@@ -35,6 +36,17 @@ namespace Responsible.Tests.Runtime
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
 			Assert.IsInstanceOf<UnhandledLogMessageException>(this.Error.InnerException);
+		}
+
+		[Test]
+		public void LoggingError_DoesNotAlsoLogWarning_WhenTestTerminatesWithException()
+		{
+			Do("Throw exception", () => throw new Exception())
+				.ToObservable(this.Executor)
+				.Subscribe(Nop, this.StoreError);
+
+			this.Logger.DidNotReceive().Log(LogType.Warning, Arg.Any<string>());
+			this.Logger.Received(1).Log(LogType.Error, Arg.Any<string>());
 		}
 
 		[Test]
