@@ -66,11 +66,11 @@ namespace Responsible
 						: MakeErrorMessage(rootState, e);
 
 					// The Unity test runner can swallow exceptions, so both log an error and throw an exception.
-					// But we don't want to re-log already logged errors...
-					if (!(e is UnhandledLogMessageException))
-					{
-						this.logger.Log(LogType.Error, message);
-					}
+					// For already logged errors, log this as a warning, as it contains extra context.
+					var logType = e is UnhandledLogMessageException
+						? LogType.Warning
+						: LogType.Error;
+					this.logger.Log(logType, message);
 
 					return Observable.Throw<T>(new AssertionException(message, e));
 				});

@@ -1,7 +1,6 @@
-using System;
 using System.Text.RegularExpressions;
+using NSubstitute;
 using NUnit.Framework;
-using Responsible.Tests.Runtime.Utilities;
 using UniRx;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -44,6 +43,15 @@ namespace Responsible.Tests.Runtime
 			LogAssert.ignoreFailingMessages = true;
 			this.LogErrorFromInstructionSynchronously();
 			Assert.IsNull(this.Error);
+		}
+
+		[Test]
+		public void LoggingError_LogsDetailsAsWarning()
+		{
+			this.LogErrorFromInstructionSynchronously();
+			this.Logger.Received().Log(
+				LogType.Warning,
+				Arg.Is<string>(msg => msg.Contains("Failure context")));
 		}
 
 		[Test]
