@@ -85,7 +85,7 @@ by adding also the following line:
 ### Installation Without the Unity Package Manager
 
 If you can't or don't want to use the package manager, you can also directly incorporate
-the `Packages/Responsible/Runtime` directory into your project.
+the [Packages/Responsible/Runtime](./) directory into your project.
 This could be done manually, or e.g. with a symlink and git submodule.
 
 If you are not already using UniRx, you'll need to install it from the Asset Store,
@@ -96,7 +96,15 @@ or in a similar fashion to what is outlined above.
 With either installation option, you'll end up with an assembly called `Responsible`,
 with the `UNITY_INCLUDE_TESTS` define constraint.
 To use Responsible, simply reference this from your test assemblies.
-You'll also need to reference UniRx to use many features of Responsible. 
+You'll also need to reference UniRx to use many features of Responsible.
+
+### Examples
+
+The library itself has [extensive test coverage](../Tests/Runtime),
+which may be used as examples of usage.
+For a simpler example of a basic test setup, there's also a simple
+[example project](../../../Assets)
+with some [basic tests](../../../Assets/PlayModeTests) included.
 
 ## Design
 
