@@ -86,6 +86,9 @@ If you can't or don't want to use the package manager, you can also directly inc
 the `Packages/Responsible/Runtime` directory into your project.
 This could be done manually, or e.g. with a symlink and git submodule.
 
+If you are not already using UniRx, you'll need to install it from the Asset Store,
+or in a similar fashion to what is outlined above.
+
 ### Referencing the Assembly
 
 With either installation option, you'll end up with an assembly called `Responsible`,
