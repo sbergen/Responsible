@@ -157,6 +157,34 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[UnityTest]
+		public IEnumerator WaitForFrames_CompletesAfterTimeout()
+		{
+			var completed = false;
+			using (WaitForFrames(2).ToObservable(this.Executor).Subscribe(_ => completed = true))
+			{
+				Assert.IsFalse(completed);
+				yield return null; // This frame
+				Assert.IsFalse(completed);
+				yield return null; // First frame
+				Assert.IsFalse(completed);
+				yield return null; // Second frame
+				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForFrames_CompletesAfterThisFrame_WithZeroFrames()
+		{
+			var completed = false;
+			using (WaitForFrames(0).ToObservable(this.Executor).Subscribe(_ => completed = true))
+			{
+				Assert.IsFalse(completed);
+				yield return null; // This frame
+				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
 		public IEnumerator WaitForAllOf_Completes_AfterAllComplete()
 		{
 			var fulfilled1 = false;

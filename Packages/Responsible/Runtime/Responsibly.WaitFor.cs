@@ -144,6 +144,20 @@ namespace Responsible
 				TimeSpan.FromSeconds(seconds),
 				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Wait for the given amount of WHOLE frames.
+		/// Note that zero frames means to wait until the next frame.
+		/// </summary>
+		[Pure]
+		public static ITestInstruction<Unit> WaitForFrames(
+			int frames,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new WaitForFramesInstruction(
+				frames,
+				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
+
 		[Pure]
 		public static ITestWaitCondition<T> WaitForLast<T>(
 			string description,
