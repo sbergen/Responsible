@@ -22,6 +22,41 @@ namespace Responsible
 	public static partial class Responsibly
 	{
 		[Pure]
+		public static ITestWaitCondition<TResult> WaitForConditionOn<TObject, TResult>(
+			string description,
+			Func<TObject> getObject,
+			Func<TObject, bool> condition,
+			Func<TObject, TResult> makeResult,
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<TObject, TResult>(
+				description,
+				getObject,
+				condition,
+				makeResult,
+				extraContext,
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		[Pure]
+		public static ITestWaitCondition<T> WaitForConditionOn<T>(
+			string description,
+			Func<T> getObject,
+			Func<T, bool> condition,
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<T, T>(
+				description,
+				getObject,
+				condition,
+				_ => _,
+				extraContext,
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		[Pure]
 		public static ITestWaitCondition<T> WaitForCondition<T>(
 			string description,
 			Func<bool> condition,
@@ -30,10 +65,11 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<T>(
+			=> new PollingWaitCondition<Unit, T>(
 				description,
-				condition,
-				makeResult,
+				() => Unit.Default,
+				_ => condition(),
+				_ => makeResult(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
@@ -45,13 +81,18 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Unit>(
+			=> new PollingWaitCondition<Unit, Unit>(
 				description,
-				condition,
 				() => Unit.Default,
+				_ => condition(),
+				_ => Unit.Default,
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Constructs a wait condition that becomes true when the given constraint
+		/// is fulfilled on the object returned by <c>getObject</c>.
+		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConstraint<T>(
 			string objectDescription,
@@ -65,7 +106,6 @@ namespace Responsible
 				getObject,
 				constraint,
 				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
-
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCoroutine(
@@ -96,12 +136,26 @@ namespace Responsible
 
 		[Pure]
 		public static ITestInstruction<Unit> WaitForSeconds(
-			int seconds,
+			double seconds,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new WaitForInstruction(
 				TimeSpan.FromSeconds(seconds),
+				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Wait for the given amount of WHOLE frames.
+		/// Note that zero frames means to wait until the next frame.
+		/// </summary>
+		[Pure]
+		public static ITestInstruction<Unit> WaitForFrames(
+			int frames,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new WaitForFramesInstruction(
+				frames,
 				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]

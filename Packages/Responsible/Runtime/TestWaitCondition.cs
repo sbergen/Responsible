@@ -128,7 +128,7 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<T> ExpectWithinSeconds<T>(
 			this ITestWaitCondition<T> condition,
-			int timeout,
+			double timeout,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

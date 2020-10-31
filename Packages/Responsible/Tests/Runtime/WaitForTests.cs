@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using NUnit.Framework;
-using Responsible.Tests.Runtime.Utilities;
 using UniRx;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
@@ -11,6 +10,56 @@ namespace Responsible.Tests.Runtime
 {
 	public class WaitForTests : ResponsibleTestBase
 	{
+		[UnityTest]
+		public IEnumerator WaitForConditionOn_Completes_OnlyWhenConditionIsTrueOnReturnedObject()
+		{
+			var completed = false;
+			object boxedBool = null;
+
+			using (WaitForConditionOn(
+					"Wait for boxedBool to be true",
+					() => boxedBool,
+					obj => obj is bool asBool && asBool)
+				.ExpectWithinSeconds(10)
+				.ToObservable(this.Executor)
+				.Subscribe(_ => completed = true))
+			{
+				Assert.IsFalse(completed);
+				yield return null;
+
+				// Completes on next frame
+				boxedBool = true;
+				Assert.IsFalse(completed);
+				yield return null;
+				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForConditionOn_RunsSelector_WhenResultSelectorProvided()
+		{
+			bool? result = null;
+			object boxedBool = null;
+
+			using (WaitForConditionOn(
+					"Wait for boxedBool to be true",
+					() => boxedBool,
+					obj => obj is bool asBool && asBool,
+					val => !(bool)val)
+				.ExpectWithinSeconds(10)
+				.ToObservable(this.Executor)
+				.Subscribe(val => result = val))
+			{
+				Assert.IsNull(result);
+				yield return null;
+
+				// Completes on next frame
+				boxedBool = true;
+				yield return null;
+				Assert.IsFalse(result, "The result should be negated by the result selector");
+			}
+		}
+
 		[UnityTest]
 		public IEnumerator WaitForCondition_Completes_WhenConditionMet()
 		{
@@ -103,6 +152,34 @@ namespace Responsible.Tests.Runtime
 				this.Scheduler.AdvanceBy(OneSecond);
 				Assert.IsFalse(completed);
 				this.Scheduler.AdvanceBy(OneSecond);
+				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForFrames_CompletesAfterTimeout()
+		{
+			var completed = false;
+			using (WaitForFrames(2).ToObservable(this.Executor).Subscribe(_ => completed = true))
+			{
+				Assert.IsFalse(completed);
+				yield return null; // This frame
+				Assert.IsFalse(completed);
+				yield return null; // First frame
+				Assert.IsFalse(completed);
+				yield return null; // Second frame
+				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForFrames_CompletesAfterThisFrame_WithZeroFrames()
+		{
+			var completed = false;
+			using (WaitForFrames(0).ToObservable(this.Executor).Subscribe(_ => completed = true))
+			{
+				Assert.IsFalse(completed);
+				yield return null; // This frame
 				Assert.IsTrue(completed);
 			}
 		}
