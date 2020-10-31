@@ -6,46 +6,50 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class PollingWaitCondition<T> : TestWaitConditionBase<T>
+	internal class PollingWaitCondition<TCondition, TResult> : TestWaitConditionBase<TResult>
 	{
 		public PollingWaitCondition(
 			string description,
-			Func<bool> condition,
-			Func<T> makeResult,
+			Func<TCondition> getConditionState,
+			Func<TCondition, bool> condition,
+			Func<TCondition, TResult> makeResult,
 			[CanBeNull] Action<StateStringBuilder> extraContext,
 			SourceContext sourceContext)
-			: base(() => new State(description, condition, makeResult, extraContext, sourceContext))
+			: base(() => new State(description, getConditionState, condition, makeResult, extraContext, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<T>
+		private class State : TestOperationState<TResult>
 		{
 			private readonly string description;
-			private readonly Func<bool> condition;
-			private readonly Func<T> makeResult;
+			private readonly Func<TCondition> getConditionState;
+			private readonly Func<TCondition, bool> condition;
+			private readonly Func<TCondition, TResult> makeResult;
 			[CanBeNull] private readonly Action<StateStringBuilder> extraContext;
 
 			public State(
 				string description,
-				Func<bool> condition,
-				Func<T> makeResult,
+				Func<TCondition> getConditionState,
+				Func<TCondition, bool> condition,
+				Func<TCondition, TResult> makeResult,
 				[CanBeNull] Action<StateStringBuilder> extraContext,
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
 				this.description = description;
+				this.getConditionState = getConditionState;
 				this.condition = condition;
 				this.makeResult = makeResult;
 				this.extraContext = extraContext;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext
+			protected override IObservable<TResult> ExecuteInner(RunContext runContext) => runContext
 				.PollObservable
 				.StartWith(Unit.Default) // Allow immediate completion
-				.Select(_ => this.condition())
-				.Where(fulfilled => fulfilled)
+				.Select(_ => this.getConditionState())
+				.Where(this.condition)
 				.Take(1)
-				.Select(_ => this.makeResult());
+				.Select(this.makeResult);
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddWait(this.description, this, this.extraContext);

@@ -22,6 +22,41 @@ namespace Responsible
 	public static partial class Responsibly
 	{
 		[Pure]
+		public static ITestWaitCondition<TResult> WaitForConditionOn<TObject, TResult>(
+			string description,
+			Func<TObject> getObject,
+			Func<TObject, bool> condition,
+			Func<TObject, TResult> makeResult,
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<TObject, TResult>(
+				description,
+				getObject,
+				condition,
+				makeResult,
+				extraContext,
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		[Pure]
+		public static ITestWaitCondition<T> WaitForConditionOn<T>(
+			string description,
+			Func<T> getObject,
+			Func<T, bool> condition,
+			Action<StateStringBuilder> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<T, T>(
+				description,
+				getObject,
+				condition,
+				_ => _,
+				extraContext,
+				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		[Pure]
 		public static ITestWaitCondition<T> WaitForCondition<T>(
 			string description,
 			Func<bool> condition,
@@ -30,10 +65,11 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<T>(
+			=> new PollingWaitCondition<Unit, T>(
 				description,
-				condition,
-				makeResult,
+				() => Unit.Default,
+				_ => condition(),
+				_ => makeResult(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
@@ -45,10 +81,11 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Unit>(
+			=> new PollingWaitCondition<Unit, Unit>(
 				description,
-				condition,
 				() => Unit.Default,
+				_ => condition(),
+				_ => Unit.Default,
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
