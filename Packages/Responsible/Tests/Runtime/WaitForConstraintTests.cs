@@ -31,6 +31,32 @@ namespace Responsible.Tests.Runtime
 			Assert.IsTrue(completed, "Should complete after constraint is true");
 		}
 
+		[UnityTest]
+		public IEnumerator WaitForConstraint_IsReferentiallyTransparent()
+		{
+			// We had a bug where using .Not would cause the constraint to be mutated,
+			// due to being resolved multiple times.
+			// This test was added to ensure there are no regressions here.
+
+			var mayComplete = false;
+			var completed = false;
+			var instruction = WaitForConstraint(
+					"mayComplete",
+					() => mayComplete, Is.Not.False)
+				.ExpectWithinSeconds(1);
+
+			// Reuse the condition with ContinueWith
+			instruction.ContinueWith(instruction)
+				.ToObservable(this.Executor)
+				.Subscribe(r => completed = r);
+
+			yield return null;
+			mayComplete = true;
+			yield return null;
+
+			Assert.IsTrue(completed, "Should complete after constraint is true");
+		}
+
 		[Test]
 		public void WaitForConstraint_HasExpectedDescription()
 		{
@@ -79,6 +105,5 @@ namespace Responsible.Tests.Runtime
 				this.Error.Message,
 				Does.Contain("[!] Some string").And.Contain("Fail!"));
 		}
-
 	}
 }

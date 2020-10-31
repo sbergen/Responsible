@@ -14,6 +14,16 @@ namespace Responsible.TestWaitConditions
 			Func<T> getObject,
 			IResolveConstraint constraint,
 			SourceContext sourceContext)
+			// Resolve() MUST be called only once!
+			: this(objectDescription, getObject, constraint.Resolve(), sourceContext)
+		{
+		}
+
+		private ConstraintWaitCondition(
+			string objectDescription,
+			Func<T> getObject,
+			IConstraint constraint,
+			SourceContext sourceContext)
 			: base(() => new State(objectDescription, getObject, constraint, sourceContext))
 		{
 		}
@@ -27,12 +37,12 @@ namespace Responsible.TestWaitConditions
 			public State(
 				string objectDescription,
 				Func<T> getObject,
-				IResolveConstraint constraint,
+				IConstraint constraint,
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
 				this.getObject = getObject;
-				this.constraint = constraint.Resolve();
+				this.constraint = constraint;
 				this.description = $"{objectDescription}: {this.constraint.Description}";
 			}
 

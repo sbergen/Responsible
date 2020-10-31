@@ -52,6 +52,10 @@ namespace Responsible
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Constructs a wait condition that becomes true when the given constraint
+		/// is fulfilled on the object returned by <c>getObject</c>.
+		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConstraint<T>(
 			string objectDescription,
@@ -65,7 +69,6 @@ namespace Responsible
 				getObject,
 				constraint,
 				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
-
 
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCoroutine(
