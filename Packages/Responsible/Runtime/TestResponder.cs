@@ -17,7 +17,7 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<TResult> ExpectWithinSeconds<TResult>(
 			this ITestResponder<TResult> responder,
-			int timeoutSeconds,
+			double timeoutSeconds,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

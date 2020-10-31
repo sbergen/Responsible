@@ -136,7 +136,7 @@ namespace Responsible
 
 		[Pure]
 		public static ITestInstruction<Unit> WaitForSeconds(
-			int seconds,
+			double seconds,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
