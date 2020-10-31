@@ -62,6 +62,36 @@ Error: System.Exception: Something failed
   at <normal exception stack trace>
 ```
 
+## Getting Started
+
+To start using Responsible, you'll need to install the package and
+reference the `Responsible` assembly from your test assemblies.
+
+### Installation Using the Unity Package Manager
+
+If you are on Unity Unity 2019.3.4f1, 2020.1a21 or later,
+you can add the following to `Packages/manifest.json`:
+```json
+"com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/Packages/Responsible"
+``` 
+if you are not already using UniRx, you may install that via the package manager also,
+by adding also the following line:
+```json
+"com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
+```
+
+### Installation Without the Unity Package Manager
+
+If you can't or don't want to use the package manager, you can also directly incorporate
+the `Packages/Responsible/Runtime` directory into your project.
+This could be done manually, or e.g. with a symlink and git submodule.
+
+### Referencing the Assembly
+
+With either installation option, you'll end up with an assembly called `Responsible`,
+with the `UNITY_INCLUDE_TESTS` define constraint.
+To use Responsible, simply reference this from your test assemblies.
+
 ## Design
 
 The primary motivation for building Responsible was the idea of *responders*,
