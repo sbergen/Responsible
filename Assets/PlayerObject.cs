@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UniRx;
 
 public class PlayerObject : MonoBehaviour
 {
@@ -7,25 +9,37 @@ public class PlayerObject : MonoBehaviour
 	[SerializeField] private TargetArea targetArea = null;
 	[SerializeField] private Status status = null;
 
+	private IDisposable inputSubscription;
 	private bool goingLeft;
+
+	private Vector2 CurrentPosition => this.rectTransform.localPosition;
+
+	private void Awake()
+	{
+		this.inputSubscription = PlayerInput.Instance.TriggerPressed.Subscribe(_ =>
+		{
+			if (this.status.IsAlive)
+			{
+				this.targetArea.AddMarker(this.CurrentPosition);
+			}
+			else
+			{
+				this.status.Restart();
+				this.targetArea.ClearMarkers();
+			}
+		});
+	}
+
+	private void OnDestroy()
+	{
+		this.inputSubscription.Dispose();
+	}
 
 	void Update()
 	{
 		if (!this.status.IsAlive)
 		{
-			if (PlayerInput.Instance.TriggerPressed())
-			{
-				this.status.Restart();
-				this.targetArea.ClearMarkers();
-			}
 			return;
-		}
-
-		var currentPosition = this.rectTransform.localPosition;
-
-		if (PlayerInput.Instance.TriggerPressed())
-		{
-			this.targetArea.AddMarker(currentPosition);
 		}
 
 		// Quick-and-ugly "bouncing" of this object across the canvas.
@@ -36,8 +50,9 @@ public class PlayerObject : MonoBehaviour
 		var leftBound = -rightBound;
 
 		var direction = this.goingLeft ? -1 : 1;
-		var currentX = currentPosition.x;
-		var nextX = currentX + direction * canvasWidth * Time.deltaTime;
+		var currentX = this.CurrentPosition.x;
+		var difficultyFactor = 1 + 0.1f * this.status.Score;
+		var nextX = currentX + direction * canvasWidth * Time.deltaTime * difficultyFactor;
 
 		if (nextX > rightBound)
 		{
@@ -50,7 +65,7 @@ public class PlayerObject : MonoBehaviour
 			nextX = 2 * leftBound - nextX;
 		}
 
-		var nextPosition = currentPosition;
+		var nextPosition = this.CurrentPosition;
 		nextPosition[0] = nextX;
 		this.rectTransform.localPosition = nextPosition;
 	}

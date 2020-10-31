@@ -30,7 +30,7 @@ namespace Responsible
 				new SourceContext(nameof(DoAndReturn), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Do an action safely, and don't return any resul.
+		/// Do an action safely, and don't return any result.
 		/// </summary>
 		[Pure]
 		public static ITestInstruction<Unit> Do(

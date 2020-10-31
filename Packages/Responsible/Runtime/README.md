@@ -66,6 +66,8 @@ Error: System.Exception: Something failed
 
 To start using Responsible, you'll need to install the package and
 reference the `Responsible` assembly from your test assemblies.
+Since `Unit` is quite commonly used in Responsible,
+no effort has been made to avoid having to reference UniRx also.
 
 ### Installation Using the Unity Package Manager
 
@@ -94,6 +96,7 @@ or in a similar fashion to what is outlined above.
 With either installation option, you'll end up with an assembly called `Responsible`,
 with the `UNITY_INCLUDE_TESTS` define constraint.
 To use Responsible, simply reference this from your test assemblies.
+You'll also need to reference UniRx to use many features of Responsible. 
 
 ## Design
 
@@ -127,7 +130,7 @@ The core design principles of Responsible are:
   Responsible does *not* contain a collection of useful operations,
   but instead provides mechanisms to build your own.
 
-### Types of operations
+### Types of Operations
 
 Responsible is built on four different operation types,
 which can be combined in multiple ways, using operators.

@@ -1,5 +1,7 @@
 # Responsible sample project
 
+**For the library, see [Packages/Responsible](../Packages/Responsible)**
+
 This is a quick-and-dirty, but somewhat realistic sample project
 that serves only the purpose of demonstrating how to set up
 system-level tests using Responsible.

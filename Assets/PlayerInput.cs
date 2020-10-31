@@ -1,16 +1,39 @@
+using System;
+using UniRx;
 using UnityEngine;
 
-public class PlayerInput : IPlayerInput
+public class PlayerInput : MonoBehaviour, IPlayerInput
 {
+	private readonly Subject<Unit> triggerPressed = new Subject<Unit>();
+
 	// Proper dependency injection is out of scope for this project,
 	// use globally mutable singleton instead...
 	// See e.g. https://github.com/svermeulen/Extenject for how to do this properly.
 	public static IPlayerInput Instance { get; set; }
 
-	static PlayerInput()
+	IObservable<Unit> IPlayerInput.TriggerPressed => this.triggerPressed;
+
+	private void Awake()
 	{
-		Instance = new PlayerInput();
+		if (Instance == null)
+		{
+			Instance = this;
+		}
 	}
 
-	public bool TriggerPressed() => Input.GetKeyDown(KeyCode.Space);
+	private void OnDestroy()
+	{
+		if (ReferenceEquals(this, Instance))
+		{
+			Instance = null;
+		}
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			this.triggerPressed.OnNext(Unit.Default);
+		}
+	}
 }
