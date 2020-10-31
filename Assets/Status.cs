@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class Status : MonoBehaviour
 {
+	public const int StartingLives = 3;
+
 	[SerializeField] private Text scoreText = null;
 	[SerializeField] private Text livesText = null;
 
@@ -50,7 +52,7 @@ public class Status : MonoBehaviour
 
 	public void Restart()
 	{
-		this.Lives = 3;
+		this.Lives = StartingLives;
 		this.Score = 0;
 	}
 }

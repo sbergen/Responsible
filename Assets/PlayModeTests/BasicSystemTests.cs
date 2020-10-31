@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using Responsible;
-using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
+using Object = UnityEngine.Object;
 
 namespace PlayModeTests
 {
@@ -39,6 +40,29 @@ namespace PlayModeTests
 		}
 
 		[UnityTest]
+		public IEnumerator TriggerKey_Restarts_AfterFailing()
+		{
+			var miss = this
+				.TriggerHit(false)
+				.ExpectWithinSeconds(2)
+				.ContinueWith(WaitForFrames(1));
+
+			var fail = Enumerable.Repeat(miss, Status.StartingLives).Sequence();
+
+			yield return fail
+				.ContinueWith(Do("Assert failed", () =>
+				{
+					Assert.IsFalse(ExpectStatusInstance().IsAlive);
+				}))
+				.ContinueWith(this.MockTriggerInput())
+				.ContinueWith(Do("Assert restarted", () =>
+				{
+					Assert.IsTrue(ExpectStatusInstance().IsAlive);
+				}))
+				.ToYieldInstruction(this.TestInstructionExecutor);
+		}
+
+		[UnityTest]
 		public IEnumerator PlayToTenPoints_ProducesExpectedEndResult()
 		{
 			// Yes, this test is pretty undeterministic, but it demonstrates
@@ -54,7 +78,7 @@ namespace PlayModeTests
 				.ExpectWithinSeconds(2)
 				.ContinueWith(WaitForFrames(1));
 
-			var threeHitsAndAMiss = hit.ContinueWith(hit).ContinueWith(hit).ContinueWith(miss);
+			var threeHitsAndAMiss = new[] { hit, hit, miss }.Sequence();
 
 			yield return new[]
 				{
@@ -73,7 +97,7 @@ namespace PlayModeTests
 				}))
 				.ContinueWith(Do("Assert status", () =>
 				{
-					var status = Object.FindObjectOfType<Status>();
+					var status = ExpectStatusInstance();
 					Assert.IsFalse(status.IsAlive);
 					Assert.AreEqual(10, status.Score);
 				}))

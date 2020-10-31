@@ -44,9 +44,21 @@ namespace PlayModeTests
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit,
 				() => components))
-			.ThenRespondWith("Trigger hit for this frame", _ => this.mockInput.Trigger());
+			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
+
+		protected ITestInstruction<Unit> MockTriggerInput() =>
+			Do("Mock trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();
+
+		protected static Status ExpectStatusInstance()
+		{
+			// Sometimes you want to just expect things to be there.
+			// Not everything needs to be async :)
+			var status = Object.FindObjectOfType<Status>();
+			Assert.IsNotNull(status, "Status is expected to not be null");
+			return status;
+		}
 
 		private static ITestWaitCondition<MainComponents> WaitForMainComponents()
 			=> WaitForConditionOn(
