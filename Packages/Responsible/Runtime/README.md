@@ -100,11 +100,17 @@ You'll also need to reference UniRx to use many features of Responsible.
 
 ### Examples
 
-The library itself has [extensive test coverage](../Tests/Runtime),
-which may be used as examples of usage.
-For a simpler example of a basic test setup, there's also a simple
-[example project](../../../Assets)
-with some [basic tests](../../../Assets/PlayModeTests) included.
+For a simple example of a basic test setup, 
+there's an [example project](../Samples~/ResponsibleGame)
+with some [basic tests](../Samples~/ResponsibleGame/PlayModeTests) included.
+This sample game can be installed from the Unity Package Manager,
+and is also symlinked into the main Unity project in this repository, for convenience.
+
+The library itself also has [extensive test coverage](../../../Assets/Tests/Runtime),
+which may be used as more extensive examples of usage.
+Note that these tests live outside of the package,
+so that they do not get included into projects referencing Responsible.
+(This has to do with undocumented reasons related to using `"type": "tests"` in `package.json`).
 
 ## Design
 
