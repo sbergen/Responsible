@@ -15,5 +15,12 @@
     "email": "unity@beatwaves.net",
     "url": "https://beatwaves.net"
   },
-  "type": "tests"
+  "type": "tests",
+  "samples": [
+    {
+      "displayName": "ResponsibleGame",
+      "description": "Simple sample game with some basic tests implemented using Responsible.",
+      "path": "Samples~/ResponsibleGame"
+    }
+  ] 
 }

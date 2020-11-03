@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System.IO;
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
 using UniRx;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -13,9 +16,21 @@ namespace PlayModeTests
 	[TestFixture]
 	public abstract class SystemTest
 	{
+		private string scenePath;
 		private MockInput mockInput;
 
 		protected TestInstructionExecutor TestInstructionExecutor { get; private set; }
+
+		[OneTimeSetUp]
+		public void ResolveScenePath()
+		{
+			// This is a bit complicated, as we don't want to force you to add the sample
+			// scene into your build settings, and I don't want to hard-code the samples location.
+			// Note that will only work in the editor, but you could just use LoadSceneAsync normally in player tests.
+			var sampleDirectory = new FileInfo(GetCallerPath()).Directory?.Parent?.FullName;
+			var assetsDirectory = new DirectoryInfo(Application.dataPath).FullName;
+			this.scenePath = $"Assets{sampleDirectory?.Substring(assetsDirectory.Length)}/Scenes/Example.unity";
+		}
 
 		[UnitySetUp]
 		public IEnumerator SetUp()
@@ -24,7 +39,9 @@ namespace PlayModeTests
 			this.mockInput = new MockInput();
 			PlayerInput.Instance = this.mockInput;
 
-			yield return SceneManager.LoadSceneAsync("Scenes/Example");
+			yield return EditorSceneManager.LoadSceneAsyncInPlayMode(
+				this.scenePath,
+				new LoadSceneParameters(LoadSceneMode.Additive));
 		}
 
 		[TearDown]
@@ -32,6 +49,12 @@ namespace PlayModeTests
 		{
 			this.TestInstructionExecutor.Dispose();
 			PlayerInput.Instance = null;
+		}
+
+		[UnityTearDown]
+		public IEnumerator AsyncTearDown()
+		{
+			yield return SceneManager.UnloadSceneAsync(this.scenePath);
 		}
 
 		// These operations are written in a way that allows the components to
@@ -74,5 +97,7 @@ namespace PlayModeTests
 			var position = ((RectTransform)components.PlayerObject.transform).localPosition;
 			return ((RectTransform)components.TargetArea.transform).rect.Contains(position);
 		}
+
+		private static string GetCallerPath([CallerFilePath] string callerPath = null) => callerPath;
 	}
 }
