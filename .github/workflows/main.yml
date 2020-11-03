@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2.1.2
+        with:
+          path: Library
+          key: Library
+
+      - name: Run tests
+        uses: webbertakken/unity-test-runner@v1.7
+        with: 
+          unityVersion: 2019.4.13f1
