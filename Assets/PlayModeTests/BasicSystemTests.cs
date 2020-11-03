@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using Responsible;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
-using Object = UnityEngine.Object;
 
 namespace PlayModeTests
 {
@@ -78,7 +76,7 @@ namespace PlayModeTests
 				.ExpectWithinSeconds(2)
 				.ContinueWith(WaitForFrames(1));
 
-			var threeHitsAndAMiss = new[] { hit, hit, miss }.Sequence();
+			var threeHitsAndAMiss = new[] { hit, hit, hit, miss }.Sequence();
 
 			yield return new[]
 				{
