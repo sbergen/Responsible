@@ -1,5 +1,11 @@
 # Responsible - Reactive Asynchronous Testing
 
+[![CI status](https://github.com/sbergen/Responsible/workflows/CI/badge.svg)](https://github.com/sbergen/Responsible/actions?query=workflow%3ACI+branch%3Amain+)
+[![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
+[![Releases](https://img.shields.io/github/v/release/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
+[![Release date](https://img.shields.io/github/release-date/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
+![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)
+
 *Responsible* is an automated testing utility primarily designed for,
 but not limited to be used in high level system tests in [Unity](https://unity.com/).
 It is built on top of [UniRx](https://github.com/neuecc/UniRx) and [NUnit](https://nunit.org/).
