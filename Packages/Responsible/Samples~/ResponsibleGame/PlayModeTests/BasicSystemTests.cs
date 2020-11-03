@@ -5,7 +5,7 @@ using Responsible;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 
-namespace PlayModeTests
+namespace ResponsibleGame.PlayModeTests
 {
 	public class BasicSystemTests : SystemTest
 	{

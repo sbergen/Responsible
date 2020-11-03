@@ -1,4 +1,7 @@
-public class Hit : Marker
+namespace ResponsibleGame
 {
+	public class Hit : Marker
+	{
 
+	}
 }

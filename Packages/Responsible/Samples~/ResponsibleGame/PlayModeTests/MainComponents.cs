@@ -1,4 +1,4 @@
-namespace PlayModeTests
+namespace ResponsibleGame.PlayModeTests
 {
 	public class MainComponents
 	{

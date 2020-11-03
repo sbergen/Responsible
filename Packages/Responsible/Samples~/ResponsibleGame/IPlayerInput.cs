@@ -1,9 +1,12 @@
 using System;
 using UniRx;
 
-public interface IPlayerInput
+namespace ResponsibleGame
 {
-	// Because Update execution order is really hard to predict,
-	// use an event driven approach here, instead of polling from Update methods.
-	IObservable<Unit> TriggerPressed { get; }
+	public interface IPlayerInput
+	{
+		// Because Update execution order is really hard to predict,
+		// use an event driven approach here, instead of polling from Update methods.
+		IObservable<Unit> TriggerPressed { get; }
+	}
 }

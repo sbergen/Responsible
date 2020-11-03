@@ -1,7 +1,7 @@
 {
-    "name": "Example.PlayModeTests",
+    "name": "ResponsibleGame.PlayModeTests",
     "references": [
-        "Example",
+        "ResponsibleGame",
         "Responsible",
         "UnityEngine.TestRunner",
         "UniRx"

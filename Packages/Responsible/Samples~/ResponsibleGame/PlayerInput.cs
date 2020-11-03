@@ -2,38 +2,41 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour, IPlayerInput
+namespace ResponsibleGame
 {
-	private readonly Subject<Unit> triggerPressed = new Subject<Unit>();
-
-	// Proper dependency injection is out of scope for this project,
-	// use globally mutable singleton instead...
-	// See e.g. https://github.com/svermeulen/Extenject for how to do this properly.
-	public static IPlayerInput Instance { get; set; }
-
-	IObservable<Unit> IPlayerInput.TriggerPressed => this.triggerPressed;
-
-	private void Awake()
+	public class PlayerInput : MonoBehaviour, IPlayerInput
 	{
-		if (Instance == null)
+		private readonly Subject<Unit> triggerPressed = new Subject<Unit>();
+
+		// Proper dependency injection is out of scope for this project,
+		// use globally mutable singleton instead...
+		// See e.g. https://github.com/svermeulen/Extenject for how to do this properly.
+		public static IPlayerInput Instance { get; set; }
+
+		IObservable<Unit> IPlayerInput.TriggerPressed => this.triggerPressed;
+
+		private void Awake()
 		{
-			Instance = this;
+			if (Instance == null)
+			{
+				Instance = this;
+			}
 		}
-	}
 
-	private void OnDestroy()
-	{
-		if (ReferenceEquals(this, Instance))
+		private void OnDestroy()
 		{
-			Instance = null;
+			if (ReferenceEquals(this, Instance))
+			{
+				Instance = null;
+			}
 		}
-	}
 
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		private void Update()
 		{
-			this.triggerPressed.OnNext(Unit.Default);
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				this.triggerPressed.OnNext(Unit.Default);
+			}
 		}
 	}
 }

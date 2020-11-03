@@ -1,7 +1,7 @@
 using System;
 using UniRx;
 
-namespace PlayModeTests
+namespace ResponsibleGame.PlayModeTests
 {
 	public class MockInput : IPlayerInput
 	{

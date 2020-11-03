@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class Marker : MonoBehaviour
+namespace ResponsibleGame
 {
-	[SerializeField] private RectTransform rectTransform = null;
-
-	public void SetPosition(Vector2 position)
+	public class Marker : MonoBehaviour
 	{
-		this.rectTransform.localPosition = position;
+		[SerializeField] private RectTransform rectTransform = null;
+
+		public void SetPosition(Vector2 position)
+		{
+			this.rectTransform.localPosition = position;
+		}
 	}
 }

@@ -11,7 +11,7 @@ using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 using Object = UnityEngine.Object;
 
-namespace PlayModeTests
+namespace ResponsibleGame.PlayModeTests
 {
 	[TestFixture]
 	public abstract class SystemTest
@@ -29,7 +29,7 @@ namespace PlayModeTests
 			// Note that will only work in the editor, but you could just use LoadSceneAsync normally in player tests.
 			var sampleDirectory = new FileInfo(GetCallerPath()).Directory?.Parent?.FullName;
 			var assetsDirectory = new DirectoryInfo(Application.dataPath).FullName;
-			this.scenePath = $"Assets{sampleDirectory?.Substring(assetsDirectory.Length)}/Scenes/Example.unity";
+			this.scenePath = $"Assets{sampleDirectory?.Substring(assetsDirectory.Length)}/Scenes/ResponsibleGame.unity";
 		}
 
 		[UnitySetUp]

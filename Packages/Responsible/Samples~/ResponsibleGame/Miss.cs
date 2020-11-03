@@ -1,4 +1,7 @@
-public class Miss : Marker
+namespace ResponsibleGame
 {
+	public class Miss : Marker
+	{
 
+	}
 }

@@ -1,58 +1,61 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Status : MonoBehaviour
+namespace ResponsibleGame
 {
-	public const int StartingLives = 3;
-
-	[SerializeField] private Text scoreText = null;
-	[SerializeField] private Text livesText = null;
-
-	private int lives;
-	private int score;
-
-	public int Lives
+	public class Status : MonoBehaviour
 	{
-		get => this.lives;
-		private set
+		public const int StartingLives = 3;
+
+		[SerializeField] private Text scoreText = null;
+		[SerializeField] private Text livesText = null;
+
+		private int lives;
+		private int score;
+
+		public int Lives
 		{
-			this.lives = value;
-			this.livesText.text = this.lives.ToString();
+			get => this.lives;
+			private set
+			{
+				this.lives = value;
+				this.livesText.text = this.lives.ToString();
+			}
 		}
-	}
 
-	public int Score
-	{
-		get => this.score;
-		private set
+		public int Score
 		{
-			this.score = value;
-			this.scoreText.text = this.score.ToString();
+			get => this.score;
+			private set
+			{
+				this.score = value;
+				this.scoreText.text = this.score.ToString();
+			}
 		}
-	}
 
-	public bool IsAlive => this.lives > 0;
+		public bool IsAlive => this.lives > 0;
 
-	private void Awake()
-	{
-		this.Restart();
-	}
-
-	public void HitOrMiss(bool wasHit)
-	{
-		if (wasHit)
+		private void Awake()
 		{
-			++this.Score;
+			this.Restart();
 		}
-		else
-		{
-			--this.Lives;
-		}
-	}
 
-	public void Restart()
-	{
-		this.Lives = StartingLives;
-		this.Score = 0;
+		public void HitOrMiss(bool wasHit)
+		{
+			if (wasHit)
+			{
+				++this.Score;
+			}
+			else
+			{
+				--this.Lives;
+			}
+		}
+
+		public void Restart()
+		{
+			this.Lives = StartingLives;
+			this.Score = 0;
+		}
 	}
 }
