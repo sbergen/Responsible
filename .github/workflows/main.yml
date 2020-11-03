@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v2.2.0 
         with:
           name: Test Results
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          path: artifacts
