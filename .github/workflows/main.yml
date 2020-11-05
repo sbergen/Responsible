@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: Library
-          key: Library
+          key: Library-test
 
       - name: Run tests
         id: tests
@@ -43,7 +43,7 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: Library
-          key: Library
+          key: Library-lint
 
       - name: Generate Solution
         uses: webbertakken/unity-builder@v1.5
@@ -54,7 +54,19 @@ jobs:
           targetPlatform: StandaloneLinux64
           buildMethod: UnityEditor.SyncVS.SyncSolution
 
-      - name: Run ReSharper
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      # Solution name is derived from directory name by Unity
+      - name: Run inspectcode
+        run: ~/.dotnet/tools/jb inspectcode -o=inspect.xml workspace.sln 
+
+      - name: Transform ReSharper results
         uses: glassechidna/resharper-action@v1
         with:
-          solution: workspace.sln # Derived from directory name by Unity
+          report: inspect.xml
