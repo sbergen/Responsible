@@ -42,6 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache
+        uses: actions/cache@v2.1.2
+        with:
+          path: Library
+          key: Library
+
       - name: Generate Solution
         uses: webbertakken/unity-builder@v1.5
         env:
@@ -50,6 +56,9 @@ jobs:
           unityVersion: ${{ env.DEFAULT_UNITY_VERSION }}
           targetPlatform: StandaloneLinux64
           buildMethod: UnityEditor.SyncVS.SyncSolution
+
+      - run: ls -l ./*
+      - run: ls -l ./*/*
 
       - name: Run ReSharper
         uses: glassechidna/resharper-action@v1
