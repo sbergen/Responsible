@@ -64,7 +64,7 @@ jobs:
 
       # Solution name is derived from directory name by Unity
       - name: Run inspectcode
-        run: ~/.dotnet/tools/jb inspectcode -o=inspect.xml workspace.sln 
+        run: dotnet jb inspectcode -o=inspect.xml workspace.sln 
 
       - name: Transform ReSharper results
         uses: glassechidna/resharper-action@v1
