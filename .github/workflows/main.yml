@@ -25,6 +25,11 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with: 
           unityVersion: 2019.4.13f1
+
+      - name: Run ReSharper
+        uses: glassechidna/resharper-action@v1
+        with:
+          solution: Responsible.sln
       
       - name: Archive test results
         uses: actions/upload-artifact@v2.2.0 
