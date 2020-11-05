@@ -5,9 +5,12 @@ on:
     branches: [ main ]
   pull_request:
 
+env:
+  DEFAULT_UNITY_VERSION: 2019.4.13f1
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest  
 
     steps:
       - uses: actions/checkout@v2
@@ -24,15 +27,31 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with: 
-          unityVersion: 2019.4.13f1
-
-      - name: Run ReSharper
-        uses: glassechidna/resharper-action@v1
-        with:
-          solution: Responsible.sln
+          unityVersion: ${{ env.DEFAULT_UNITY_VERSION }}
+          testMode: playmode # We only have play mode tests
       
       - name: Archive test results
         uses: actions/upload-artifact@v2.2.0 
         with:
           name: Test Results
           path: artifacts
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate Solution
+        uses: webbertakken/unity-builder@v1.5
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ env.DEFAULT_UNITY_VERSION }}
+          targetPlatform: StandaloneLinux64
+          buildMethod: UnityEditor.SyncVS.SyncSolution
+
+      - name: Run ReSharper
+        uses: glassechidna/resharper-action@v1
+        with:
+          solution: Responsible.sln
