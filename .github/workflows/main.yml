@@ -36,7 +36,14 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    env:
+      FrameworkPathOverride: /usr/lib/mono/4.5/
+
     steps:
+      - run: printenv
+      - run: which mono
+      - run: dotnet --info
+
       - uses: actions/checkout@v2
 
       - name: Cache
