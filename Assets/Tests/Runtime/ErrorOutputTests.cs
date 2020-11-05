@@ -118,6 +118,14 @@ Failure context:
         [ ] ...
       THEN RESPOND WITH ...
  
+Failed with:
+  System.Exception: 'Exception'
+ 
+Test operation stack:
+  [ExpectWithinSeconds] MakeInstruction (at Assets/Tests/Runtime/ErrorOutputTests.cs:34)
+  [ToObservable] ErrorOutput_IsAsExpected (at Assets/Tests/Runtime/ErrorOutputTests.cs:67)
+ 
+ 
 Error: System.Exception: Exception";
 	}
 }
