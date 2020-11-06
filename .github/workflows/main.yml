@@ -52,26 +52,19 @@ jobs:
           path: Library
           key: Library-lint
 
-      - name: Generate Solution
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+
+      - name: Lint (in Unity)
         uses: webbertakken/unity-builder@v1.5
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           unityVersion: 2019.4.13f1
           targetPlatform: StandaloneLinux64
-          buildMethod: UnityEditor.SyncVS.SyncSolution
-
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
-
-      - name: Restore dotnet tools
-        run: dotnet tool restore
-
-      # Solution name is derived from directory name by Unity
-      - name: Run inspectcode
-        run: dotnet jb inspectcode -o=inspect.xml workspace.sln 
+          buildMethod: Responsible.Tools.ContinuousIntegration.Lint
 
       - name: Transform ReSharper results
         uses: glassechidna/resharper-action@v1
