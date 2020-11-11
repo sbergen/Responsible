@@ -3,6 +3,7 @@
 [![CI status](https://github.com/sbergen/Responsible/workflows/CI/badge.svg)](https://github.com/sbergen/Responsible/actions?query=workflow%3ACI+branch%3Amain+)
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
 [![Releases](https://img.shields.io/github/v/release/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
+[![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 [![Release date](https://img.shields.io/github/release-date/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
 ![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)
 
