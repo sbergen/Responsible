@@ -99,17 +99,17 @@ namespace Responsible.State
 		internal void AddExpectWithin(
 			ITestOperationState expectOperation,
 			TimeSpan timeout,
-			ITestOperationState operation)
-			=> this.AddParentWithChildren(
+			ITestOperationState operation) => this
+			.AddParentWithChildren(
 				$"EXPECT WITHIN {timeout:g}",
 				expectOperation,
 				new[] { operation });
 
-		internal void AddParentWithChildren(
+		internal StateStringBuilder AddParentWithChildren(
 			string parentDescription,
 			ITestOperationState parentState,
-			IEnumerable<ITestOperationState> children)
-			=> this.AddIndented(
+			IEnumerable<ITestOperationState> children) => this
+			.AddIndented(
 				parentState.Status.MakeStatusLine(parentDescription),
 				b =>
 				{
@@ -117,7 +117,8 @@ namespace Responsible.State
 					{
 						child.BuildDescription(b);
 					}
-				});
+				})
+			.AddFailureDetails(parentState.Status);
 
 		internal void AddToPreviousLineWithChildren(
 			string addToPrevious,
@@ -140,37 +141,44 @@ namespace Responsible.State
 		private StateStringBuilder AddStatus(
 			TestOperationStatus status,
 			string description,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this.AddIndented(
-			status.MakeStatusLine(description),
-			_ =>
+			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this
+			.AddIndented(
+				status.MakeStatusLine(description),
+				_ => this.AddFailureDetails(status, extraContext));
+
+		private StateStringBuilder AddFailureDetails(
+			TestOperationStatus status,
+			[CanBeNull] Action<StateStringBuilder> extraContext = null)
+		{
+			if (status is TestOperationStatus.Failed failed)
 			{
-				if (status is TestOperationStatus.Failed failed)
+				this.AddEmptyLine();
+
+				var e = failed.Error;
+				this.AddIndented(
+					"Failed with:",
+					b => b.Add($"{e.GetType()}: '{TruncatedExceptionMessage(e)}'"));
+
+				this.AddEmptyLine();
+
+				this.AddIndented("Test operation stack:", b =>
 				{
-					this.AddEmptyLine();
-
-					var e = failed.Error;
-					this.AddIndented(
-						"Failed with:",
-						b => b.Add($"{e.GetType()}: '{TruncatedExceptionMessage(e)}'"));
-
-					this.AddEmptyLine();
-
-					this.AddIndented("Test operation stack:", b =>
+					foreach (var sourceLine in failed.SourceContext.SourceLines)
 					{
-						foreach (var sourceLine in failed.SourceContext.SourceLines)
-						{
-							b.Add(sourceLine);
-						}
-					});
+						b.Add(sourceLine);
+					}
+				});
 
-					this.AddEmptyLine();
-				}
+				this.AddEmptyLine();
+			}
 
-				if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
-				{
-					extraContext?.Invoke(this);
-				}
-			});
+			if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
+			{
+				extraContext?.Invoke(this);
+			}
+
+			return this;
+		}
 
 		private static string TruncatedExceptionMessage(Exception e) => new string(e.Message
 			.Select(Indexed.Make)
