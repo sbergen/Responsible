@@ -89,7 +89,15 @@ by adding also the following line:
 "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
 ```
 
-### Installation Without the Unity Package Manager
+### Installation Using OpenUPM
+
+After [setting up OpenUMP](https://openupm.com/docs/),
+you can add Responsible to your project by running
+```
+openupm add com.beatwaves.responsible
+``` 
+
+### Installation Without a Package Manager
 
 If you can't or don't want to use the package manager, you can also directly incorporate
 the [Packages/Responsible/Runtime](Packages/Responsible/Runtime) directory into your project.
