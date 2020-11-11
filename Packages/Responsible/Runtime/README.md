@@ -1,66 +1,7 @@
 # Responsible - Reactive Asynchronous Testing
 
-*Responsible* is an automated testing utility primarily designed for,
-but not limited to be used in high level system tests in [Unity](https://unity.com/).
-It is built on top of [UniRx](https://github.com/neuecc/UniRx) and [NUnit](https://nunit.org/).
-Responsible currently runs only in Unity,
-but could easily be [ported](#portability) to work in other .NET environments also.
-
-The primary benefits of using Responsible are:
-* Detailed output on test failures and timeouts
-* Declarative, composable, and reusable test code
-
-Additionally, using Responsible will circumvent a
-[Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception),
-where test execution will continue after errors within nested coroutines,
-sometimes even hiding the first exception.
-
-While the design of Responsible was inspired by [Rx](http://reactivex.io/),
-and it is being used under the hood,
-knowing Rx is not *necessary* for using Responsible.
-However, being familiar with reactive and/or functional programming in C# (e.g. LINQ)
-should ease the learning curve.
-
-## Usage and Error Output Example
-
-Here's a simple example of what using Responsible could look like
-(with `using static Responsible.Responsibly;`) 
-
-```cs
-yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
-    .AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
-    .ThenRespondWith("Consume bar", _ => foo.Consume(bar))
-    .ExpectWithinSeconds(10)
-    .ContinueWith(Do("Continue operation", foo.ContinueOperation))
-    .ToYieldInstruction(this.TestInstructionExecutor);
-```
-
-If `foo.Consume` were to throw an error, the output could look something like this:
-```
-Test operation execution failed!
- 
-Failure context:
-[!] EXPECT WITHIN 0:00:10 (Failed after 0.10s and 7 frames)
-  [!] Consume bar (Failed after 0.00s and 0 frames)
-    WAIT FOR
-      [✓] Foo to be ready (Completed in 0.06s and 3 frames)
-      [✓] Bar to be completed (Completed in 0.04s and 4 frames)
-    THEN RESPOND WITH
-      [!] Consume bar (Failed after 0.00s and 0 frames)
- 
-        Failed with:
-          System.Exception: 'Something failed'
- 
-        Test operation stack:
-          [ThenRespondWith] MethodName (at Path/To/Source.cs:36)
-          [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:37)
-          [ToYieldInstruction] MethodName (at Path/To/Source.cs:38)
- 
-[ ] Continue operation
- 
-Error: System.Exception: Something failed
-  at <normal exception stack trace>
-```
+This is the main design documentation for Responsible.
+For getting started, please refer to the [GitHub README](https://github.com/sbergen/Responsible).
 
 ## Design
 
@@ -94,7 +35,7 @@ The core design principles of Responsible are:
   Responsible does *not* contain a collection of useful operations,
   but instead provides mechanisms to build your own.
 
-### Types of operations
+### Types of Operations
 
 Responsible is built on four different operation types,
 which can be combined in multiple ways, using operators.
