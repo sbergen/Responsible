@@ -79,7 +79,9 @@ namespace Responsible.Tests.Runtime
 			WaitForCondition(
 					"Never",
 					() => false,
-					builder => builder.AddDetails("Should be in logs"))
+					builder => builder.AddNestedDetails(
+						"Should be in logs",
+						b => b.AddDetails("Nested details")))
 				.ExpectWithinSeconds(1)
 				.ToObservable(this.Executor)
 				.CatchIgnore()
@@ -89,7 +91,9 @@ namespace Responsible.Tests.Runtime
 
 			this.Logger.Received(1).Log(
 				LogType.Error,
-				Arg.Is<string>(str => str.Contains("Should be in logs")));
+				Arg.Is<string>(str =>
+					str.Contains("Should be in logs") &&
+					str.Contains("Nested details")));
 		}
 	}
 }

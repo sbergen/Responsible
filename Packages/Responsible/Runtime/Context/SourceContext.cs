@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using UnityEngine;
@@ -33,6 +34,7 @@ namespace Responsible.Context
 		[Pure]
 		internal SourceContext Append(SourceContext other) => new SourceContext(other, this);
 
+		[ExcludeFromCodeCoverage] // Used only for prettier debugger output
 		public override string ToString() => string.Join("\n", this.SourceLines);
 
 		private static string Format(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
