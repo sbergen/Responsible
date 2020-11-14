@@ -67,7 +67,7 @@ namespace Responsible.Tests.Runtime
 		public IEnumerator ContinueWith_Completes_AfterBothComplete([Values] Strategy strategy)
 		{
 			var completed = false;
-			this.ContinueWithError(this.waitForFirst.ExpectWithinSeconds(1), strategy)
+			this.ContinueWithUnit(this.waitForFirst.ExpectWithinSeconds(1), strategy)
 				.ToObservable(this.Executor)
 				.Subscribe(_ => completed = true);
 
