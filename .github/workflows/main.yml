@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - uses: testspace-com/setup-testspace@v1
+        with:
+          domain: ${{github.repository_owner}}
 
       - name: Cache
         uses: actions/cache@v2.1.2
@@ -26,7 +29,16 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with: 
           unityVersion: 2019.4.13f1
+          testMode: playmode
+          customParameters: -enableCodeCoverage \
+            -coverageResultsPath "artifacts/CodeCoverage/" \
+            -coverageOptions assemblyFilters:+Responsible
       
+      - name: Push test results
+        run: |
+          testspace artifacts/playmode-results.xml
+          testspace artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+
       - name: Archive test results
         uses: actions/upload-artifact@v2.2.0 
         with:
