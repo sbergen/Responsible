@@ -124,7 +124,7 @@ with some [basic tests](Packages/Responsible/Samples~/ResponsibleGame/PlayModeTe
 This sample game can be installed from the Unity Package Manager,
 and is also symlinked into the main Unity project in this repository, for convenience.
 
-The library itself also has [extensive test coverage](Assets/Tests/Runtime),
+The library itself also has [extensive test coverage](Assets/Responsible/Tests/Runtime),
 which may be used as more extensive examples of usage.
 Note that these tests live outside of the package,
 so that they do not get included into projects referencing Responsible.
