@@ -16,6 +16,7 @@ namespace Responsible.Tests.Runtime
 
 			public void Consume(Bar bar)
 			{
+				var unused = bar;
 				throw new Exception("Something failed");
 			}
 

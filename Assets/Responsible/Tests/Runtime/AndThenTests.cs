@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using NUnit.Framework;
 using UniRx;
-using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure

@@ -1,6 +1,5 @@
 using System.Collections;
 using NUnit.Framework;
-using Responsible.State;
 using Responsible.Tests.Runtime.Utilities;
 using UnityEngine.TestTools;
 using UniRx;

@@ -6,12 +6,11 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
       - uses: testspace-com/setup-testspace@v1
         with:
           domain: ${{github.repository_owner}}
@@ -35,12 +34,21 @@ jobs:
             -coverageOptions assemblyFilters:+Responsible
       
       - name: Push test results
-        run: |
-          testspace artifacts/playmode-results.xml
+        if: ${{ always() }}
+        run: testspace \
+          artifacts/playmode-results.xml \
           testspace artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
       - name: Archive test results
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2.2.0 
         with:
           name: Test Results
           path: artifacts
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1

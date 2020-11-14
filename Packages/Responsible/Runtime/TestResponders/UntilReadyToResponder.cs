@@ -1,7 +1,5 @@
-using System;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestResponders
 {

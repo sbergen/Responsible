@@ -3,8 +3,7 @@
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
 [![CI status](https://github.com/sbergen/Responsible/workflows/CI/badge.svg)](https://github.com/sbergen/Responsible/actions?query=workflow%3ACI+branch%3Amain+)
 [![Coverage](https://sbergen.testspace.com/spaces/131745/metrics/100794/badge?token=5c47e94bb09fffb3e67ddb83367037937a5763db)](https://sbergen.testspace.com/spaces/131745/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (sequences)")
-![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)
-
+![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)  
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 [![Releases](https://img.shields.io/github/v/release/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
 [![Release date](https://img.shields.io/github/release-date/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
@@ -125,7 +124,7 @@ with some [basic tests](Packages/Responsible/Samples~/ResponsibleGame/PlayModeTe
 This sample game can be installed from the Unity Package Manager,
 and is also symlinked into the main Unity project in this repository, for convenience.
 
-The library itself also has [extensive test coverage](Assets/Tests/Runtime),
+The library itself also has [extensive test coverage](Assets/Responsible/Tests/Runtime),
 which may be used as more extensive examples of usage.
 Note that these tests live outside of the package,
 so that they do not get included into projects referencing Responsible.

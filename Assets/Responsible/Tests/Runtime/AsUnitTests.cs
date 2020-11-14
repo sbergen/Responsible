@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using NSubstitute;
 using NUnit.Framework;
 using UniRx;
 using UnityEngine.TestTools;

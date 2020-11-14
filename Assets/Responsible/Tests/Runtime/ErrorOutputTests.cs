@@ -107,10 +107,10 @@ Failure context:
             System.Exception: 'Exception'
  
           Test operation stack:
-            [ThenRespondWith] MakeResponder (at Assets/Tests/Runtime/ErrorOutputTests.cs:29)
-            [Until] MakeInstruction (at Assets/Tests/Runtime/ErrorOutputTests.cs:33)
-            [ExpectWithinSeconds] MakeInstruction (at Assets/Tests/Runtime/ErrorOutputTests.cs:34)
-            [ToObservable] ErrorOutput_IsAsExpected (at Assets/Tests/Runtime/ErrorOutputTests.cs:67)
+            [ThenRespondWith] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:29)
+            [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:33)
+            [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+            [ToObservable] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:67)
  
     [.] Response 2 (Started 3.00s and 4 frames ago)
       WAIT FOR
@@ -122,8 +122,8 @@ Failed with:
   System.Exception: 'Exception'
  
 Test operation stack:
-  [ExpectWithinSeconds] MakeInstruction (at Assets/Tests/Runtime/ErrorOutputTests.cs:34)
-  [ToObservable] ErrorOutput_IsAsExpected (at Assets/Tests/Runtime/ErrorOutputTests.cs:67)
+  [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+  [ToObservable] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:67)
  
  
 Error: System.Exception: Exception";
