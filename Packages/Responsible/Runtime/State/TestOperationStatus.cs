@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Responsible.Context;
 
 namespace Responsible.State
@@ -25,12 +26,7 @@ namespace Responsible.State
 
 			public Waiting(TestOperationStatus previous, WaitContext waitContext)
 			{
-				if (previous != NotExecuted.Instance)
-				{
-					throw new InvalidOperationException(
-						$"Can not go back to not waiting from {previous.GetType().Name}");
-				}
-
+				AssertNotStarted(previous);
 				this.WaitContext = waitContext;
 			}
 
@@ -44,16 +40,9 @@ namespace Responsible.State
 
 			public Completed(TestOperationStatus previous)
 			{
-				if (previous is Waiting waiting)
-				{
-					this.elapsedTime = waiting.WaitContext.ElapsedTime;
-					waiting.WaitContext.WaitCompleted();
-				}
-				else
-				{
-					throw new InvalidOperationException(
-						$"Can not transition from {previous.GetType().Name} to completed");
-				}
+				var waiting = this.ExpectWaiting(previous);
+				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+				waiting.WaitContext.WaitCompleted();
 			}
 
 			public override string MakeStatusLine(string description) =>
@@ -69,21 +58,38 @@ namespace Responsible.State
 
 			public Failed(TestOperationStatus previous, Exception error, SourceContext sourceContext)
 			{
-				if (previous is Waiting waiting)
-				{
-					this.elapsedTime = waiting.WaitContext.ElapsedTime;
-					this.Error = error;
-					this.SourceContext = sourceContext;
-				}
-				else
-				{
-					throw new InvalidOperationException(
-						$"Can not transition from {previous.GetType().Name} to failed");
-				}
+				var waiting = this.ExpectWaiting(previous);
+				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+				this.Error = error;
+				this.SourceContext = sourceContext;
 			}
 
 			public override string MakeStatusLine(string description) =>
 				$"[!] {description} (Failed after {this.elapsedTime})";
+		}
+
+		[ExcludeFromCodeCoverage] // Unreachable defensive code
+		public static void AssertNotStarted(TestOperationStatus status)
+		{
+			if (status != NotExecuted.Instance)
+			{
+				throw new InvalidOperationException(
+					$"Operation already started ({status?.GetType().Name})");
+			}
+		}
+
+		[ExcludeFromCodeCoverage] // Unreachable defensive code
+		private Waiting ExpectWaiting(TestOperationStatus status)
+		{
+			if (status is Waiting waiting)
+			{
+				return waiting;
+			}
+			else
+			{
+				throw new InvalidOperationException(
+					$"Can not transition from {status.GetType().Name} to {this.GetType().Name}");
+			}
 		}
 	}
 }

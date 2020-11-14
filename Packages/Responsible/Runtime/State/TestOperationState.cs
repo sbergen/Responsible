@@ -17,10 +17,7 @@ namespace Responsible.State
 
 		public IObservable<T> Execute(RunContext runContext) => Observable.Defer(() =>
 		{
-			if (this.Status != TestOperationStatus.NotExecuted.Instance)
-			{
-				throw new InvalidOperationException("Operation already started");
-			}
+			TestOperationStatus.AssertNotStarted(this.Status);
 
 			var waitContext = runContext.MakeWaitContext();
 			var nestedRunContext = this.sourceContext != null
