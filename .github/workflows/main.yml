@@ -30,12 +30,14 @@ jobs:
         with: 
           unityVersion: 2019.4.13f1
           testMode: playmode
-          customParameters: -enableCodeCoverage -coverageResultsPath "artifacts/CodeCoverage/"
+          customParameters: -enableCodeCoverage \
+            -coverageResultsPath "artifacts/CodeCoverage/" \
+            -coverageOptions assemblyFilters:+Responsible
       
       - name: Push test results
-        run: testspace \
-          artifacts/playmode-results.xml \
-          artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+        run: |
+          testspace artifacts/playmode-results.xml
+          testspace artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
       - name: Archive test results
         uses: actions/upload-artifact@v2.2.0 
