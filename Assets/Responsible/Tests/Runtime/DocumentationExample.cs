@@ -15,8 +15,8 @@ namespace Responsible.Tests.Runtime
 			public bool IsReady { get; set; }
 
 			public void Consume(Bar bar)
-            {
-                var unused = bar;
+			{
+				var unused = bar;
 				throw new Exception("Something failed");
 			}
 
