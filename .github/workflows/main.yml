@@ -8,9 +8,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2018.4.28f1
+          - 2019.4.13f1
+          - 2020.1.12f1
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 
       - uses: testspace-com/setup-testspace@v1
         with:
           domain: ${{github.repository_owner}}
@@ -19,7 +26,7 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: Library
-          key: Library
+          key: Library-${{ matrix.unityVersion }}
 
       - name: Run tests
         id: tests
@@ -27,7 +34,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with: 
-          unityVersion: 2019.4.13f1
+          unityVersion: ${{ matrix.unityVersion }}
           testMode: playmode
           customParameters: -enableCodeCoverage \
             -coverageResultsPath "artifacts/CodeCoverage/" \
@@ -36,14 +43,14 @@ jobs:
       - name: Push test results
         if: ${{ always() }}
         run: testspace \
-          artifacts/playmode-results.xml \
-          testspace artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml \
+          [${{ matrix.unityVersion }}]artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
       - name: Archive test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v2.2.0 
         with:
-          name: Test Results
+          name: Test Results ${{ matrix.unityVersion }}
           path: artifacts
 
   lint:
