@@ -15,9 +15,9 @@ jobs:
           # - 2018.4.28f1 2018 doesn't support git packages
           - 2019.4.13f1
           - 2020.1.13f1-update-2020-11-11
+
+        # No dots allowed in secret names, so we need to have this mapping
         include:
-          - unityVersion: 2018.4.28f1
-            licenseSecret: UNITY_LICENSE_2018
           - unityVersion: 2019.4.13f1
             licenseSecret: UNITY_LICENSE_2019
           - unityVersion: 2020.1.13f1-update-2020-11-11
