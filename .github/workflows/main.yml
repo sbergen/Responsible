@@ -15,56 +15,51 @@ jobs:
           - 2018.4.28f1
           - 2019.4.13f1
           - 2020.1.12f1
+        include:
+          - unityVersion: 2018.4.28f1
+            licenseSecret: UNITY_LICENSE_2018
+          - unityVersion: 2019.4.13f1
+            licenseSecret: UNITY_LICENSE_2019
+          - unityVersion: 2020.1.12f1
+            licenseSecret: UNITY_LICENSE_2020
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Request manual activation file
-        id: getManualLicenseFile
-        uses: webbertakken/unity-request-manual-activation-file@v1.1
+      - uses: testspace-com/setup-testspace@v1
         with:
+          domain: ${{github.repository_owner}}
+
+      - name: Cache
+        uses: actions/cache@v2.1.2
+        with:
+          path: Library
+          key: Library-${{ matrix.unityVersion }}
+
+      - name: Run tests
+        id: tests
+        uses: webbertakken/unity-test-runner@v1.7
+        env:
+          UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
+        with: 
           unityVersion: ${{ matrix.unityVersion }}
-
-      - name: Expose as artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{ matrix.unityVersion }}
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
-
-      # - uses: testspace-com/setup-testspace@v1
-      #   with:
-      #     domain: ${{github.repository_owner}}
-
-      # - name: Cache
-      #   uses: actions/cache@v2.1.2
-      #   with:
-      #     path: Library
-      #     key: Library-${{ matrix.unityVersion }}
-
-      # - name: Run tests
-      #   id: tests
-      #   uses: webbertakken/unity-test-runner@v1.7
-      #   env:
-      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #   with: 
-      #     unityVersion: ${{ matrix.unityVersion }}
-      #     testMode: playmode
-      #     customParameters: -enableCodeCoverage \
-      #       -coverageResultsPath "artifacts/CodeCoverage/" \
-      #       -coverageOptions assemblyFilters:+Responsible
+          testMode: playmode
+          customParameters: -enableCodeCoverage \
+            -coverageResultsPath "artifacts/CodeCoverage/" \
+            -coverageOptions assemblyFilters:+Responsible
       
-      # - name: Push test results
-      #   if: ${{ always() }}
-      #   run: testspace \
-      #     [${{ matrix.unityVersion }}]artifacts/playmode-results.xml \
-      #     [${{ matrix.unityVersion }}]artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+      - name: Push test results
+        if: ${{ always() }}
+        run: testspace \
+          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml \
+          [${{ matrix.unityVersion }}]artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
-      # - name: Archive test results
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v2.2.0 
-      #   with:
-      #     name: Test Results ${{ matrix.unityVersion }}
-      #     path: artifacts
+      - name: Archive test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: Test Results ${{ matrix.unityVersion }}
+          path: artifacts
 
   lint:
     runs-on: ubuntu-latest
