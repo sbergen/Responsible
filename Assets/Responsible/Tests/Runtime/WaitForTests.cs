@@ -156,6 +156,19 @@ namespace Responsible.Tests.Runtime
 			}
 		}
 
+		[Test]
+		public void WaitForSeconds_ContainsCorrectStatusInDescription()
+		{
+			var state = WaitForSeconds(1).CreateState();
+			StringAssert.Contains("[ ]", state.ToString());
+			using (state.ToObservable(this.Executor).Subscribe())
+			{
+				StringAssert.Contains("[.]", state.ToString());
+				this.Scheduler.AdvanceBy(OneSecond);
+				StringAssert.Contains("[✓]", state.ToString());
+			}
+		}
+
 		[UnityTest]
 		public IEnumerator WaitForFrames_CompletesAfterTimeout()
 		{
@@ -181,6 +194,19 @@ namespace Responsible.Tests.Runtime
 				Assert.IsFalse(completed);
 				yield return null; // This frame
 				Assert.IsTrue(completed);
+			}
+		}
+
+		[UnityTest]
+		public IEnumerator WaitForFrames_ContainsCorrectStatusInDescription()
+		{
+			var state = WaitForFrames(0).CreateState();
+			StringAssert.Contains("[ ]", state.ToString());
+			using (state.ToObservable(this.Executor).Subscribe())
+			{
+				StringAssert.Contains("[.]", state.ToString());
+				yield return null;
+				StringAssert.Contains("[✓]", state.ToString());
 			}
 		}
 

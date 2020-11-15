@@ -73,6 +73,12 @@ jobs:
           [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
           [${{ matrix.unityVersion }}]artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
+      - uses: codecov/codecov-action@v1
+        with:
+          file: artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+          fail_ci_if_error: true
+          verbose: true
+
       - name: Archive test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v2.2.0 
