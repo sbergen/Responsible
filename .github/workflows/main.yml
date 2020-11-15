@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   pull_request:
 
+env:
+  requestActivation: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,18 +16,32 @@ jobs:
       matrix:
         unityVersion:
           # - 2018.4.28f1 2018 doesn't support git packages
-          - 2019.4.13f1
-          - 2020.1.13f1-update-2020-11-11
+          #- 2019.4.13f1
+          - 2020.1.13f1
 
         # No dots allowed in secret names, so we need to have this mapping
         include:
-          - unityVersion: 2019.4.13f1
-            licenseSecret: UNITY_LICENSE_2019
+          #- unityVersion: 2019.4.13f1
+          #  licenseSecret: UNITY_LICENSE_2019
           - unityVersion: 2020.1.13f1-update-2020-11-11
             licenseSecret: UNITY_LICENSE_2020
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Request manual activation file
+        if: ${{ env.requestActivation }}
+        id: getManualLicenseFile
+        uses: webbertakken/unity-request-manual-activation-file@v2.0-alpha-1
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+
+      - name: Upload activation atrifact
+        if: ${{ env.requestActivation }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ matrix.unityVersion }}
+          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -37,8 +54,9 @@ jobs:
           key: Library-${{ matrix.unityVersion }}
 
       - name: Run tests
+        if: ${{ !env.requestActivation }}
         id: tests
-        uses: webbertakken/unity-test-runner@v1.7
+        uses: webbertakken/unity-test-runner@f78eb5b9faac64fc7450bae1eb8cbfa45e287abf
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
         with: 
