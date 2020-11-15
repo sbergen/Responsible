@@ -16,13 +16,13 @@ jobs:
       matrix:
         unityVersion:
           # - 2018.4.28f1 2018 doesn't support git packages
-          - 2019.4.13f1
+          - 2019.4.14f1
           - 2020.1.13f1
 
         # No dots allowed in secret names, so we need to have this mapping
         include:
-          - unityVersion: 2019.4.13f1
-            licenseSecret: UNITY_LICENSE_2019_4_13
+          - unityVersion: 2019.4.14f1
+            licenseSecret: UNITY_LICENSE_2019_4_14
           - unityVersion: 2020.1.13f1
             licenseSecret: UNITY_LICENSE_2020_1_13
 
