@@ -62,14 +62,15 @@ jobs:
         with: 
           unityVersion: ${{ matrix.unityVersion }}
           testMode: playmode
-          customParameters: -enableCodeCoverage \
-            -coverageResultsPath "artifacts/CodeCoverage/" \
+          customParameters: -enableCodeCoverage
+            -coverageResultsPath "artifacts/CodeCoverage/"
             -coverageOptions assemblyFilters:+Responsible
+            -nographics
       
       - name: Push test results
         if: ${{ always() }}
-        run: testspace \
-          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml \
+        run: testspace
+          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
           [${{ matrix.unityVersion }}]artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
 
       - name: Archive test results
