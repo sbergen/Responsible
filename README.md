@@ -2,13 +2,11 @@
 
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
 [![CI status](https://github.com/sbergen/Responsible/workflows/CI/badge.svg)](https://github.com/sbergen/Responsible/actions?query=workflow%3ACI+branch%3Amain+)
-[![Coverage](https://sbergen.testspace.com/spaces/131745/metrics/100794/badge?token=5c47e94bb09fffb3e67ddb83367037937a5763db)](https://sbergen.testspace.com/spaces/131745/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (sequences)")
+[![codecov](https://codecov.io/gh/sbergen/Responsible/branch/main/graph/badge.svg)](https://codecov.io/gh/sbergen/Responsible)
 ![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)  
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 [![Releases](https://img.shields.io/github/v/release/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
 [![Release date](https://img.shields.io/github/release-date/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
-
-
 
 *Responsible* is an automated testing utility primarily designed for,
 but not limited to be used in high level system tests in [Unity](https://unity.com/).
