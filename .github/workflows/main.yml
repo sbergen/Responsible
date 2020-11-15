@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  requestActivation: true
+  requestActivation: false
 
 jobs:
   test:
@@ -23,8 +23,8 @@ jobs:
         include:
           #- unityVersion: 2019.4.13f1
           #  licenseSecret: UNITY_LICENSE_2019
-          - unityVersion: 2020.1.13f1-update-2020-11-11
-            licenseSecret: UNITY_LICENSE_2020
+          - unityVersion: 2020.1.13f1
+            licenseSecret: UNITY_LICENSE_2020_1_13
 
     steps:
       - uses: actions/checkout@v2
