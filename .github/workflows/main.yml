@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  requestActivation: true
+  requestActivation: false
 
 jobs:
   test:
@@ -22,9 +22,9 @@ jobs:
         # No dots allowed in secret names, so we need to have this mapping
         include:
           - unityVersion: 2019.4.14f1
-            licenseSecret: UNITY_LICENSE_2019_4_14
+            licenseSecret: UNITY_LICENSE_2019
           - unityVersion: 2020.1.13f1
-            licenseSecret: UNITY_LICENSE_2020_1_13
+            licenseSecret: UNITY_LICENSE_2020
 
     steps:
       - uses: actions/checkout@v2
