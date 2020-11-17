@@ -74,7 +74,7 @@ jobs:
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v1
-        if: matrix.unityVersion == '2019.4.13f1'
+        if: matrix.unityVersion == '2019.4.14f1'
         with:
           file: artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
           fail_ci_if_error: true
