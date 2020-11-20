@@ -117,7 +117,7 @@ namespace Responsible.Tests.Runtime
 			var extraContextRequested = false;
 
 			var respond = WaitForCondition(
-					"Never",
+					"Should be canceled",
 					() => false,
 					_ => extraContextRequested = true)
 				.ThenRespondWith("Do nothing", Nop);
@@ -138,7 +138,7 @@ namespace Responsible.Tests.Runtime
 
 				Assert.IsInstanceOf<AssertionException>(this.Error);
 				Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
-				Assert.That(this.Error.Message, Does.Match(@"\[-\].*Never.*[Cc]anceled"));
+				Assert.That(this.Error.Message, Does.Match(@"\[-\].*Should be canceled.*[Cc]anceled"));
 			}
 		}
 	}
