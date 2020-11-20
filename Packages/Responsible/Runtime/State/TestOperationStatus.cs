@@ -68,6 +68,20 @@ namespace Responsible.State
 				$"[!] {description} (Failed after {this.elapsedTime})";
 		}
 
+		internal class Canceled : TestOperationStatus
+		{
+			private readonly string elapsedTime;
+
+			public Canceled(TestOperationStatus previous)
+			{
+				var waiting = this.ExpectWaiting(previous);
+				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+			}
+
+			public override string MakeStatusLine(string description) =>
+				$"[-] {description} (Canceled after {this.elapsedTime})";
+		}
+
 		[ExcludeFromCodeCoverage] // Unreachable defensive code
 		public static void AssertNotStarted(TestOperationStatus status)
 		{
