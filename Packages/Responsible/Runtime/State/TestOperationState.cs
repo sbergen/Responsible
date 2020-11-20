@@ -28,6 +28,7 @@ namespace Responsible.State
 			return this
 				.ExecuteInner(nestedRunContext)
 				.DoOnCompleted(() => this.Status = new TestOperationStatus.Completed(this.Status))
+				.DoOnCancel(() => this.Status = new TestOperationStatus.Canceled(this.Status))
 				.DoOnError(exception => this.Status =
 					new TestOperationStatus.Failed(this.Status, exception, nestedRunContext.SourceContext))
 				.Finally(() => waitContext.Dispose());
