@@ -101,17 +101,21 @@ namespace Responsible.State
 			TimeSpan timeout,
 			ITestOperationState operation)
 		{
+			var timeoutString = timeout > TimeSpan.FromMinutes(1)
+				? $"{timeout:g}"
+				: $"{timeout.TotalSeconds:0.00 s}";
+
 			if (operation is IDiscreteWaitConditionState discreteSate)
 			{
 				this.AddWait(
-					$"{discreteSate.Description} WITHIN {timeout:g}",
+					$"{discreteSate.Description} WITHIN {timeoutString}",
 					expectOperation,
 					discreteSate.ExtraContext);
 			}
 			else
 			{
 				this.AddParentWithChildren(
-					$"EXPECT WITHIN {timeout:g}",
+					$"EXPECT WITHIN {timeoutString}",
 					expectOperation,
 					new[] { operation });
 			}

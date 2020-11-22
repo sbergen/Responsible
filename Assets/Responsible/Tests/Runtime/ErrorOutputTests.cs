@@ -118,24 +118,24 @@ namespace Responsible.Tests.Runtime
 			@"Test operation execution failed!
  
 Failure context:
-[✓] EXPECT WITHIN 0:00:10 (Completed in 0.02s and 2 frames)
+[✓] EXPECT WITHIN 10.00 s (Completed in 0.02 s and 2 frames)
   UNTIL
-    [✓] Cond 1.2 (Completed in 0.02s and 2 frames)
+    [✓] Cond 1.2 (Completed in 0.02 s and 2 frames)
   RESPOND TO ANY OF
-    [-] Response 1 (Canceled after 0.02s and 1 frames)
+    [-] Response 1 (Canceled after 0.02 s and 1 frames)
       WAIT FOR
-        [-] Cond 1.1 (Canceled after 0.02s and 1 frames)
+        [-] Cond 1.1 (Canceled after 0.02 s and 1 frames)
       THEN RESPOND WITH ...
-[!] EXPECT WITHIN 0:00:10 (Failed after 0.04s and 4 frames)
+[!] EXPECT WITHIN 10.00 s (Failed after 0.04 s and 4 frames)
   UNTIL
-    [.] Never (Started 0.04s and 4 frames ago)
+    [.] Never (Started 0.04 s and 4 frames ago)
   RESPOND TO ANY OF
-    [!] Response 2 (Failed after 0.00s and 0 frames)
+    [!] Response 2 (Failed after 0.00 s and 0 frames)
       WAIT FOR
-        [✓] Cond 2.1 (Completed in 0.02s and 2 frames)
-        [.] Cond 2.2 (Started 0.02s and 2 frames ago)
+        [✓] Cond 2.1 (Completed in 0.02 s and 2 frames)
+        [.] Cond 2.2 (Started 0.02 s and 2 frames ago)
       THEN RESPOND WITH
-        [!] Response 2 (Failed after 0.00s and 0 frames)
+        [!] Response 2 (Failed after 0.00 s and 0 frames)
  
           Failed with:
             System.Exception: 'Exception'
@@ -147,9 +147,9 @@ Failure context:
             [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:43)
             [ToObservable] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:86)
  
-    [.] Response 3 (Started 0.04s and 4 frames ago)
+    [.] Response 3 (Started 0.04 s and 4 frames ago)
       WAIT FOR
-        [.] Cond 3.1 (Started 0.04s and 4 frames ago)
+        [.] Cond 3.1 (Started 0.04 s and 4 frames ago)
         [ ] ...
       THEN RESPOND WITH ...
  
