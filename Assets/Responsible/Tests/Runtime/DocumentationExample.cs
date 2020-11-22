@@ -38,7 +38,7 @@ namespace Responsible.Tests.Runtime
 
 			WaitForCondition("Foo to be ready", () => foo.IsReady)
 				.AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
-				.ThenRespondWith("Consume bar", _ => foo.Consume(bar))
+				.ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
 				.ExpectWithinSeconds(10)
 				.ContinueWith(Do("Continue operation", foo.ContinueOperation))
 				.ToObservable(this.Executor)
