@@ -52,8 +52,7 @@ namespace Responsible.TestWaitConditions
 				.Take(1)
 				.Select(this.makeResult);
 
-			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddWait(this.Description, this, this.ExtraContext);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }

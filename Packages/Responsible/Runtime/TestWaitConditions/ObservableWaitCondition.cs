@@ -15,23 +15,24 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : TestOperationState<T>
+		private class State : TestOperationState<T>, IDiscreteWaitConditionState
 		{
-			private readonly string description;
 			private readonly IObservable<T> observable;
+
+			public string Description { get; }
+			public Action<StateStringBuilder> ExtraContext => null;
 
 			public State(string description, IObservable<T> observable, SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.description = description;
+				this.Description = description;
 				this.observable = observable;
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext)
 				=> this.observable.Last();
 
-			public override void BuildDescription(StateStringBuilder builder)
-				=> builder.AddWait(this.description, this);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }

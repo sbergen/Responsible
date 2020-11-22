@@ -44,11 +44,8 @@ namespace Responsible.State
 				$"SELECT {typeof(T1).Name} -> {typeof(T2).Name}");
 		}
 
-		internal void AddWait(
-			string description,
-			ITestOperationState operation,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null)
-			=> this.AddStatus(operation.Status, description, extraContext);
+		internal void AddWait(IDiscreteWaitConditionState operation)
+			=> this.AddStatus(operation.Status, operation.Description, operation.ExtraContext);
 
 		internal void AddContinuation(
 			ITestOperationState first,
@@ -107,9 +104,9 @@ namespace Responsible.State
 
 			if (operation is IDiscreteWaitConditionState discreteSate)
 			{
-				this.AddWait(
-					$"{discreteSate.Description} WITHIN {timeoutString}",
-					expectOperation,
+				this.AddStatus(
+					expectOperation.Status,
+					$"{discreteSate.Description} EXPECTED WITHIN {timeoutString}",
 					discreteSate.ExtraContext);
 			}
 			else

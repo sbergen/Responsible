@@ -18,11 +18,13 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : TestOperationState<T>
+		private class State : TestOperationState<T>, IDiscreteWaitConditionState
 		{
-			private readonly string description;
 			private readonly Func<IEnumerator> startCoroutine;
 			private readonly Func<T> makeResult;
+
+			public string Description { get; }
+			public Action<StateStringBuilder> ExtraContext => null;
 
 			public State(
 				[CanBeNull] string description,
@@ -31,7 +33,7 @@ namespace Responsible.TestWaitConditions
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.description = description ?? startCoroutine.Method.Name;
+				this.Description = $"{description ?? startCoroutine.Method.Name} (Coroutine)";
 				this.startCoroutine = startCoroutine;
 				this.makeResult = makeResult;
 			}
@@ -40,10 +42,7 @@ namespace Responsible.TestWaitConditions
 				.FromCoroutine(this.startCoroutine)
 				.Select(_ => this.makeResult());
 
-			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddWait(
-					$"{this.description} (Coroutine)",
-					this);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }
