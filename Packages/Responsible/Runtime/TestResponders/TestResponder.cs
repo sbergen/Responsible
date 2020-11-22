@@ -17,13 +17,14 @@ namespace Responsible.TestResponders
 		{
 		}
 
-		private class State : TestOperationState<ITestOperationState<T>>
+		private class State : TestOperationState<ITestOperationState<T>>, IBasicResponderState
 		{
-			private readonly string description;
 			private readonly ITestOperationState<TArg> waitCondition;
 			private readonly Func<TArg, ITestInstruction<T>> makeInstruction;
 
-			[CanBeNull] private ITestOperationState<T> instructionState;
+			public string Description { get; }
+			public ITestOperationState WaitState => this.waitCondition;
+			public ITestOperationState InstructionState { get; private set; }
 
 			public State(
 				string description,
@@ -32,7 +33,7 @@ namespace Responsible.TestResponders
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.description = description;
+				this.Description = description;
 				this.waitCondition = waitCondition.CreateState();
 				this.makeInstruction = makeInstruction;
 			}
@@ -41,10 +42,9 @@ namespace Responsible.TestResponders
 				this.waitCondition
 					.Execute(runContext)
 					.Select(arg => this.makeInstruction(arg).CreateState())
-					.Do(instruction => this.instructionState = instruction);
+					.Do(instruction => this.InstructionState = instruction);
 
-			public override void BuildDescription(StateStringBuilder builder)
-				=> builder.AddResponder(this.description, this, this.waitCondition, this.instructionState);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddResponder(this);
 		}
 	}
 }

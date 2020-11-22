@@ -1,4 +1,6 @@
 using System;
+using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using UniRx;
 using static Responsible.Responsibly;
@@ -23,7 +25,11 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectCondition_ContainsErrorDetails_WhenTimedOut()
 		{
-			this.AssertErrorDetailsAfterOneSecond(Never.ExpectWithinSeconds(1));
+			this.AssertErrorDetailsAfterOneSecond(
+				Never.ExpectWithinSeconds(1),
+				@"\[!\] Never EXPECTED WITHIN.*
+\s+Failed with.*
+\s+Test operation stack");
 		}
 
 		[Test]
@@ -33,7 +39,10 @@ namespace Responsible.Tests.Runtime
 				WaitForCondition(
 						"Throwing condition",
 						() => throw new Exception("Test"))
-					.ExpectWithinSeconds(1));
+					.ExpectWithinSeconds(1),
+				@"\[!\] Throwing condition EXPECTED WITHIN.*
+\s+Failed with.*
+\s+Test operation stack");
 		}
 
 		[TestCase(1, @"1\.00 s")]
@@ -106,29 +115,54 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectResponder_ContainsErrorDetails_WhenTimedOut()
 		{
-			var responder = Never.ThenRespondWith("NOP", Nop);
-			this.AssertErrorDetailsAfterOneSecond(responder.ExpectWithinSeconds(1));
+			var responder = Never.ThenRespondWith("Nop", Nop);
+			this.AssertErrorDetailsAfterOneSecond(
+				responder.ExpectWithinSeconds(1),
+				@"timed out.*
+\[!\] Nop EXPECTED WITHIN [^!]*
+Failed with.*
+Test operation stack");
 		}
 
 		[Test]
 		public void ExpectResponder_ContainsErrorDetails_WhenExceptionThrown()
 		{
 			var responder = ImmediateTrue.ThenRespondWith("Throw error", _ => throw new Exception("Test"));
-			this.AssertErrorDetailsAfterOneSecond(responder.ExpectWithinSeconds(1));
+			this.AssertErrorDetailsAfterOneSecond(
+				responder.ExpectWithinSeconds(1),
+				@"failed.*
+\[!\] Throw error EXPECTED WITHIN.*
+\s+\[!\] Throw error .*
+\s+Failed with.*
+\s+Test operation stack");
 		}
 
-		private void AssertErrorDetailsAfterOneSecond(ITestInstruction<Unit> instruction)
+		private void AssertErrorDetailsAfterOneSecond(
+			ITestInstruction<Unit> instruction,
+			[RegexPattern] string regex)
 		{
-			instruction
+			using (instruction
 				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.Subscribe(Nop, this.StoreError))
+			{
+				this.Scheduler.AdvanceBy(OneSecond);
 
-			this.Scheduler.AdvanceBy(OneSecond);
+				Assert.IsInstanceOf<AssertionException>(this.Error);
+				Assert.That(this.Error.Message, Does.Match($"(?s:{regex})"));
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
-			StringAssert.Contains("[!]", this.Error.Message);
-			StringAssert.Contains("Test operation stack", this.Error.Message);
-			StringAssert.Contains("Failed with", this.Error.Message);
+				var multipleFailuresDescription =
+					$"Should contain only singe failure details, but was:\n{this.Error.Message}";
+
+				Assert.AreEqual(
+					1,
+					Regex.Matches(this.Error.Message, "Failed with").Count,
+					multipleFailuresDescription);
+
+				Assert.AreEqual(
+					1,
+					Regex.Matches(this.Error.Message, "Test operation stack").Count,
+					multipleFailuresDescription);
+			}
 		}
 	}
 }
