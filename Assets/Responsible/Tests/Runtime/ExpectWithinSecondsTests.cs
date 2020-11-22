@@ -113,7 +113,7 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void ExpectResponder_ContainsErrorDetails_WhenTimedOut()
+		public void ExpectResponder_ContainsErrorDetails_WhenConditionTimedOut()
 		{
 			var responder = Never.ThenRespondWith("Nop", Nop);
 			this.AssertErrorDetailsAfterOneSecond(
@@ -122,6 +122,19 @@ namespace Responsible.Tests.Runtime
 \[!\] Nop EXPECTED WITHIN [^!]*
 Failed with.*
 Test operation stack");
+		}
+
+		[Test]
+		public void ExpectResponder_ContainsErrorDetails_WhenInstructionTimedOut()
+		{
+			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
+			this.AssertErrorDetailsAfterOneSecond(
+				responder.ExpectWithinSeconds(1),
+				@"timed out.*
+\[!\] Response EXPECTED WITHIN.*
+\s+\[!\] Never EXPECTED WITHIN.*
+\s+Failed with.*
+\s+Test operation stack");
 		}
 
 		[Test]
