@@ -62,28 +62,6 @@ namespace Responsible.State
 			}
 		}
 
-		internal void AddResponder(
-			string description,
-			ITestOperationState responder,
-			ITestOperationState wait,
-			[CanBeNull] ITestOperationState instruction)
-		{
-			// Needs special handling, as the instruction execution is not part of the responder stream
-			var status = (instruction ?? responder).Status;
-			var statusLine = status.MakeStatusLine(description);
-			if (status is TestOperationStatus.Completed ||
-				status is TestOperationStatus.NotExecuted)
-			{
-				this.Add(statusLine);
-			}
-			else
-			{
-				this.AddIndented(statusLine, b => b
-					.AddOptional("WAIT FOR", wait)
-					.AddOptional("THEN RESPOND WITH", instruction));
-			}
-		}
-
 		internal void AddUntilResponder(
 			string respondToDescription,
 			ITestOperationState<ITestOperationState> responder,
@@ -92,6 +70,12 @@ namespace Responsible.State
 			=> this
 				.AddOptional(untilDescription, condition)
 				.AddOptional(respondToDescription, responder);
+
+		internal void AddResponder(IBasicResponderState responder) => this.AddResponder(
+			responder.Description,
+			responder.InstructionState ?? responder,
+			responder.WaitState,
+			responder.InstructionState);
 
 		internal void AddExpectWithin(
 			ITestOperationState expectOperation,
@@ -108,6 +92,14 @@ namespace Responsible.State
 					expectOperation.Status,
 					$"{discreteSate.Description} EXPECTED WITHIN {timeoutString}",
 					discreteSate.ExtraContext);
+			}
+			else if (operation is IBasicResponderState responderState)
+			{
+				this.AddResponder(
+					$"{responderState.Description} EXPECTED WITHIN {timeoutString}",
+					expectOperation,
+					responderState.WaitState,
+					responderState.InstructionState);
 			}
 			else
 			{
@@ -141,6 +133,36 @@ namespace Responsible.State
 			foreach (var child in children)
 			{
 				child.BuildDescription(this);
+			}
+		}
+
+		private void AddResponder(
+			string description,
+			ITestOperationState primaryState,
+			ITestOperationState wait,
+			[CanBeNull] ITestOperationState instruction)
+		{
+			var status = primaryState.Status;
+			var statusLine = status.MakeStatusLine(description);
+			if (status is TestOperationStatus.Completed ||
+				status is TestOperationStatus.NotExecuted)
+			{
+				this.Add(statusLine);
+			}
+			else
+			{
+				this.AddIndented(statusLine, b => b
+					.AddOptional("WAIT FOR", wait)
+					.AddOptional("THEN RESPOND WITH", instruction));
+
+				// Add primary state failure details, if we didn't have failure details yet
+				var failureIncluded =
+					wait.Status is TestOperationStatus.Failed ||
+					instruction?.Status is TestOperationStatus.Failed;
+				if (!failureIncluded)
+				{
+					this.AddFailureDetails(status);
+				}
 			}
 		}
 

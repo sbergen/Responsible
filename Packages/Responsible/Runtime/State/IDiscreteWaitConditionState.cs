@@ -7,7 +7,7 @@ namespace Responsible.State
 	/// A discrete, or singular, wait state, which can be combined with
 	/// expect within operations in output.
 	/// </summary>
-	public interface IDiscreteWaitConditionState : ITestOperationState
+	internal interface IDiscreteWaitConditionState : ITestOperationState
 	{
 		string Description { get; }
 		[CanBeNull] Action<StateStringBuilder> ExtraContext { get; }
