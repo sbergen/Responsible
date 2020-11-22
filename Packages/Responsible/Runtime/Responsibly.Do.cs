@@ -42,6 +42,6 @@ namespace Responsible
 			=> new SynchronousTestInstruction<Unit>(
 				description,
 				action.AsUnitFunc(),
-				new SourceContext(nameof(DoAndReturn), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 	}
 }
