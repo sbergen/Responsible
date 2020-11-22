@@ -99,11 +99,23 @@ namespace Responsible.State
 		internal void AddExpectWithin(
 			ITestOperationState expectOperation,
 			TimeSpan timeout,
-			ITestOperationState operation) => this
-			.AddParentWithChildren(
-				$"EXPECT WITHIN {timeout:g}",
-				expectOperation,
-				new[] { operation });
+			ITestOperationState operation)
+		{
+			if (operation is IDiscreteWaitConditionState discreteSate)
+			{
+				this.AddWait(
+					$"{discreteSate.Description} WITHIN {timeout:g}",
+					expectOperation,
+					discreteSate.ExtraContext);
+			}
+			else
+			{
+				this.AddParentWithChildren(
+					$"EXPECT WITHIN {timeout:g}",
+					expectOperation,
+					new[] { operation });
+			}
+		}
 
 		internal StateStringBuilder AddParentWithChildren(
 			string parentDescription,

@@ -37,6 +37,31 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
+		public void ExpectConditionDescription_ContainsSubConditions_WithCompoundCondition()
+		{
+			var description = WaitForCondition("First", () => false)
+				.AndThen(WaitForCondition("Second", () => false))
+				.ExpectWithinSeconds(1)
+				.CreateState()
+				.ToString();
+
+			Assert.That(description, Does.Match(@"
+\s*\[ \] First.*
+\s*\[ \] Second"));
+		}
+
+		[Test]
+		public void ExpectConditionDescription_Inlined_WithDiscreteCondition()
+		{
+			var description = WaitForCondition("Only", () => false)
+				.ExpectWithinSeconds(1)
+				.CreateState()
+				.ToString();
+
+			Assert.That(description, Does.Match(@"\s*\[ \] Only.*WITHIN.*1"));
+		}
+
+		[Test]
 		public void ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
 		{
 			Never
