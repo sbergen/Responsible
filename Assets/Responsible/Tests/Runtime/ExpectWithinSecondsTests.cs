@@ -126,6 +126,7 @@ namespace Responsible.Tests.Runtime
 			this.Scheduler.AdvanceBy(OneSecond);
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
+			StringAssert.Contains("[!]", this.Error.Message);
 			StringAssert.Contains("Test operation stack", this.Error.Message);
 			StringAssert.Contains("Failed with", this.Error.Message);
 		}
