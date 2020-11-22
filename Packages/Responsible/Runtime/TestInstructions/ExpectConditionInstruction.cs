@@ -5,9 +5,9 @@ using UniRx;
 
 namespace Responsible.TestInstructions
 {
-	internal class WaitInstruction<T> : TestInstructionBase<T>
+	internal class ExpectConditionInstruction<T> : TestInstructionBase<T>
 	{
-		public WaitInstruction(
+		public ExpectConditionInstruction(
 			ITestWaitCondition<T> condition,
 			TimeSpan timeout,
 			SourceContext sourceContext)
