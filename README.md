@@ -37,7 +37,7 @@ Here's a simple example of what using Responsible could look like
 ```cs
 yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
     .AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
-    .ThenRespondWith("Consume bar", _ => foo.Consume(bar))
+    .ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
     .ExpectWithinSeconds(10)
     .ContinueWith(Do("Continue operation", foo.ContinueOperation))
     .ToYieldInstruction(this.TestInstructionExecutor);
@@ -48,26 +48,26 @@ If `foo.Consume` were to throw an error, the output could look something like th
 Test operation execution failed!
  
 Failure context:
-[!] EXPECT WITHIN 0:00:10 (Failed after 0.10s and 7 frames)
-  [!] Consume bar (Failed after 0.00s and 0 frames)
-    WAIT FOR
-      [✓] Foo to be ready (Completed in 0.06s and 3 frames)
-      [✓] Bar to be completed (Completed in 0.04s and 4 frames)
-    THEN RESPOND WITH
-      [!] Consume bar (Failed after 0.00s and 0 frames)
+[!] Foo the bar EXPECTED WITHIN 10.00 s (Failed after 0.15 s and 7 frames)
+  WAIT FOR
+    [✓] Foo to be ready (Completed in 0.11 s and 3 frames)
+    [✓] Bar to be completed (Completed in 0.04 s and 4 frames)
+  THEN RESPOND WITH
+    [!] Consume bar (Failed after 0.00 s and 0 frames)
  
-        Failed with:
-          System.Exception: 'Something failed'
+      Failed with:
+        System.Exception: 'Something failed'
  
-        Test operation stack:
-          [ThenRespondWith] MethodName (at Path/To/Source.cs:36)
-          [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:37)
-          [ToYieldInstruction] MethodName (at Path/To/Source.cs:38)
+      Test operation stack:
+        [Do] MethodName (at Path/To/Source.cs:41)
+        [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:42)
+        [ContinueWith] MethodName (at Path/To/Source.cs:43)
+        [ToYieldInstruction] MethodName (at Path/To/Source.cs:44)
  
 [ ] Continue operation
  
 Error: System.Exception: Something failed
-  at <normal exception stack trace>
+  at <normal exception stack trace comes here>
 ```
 
 ## Getting Started
