@@ -27,8 +27,7 @@ namespace Responsible.Tests.Runtime
 		public void InitialState_ProducesCorrectOutput()
 		{
 			var stateString = this.state.ToString();
-			StringAssert.Contains("[ ] EXPECT WITHIN", stateString);
-			StringAssert.Contains("[ ] Wait for value", stateString);
+			StringAssert.Contains("[ ] Wait for value EXPECTED WITHIN", stateString);
 		}
 
 		[Test]
@@ -39,8 +38,7 @@ namespace Responsible.Tests.Runtime
 			this.observable.OnCompleted();
 
 			var stateString = this.state.ToString();
-			StringAssert.Contains("[✓] EXPECT WITHIN", stateString);
-			StringAssert.Contains("[✓] Wait for value", stateString);
+			StringAssert.Contains("[✓] Wait for value EXPECTED WITHIN", stateString);
 		}
 
 		[UnityTest]
@@ -53,8 +51,7 @@ namespace Responsible.Tests.Runtime
 			yield return instruction;
 
 			var stateString = this.state.ToString();
-			StringAssert.Contains("[✓] EXPECT WITHIN", stateString);
-			StringAssert.Contains("[✓] Wait for value", stateString);
+			StringAssert.Contains("[✓] Wait for value EXPECTED WITHIN", stateString);
 		}
 	}
 }

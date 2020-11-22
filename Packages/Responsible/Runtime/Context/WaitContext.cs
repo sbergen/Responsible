@@ -14,7 +14,7 @@ namespace Responsible.Context
 		private bool anyWaitsCompleted;
 
 		internal string ElapsedTime =>
-			$"{(this.scheduler.Now - this.startTime).TotalSeconds:0.00}s and {this.frameCount} frames";
+			$"{(this.scheduler.Now - this.startTime).TotalSeconds:0.00} s and {this.frameCount} frames";
 
 		internal void WaitCompleted() => this.anyWaitsCompleted = true;
 

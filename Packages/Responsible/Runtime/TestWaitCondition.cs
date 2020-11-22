@@ -132,7 +132,7 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new WaitInstruction<T>(
+			=> new ExpectConditionInstruction<T>(
 				condition,
 				TimeSpan.FromSeconds(timeout),
 				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));

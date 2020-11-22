@@ -36,6 +36,37 @@ namespace Responsible.Tests.Runtime
 					.ExpectWithinSeconds(1));
 		}
 
+		[TestCase(1, @"1\.00 s")]
+		[TestCase(61, @"0:01:01")]
+		public void ExpectConditionDescription_ContainsSubConditions_WithCompoundCondition(
+			double withinSeconds, string expectedTimeFormat)
+		{
+			var description = WaitForCondition("First", () => false)
+				.AndThen(WaitForCondition("Second", () => false))
+				.ExpectWithinSeconds(withinSeconds)
+				.CreateState()
+				.ToString();
+
+			Assert.That(description, Does.Match($@".*{expectedTimeFormat}.*
+\s*\[ \] First.*
+\s*\[ \] Second.*"));
+		}
+
+		[TestCase(59, @"59\.00 s")]
+		[TestCase(3670, @"1:01:10")]
+		public void ExpectConditionDescription_Inlined_WithDiscreteCondition(
+			double withinSeconds, string expectedTimeFormat)
+		{
+			var description = WaitForCondition("Only", () => false)
+				.ExpectWithinSeconds(withinSeconds)
+				.CreateState()
+				.ToString();
+
+			Assert.That(
+				description,
+				Does.Match($@"\s*\[ \] Only.*WITHIN.*{expectedTimeFormat}"));
+		}
+
 		[Test]
 		public void ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
 		{
@@ -95,6 +126,7 @@ namespace Responsible.Tests.Runtime
 			this.Scheduler.AdvanceBy(OneSecond);
 
 			Assert.IsInstanceOf<AssertionException>(this.Error);
+			StringAssert.Contains("[!]", this.Error.Message);
 			StringAssert.Contains("Test operation stack", this.Error.Message);
 			StringAssert.Contains("Failed with", this.Error.Message);
 		}

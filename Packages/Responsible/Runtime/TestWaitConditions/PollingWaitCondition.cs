@@ -19,13 +19,14 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : TestOperationState<TResult>
+		private class State : TestOperationState<TResult>, IDiscreteWaitConditionState
 		{
-			private readonly string description;
 			private readonly Func<TCondition> getConditionState;
 			private readonly Func<TCondition, bool> condition;
 			private readonly Func<TCondition, TResult> makeResult;
-			[CanBeNull] private readonly Action<StateStringBuilder> extraContext;
+
+			public string Description { get; }
+			[CanBeNull] public Action<StateStringBuilder> ExtraContext { get; }
 
 			public State(
 				string description,
@@ -36,11 +37,11 @@ namespace Responsible.TestWaitConditions
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.description = description;
+				this.Description = description;
 				this.getConditionState = getConditionState;
 				this.condition = condition;
 				this.makeResult = makeResult;
-				this.extraContext = extraContext;
+				this.ExtraContext = extraContext;
 			}
 
 			protected override IObservable<TResult> ExecuteInner(RunContext runContext) => runContext
@@ -51,8 +52,7 @@ namespace Responsible.TestWaitConditions
 				.Take(1)
 				.Select(this.makeResult);
 
-			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddWait(this.description, this, this.extraContext);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }

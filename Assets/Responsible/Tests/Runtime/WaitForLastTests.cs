@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using NUnit.Framework;
 using UniRx;
 using UnityEngine.TestTools;
@@ -56,6 +57,38 @@ namespace Responsible.Tests.Runtime
 				yield return null;
 				Assert.IsInstanceOf<AssertionException>(this.Error);
 			}
+		}
+
+		[Test]
+		public void WaitForLast_ProducesCorrectState_WhenNotStarted()
+		{
+			var description = WaitForLast("My description", Observable.Never<int>())
+				.CreateState()
+				.ToString();
+			StringAssert.Contains("[ ] My description", description);
+		}
+
+		[Test]
+		public void WaitForLast_ProducesCorrectState_WhenCompleted()
+		{
+			var state = WaitForLast("My description", Observable.Return(42)).CreateState();
+			using (state.ToObservable(this.Executor).Subscribe())
+			{
+				var description = state.ToString();
+				StringAssert.Contains("[✓] My description", description);
+			}
+		}
+
+		[Test]
+		public void WaitForLast_ProducesCorrectState_WhenErrorEncountered()
+		{
+			var state = WaitForLast("My description", Observable.Throw<int>(new Exception()))
+				.ExpectWithinSeconds(1)
+				.ToObservable(this.Executor)
+				.Subscribe(Nop, this.StoreError);
+
+			Assert.IsInstanceOf<AssertionException>(this.Error);
+			StringAssert.Contains("[!] My description", this.Error.Message);
 		}
 	}
 }

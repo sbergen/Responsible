@@ -28,11 +28,13 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : TestOperationState<T>
+		private class State : TestOperationState<T>, IDiscreteWaitConditionState
 		{
 			private readonly Func<T> getObject;
 			private readonly IConstraint constraint;
-			private readonly string description;
+
+			public string Description { get; }
+			public Action<StateStringBuilder> ExtraContext => this.AddDetails;
 
 			public State(
 				string objectDescription,
@@ -43,7 +45,7 @@ namespace Responsible.TestWaitConditions
 			{
 				this.getObject = getObject;
 				this.constraint = constraint;
-				this.description = $"{objectDescription}: {this.constraint.Description}";
+				this.Description = $"{objectDescription}: {this.constraint.Description}";
 			}
 
 			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext
@@ -54,8 +56,7 @@ namespace Responsible.TestWaitConditions
 				.Take(1)
 				.Select(_ => this.getObject());
 
-			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddWait(this.description, this, this.AddDetails);
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 
 			private ConstraintResult GetResult() =>
 				this.constraint.ApplyTo(this.getObject());
