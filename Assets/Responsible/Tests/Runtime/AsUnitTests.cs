@@ -12,14 +12,14 @@ namespace Responsible.Tests.Runtime
 		private bool complete;
 		private bool completed;
 
-		private ITestWaitCondition<Unit> waitForComplete;
+		private ITestWaitCondition<bool> waitForComplete;
 		private ITestInstruction<bool> setCompleted;
 		private ITestInstruction<int> throwError;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			this.waitForComplete = WaitForCondition("Wait", () => this.complete);
+			this.waitForComplete = WaitForConditionOn("Wait", () => this.complete, val => val);
 			this.setCompleted = DoAndReturn("Set completed", () => this.completed = true);
 			this.throwError = DoAndReturn<int>("Throw error", () => throw new Exception(""));
 		}
