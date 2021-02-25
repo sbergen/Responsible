@@ -107,32 +107,50 @@ namespace Responsible
 				constraint,
 				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Construct a wait condition, which will start the provided coroutine when executed.
+		/// Will complete when the coroutine has terminated.
+		/// <seealso cref="WaitForCoroutineMethod"/>
+		/// </summary>
+		/// <remarks>
+		///	May be used with local functions and lambdas, as the description is manually provided.
+		/// </remarks>
+		/// <param name="description"></param>
+		/// <param name="startCoroutine"></param>
+		/// <param name="memberName"></param>
+		/// <param name="sourceFilePath"></param>
+		/// <param name="sourceLineNumber"></param>
+		/// <returns></returns>
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCoroutine(
+			string description,
 			Func<IEnumerator> startCoroutine,
-			[CanBeNull] string description = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-		=> new CoroutineWaitCondition<Unit>(
+		=> new CoroutineWaitCondition(
 			description,
 			startCoroutine,
-			() => Unit.Default,
 			new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Construct a wait condition, which will start the provided coroutine when executed.
+		/// Will complete when the coroutine has terminated.
+		/// <seealso cref="WaitForCoroutine"/>
+		/// </summary>
+		/// <remarks>
+		/// If used with a lambda or local function, you will get a weird compiler-generated description.
+		/// </remarks>
 		[Pure]
-		public static ITestWaitCondition<T> WaitForCoroutine<T>(
-			Func<IEnumerator> startCoroutine,
-			Func<T> makeResult,
-			[CanBeNull] string description = null,
+		public static ITestWaitCondition<Unit> WaitForCoroutineMethod(
+			Func<IEnumerator> coroutineMethod,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new CoroutineWaitCondition<T>(
-				description,
-				startCoroutine,
-				makeResult,
-				new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
+			=> new CoroutineWaitCondition(
+				coroutineMethod.Method.Name,
+				coroutineMethod,
+				new SourceContext(nameof(WaitForCoroutineMethod), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
 		public static ITestInstruction<Unit> WaitForSeconds(
