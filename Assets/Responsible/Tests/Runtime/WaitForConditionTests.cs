@@ -36,31 +36,6 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator WaitForConditionOn_RunsSelector_WhenResultSelectorProvided()
-		{
-			bool? result = null;
-			object boxedBool = null;
-
-			using (WaitForConditionOn(
-					"Wait for boxedBool to be true",
-					() => boxedBool,
-					obj => obj is bool asBool && asBool,
-					val => !(bool)val)
-				.ExpectWithinSeconds(10)
-				.ToObservable(this.Executor)
-				.Subscribe(val => result = val))
-			{
-				Assert.IsNull(result);
-				yield return null;
-
-				// Completes on next frame
-				boxedBool = true;
-				yield return null;
-				Assert.IsFalse(result, "The result should be negated by the result selector");
-			}
-		}
-
-		[UnityTest]
 		public IEnumerator WaitForCondition_Completes_WhenConditionMet()
 		{
 			var fulfilled = false;

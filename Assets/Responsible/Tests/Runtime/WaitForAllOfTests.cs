@@ -18,10 +18,12 @@ namespace Responsible.Tests.Runtime
 			var fulfilled3 = false;
 			bool[] results = null;
 
+			bool Id(bool val) => val;
+
 			using (WaitForAllOf(
-					WaitForCondition("cond 1", () => fulfilled1, () => true),
-					WaitForCondition("cond 2", () => fulfilled2, () => false),
-					WaitForCondition("cond 3", () => fulfilled3, () => false))
+					WaitForConditionOn("cond 1", () => fulfilled1, Id),
+					WaitForConditionOn("cond 2", () => fulfilled2, Id),
+					WaitForConditionOn("cond 3", () => fulfilled3, Id))
 				.ExpectWithinSeconds(10)
 				.ToObservable(this.Executor)
 				.Subscribe(val => results = val))
@@ -44,7 +46,7 @@ namespace Responsible.Tests.Runtime
 				// Completes on next frame
 				yield return null;
 				Assert.AreEqual(
-					new[] { true, false, false },
+					new[] { true, true, true },
 					results);
 			}
 		}

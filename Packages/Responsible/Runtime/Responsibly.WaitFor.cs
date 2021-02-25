@@ -21,24 +21,12 @@ namespace Responsible
 	/// </remarks>
 	public static partial class Responsibly
 	{
-		[Pure]
-		public static ITestWaitCondition<TResult> WaitForConditionOn<TObject, TResult>(
-			string description,
-			Func<TObject> getObject,
-			Func<TObject, bool> condition,
-			Func<TObject, TResult> makeResult,
-			Action<StateStringBuilder> extraContext = null,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<TObject, TResult>(
-				description,
-				getObject,
-				condition,
-				makeResult,
-				extraContext,
-				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
-
+		/// <summary>
+		/// Constructs a wait condition, which will call an object getter on every frame,
+		/// and check a condition on the returned object.
+		/// Will complete once the condition returns true,
+		/// returning the last value returned by the object provider.
+		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConditionOn<T>(
 			string description,
@@ -48,31 +36,17 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<T, T>(
+			=> new PollingWaitCondition<T>(
 				description,
 				getObject,
 				condition,
-				_ => _,
 				extraContext,
-				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(WaitForConditionOn), memberName, sourceFilePath, sourceLineNumber));
 
-		[Pure]
-		public static ITestWaitCondition<T> WaitForCondition<T>(
-			string description,
-			Func<bool> condition,
-			Func<T> makeResult,
-			Action<StateStringBuilder> extraContext = null,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Unit, T>(
-				description,
-				() => Unit.Default,
-				_ => condition(),
-				_ => makeResult(),
-				extraContext,
-				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
-
+		/// <summary>
+		/// Constructs a wait condition, which will poll a condition,
+		/// and complete once the condition returns true.
+		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<Unit> WaitForCondition(
 			string description,
@@ -81,11 +55,10 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Unit, Unit>(
+			=> new PollingWaitCondition<Unit>(
 				description,
 				() => Unit.Default,
 				_ => condition(),
-				_ => Unit.Default,
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 

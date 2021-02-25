@@ -12,14 +12,14 @@ namespace Responsible.Tests.Runtime
 		private bool complete;
 		private bool completed;
 
-		private ITestWaitCondition<bool> waitForComplete;
+		private ITestWaitCondition<Unit> waitForComplete;
 		private ITestInstruction<bool> setCompleted;
 		private ITestInstruction<int> throwError;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			this.waitForComplete = WaitForCondition("Wait", () => this.complete, () => this.complete);
+			this.waitForComplete = WaitForCondition("Wait", () => this.complete);
 			this.setCompleted = DoAndReturn("Set completed", () => this.completed = true);
 			this.throwError = DoAndReturn<int>("Throw error", () => throw new Exception(""));
 		}
@@ -89,7 +89,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void AsUnitCondition_ReturnsSelf_WhenAlreadyUnit()
 		{
-			var condition = WaitForCondition("Unit", () => false, () => Unit.Default);
+			var condition = WaitForCondition("Unit", () => false);
 			Assert.AreSame(condition, condition.AsUnitCondition());
 		}
 

@@ -11,7 +11,7 @@ namespace Responsible.Tests.Runtime
 	public class ResponsibleTestBase
 	{
 		protected static readonly ITestWaitCondition<bool> ImmediateTrue =
-			WaitForCondition("True", () => true, () => true);
+			WaitForConditionOn("True", () => true, val => val);
 
 		protected static readonly ITestWaitCondition<Unit> Never =
 			WaitForCondition("Never", () => false);
