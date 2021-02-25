@@ -26,7 +26,7 @@ namespace Responsible.TestWaitConditions
 			private readonly Func<TCondition, TResult> makeResult;
 
 			public string Description { get; }
-			[CanBeNull] public Action<StateStringBuilder> ExtraContext { get; }
+			public Action<StateStringBuilder> ExtraContext { get; }
 
 			public State(
 				string description,

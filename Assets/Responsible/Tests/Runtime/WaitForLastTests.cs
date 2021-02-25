@@ -82,7 +82,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void WaitForLast_ProducesCorrectState_WhenErrorEncountered()
 		{
-			var state = WaitForLast("My description", Observable.Throw<int>(new Exception()))
+			WaitForLast("My description", Observable.Throw<int>(new Exception()))
 				.ExpectWithinSeconds(1)
 				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
