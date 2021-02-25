@@ -95,7 +95,7 @@ namespace Responsible.Tests.Runtime
 					"Should be canceled",
 					() => false,
 					_ => extraContextRequested = true)
-				.ThenRespondWith("Do nothing", Nop);
+				.ThenRespondWithAction("Do nothing", Nop);
 
 			// Never execute the optional responder, leading to the wait being canceled.
 			// But error out afterwards, to get a failure message.
