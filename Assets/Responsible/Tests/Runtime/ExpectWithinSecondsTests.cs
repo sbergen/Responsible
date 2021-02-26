@@ -80,7 +80,7 @@ namespace Responsible.Tests.Runtime
 		public void ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
 		{
 			Never
-				.ThenRespondWith("NOP", Nop)
+				.ThenRespondWithAction("NOP", Nop)
 				.ExpectWithinSeconds(1)
 				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
@@ -115,7 +115,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectResponder_ContainsErrorDetails_WhenConditionTimedOut()
 		{
-			var responder = Never.ThenRespondWith("Nop", Nop);
+			var responder = Never.ThenRespondWithAction("Nop", Nop);
 			this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
 				@"timed out.*
@@ -140,7 +140,7 @@ Test operation stack");
 		[Test]
 		public void ExpectResponder_ContainsErrorDetails_WhenExceptionThrown()
 		{
-			var responder = ImmediateTrue.ThenRespondWith("Throw error", _ => throw new Exception("Test"));
+			var responder = ImmediateTrue.ThenRespondWithAction("Throw error", _ => throw new Exception("Test"));
 			this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
 				@"failed.*

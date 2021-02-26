@@ -25,14 +25,14 @@ namespace Responsible.Tests.Runtime
 
 		private static ITestWaitCondition<Unit> MakeOptionalResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
-				.ThenRespondWith(state.ResponseName, _ => state.ResponseAction)
+				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction())
 				.Optionally()
 				.Until(WaitForCondition(state.Condition2Name, () => state.Condition2));
 
 		private static ITestResponder<Unit> MakeResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.AndThen(_ => WaitForCondition(state.Condition2Name, () => state.Condition2))
-				.ThenRespondWith(state.ResponseName, _ => state.ResponseAction());
+				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction());
 
 		private static ITestInstruction<Unit> MakeInstruction(
 			ResponderState state1,
@@ -141,7 +141,7 @@ Failure context:
             System.Exception: 'Exception'
  
           Test operation stack:
-            [ThenRespondWith] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)
+            [ThenRespondWithAction] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)
             [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
             [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:46)
             [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:43)

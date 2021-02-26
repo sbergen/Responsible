@@ -65,8 +65,7 @@ namespace ResponsibleGame.PlayModeTests
 		protected ITestResponder<Unit> TriggerHit(bool shouldHit) => WaitForMainComponents()
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
-				() => PlayerIsOnTarget(components) == shouldHit,
-				() => components))
+				() => PlayerIsOnTarget(components) == shouldHit))
 			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
 
 		protected ITestInstruction<Unit> MockTriggerInput() =>

@@ -6,33 +6,30 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class PollingWaitCondition<TCondition, TResult> : TestWaitConditionBase<TResult>
+	internal class PollingWaitCondition<T> : TestWaitConditionBase<T>
 	{
 		public PollingWaitCondition(
 			string description,
-			Func<TCondition> getConditionState,
-			Func<TCondition, bool> condition,
-			Func<TCondition, TResult> makeResult,
+			Func<T> getConditionState,
+			Func<T, bool> condition,
 			[CanBeNull] Action<StateStringBuilder> extraContext,
 			SourceContext sourceContext)
-			: base(() => new State(description, getConditionState, condition, makeResult, extraContext, sourceContext))
+			: base(() => new State(description, getConditionState, condition, extraContext, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<TResult>, IDiscreteWaitConditionState
+		private class State : TestOperationState<T>, IDiscreteWaitConditionState
 		{
-			private readonly Func<TCondition> getConditionState;
-			private readonly Func<TCondition, bool> condition;
-			private readonly Func<TCondition, TResult> makeResult;
+			private readonly Func<T> getConditionState;
+			private readonly Func<T, bool> condition;
 
 			public string Description { get; }
-			[CanBeNull] public Action<StateStringBuilder> ExtraContext { get; }
+			public Action<StateStringBuilder> ExtraContext { get; }
 
 			public State(
 				string description,
-				Func<TCondition> getConditionState,
-				Func<TCondition, bool> condition,
-				Func<TCondition, TResult> makeResult,
+				Func<T> getConditionState,
+				Func<T, bool> condition,
 				[CanBeNull] Action<StateStringBuilder> extraContext,
 				SourceContext sourceContext)
 				: base(sourceContext)
@@ -40,17 +37,15 @@ namespace Responsible.TestWaitConditions
 				this.Description = description;
 				this.getConditionState = getConditionState;
 				this.condition = condition;
-				this.makeResult = makeResult;
 				this.ExtraContext = extraContext;
 			}
 
-			protected override IObservable<TResult> ExecuteInner(RunContext runContext) => runContext
+			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext
 				.PollObservable
 				.StartWith(Unit.Default) // Allow immediate completion
 				.Select(_ => this.getConditionState())
 				.Where(this.condition)
-				.Take(1)
-				.Select(this.makeResult);
+				.Take(1);
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}

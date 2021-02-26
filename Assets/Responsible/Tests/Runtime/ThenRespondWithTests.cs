@@ -14,7 +14,7 @@ namespace Responsible.Tests.Runtime
 		{
 			Continuation,
 			Instruction,
-			Selector,
+			Func,
 			Action
 		}
 
@@ -76,10 +76,10 @@ namespace Responsible.Tests.Runtime
 					return waitCondition.ThenRespondWith("Respond", x => Return(Unit.Default));
 				case ConstructionStrategy.Instruction:
 					return waitCondition.ThenRespondWith("Respond", Return(Unit.Default));
-				case ConstructionStrategy.Selector:
-					return waitCondition.ThenRespondWith("Respond", _ => Unit.Default);
+				case ConstructionStrategy.Func:
+					return waitCondition.ThenRespondWithFunc("Respond", _ => Unit.Default);
 				case ConstructionStrategy.Action:
-					return waitCondition.ThenRespondWith("Respond", _ => { });
+					return waitCondition.ThenRespondWithAction("Respond", _ => { });
 				default:
 					throw new ArgumentOutOfRangeException(nameof(strategy), strategy, "Unhandled strategy");
 			}
@@ -97,10 +97,10 @@ namespace Responsible.Tests.Runtime
 					return waitCondition.ThenRespondWith("Respond", x => throwInstruction);
 				case ConstructionStrategy.Instruction:
 					return waitCondition.ThenRespondWith("Respond", throwInstruction);
-				case ConstructionStrategy.Selector:
-					return waitCondition.ThenRespondWith("Respond", ThrowException);
+				case ConstructionStrategy.Func:
+					return waitCondition.ThenRespondWithFunc("Respond", ThrowException);
 				case ConstructionStrategy.Action:
-					return waitCondition.ThenRespondWith("Respond", _ => { ThrowException(_); });
+					return waitCondition.ThenRespondWithAction("Respond", _ => { ThrowException(_); });
 				default:
 					throw new ArgumentOutOfRangeException(nameof(strategy), strategy, "Unhandled strategy");
 			}

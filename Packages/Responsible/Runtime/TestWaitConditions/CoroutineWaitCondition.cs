@@ -7,21 +7,19 @@ using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class CoroutineWaitCondition<T> : TestWaitConditionBase<T>
+	internal class CoroutineWaitCondition : TestWaitConditionBase<Unit>
 	{
 		public CoroutineWaitCondition(
-			[CanBeNull] string description,
+			string description,
 			Func<IEnumerator> startCoroutine,
-			Func<T> makeResult,
 			SourceContext sourceContext)
-			: base(() => new State(description, startCoroutine, makeResult, sourceContext))
+			: base(() => new State(description, startCoroutine, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<T>, IDiscreteWaitConditionState
+		private class State : TestOperationState<Unit>, IDiscreteWaitConditionState
 		{
 			private readonly Func<IEnumerator> startCoroutine;
-			private readonly Func<T> makeResult;
 
 			public string Description { get; }
 			public Action<StateStringBuilder> ExtraContext => null;
@@ -29,18 +27,15 @@ namespace Responsible.TestWaitConditions
 			public State(
 				[CanBeNull] string description,
 				Func<IEnumerator> startCoroutine,
-				Func<T> makeResult,
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.Description = $"{description ?? startCoroutine.Method.Name} (Coroutine)";
+				this.Description = $"{description} (Coroutine)";
 				this.startCoroutine = startCoroutine;
-				this.makeResult = makeResult;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable
-				.FromCoroutine(this.startCoroutine)
-				.Select(_ => this.makeResult());
+			protected override IObservable<Unit> ExecuteInner(RunContext runContext) => Observable
+				.FromCoroutine(this.startCoroutine);
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}

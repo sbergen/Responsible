@@ -15,11 +15,6 @@ namespace Responsible.Tests.Runtime
 			yield return null;
 		}
 
-		private static IEnumerator CompleteAfterOneFrame()
-		{
-			yield return null;
-		}
-
 		private static IEnumerator ThrowAfterOneFrame()
 		{
 			yield return null;
@@ -30,7 +25,7 @@ namespace Responsible.Tests.Runtime
 		public IEnumerator WaitForCoroutine_Completes_WhenExpected()
 		{
 			var completed = false;
-			WaitForCoroutine(CompleteAfterTwoFrames)
+			WaitForCoroutineMethod(CompleteAfterTwoFrames)
 				.ExpectWithinSeconds(1)
 				.ToObservable(this.Executor)
 				.Subscribe(_ => completed = true);
@@ -43,24 +38,10 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator WaitForCoroutine_ReturnsResult_WhenProvided()
-		{
-			int? result = null;
-			WaitForCoroutine(CompleteAfterOneFrame, () => 42)
-				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(r => result = r);
-
-			Assert.IsNull(result, "Should not publish result before any yields");
-			yield return null;
-			Assert.AreEqual(42, result, "Should have provided result after yield");
-		}
-
-		[UnityTest]
 		public IEnumerator WaitForCoroutine_PublishesErrorWithContext_WhenExpected()
 		{
 			var completed = false;
-			WaitForCoroutine(ThrowAfterOneFrame)
+			WaitForCoroutineMethod(ThrowAfterOneFrame)
 				.ExpectWithinSeconds(1)
 				.ToObservable(this.Executor)
 				.Subscribe(Nop, this.StoreError);
@@ -82,7 +63,7 @@ namespace Responsible.Tests.Runtime
 				yield break;
 			}
 
-			var description = WaitForCoroutine(LocalCoroutine, "LocalCoroutine").CreateState().ToString();
+			var description = WaitForCoroutine("LocalCoroutine", LocalCoroutine).CreateState().ToString();
 			Assert.That(description, Does.Contain("[ ] LocalCoroutine"));
 		}
 	}

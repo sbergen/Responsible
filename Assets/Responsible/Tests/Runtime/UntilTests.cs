@@ -61,7 +61,7 @@ namespace Responsible.Tests.Runtime
 			var secondCompleted = false;
 
 			var state = WaitForCondition("Wait for first cond", () => cond1)
-				.ThenRespondWith("First response", _ => firstCompleted = true)
+				.ThenRespondWithAction("First response", _ => firstCompleted = true)
 				.Optionally()
 				.Until(WaitForCondition("Until cond", () => untilCond))
 				.ThenRespondWith("Second response", WaitForCondition("Second cond", () => cond2)
@@ -101,7 +101,7 @@ namespace Responsible.Tests.Runtime
 			var completed = false;
 
 			Never
-				.ThenRespondWith("complete", _ => completed = true)
+				.ThenRespondWithAction("complete", _ => completed = true)
 				.Optionally()
 				.Until(Never)
 				.ExpectWithinSeconds(1)

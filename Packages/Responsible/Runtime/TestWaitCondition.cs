@@ -85,7 +85,7 @@ namespace Responsible
 		/// and then continue executing a synchronous action.
 		/// </summary>
 		[Pure]
-		public static ITestResponder<TResult> ThenRespondWith<TWait, TResult>(
+		public static ITestResponder<TResult> ThenRespondWithFunc<TWait, TResult>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
 			Func<TWait, TResult> selector,
@@ -98,15 +98,15 @@ namespace Responsible
 				waitResult => new SynchronousTestInstruction<TResult>(
 					description,
 					() => selector(waitResult),
-					new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber)),
-				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(ThenRespondWithFunc), memberName, sourceFilePath, sourceLineNumber)),
+				new SourceContext(nameof(ThenRespondWithFunc), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
 		/// and then continue executing a synchronous action.
 		/// </summary>
 		[Pure]
-		public static ITestResponder<Unit> ThenRespondWith<TWait>(
+		public static ITestResponder<Unit> ThenRespondWithAction<TWait>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
 			Action<TWait> action,
@@ -119,8 +119,8 @@ namespace Responsible
 				waitResult => new SynchronousTestInstruction<Unit>(
 					description,
 					action.AsUnitFunc(waitResult),
-					new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber)),
-				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
+					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
+				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition to an instruction, by enforcing a timeout on it.
