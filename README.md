@@ -5,8 +5,8 @@
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 
 *Responsible* helps you write maintainable high level asynchronous tests in [Unity](https://unity.com/):
-* Get detailed output on test failures and timeouts
-* Write highly declarative, composable, and reusable test code
+* Get highly readable and informative output on test failures and timeouts
+* Write declarative, composable, and reusable test code
 * Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
 
