@@ -12,10 +12,9 @@
 
 ## Usage and Output Example
 
-Here's a simple example of what using Responsible could look like
-(with `using static Responsible.Responsibly;`) 
-
 ```cs
+// with 'using static Responsible.Responsibly;'
+
 yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
     .AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
     .ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
@@ -24,7 +23,7 @@ yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
     .ToYieldInstruction(this.TestInstructionExecutor);
 ```
 
-If `foo.Consume` were to throw an error, the output could look something like this:
+If `foo.Consume` were to throw an error, the output would look like this:
 ```
 Test operation execution failed!
  
