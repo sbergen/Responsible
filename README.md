@@ -1,40 +1,20 @@
 # Responsible - Reactive Asynchronous Testing
 
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
-[![CI status](https://github.com/sbergen/Responsible/workflows/CI/badge.svg)](https://github.com/sbergen/Responsible/actions?query=workflow%3ACI+branch%3Amain+)
 [![codecov](https://codecov.io/gh/sbergen/Responsible/branch/main/graph/badge.svg)](https://codecov.io/gh/sbergen/Responsible)
-![Last commit](https://img.shields.io/github/last-commit/sbergen/Responsible)  
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
-[![Releases](https://img.shields.io/github/v/release/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
-[![Release date](https://img.shields.io/github/release-date/sbergen/Responsible)](https://github.com/sbergen/Responsible/releases)
 
-*Responsible* is an automated testing utility primarily designed for,
-but not limited to be used in high level system tests in [Unity](https://unity.com/).
-It is built on top of [UniRx](https://github.com/neuecc/UniRx) and [NUnit](https://nunit.org/).
-Responsible currently runs only in Unity,
-but could easily be [ported](Packages/Responsible/Runtime/README.md#portability) to work in other .NET environments also.
+*Responsible* helps you write maintainable high level asynchronous tests in [Unity](https://unity.com/):
+* Get detailed output on test failures and timeouts
+* Write highly declarative, composable, and reusable test code
+* Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
-The primary benefits of using Responsible are:
-* Detailed output on test failures and timeouts
-* Declarative, composable, and reusable test code
 
-Additionally, using Responsible will circumvent a
-[Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception),
-where test execution will continue after errors within nested coroutines,
-sometimes even hiding the first exception.
-
-While the design of Responsible was inspired by [Rx](http://reactivex.io/),
-and it is being used under the hood,
-knowing Rx is not *necessary* for using Responsible.
-However, being familiar with reactive and/or functional programming in C# (e.g. LINQ)
-should ease the learning curve.
-
-## Usage and Error Output Example
-
-Here's a simple example of what using Responsible could look like
-(with `using static Responsible.Responsibly;`) 
+## Usage and Output Example
 
 ```cs
+// with 'using static Responsible.Responsibly;'
+
 yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
     .AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
     .ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
@@ -43,7 +23,7 @@ yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
     .ToYieldInstruction(this.TestInstructionExecutor);
 ```
 
-If `foo.Consume` were to throw an error, the output could look something like this:
+If `foo.Consume` were to throw an error, the output would look like this:
 ```
 Test operation execution failed!
  
@@ -69,6 +49,47 @@ Failure context:
 Error: System.Exception: Something failed
   at <normal exception stack trace comes here>
 ```
+
+## Is That It?
+
+The above sample introduces the responder pattern:
+an if-then relationship between a wait condition and (optionally) asynchronous response.
+However, just like it wouldn't be fair to dismiss [ReactiveX](http://reactivex.io/)
+as *just an implementation of the observer pattern*,
+Responsible is also a lot more than just this pattern:
+the real power of Responsible comes from its composable operators.
+To read more about the design principles behind Responsible,
+see the [Design Documentation](Packages/Responsible/Runtime/README.md).
+
+## Reactive Programming? 
+
+While the design of Responsible was inspired by [ReactiveX](http://reactivex.io/),
+and it is being used under the hood,
+it's debatable if Responsible really fits the reactive programming paradigm.
+While knowing Rx is not *necessary* for using Responsible,
+being familiar with reactive and/or functional programming in C# (e.g. LINQ)
+should ease the learning curve.
+
+## Dependencies
+
+Responsible is built on top of [UniRx](https://github.com/neuecc/UniRx)
+and uses a bit of [NUnit](https://nunit.org/).
+Responsible currently runs only in [Unity](https://unity.com/),
+but could easily be [ported](Packages/Responsible/Runtime/README.md#portability) to work in other .NET environments also.
+
+## Examples
+
+For a simple example of a basic test setup, 
+there's an [example project](Packages/Responsible/Samples~/ResponsibleGame)
+with some [basic tests](Packages/Responsible/Samples~/ResponsibleGame/PlayModeTests) included.
+This sample game can be installed from the Unity Package Manager,
+and is also symlinked into the main Unity project in this repository, for convenience.
+
+The library itself also has [extensive test coverage](Assets/Responsible/Tests/Runtime),
+which may be used as more extensive examples of usage.
+Note that these tests live outside of the package,
+so that they do not get included into projects referencing Responsible.
+(This has to do with undocumented reasons related to using `"type": "tests"` in `package.json`).
 
 ## Getting Started
 
@@ -113,22 +134,3 @@ With either installation option, you'll end up with an assembly called `Responsi
 with the `UNITY_INCLUDE_TESTS` define constraint.
 To use Responsible, simply reference this from your test assemblies.
 You'll also need to reference UniRx to use many features of Responsible.
-
-### Examples
-
-For a simple example of a basic test setup, 
-there's an [example project](Packages/Responsible/Samples~/ResponsibleGame)
-with some [basic tests](Packages/Responsible/Samples~/ResponsibleGame/PlayModeTests) included.
-This sample game can be installed from the Unity Package Manager,
-and is also symlinked into the main Unity project in this repository, for convenience.
-
-The library itself also has [extensive test coverage](Assets/Responsible/Tests/Runtime),
-which may be used as more extensive examples of usage.
-Note that these tests live outside of the package,
-so that they do not get included into projects referencing Responsible.
-(This has to do with undocumented reasons related to using `"type": "tests"` in `package.json`).
-
-## Design Documentation
-
-To read more about the design principles behind Responsible, and how it works,
-see the [Design Documentation](Packages/Responsible/Runtime/README.md).
