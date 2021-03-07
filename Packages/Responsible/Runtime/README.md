@@ -167,14 +167,19 @@ If the method names in the `Responsibly` class do not conflict with anything els
 using `using static Responsible.Responsibly;` can make your code more concise.
 The method names were designed to work well like this. 
 
+By using the Editor window availble under `Window -> Responsible -> Operation State`,
+you can observe the progress of your tests exeecuting.
+The contents of the window updates in real time and matches the output produced on failures,
+except for the operation stack and stack trace.
+
 All the basic operations (excluding optional responders) implement the
 `ITestOperation<T>` interface, which contains the `CreateState` method,
 producing a `ITestOperationState<T>` instance.
 All implementations of this interface declare a `ToString` override,
-which is used to produce the failure output.
-If you wish to produce output during execution,
+which is used to produce the failure and state window output.
+If you wish to produce output at specific points during test execution,
 you may manually call `CreateState`, start executing it using a `TestInstructionExecutor`,
-and periodically log the state of the operation.
+and log the state of the operation at a specific time.
 
 ## For Imperative Programmers
 

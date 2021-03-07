@@ -7,6 +7,7 @@
 *Responsible* helps you write maintainable high level asynchronous tests in [Unity](https://unity.com/):
 * Get highly readable and informative output on test failures and timeouts
 * Write declarative, composable, and reusable test code
+* Observe test execution progress while they are running in the Editor
 * Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
 
@@ -49,6 +50,11 @@ Failure context:
 Error: System.Exception: Something failed
   at <normal exception stack trace comes here>
 ```
+
+By using the Editor window availble under `Window -> Responsible -> Operation State`,
+you can observe the progress of your tests exeecuting.
+The contents of the window updates in real time and matches the output produced on failures,
+except for the operation stack and stack trace.
 
 ## Is That It?
 
