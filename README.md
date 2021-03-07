@@ -51,8 +51,8 @@ Error: System.Exception: Something failed
   at <normal exception stack trace comes here>
 ```
 
-By using the Editor window availble under `Window -> Responsible -> Operation State`,
-you can observe the progress of your tests exeecuting.
+By using the Editor window available under `Window -> Responsible -> Operation State`,
+you can observe the progress of your tests executing.
 The contents of the window updates in real time and matches the output produced on failures,
 except for the operation stack and stack trace.
 

@@ -167,8 +167,8 @@ If the method names in the `Responsibly` class do not conflict with anything els
 using `using static Responsible.Responsibly;` can make your code more concise.
 The method names were designed to work well like this. 
 
-By using the Editor window availble under `Window -> Responsible -> Operation State`,
-you can observe the progress of your tests exeecuting.
+By using the Editor window available under `Window -> Responsible -> Operation State`,
+you can observe the progress of your tests executing.
 The contents of the window updates in real time and matches the output produced on failures,
 except for the operation stack and stack trace.
 
