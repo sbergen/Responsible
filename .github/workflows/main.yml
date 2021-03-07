@@ -55,7 +55,7 @@ jobs:
       - name: Run tests
         if: env.requestActivation == 'false'
         id: tests
-        uses: webbertakken/unity-test-runner@f78eb5b9faac64fc7450bae1eb8cbfa45e287abf
+        uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
         with: 
