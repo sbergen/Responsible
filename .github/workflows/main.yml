@@ -15,7 +15,6 @@ jobs:
       fail-fast: false
       matrix:
         unityVersion:
-          # - 2018.4.28f1 2018 doesn't support git packages
           - 2019.4.14f1
           - 2020.1.13f1
 
@@ -61,22 +60,24 @@ jobs:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
         with: 
           unityVersion: ${{ matrix.unityVersion }}
-          testMode: playmode
           customParameters: -enableCodeCoverage
             -coverageResultsPath "artifacts/CodeCoverage/"
-            -coverageOptions assemblyFilters:+Responsible
+            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
             -nographics
       
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
+          [${{ matrix.unityVersion }}]artifacts/editmode-results.xml
           [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v1
         if: matrix.unityVersion == '2019.4.14f1'
         with:
-          file: artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+          files: |
+            artifacts/CodeCoverage/workspace-opencov/EditMode/TestCoverageResults_0000.xml,
+            artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
           fail_ci_if_error: true
           verbose: true
 
