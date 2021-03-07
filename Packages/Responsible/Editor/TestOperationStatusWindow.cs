@@ -9,7 +9,7 @@ namespace Responsible.Editor
 		[MenuItem("Window/Responsible/Operation State")]
 		public static void ShowWindow()
 		{
-			var window = GetWindow<TestOperationStatusWindow>(utility: false, "Test Operation State");
+			var window = GetWindow<TestOperationStatusWindow>(utility: false, "Test Operation Status");
 			window.Show();
 		}
 
@@ -22,6 +22,6 @@ namespace Responsible.Editor
 
 		private void OnDestroy() => this.state.Dispose();
 
-		private void Update() => this.state.Update();
+		public void Update() => this.state.Update();
 	}
 }
