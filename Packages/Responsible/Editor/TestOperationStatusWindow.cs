@@ -1,5 +1,6 @@
 ﻿using System;
-using Responsible;
+using System.Collections.Generic;
+using System.Linq;
 using Responsible.State;
 using UniRx;
 using UnityEditor;
@@ -9,8 +10,8 @@ namespace Responsible.Editor
 {
 	public class TestOperationStatusWindow : EditorWindow
 	{
+		private readonly List<ITestOperationState> activeStates = new List<ITestOperationState>();
 		private IDisposable subscription;
-		private ITestOperationState currentState;
 
 		[MenuItem("Window/Responsible/Operation State")]
 		public static void ShowWindow()
@@ -28,11 +29,11 @@ namespace Responsible.Editor
 					{
 						switch (notification)
 						{
-							case TestOperationStateNotification.Finished _:
-								this.currentState = null;
+							case TestOperationStateNotification.Finished finished:
+								this.activeStates.Remove(finished.State);
 								break;
 							case TestOperationStateNotification.Started started:
-								this.currentState = started.State;
+								this.activeStates.Add(started.State);
 								break;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(notification));
@@ -42,12 +43,23 @@ namespace Responsible.Editor
 					});
 			}
 
-			GUILayout.Label(this.currentState?.ToString() ?? "No operations executing");
+			if (this.activeStates.Count == 0)
+			{
+				GUILayout.Label("No operations executing");
+			}
+			else
+			{
+				foreach (var state in this.activeStates)
+				{
+					GUILayout.Label(state.ToString());
+					GUILayout.Label("----------");
+				}
+			}
 		}
 
 		private void Update()
 		{
-			if (this.currentState != null)
+			if (this.activeStates.Count > 0)
 			{
 				this.Repaint();
 			}
