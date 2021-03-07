@@ -17,11 +17,16 @@ namespace Responsible
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
 
+		private static readonly Subject<TestOperationStateNotification> StateNotificationsSubject =
+			new Subject<TestOperationStateNotification>();
+
 		private readonly List<(LogType type, Regex regex)> expectedLogs = new List<(LogType, Regex)>();
 		private readonly IDisposable pollSubscription;
 		private readonly ILogger logger;
 		private readonly IScheduler scheduler;
 		private readonly IObservable<Unit> pollObservable;
+
+		public static IObservable<TestOperationStateNotification> StateNotifications => StateNotificationsSubject;
 
 		public TestInstructionExecutor(
 			IScheduler scheduler = null,
@@ -73,7 +78,11 @@ namespace Responsible
 					this.logger.Log(logType, message);
 
 					return Observable.Throw<T>(new AssertionException(message, e));
-				});
+				})
+				.DoOnSubscribe(() => StateNotificationsSubject.OnNext(
+					new TestOperationStateNotification.Started(rootState)))
+				.Finally(() => StateNotificationsSubject.OnNext(
+					new TestOperationStateNotification.Finished(rootState)));
 		}
 
 		[Pure]
