@@ -26,6 +26,10 @@ namespace Responsible
 		private readonly IScheduler scheduler;
 		private readonly IObservable<Unit> pollObservable;
 
+		/// <summary>
+		/// Notifications for started and finished test operations.
+		/// Static, so that Unity EditorWindows can access it.
+		/// </summary>
 		public static IObservable<TestOperationStateNotification> StateNotifications => StateNotificationsSubject;
 
 		public TestInstructionExecutor(
