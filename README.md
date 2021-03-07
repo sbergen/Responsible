@@ -100,8 +100,7 @@ no effort has been made to avoid having to reference UniRx also.
 
 ### Installation Using the Unity Package Manager
 
-If you are on Unity Unity 2019.3.4f1, 2020.1a21 or later,
-you can add the following to `Packages/manifest.json`:
+Add the following to `Packages/manifest.json`:
 ```json
 "com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/Packages/Responsible"
 ``` 
