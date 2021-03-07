@@ -1,7 +1,10 @@
-﻿using UnityEditor;
+﻿using System.Diagnostics.CodeAnalysis;
+using UnityEditor;
 
 namespace Responsible.Editor
 {
+	// No easy way to test this in CI, and the core logic is already covered => Exclude
+	[ExcludeFromCodeCoverage]
 	public class TestOperationStatusWindow : EditorWindow
 	{
 		private TestOperationStatusWindowState state;
