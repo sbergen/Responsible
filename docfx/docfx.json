@@ -1,0 +1,40 @@
+{
+    "metadata": [
+      {
+        "src": [
+          {
+            "files": [ "**/*.cs" ],
+            "exclude": [ "**/bin/**", "**/obj/**" ],
+            "src": "../Packages/Responsible/Runtime"
+          }
+        ],
+        "dest": "obj/api",
+        "filter": "filter.yml"
+      }
+    ],
+    "build": {
+      "content": [
+        {
+          "files": [ "**/*.yml" ],
+          "src": "obj/api",
+          "dest": "api"
+        },
+        {
+          "files": [ "articles/**/*.md", "*.md", "toc.yml", "restapi/**" ]
+        }
+      ],
+      "resource": [
+        {
+          "files": [ "articles/images/**"]
+        }
+      ],
+      "overwrite": "specs/*.md",
+      "globalMetadata": {
+        "_appTitle": "docfx seed website",
+        "_enableSearch": true
+      },
+      "markdownEngineName": "markdig",
+      "dest": "_site",
+      "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
+    }
+}

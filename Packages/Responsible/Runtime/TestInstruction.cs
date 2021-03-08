@@ -88,17 +88,23 @@ namespace Responsible
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Applies selector to result of test instruction
+		/// Applies a selector to the result of a test instruction.
 		/// </summary>
+		/// <param name="instruction">A test instruction to apply the selector to.</param>
+		/// <param name="selector">A function to apply to the result of the instruction.</param>
+		/// <returns>
+		/// A test instruction whose result is the result of invoking <c>selector</c> on the result of <c>instruction</c>
+		/// </returns>
+		/// <inheritdoc cref="Docs.Provider.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestInstruction<T2> Select<T1, T2>(
-			this ITestInstruction<T1> first,
+			this ITestInstruction<T1> instruction,
 			Func<T1, T2> selector,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new SelectTestInstruction<T1, T2>(
-				first,
+				instruction,
 				selector,
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
