@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Responsible.TestResponders
 {
-	public class OptionalTestResponderBase : IOptionalTestResponder
+	internal class OptionalTestResponderBase : IOptionalTestResponder
 	{
 		private readonly Func<ITestOperationState<ITestOperationState<Unit>>> createState;
 

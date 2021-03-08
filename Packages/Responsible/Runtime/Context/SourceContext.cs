@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Responsible.Context
 {
-	public readonly struct SourceContext
+	internal readonly struct SourceContext
 	{
 		private static readonly int StripFromPaths;
 
