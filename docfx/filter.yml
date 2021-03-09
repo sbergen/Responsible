@@ -1,5 +1,9 @@
 apiRules:
 - exclude:
-    uid: System.Object
+    uidRegex: ^System\.Object
     type: Type
 
+attributeRules:
+- include:
+    uidRegex: '^System\.Runtime\.CompilerServices\.[^.]+$'
+    type: Type

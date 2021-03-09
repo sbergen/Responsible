@@ -3,9 +3,9 @@
       {
         "src": [
           {
-            "files": [ "**/*.cs" ],
+            "files": [ "Responsible.csproj" ],
             "exclude": [ "**/bin/**", "**/obj/**" ],
-            "src": "../Packages/Responsible/Runtime"
+            "src": "../"
           }
         ],
         "dest": "obj/api",
@@ -35,6 +35,7 @@
       },
       "markdownEngineName": "markdig",
       "dest": "_site",
-      "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
+      "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
+      "template": [ "statictoc" ]
     }
 }
