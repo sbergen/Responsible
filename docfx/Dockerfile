@@ -16,7 +16,8 @@ RUN apt-get -q update \
     && apt-get -q update \
     && apt-get -q install -y --no-install-recommends --allow-downgrades \
     mono-runtime \
-    mono-devel
+    mono-devel \
+    msbuild
 COPY --from=builder /docfx /docfx
 RUN printf '#!/bin/bash\nmono /docfx/docfx.exe $@' > /usr/local/bin/docfx \
     && chmod a+x /usr/local/bin/docfx
