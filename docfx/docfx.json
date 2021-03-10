@@ -1,0 +1,39 @@
+{
+    "metadata": [
+      {
+        "src": [
+          {
+            "files": [ "Responsible.csproj" ],
+            "src": "../"
+          }
+        ],
+        "dest": "obj/api",
+        "filter": "filter.yml"
+      }
+    ],
+    "build": {
+      "content": [
+        {
+          "files": [ "**/*.yml" ],
+          "src": "obj/api",
+          "dest": "api"
+        },
+        {
+          "files": [ "*.md", "toc.yml" ]
+        }
+      ],
+      "resource": [
+        {
+          "files": [ ]
+        }
+      ],
+      "globalMetadata": {
+        "_appTitle": "Responsible",
+        "_enableSearch": false
+      },
+      "markdownEngineName": "markdig",
+      "dest": "docs_site",
+      "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
+      "template": [ "statictoc" ]
+    }
+}
