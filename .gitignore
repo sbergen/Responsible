@@ -3,6 +3,7 @@ Library
 Logs
 CodeCoverage
 obj
+obj.meta
 
 .idea
 

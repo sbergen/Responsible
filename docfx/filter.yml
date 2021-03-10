@@ -1,0 +1,9 @@
+apiRules:
+- exclude:
+    uidRegex: ^System\.Object
+    type: Type
+
+attributeRules:
+- include:
+    uidRegex: '^System\.Runtime\.CompilerServices\.[^.]+$'
+    type: Type
