@@ -16,8 +16,6 @@ namespace Responsible.EditorSetup
         private static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.FullName;
         private static readonly string DocFxDir = Path.Combine(RepositoryPath, "docfx");
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
-        private static readonly string DocFxBinDir = Path.Combine(DocFxDir, "bin");
-        private static readonly string DocFxExe = Path.Combine(DocFxBinDir, "docfx.exe");
 
         /// <summary>
         /// Build documentation from within Unity,
@@ -33,9 +31,9 @@ namespace Responsible.EditorSetup
 
             Debug.Log("Building documentation...");
             var (status, stdout, _) = RunCommand(
-                workingDir: DocFxBinDir,
-                command: "mono",
-                Quote(DocFxExe), Quote(DocFxJsonPath), "--warningsAsErrors");
+                workingDir: DocFxDir,
+                command: "docfx",
+                Quote(DocFxJsonPath), "--warningsAsErrors");
 
             if (status != 0)
             {

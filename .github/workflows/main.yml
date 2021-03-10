@@ -64,6 +64,7 @@ jobs:
             -coverageResultsPath "artifacts/CodeCoverage/"
             -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
             -nographics
+            -disable-assembly-updater
       
       - name: Push to testspace
         if: ${{ always() }}
@@ -94,3 +95,31 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Library
+        uses: actions/cache@v2.1.2
+        with:
+          path: Library
+          key: Library-docfx
+
+      - name: Generate docs
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
+        with: 
+          customImage: thesbergen/unityci-docfx
+          targetPlatform: StandaloneLinux64
+          buildMethod: Responsible.EditorSetup.ContinuousIntegration.BuildDocumentation
+          customParameters: -disable-assembly-updater
+
+      - name: Archive docs
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: Docs
+          path: docfx/_site
