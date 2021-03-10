@@ -123,3 +123,10 @@ jobs:
         with:
           name: Docs
           path: docfx/docs_site
+
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: docfx/docs_site
+          dry-run: ${{ github.ref != 'refs/heads/main' }}
