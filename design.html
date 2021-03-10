@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Design Overview | Responsible </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Design Overview | Responsible ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="index.html" title="Home">Home</a>
+                      </li>
+                      <li>
+                          <a href="design.html" title="Design Overview">Design Overview</a>
+                      </li>
+                      <li>
+                          <a href="api/Responsible.html" title="API Documentation">API Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="design-overview">Design Overview</h1>
+
+<p>The primary motivation for building Responsible was the idea of <em>responders</em>,
+which form an asynchronous if-then operation.
+The <em>if</em> part is implemented as a <em>wait condition</em>,
+and the <em>then</em> part as an <em>instruction</em>.
+Both responders and wait conditions can be <em>expected</em>, turning them into instructions.
+One or more responders can additionally be reacted to optionally,
+until another condition is met, or another responder is ready to execute.
+Operations can be combined and chained using operators.</p>
+<h2 id="core-principles">Core Principles</h2>
+<p>The core design principles of Responsible are:</p>
+<ul>
+<li><strong>Useful output on failures</strong>:
+You are required to name your operations,
+and full information on operations is provided on failures and timeouts.</li>
+<li><strong>Manageable test execution times</strong>:
+Tests using Responsible will terminate on the first failure,
+and providing timeouts is mandatory.
+This leads to as-early-as-possible failures, keeping test execution times manageable.
+This is especially important for large test suites being run on CI.</li>
+<li><strong>Operations as data</strong>: Building and composing operations is
+<a href="https://en.wikipedia.org/wiki/Referential_transparency">referentially transparent</a>,
+making code declarative, reusable, and easy to reason about.
+When an operation is executed, a separate object representing its state is created.</li>
+<li>Responsible is an <strong>extendable execution engine</strong>:
+Responsible provides the mechanism for declaring operations,
+and operators to combine operations.
+Responsible does <em>not</em> contain a collection of useful operations,
+but instead provides mechanisms to build your own.</li>
+</ul>
+<h2 id="types-of-operations">Types of Operations</h2>
+<p>Responsible is built on four different operation types,
+which can be combined in multiple ways, using operators.</p>
+<p><strong>About <code>Unit</code> and not returning values:</strong> If you are not familiar with Rx,
+you might find the concept of using <code>Unit</code> as a return value confusing at first.
+<code>Unit</code> represents an <em>empty</em> value (defined as the empty tuple in many languages).
+Using <code>Unit</code> vastly simplifies building generic operations which may or may not return a useful value,
+as you don't need overrides for functions returning void (e.g. <code>Action</code> vs <code>Func</code>).
+You can treat <code>Unit</code> very similarly to <code>void</code> except that it <em>is</em> a value.</p>
+<h3 id="instructions">Instructions</h3>
+<p>Instructions are represented by the <code>ITestInstruction&lt;T&gt;</code> interface.
+They represent a synchronous or asynchronous operation producing a single result.
+Instructions can be executed by a <code>TestInstructionExecutor</code>,
+either as a yield instruction, or as an observable,
+using the <code>ToYieldInstruction</code> and <code>ToObservable</code> extension methods.
+All instructions should have an internal timeout.
+The basic operations for chaining instructions are <code>ContinueWith</code> and <code>Sequence</code>.</p>
+<h3 id="wait-conditions">Wait Conditions</h3>
+<p>Wait conditions are represented by the <code>ITestWaitCondition&lt;T&gt;</code> interface.
+A wait condition produces a single result,
+which can be extremely useful when chaining wait conditions and building responders.
+The basic operations on conditions are chaining them using <code>AndThen</code>,
+converting to a responder using <code>ThenRespondWith</code>,
+or into an instruction with <code>ExpectWithinSeconds</code>.</p>
+<h3 id="responders">Responders</h3>
+<p>A responder is represented by the <code>ITestResponder&lt;T&gt;</code> interface.
+A responder produces a single result,
+and is usually built from a wait condition and an instruction,
+using the <code>ThenRespondWith</code> operator.
+This forms an if-then relationship between the wait condition and instruction.
+Responders are guaranteed to either not be triggered at all, or be fully executed.</p>
+<h3 id="optional-responders">Optional Responders</h3>
+<p>Optional responders are represented by the <code>IOptionalTestResponder</code> interface.
+Unlike the other operation types, optional responders do not produce a result,
+as handling these results would get complicated due to their optional nature
+(this is something that may be implemented later).
+One or more responders can be optionally executed using the <code>RespondToAnyOf</code> operator,
+or the <code>Optionally</code> extension method, which which can be applied to a single responder.
+Optional responders can be executed until a wait conditions becomes fulfilled,
+using the <code>Until</code> operator, or until some other responder becomes ready to execute,
+using the <code>UntilReadyTo</code> operator.</p>
+<h2 id="operators">Operators</h2>
+<p>The class <code>Responsibly</code> contains the basic operators for creating operations,
+and a bunch of operators for combining operations,
+which are not idiomatic extension methods.
+Following the pattern used by e.g. <code>IEnumerable&lt;T&gt;</code> and <code>IObservable&lt;T&gt;</code>,
+all extension methods on operators can be found in a similarly named class.
+E.g. <code>TestInstruction</code> for extension methods on <code>ITestInstruction&lt;T&gt;</code>.</p>
+<p>Some operators worth mentioning are the <code>AsUnit...</code> and <code>Select</code> operators,
+which are very useful in conjunction with operators requiring operators of the same type,
+such as <code>RespondToAllOf</code> and <code>WaitForAllOf</code>.</p>
+<h1 id="extending-responsible">Extending Responsible</h1>
+<p>While Responsible is already useful on it's own, it is built to be extensible,
+and becomes even more powerful when you write your own operators on top of it.
+It's recommended to build your own wait conditions and instructions for common use cases
+by wrapping or combining the basic operations.
+You could e.g. create a method with the following signature:<br>
+<code>ITestWaitCondition&lt;GameObject&gt; WaitForDescendantByNameToBeActive(GameObject gameObject, string name)</code>.</p>
+<p>You may want to pass in explicit <code>CallerMemberName</code> etc. arguments to your own low-level operations
+to capture the original caller location.
+Putting these operations into their own file and
+suppressing warnings about explicit argument use is recommended.</p>
+<p>The methods that build wait conditions take an argument for creating extra context.
+The provided function will be called on failures
+(or when <a href="#tips-and-tricks">manually logging state</a>)
+to create extra details that might help figuring out why a wait timed out.
+An example use would be to e.g. list all open menus in your menu system,
+when waiting for a specific menu to be open.</p>
+<h1 id="about-testinstructionexecutor">About TestInstructionExecutor</h1>
+<p>Passing in a <code>TestInstructionExecutor</code> instance for running instructions is mandatory.
+There are a few reasons for this:</p>
+<ul>
+<li>You may want to customize your executor for different tests (see below).</li>
+<li>The UniRx <code>EveryUpdate</code> method has some internal delays when invoked for the first time.
+For this reason, an internal proxy is used in the executor to speed up execution.</li>
+<li>If your code tears down everything, including <code>DontDestroyOnLoad</code> objects,
+the executor may stop functioning after such tear down (again due to UniRx internals).</li>
+</ul>
+<p>The <code>TestInstructionExecutor</code> constructor takes three optional arguments:</p>
+<ul>
+<li><code>IScheduler scheduler</code>, which is <code>UniRx.Scheduler.MainThread</code> by default.
+The scheduler is used for timeouts, keeping time for output purposes,
+and in the <code>WaitFor</code> operator.
+If for any reason you wish to keep track of time in a differently,
+you may override this default.</li>
+<li><code>IObservable&lt;Unit&gt; pollObservable</code>,
+which is <code>UniRx.Observable.EveryUpdate().AsUnitObservable()</code> by default.
+If for any reason you don't want to poll for conditions on every frame,
+you may override this default.</li>
+<li><code>ILogger logger</code>, which is <code>UnityEngine.Debug.unityLogger</code> by default.
+The logger is used to log an error in addition to throwing an exception on failures.
+This is due to the way Unity does not handle errors in nested coroutines very well.
+If you are using Responsible at every level of your tests,
+you may wish to not log these errors,
+which can be accomplished by implementing a no-op logger.</li>
+</ul>
+<h2 id="unity-error-log-handling">Unity Error Log Handling</h2>
+<p>The Unity Tests Runner will fail tests on logged errors.
+While running a test instruction, Responsible will intercept this process,
+by listening to logged errors, and overriding the default behavior.
+The following points are worth noting:</p>
+<ul>
+<li>If you are expecting an error, you must call <code>TestInstructionExecutor.ExpectLog</code>
+instead of only calling <code>LogAssert.Expect</code>.</li>
+<li>Logging errors from any other thread but the main thread is <strong>not</strong> handled.
+As test instructions are executed on the main thread,
+it would be impossible to attribute a logged error to the correct test instruction.</li>
+<li><code>LogAssert.ignoreFailingMessages</code> is respected at the time of logging.</li>
+</ul>
+<h1 id="tips-and-tricks">Tips and Tricks</h1>
+<p>If the method names in the <code>Responsibly</code> class do not conflict with anything else,
+using <code>using static Responsible.Responsibly;</code> can make your code more concise.
+The method names were designed to work well like this.</p>
+<p>By using the Editor window available under <code>Window -&gt; Responsible -&gt; Operation State</code>,
+you can observe the progress of your tests executing.
+The contents of the window updates in real time and matches the output produced on failures,
+except for the operation stack and stack trace.</p>
+<p>All the basic operations (excluding optional responders) implement the
+<code>ITestOperation&lt;T&gt;</code> interface, which contains the <code>CreateState</code> method,
+producing a <code>ITestOperationState&lt;T&gt;</code> instance.
+All implementations of this interface declare a <code>ToString</code> override,
+which is used to produce the failure and state window output.
+If you wish to produce output at specific points during test execution,
+you may manually call <code>CreateState</code>, start executing it using a <code>TestInstructionExecutor</code>,
+and log the state of the operation at a specific time.</p>
+<h1 id="for-imperative-programmers">For Imperative Programmers</h1>
+<p>You will notice that <code>Func&lt;T&gt;</code> and <code>Func&lt;T1, T2&gt;</code> are used a lot in Responsible.
+This is because test operations are not executed on creation,
+but only once you actually request an execution.
+This means that the same <em>instance</em> of an operation can be reused,
+meaning the following code will work as expected:</p>
+<pre><code class="lang-cs">var waitForFoo = WaitForFoo(...);
+var waitForBar = WaitForBar(...);
+var waitForQuux = WaitForQuux(...);
+
+var waitForFooAndBar = waitForFoo.AndThen(waitForBar);
+var waitForFooAndQuux = waitForFoo.AndThen(waitForQuux);
+</code></pre>
+<p>Here, <code>waitForFoo</code> is being reused in two different contexts,
+and reusing e.g. <code>waitForFooAndBar</code> later is also fine.
+What happens under the hood, is that for each <em>execution</em> of an operation,
+a separate state object will be created.</p>
+<p>What this means in the context of building your own operations,
+is that you must not read or write any state without deferring the operation.
+E.g. the following will <strong>not</strong> work as expected:</p>
+<pre><code class="lang-cs">ITestWaitCondition&lt;T&gt; WaitForFoo(...)
+{
+    var foo = GameObject.Find(&quot;Foo&quot;);
+    return WaitForCondition(
+        &quot;Foo to be ...&quot;,
+        () =&gt; foo...);
+}
+</code></pre>
+<p>while the following will:</p>
+<pre><code class="lang-cs">ITestWaitCondition&lt;T&gt; WaitForFoo(...)
+{
+    return WaitForCondition(
+        &quot;Foo to be ...&quot;,
+        () =&gt; GameObject.Find(&quot;Foo&quot;)...);
+}
+</code></pre>
+<h1 id="for-functional-programmers">For Functional Programmers</h1>
+<p>Test operations are stateless and referentially transparent.
+Calling <code>CreateState</code> could be considered a form of reification,
+producing a stateful instance of the abstract operation.
+When building custom operations, ensure that you defer any stateful operations
+(both reading and writing state).</p>
+<p><code>ITestInstruction&lt;T&gt;</code> ended up being a monad,
+where <code>Return</code> is <code>return</code> (obviously), and <code>ContinueWith</code> is <code>bind</code>.
+This may not have any practical implications in C# beyond being able to use the LINQ query syntax.</p>
+<h1 id="linq-query-syntax">LINQ query syntax</h1>
+<p>While not recommended, due to it muddling call-site details,
+it is possible to use the LINQ query syntax with test instructions.
+For example, the following query will return an instruction returning 10:</p>
+<pre><code class="lang-cs">from a in Return(2)
+from b in Return(3)
+let c = a + b
+from result in Return(2 * c)
+select result;
+</code></pre>
+<p>While the example uses simple <code>Return</code> calls for brevity,
+this syntax will work for sequencing asynchronous instructions also.</p>
+<h1 id="portability">Portability</h1>
+<p>The core functionality of Responsible does't really depend on anything Unity-specific.
+Only the following details should need changing to port Responsible to some other .NET environment:</p>
+<ul>
+<li><code>using UniRx</code> directives would need replacing with standard Rx directives.</li>
+<li><code>TestInstructionExecutor</code> uses the Unity <code>ILogger</code> interface, which would need replacing.</li>
+<li><code>ToYieldInstruction</code>: not needed outside of Unity</li>
+<li><code>WaitForCoroutine</code>: not needed outside of Unity</li>
+<li>Tests are written using the <code>UnityTest</code> attribute and <code>yield return null</code>,
+to best mimic the environment the library would actually be used in.</li>
+<li>The <code>IScheduler</code> interface is slightly different in UniRx than in standard Rx,
+and the tests use a custom <code>TestScheduler</code>.</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/sbergen/Responsible/blob/main/docfx/design.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

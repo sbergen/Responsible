@@ -1,0 +1,464 @@
+{
+  "homepages": [],
+  "source_base_path": "/github/workspace/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "design.md",
+      "output": {
+        ".html": {
+          "relative_path": "design.html",
+          "hash": "9htMc+h4WszuN55ZIajW3g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "aMtUYbrfz503mx7HX/q4Cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Context.RunContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Context.RunContext.html",
+          "hash": "bWxDC925L6hbQZDQTPz+NA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Context.SourceContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Context.SourceContext.html",
+          "hash": "QnmXEbEMXBBh1Fgqv5YhfA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Context.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Context.html",
+          "hash": "IxCtzadcX7Bd5aBM+7Erew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.IOptionalTestResponder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.IOptionalTestResponder.html",
+          "hash": "h+HkAFIMK11RoY7EUU/k4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.ITestInstruction-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.ITestInstruction-1.html",
+          "hash": "iYmzjCrJwZG57LH5AeIjzQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.ITestOperation-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.ITestOperation-1.html",
+          "hash": "8Lb0jyawZyGlYleXAxPbMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.ITestResponder-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.ITestResponder-1.html",
+          "hash": "+hjdLvRkERnvUA0omMARfw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.ITestWaitCondition-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.ITestWaitCondition-1.html",
+          "hash": "i3Lhzkp0POpjgnsVzE94jA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.LinqSupport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.LinqSupport.html",
+          "hash": "7AfJblS963AvT63BfRhs5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.OptionalTestResponder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.OptionalTestResponder.html",
+          "hash": "SrRVI34GRkMbR3pc5vW2jQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Responsibly.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Responsibly.html",
+          "hash": "4Pu3r2NP7x3l/ukmey7ChA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.ITestOperationState-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.ITestOperationState-1.html",
+          "hash": "Jz3L0Wp7OAopFH4h11ze2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.ITestOperationState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.ITestOperationState.html",
+          "hash": "f0CzCCnguI8Ls8YmFhYTRA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.StateStringBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.StateStringBuilder.html",
+          "hash": "eeJEUK6FrEx4OokomVivxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.TestOperationStateNotification.Finished.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.TestOperationStateNotification.Finished.html",
+          "hash": "ootIJpK1vmxT/vctA+AGUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.TestOperationStateNotification.Started.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.TestOperationStateNotification.Started.html",
+          "hash": "ML0oyXMNu5NyYw+EJmV2dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.TestOperationStateNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.TestOperationStateNotification.html",
+          "hash": "BB7oeWR+rt01ZgUwQHCvyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.TestOperationStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.TestOperationStatus.html",
+          "hash": "pK38Y4pAK/nRDA7dEjHGqA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.State.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.State.html",
+          "hash": "AagXvDDgx7mubpkCcWfrZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestInstruction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestInstruction.html",
+          "hash": "VF+HLgrg1DUmOy05h5CT9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestInstructionExecutor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestInstructionExecutor.html",
+          "hash": "fIuUVXM/W8KybPnP4DDnlw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestOperationState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestOperationState.html",
+          "hash": "1ZSR5/gj9OQ17OqCJXwCnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestResponder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestResponder.html",
+          "hash": "5kPVfHAvqCV59i0lqI27Mw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestResponders.OptionalTestResponderBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestResponders.OptionalTestResponderBase.html",
+          "hash": "ryN40+NQZnbPnkF0iy+yxA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestResponders.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestResponders.html",
+          "hash": "VBY0oyQwqC5nZ2GQBAJlKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.TestWaitCondition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.TestWaitCondition.html",
+          "hash": "Xh4hQuJyy4XdIwJ9TUSfhw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.UnhandledLogMessageException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.UnhandledLogMessageException.html",
+          "hash": "CCw4zEdRw90Y52W7ieyLHQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Utilities.IndentedStringBuilder-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Utilities.IndentedStringBuilder-1.html",
+          "hash": "X04c3RYEQUrRTJ126BUbnA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Utilities.Indexed-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Utilities.Indexed-1.html",
+          "hash": "3HXt34kR1lFqJJF9EC4cjQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Utilities.Indexed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Utilities.Indexed.html",
+          "hash": "VjYSIwZGN0/PUaxZZSEchg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.Utilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.Utilities.html",
+          "hash": "uZELpPqpn/tR/lhAuIj4QQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.html",
+          "hash": "yYklKSJO1tr+2FaEkayQbA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Disable incremental build by force rebuild option.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "ForceRebuild"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 32,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: it's disabled.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

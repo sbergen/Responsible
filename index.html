@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Responsible - Reactive Asynchronous Testing | Responsible </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Responsible - Reactive Asynchronous Testing | Responsible ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="index.html" title="Home">Home</a>
+                      </li>
+                      <li>
+                          <a href="design.html" title="Design Overview">Design Overview</a>
+                      </li>
+                      <li>
+                          <a href="api/Responsible.html" title="API Documentation">API Documentation</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="responsible---reactive-asynchronous-testing">Responsible - Reactive Asynchronous Testing</h1>
+
+<p><a href="https://github.com/sbergen/Responsible/blob/main/LICENSE"><img src="https://img.shields.io/github/license/sbergen/Responsible.svg" alt="License"></a>
+<a href="https://codecov.io/gh/sbergen/Responsible"><img src="https://codecov.io/gh/sbergen/Responsible/branch/main/graph/badge.svg" alt="codecov"></a>
+<a href="https://openupm.com/packages/com.beatwaves.responsible/"><img src="https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&amp;registry_uri=https://package.openupm.com" alt="openupm"></a></p>
+<p><em>Responsible</em> helps you write maintainable high level asynchronous tests in <a href="https://unity.com/">Unity</a>:</p>
+<ul>
+<li>Get highly readable and informative output on test failures and timeouts</li>
+<li>Write declarative, composable, and reusable test code</li>
+<li>Observe test execution progress while they are running in the Editor</li>
+<li>Stop worrying about a specific long-standing <a href="https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception">Unity bug</a></li>
+</ul>
+<h2 id="usage-and-output-example">Usage and Output Example</h2>
+<pre><code class="lang-cs">// with 'using static Responsible.Responsibly;'
+
+yield return WaitForCondition(&quot;Foo to be ready&quot;, () =&gt; foo.IsReady)
+    .AndThen(WaitForCondition(&quot;Bar to be completed&quot;, () =&gt; bar.IsCompleted))
+    .ThenRespondWith(&quot;Foo the bar&quot;, Do(&quot;Consume bar&quot;, () =&gt; foo.Consume(bar)))
+    .ExpectWithinSeconds(10)
+    .ContinueWith(Do(&quot;Continue operation&quot;, foo.ContinueOperation))
+    .ToYieldInstruction(this.TestInstructionExecutor);
+</code></pre>
+<p>If <code>foo.Consume</code> were to throw an error, the output would look like this:</p>
+<pre><code>Test operation execution failed!
+ 
+Failure context:
+[!] Foo the bar EXPECTED WITHIN 10.00 s (Failed after 0.15 s and 7 frames)
+  WAIT FOR
+    [✓] Foo to be ready (Completed in 0.11 s and 3 frames)
+    [✓] Bar to be completed (Completed in 0.04 s and 4 frames)
+  THEN RESPOND WITH
+    [!] Consume bar (Failed after 0.00 s and 0 frames)
+ 
+      Failed with:
+        System.Exception: 'Something failed'
+ 
+      Test operation stack:
+        [Do] MethodName (at Path/To/Source.cs:41)
+        [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:42)
+        [ContinueWith] MethodName (at Path/To/Source.cs:43)
+        [ToYieldInstruction] MethodName (at Path/To/Source.cs:44)
+ 
+[ ] Continue operation
+ 
+Error: System.Exception: Something failed
+  at &lt;normal exception stack trace comes here&gt;
+</code></pre>
+<p>By using the Editor window available under <code>Window -&gt; Responsible -&gt; Operation State</code>,
+you can observe the progress of your tests executing.
+The contents of the window updates in real time and matches the output produced on failures,
+except for the operation stack and stack trace.</p>
+<h2 id="is-that-it">Is That It?</h2>
+<p>The above sample introduces the responder pattern:
+an if-then relationship between a wait condition and (optionally) asynchronous response.
+However, just like it wouldn't be fair to dismiss <a href="http://reactivex.io/">ReactiveX</a>
+as <em>just an implementation of the observer pattern</em>,
+Responsible is also a lot more than just this pattern:
+the real power of Responsible comes from its composable operators.
+To read more about the design principles behind Responsible,
+see the <a href="design.html">Design Documentation</a>.</p>
+<h2 id="reactive-programming">Reactive Programming?</h2>
+<p>While the design of Responsible was inspired by <a href="http://reactivex.io/">ReactiveX</a>,
+and it is being used under the hood,
+it's debatable if Responsible really fits the reactive programming paradigm.
+While knowing Rx is not <em>necessary</em> for using Responsible,
+being familiar with reactive and/or functional programming in C# (e.g. LINQ)
+should ease the learning curve.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Responsible is built on top of <a href="https://github.com/neuecc/UniRx">UniRx</a>
+and uses a bit of <a href="https://nunit.org/">NUnit</a>.
+Responsible currently runs only in <a href="https://unity.com/">Unity</a>,
+but could easily be <a href="design.html#portability">ported</a> to work in other .NET environments also.</p>
+<h2 id="examples">Examples</h2>
+<p>For a simple example of a basic test setup,
+there's an <a href="https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Samples%7E/ResponsibleGame">example project</a>
+with some <a href="https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Samples%7E/ResponsibleGame/PlayModeTests">basic tests</a> included.
+This sample game can be installed from the Unity Package Manager,
+and is also symlinked into the main Unity project in this repository, for convenience.</p>
+<p>The library itself also has <a href="https://github.com/sbergen/responsible/tree/main/Assets/Responsible/Tests/Runtime">extensive test coverage</a>,
+which may be used as more extensive examples of usage.
+Note that these tests live outside of the package,
+so that they do not get included into projects referencing Responsible.
+(This has to do with undocumented reasons related to using <code>&quot;type&quot;: &quot;tests&quot;</code> in <code>package.json</code>).</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>To start using Responsible, you'll need to install the package and
+reference the <code>Responsible</code> assembly from your test assemblies.
+Since <code>Unit</code> is quite commonly used in Responsible,
+no effort has been made to avoid having to reference UniRx also.</p>
+<h3 id="installation-using-the-unity-package-manager">Installation Using the Unity Package Manager</h3>
+<p>Add the following to <code>Packages/manifest.json</code>:</p>
+<pre><code class="lang-json">&quot;com.beatwaves.responsible&quot;: &quot;https://github.com/sbergen/Responsible.git?path=/Packages/Responsible&quot;
+</code></pre>
+<p>if you are not already using UniRx, you may install that via the package manager also,
+by adding also the following line:</p>
+<pre><code class="lang-json">&quot;com.neuecc.unirx&quot;: &quot;https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts&quot;
+</code></pre>
+<h3 id="installation-using-openupm">Installation Using OpenUPM</h3>
+<p>After <a href="https://openupm.com/docs/">setting up OpenUMP</a>,
+you can add Responsible to your project by running</p>
+<pre><code>openupm add com.beatwaves.responsible
+</code></pre>
+<h3 id="installation-without-a-package-manager">Installation Without a Package Manager</h3>
+<p>If you can't or don't want to use the package manager, you can also directly incorporate
+the <a href="https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Runtime">Packages/Responsible/Runtime</a> directory into your project.
+This could be done manually, or e.g. with a symlink and git submodule.</p>
+<p>If you are not already using UniRx, you'll need to install it from the Asset Store,
+or in a similar fashion to what is outlined above.</p>
+<h3 id="referencing-the-assembly">Referencing the Assembly</h3>
+<p>With either installation option, you'll end up with an assembly called <code>Responsible</code>,
+with the <code>UNITY_INCLUDE_TESTS</code> define constraint.
+To use Responsible, simply reference this from your test assemblies.
+You'll also need to reference UniRx to use many features of Responsible.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/sbergen/Responsible/blob/main/docfx/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
