@@ -10,7 +10,12 @@ RUN mkdir -p /docfx \
 FROM unityci/editor:ubuntu-2019.4.14f1-linux-il2cpp-0.10.0
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -q update \
+    && apt-get install -y --no-install-recommends gnupg ca-certificates \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
+    && echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | tee /etc/apt/sources.list.d/mono-official-stable.list \
+    && apt-get -q update \
     && apt-get -q install -y --no-install-recommends --allow-downgrades \
+    mono-runtime \
     mono-devel
 COPY --from=builder /docfx /docfx
 RUN printf '#!/bin/bash\nmono /docfx/docfx.exe $@' > /usr/local/bin/docfx \
