@@ -21,6 +21,7 @@ namespace Responsible.EditorSetup
         private static readonly string ResharperResults = Path.Combine(ResharperDir, "inspect.xml");
         private static readonly string ResharperStdout = Path.Combine(ResharperDir, "stdout.txt");
         private static readonly string ResharperStderr = Path.Combine(ResharperDir, "stderr.txt");
+        private static readonly string DotSettingsFile = Path.Combine(RepositoryPath, "Responsible.sln.DotSettings");
 
         /// <summary>
         /// Build documentation from within Unity,
@@ -70,7 +71,7 @@ namespace Responsible.EditorSetup
                 $"-o={Quote(ResharperResults)}",
                 $"--caches-home={Quote(ResharperCache)}",
                 "-s=WARNING",
-                "--verbosity=TRACE");
+                $"--profile={Quote(DotSettingsFile)}");
 
             File.WriteAllText(ResharperStdout, stdout);
             File.WriteAllText(ResharperStderr, stderr);
