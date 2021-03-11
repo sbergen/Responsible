@@ -66,7 +66,11 @@ namespace Responsible.EditorSetup
             var (status, stdout, stderr) = RunCommand(
                 workingDir: RepositoryPath,
                 command: "inspectcode",
-                Quote(solution), $"-o={Quote(ResharperResults)}", $"--caches-home={Quote(ResharperCache)}");
+                Quote(solution),
+                $"-o={Quote(ResharperResults)}",
+                $"--caches-home={Quote(ResharperCache)}",
+                "-s=WARNING",
+                "--verbosity=TRACE");
 
             File.WriteAllText(ResharperStdout, stdout);
             File.WriteAllText(ResharperStderr, stderr);
