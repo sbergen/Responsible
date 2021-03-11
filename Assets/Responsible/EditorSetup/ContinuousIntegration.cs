@@ -16,6 +16,9 @@ namespace Responsible.EditorSetup
         private static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.FullName;
         private static readonly string DocFxDir = Path.Combine(RepositoryPath, "docfx");
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
+        private static readonly string ResharperDir = Path.Combine(RepositoryPath, "resharper");
+        private static readonly string ResharperCache = Path.Combine(ResharperDir, ".cache");
+        private static readonly string ResharperOutput = Path.Combine(ResharperDir, "inspect.xml");
 
         /// <summary>
         /// Build documentation from within Unity,
@@ -43,6 +46,34 @@ namespace Responsible.EditorSetup
             else
             {
                 Debug.Log($"Finished building documentation:\n{stdout}");
+            }
+        }
+
+        /// <summary>
+        /// Run the JetBrains inspectcode tool from within Unity,
+        /// to make this easier to use with existing Unity-related CI infrastructure.
+        /// ReSharper requires Unity dlls, so this can't be run without Unity around.
+        /// </summary>
+        [MenuItem("CI/Inspect Code")]
+        public static void InspectCode()
+        {
+            Debug.Log("Syncing solution...");
+            var solution = SyncSolution();
+
+            Debug.Log("Running inspections...");
+            var (status, stdout, stderr) = RunCommand(
+                workingDir: RepositoryPath,
+                command: "inspectcode",
+                Quote(solution), $"-o={Quote(ResharperOutput)}", $"--caches-home={Quote(ResharperCache)}");
+
+            if (status != 0)
+            {
+                Debug.LogError($"Inspecting code failed:\n{stderr}");
+                throw new Exception($"Inspecting code failed ({status})");
+            }
+            else
+            {
+                Debug.Log($"Finished inspecting code:\n{stdout}");
             }
         }
 
