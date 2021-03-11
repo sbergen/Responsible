@@ -18,7 +18,9 @@ namespace Responsible.EditorSetup
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
         private static readonly string ResharperDir = Path.Combine(RepositoryPath, "resharper");
         private static readonly string ResharperCache = Path.Combine(ResharperDir, ".cache");
-        private static readonly string ResharperOutput = Path.Combine(ResharperDir, "inspect.xml");
+        private static readonly string ResharperResults = Path.Combine(ResharperDir, "inspect.xml");
+        private static readonly string ResharperStdout = Path.Combine(ResharperDir, "stdout.txt");
+        private static readonly string ResharperStderr = Path.Combine(ResharperDir, "stderr.txt");
 
         /// <summary>
         /// Build documentation from within Unity,
@@ -64,7 +66,10 @@ namespace Responsible.EditorSetup
             var (status, stdout, stderr) = RunCommand(
                 workingDir: RepositoryPath,
                 command: "inspectcode",
-                Quote(solution), $"-o={Quote(ResharperOutput)}", $"--caches-home={Quote(ResharperCache)}");
+                Quote(solution), $"-o={Quote(ResharperResults)}", $"--caches-home={Quote(ResharperCache)}");
+
+            File.WriteAllText(ResharperStdout, stdout);
+            File.WriteAllText(ResharperStderr, stderr);
 
             if (status != 0)
             {

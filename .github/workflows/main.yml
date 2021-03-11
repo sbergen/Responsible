@@ -118,6 +118,15 @@ jobs:
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.InspectCode
           customParameters: -disable-assembly-updater
 
+      - name: Archive ReSharper run
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: ReSharper
+          path: |
+            resharper/inspect.xml
+            resharper/stdout.txt
+            resharper/stderr.txt
+
       - name: Transform ReSharper results
         uses: glassechidna/resharper-action@v1
         with:
