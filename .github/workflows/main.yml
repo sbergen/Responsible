@@ -105,9 +105,7 @@ jobs:
       - name: Cache Library & ReSharper
         uses: actions/cache@v2.1.2
         with:
-          path: |
-            Library
-            resharper/.cache
+          path: Library
           key: Library-resharper
 
       - name: Run ReSharper in Unity

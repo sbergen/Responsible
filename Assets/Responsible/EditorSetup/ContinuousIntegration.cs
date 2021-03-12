@@ -17,7 +17,6 @@ namespace Responsible.EditorSetup
         private static readonly string DocFxDir = Path.Combine(RepositoryPath, "docfx");
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
         private static readonly string ResharperDir = Path.Combine(RepositoryPath, "resharper");
-        private static readonly string ResharperCache = Path.Combine(ResharperDir, ".cache");
         private static readonly string ResharperResults = Path.Combine(ResharperDir, "inspect.xml");
         private static readonly string ResharperStdout = Path.Combine(ResharperDir, "stdout.txt");
         private static readonly string ResharperStderr = Path.Combine(ResharperDir, "stderr.txt");
@@ -69,7 +68,6 @@ namespace Responsible.EditorSetup
                 command: "inspectcode",
                 Quote(solution),
                 $"-o={Quote(ResharperResults)}",
-                $"--caches-home={Quote(ResharperCache)}",
                 "-s=WARNING",
                 $"--profile={Quote(DotSettingsFile)}");
 
