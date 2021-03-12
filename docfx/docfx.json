@@ -29,7 +29,8 @@
       ],
       "globalMetadata": {
         "_appTitle": "Responsible",
-        "_enableSearch": false
+        "_enableSearch": false,
+        "_disableContribution": true
       },
       "markdownEngineName": "markdig",
       "dest": "docs_site",
