@@ -102,7 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Cache Library & ReSharper
+      - name: Cache Library
         uses: actions/cache@v2.1.2
         with:
           path: Library
@@ -127,7 +127,7 @@ jobs:
             resharper/stdout.txt
             resharper/stderr.txt
 
-      - name: Transform ReSharper results
+      - name: ReSharper XML -> GitHub output
         uses: glassechidna/resharper-action@v1
         with:
           report: resharper/inspect.xml
