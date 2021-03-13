@@ -6,6 +6,9 @@ using Responsible.TestWaitConditions;
 
 namespace Responsible
 {
+	/// <summary>
+	/// Provides extension methods on <see cref="IOptionalTestResponder"/>.
+	/// </summary>
 	public static class OptionalTestResponder
 	{
 		/// <summary>
