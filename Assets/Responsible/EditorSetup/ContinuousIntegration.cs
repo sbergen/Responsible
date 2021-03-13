@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using NUnit.Framework;
 using Packages.Rider.Editor;
 using UnityEditor;
@@ -82,6 +84,13 @@ namespace Responsible.EditorSetup
             else
             {
                 Debug.Log($"Finished inspecting code:\n{stdout}");
+
+                var document = XElement.Load(File.OpenRead(ResharperResults));
+                var issueCount = document.Descendants("Issue").Count();
+                if (issueCount > 0)
+                {
+                    throw new Exception($"Found {issueCount} code inspection issues.");
+                }
             }
         }
 
