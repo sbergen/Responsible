@@ -122,6 +122,7 @@ jobs:
           customParameters: -disable-assembly-updater
 
       - name: Archive ReSharper run
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2.2.0 
         with:
           name: ReSharper
@@ -131,6 +132,7 @@ jobs:
             resharper/stderr.txt
 
       - name: ReSharper XML -> GitHub output
+        if: ${{ always() }}
         uses: glassechidna/resharper-action@v1
         with:
           report: resharper/inspect.xml
