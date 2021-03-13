@@ -8,6 +8,9 @@ using UniRx;
 
 namespace Responsible
 {
+	/// <summary>
+	/// Contains extension methods on <see cref="ITestResponder{T}"/>.
+	/// </summary>
 	public static class TestResponder
 	{
 		/// <summary>
