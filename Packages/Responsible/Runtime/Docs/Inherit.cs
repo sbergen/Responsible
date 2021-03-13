@@ -126,5 +126,16 @@ namespace Responsible.Docs
 			int sourceLineNumber = 0)
 		{
 		}
+
+		/// <inheritdoc cref="CallerMember{T1, T2}"/>
+		/// <param name="executor">Test operation executor to use </param>
+		public void CallerMemberWithExecutor<T>(
+			T arg1,
+			TestInstructionExecutor executor,
+			string memberName = "",
+			string sourceFilePath = "",
+			int sourceLineNumber = 0)
+		{
+		}
 	}
 }
