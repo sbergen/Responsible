@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -207,7 +198,9 @@
   
   <h1 id="Responsible_State_ITestOperationState" data-uid="Responsible.State.ITestOperationState" class="text-break">Interface ITestOperationState
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Type-agnostic parts of the execution status of a test operation,
+see <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.State.html">Responsible.State</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
@@ -217,16 +210,10 @@
   </div>
   <h3 id="properties">Properties
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_ITestOperationState_Status.md&amp;value=---%0Auid%3A%20Responsible.State.ITestOperationState.Status%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/ITestOperationState.cs/#L8">View Source</a>
-  </span>
   <a id="Responsible_State_ITestOperationState_Status_" data-uid="Responsible.State.ITestOperationState.Status*"></a>
   <h4 id="Responsible_State_ITestOperationState_Status" data-uid="Responsible.State.ITestOperationState.Status">Status</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Current status of the test operation. Intended for internal use only.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -243,23 +230,16 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.State.TestOperationStatus.html">TestOperationStatus</a></td>
-        <td></td>
+        <td><p>The current state of this test operation run.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_ITestOperationState_BuildDescription_Responsible_State_StateStringBuilder_.md&amp;value=---%0Auid%3A%20Responsible.State.ITestOperationState.BuildDescription(Responsible.State.StateStringBuilder)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/ITestOperationState.cs/#L14">View Source</a>
-  </span>
   <a id="Responsible_State_ITestOperationState_BuildDescription_" data-uid="Responsible.State.ITestOperationState.BuildDescription*"></a>
   <h4 id="Responsible_State_ITestOperationState_BuildDescription_Responsible_State_StateStringBuilder_" data-uid="Responsible.State.ITestOperationState.BuildDescription(Responsible.State.StateStringBuilder)">BuildDescription(StateStringBuilder)</h4>
-  <div class="markdown level1 summary"><p>Adds a detailed description of the operation to the builder, which might help debugging failures.
-This can include a lot of detail, as it's only used when an operation fails.</p>
+  <div class="markdown level1 summary"><p>Adds a detailed description of the operation to the builder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -279,7 +259,8 @@ This can include a lot of detail, as it's only used when an operation fails.</p>
       <tr>
         <td><a class="xref" href="Responsible.State.StateStringBuilder.html">StateStringBuilder</a></td>
         <td><span class="parametername">builder</span></td>
-        <td></td>
+        <td><p>State string builder to append the description of this operation state to.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -288,16 +269,6 @@ This can include a lot of detail, as it's only used when an operation fails.</p>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_ITestOperationState.md&amp;value=---%0Auid%3A%20Responsible.State.ITestOperationState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/ITestOperationState.cs/#L6" class="contribution-link">View Source</a>
-                  </li>
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

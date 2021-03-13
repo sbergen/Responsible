@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="active">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -206,36 +197,58 @@
   
   <h1 id="Responsible_State" data-uid="Responsible.State" class="text-break">Namespace Responsible.State
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary">
+<p>Contains classes and interfaces for working with the state of a running test operation.
+While these may be used to extend the functionality of Responsible,
+all of the basic functionality is available through extension methods on
+<a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="Responsible.State.StateStringBuilder.html">StateStringBuilder</a></h4>
-      <section></section>
+      <section><p>Utility class for building string representations of test operation execution states.</p>
+</section>
       <h4><a class="xref" href="Responsible.State.TestOperationStateNotification.html">TestOperationStateNotification</a></h4>
-      <section></section>
+      <section><p>Represents a notification for test operation state changes.
+See <a class="xref" href="Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_StateNotifications">StateNotifications</a>.</p>
+</section>
       <h4><a class="xref" href="Responsible.State.TestOperationStateNotification.Finished.html">TestOperationStateNotification.Finished</a></h4>
-      <section></section>
+      <section><p>Notification for an operation that has been finished,
+either when canceled, completed, or on failure.</p>
+</section>
       <h4><a class="xref" href="Responsible.State.TestOperationStateNotification.Started.html">TestOperationStateNotification.Started</a></h4>
-      <section></section>
+      <section><p>Notification for an operation that has been started.</p>
+</section>
       <h4><a class="xref" href="Responsible.State.TestOperationStatus.html">TestOperationStatus</a></h4>
-      <section></section>
+      <section><p>Base class for the status of a test operation execution.
+Can be one of:</p>
+<ul>
+<li>Not executed</li>
+<li>Waiting</li>
+<li>Completed</li>
+<li>Failed</li>
+<li>Canceled</li>
+</ul>
+<p>Not intended for public use.</p>
+</section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="Responsible.State.ITestOperationState.html">ITestOperationState</a></h4>
-      <section></section>
+      <section><p>Type-agnostic parts of the execution status of a test operation,
+see <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>.</p>
+</section>
       <h4><a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Represents the execution status of a test operation run created with
+<a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">CreateState()</a>.</p>
+<p>Mostly intended for internal use.</p>
+</section>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

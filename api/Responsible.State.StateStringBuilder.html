@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -207,7 +198,8 @@
   
   <h1 id="Responsible_State_StateStringBuilder" data-uid="Responsible.State.StateStringBuilder" class="text-break">Class StateStringBuilder
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Utility class for building string representations of test operation execution states.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -220,18 +212,6 @@
     <div>
       <a class="xref" href="Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_ToString">IndentedStringBuilder&lt;StateStringBuilder&gt;.ToString()</a>
     </div>
-    <div>
-      <a class="xref" href="Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_Add_System_String_">IndentedStringBuilder&lt;StateStringBuilder&gt;.Add(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddIndented_System_String_System_Action__0__">IndentedStringBuilder&lt;StateStringBuilder&gt;.AddIndented(String, Action&lt;StateStringBuilder&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddToPreviousLine_System_String_">IndentedStringBuilder&lt;StateStringBuilder&gt;.AddToPreviousLine(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddEmptyLine">IndentedStringBuilder&lt;StateStringBuilder&gt;.AddEmptyLine()</a>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.State.html">Responsible.State</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
@@ -241,16 +221,10 @@
   </div>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_StateStringBuilder_AddDetails_System_String_.md&amp;value=---%0Auid%3A%20Responsible.State.StateStringBuilder.AddDetails(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/StateStringBuilder.cs/#L11">View Source</a>
-  </span>
   <a id="Responsible_State_StateStringBuilder_AddDetails_" data-uid="Responsible.State.StateStringBuilder.AddDetails*"></a>
   <h4 id="Responsible_State_StateStringBuilder_AddDetails_System_String_" data-uid="Responsible.State.StateStringBuilder.AddDetails(System.String)">AddDetails(String)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds details to the state of an operation.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -269,24 +243,25 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">details</span></td>
-        <td></td>
+        <td><p>Details to add, may be multiple lines</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_StateStringBuilder_AddNestedDetails_System_String_System_Action_Responsible_State_StateStringBuilder__.md&amp;value=---%0Auid%3A%20Responsible.State.StateStringBuilder.AddNestedDetails(System.String%2CSystem.Action%7BResponsible.State.StateStringBuilder%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/StateStringBuilder.cs/#L20">View Source</a>
-  </span>
+  <h5 id="Responsible_State_StateStringBuilder_AddDetails_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The input will be split by the newline character,
+and added as separate lines, to respect indentation.</p>
+</div>
   <a id="Responsible_State_StateStringBuilder_AddNestedDetails_" data-uid="Responsible.State.StateStringBuilder.AddNestedDetails*"></a>
   <h4 id="Responsible_State_StateStringBuilder_AddNestedDetails_System_String_System_Action_Responsible_State_StateStringBuilder__" data-uid="Responsible.State.StateStringBuilder.AddNestedDetails(System.String,System.Action{Responsible.State.StateStringBuilder})">AddNestedDetails(String, Action&lt;StateStringBuilder&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds nested details using indentation.
+This method may be called recursively from <code data-dev-comment-type="paramref" class="paramref">addNested</code>
+to add multiple levels of indentation.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void AddNestedDetails(string details, Action&lt;StateStringBuilder&gt; addNested)</code></pre>
+    <pre><code class="lang-csharp hljs">public void AddNestedDetails(string description, Action&lt;StateStringBuilder&gt; addNested)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,13 +275,15 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">details</span></td>
-        <td></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>Description of the details.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Responsible.State.StateStringBuilder.html">StateStringBuilder</a>&gt;</td>
         <td><span class="parametername">addNested</span></td>
-        <td></td>
+        <td><p>Action to add more details at an increased indentation level.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -315,16 +292,6 @@
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_State_StateStringBuilder.md&amp;value=---%0Auid%3A%20Responsible.State.StateStringBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/State/StateStringBuilder.cs/#L9" class="contribution-link">View Source</a>
-                  </li>
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

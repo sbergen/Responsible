@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -207,7 +198,9 @@
   
   <h1 id="Responsible_LinqSupport" data-uid="Responsible.LinqSupport" class="text-break">Class LinqSupport
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides the required extension method on <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>
+for it to be used with the LINQ query syntax.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -222,16 +215,11 @@
   </div>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__.md&amp;value=---%0Auid%3A%20Responsible.LinqSupport.SelectMany%60%603(Responsible.ITestInstruction%7B%60%600%7D%2CSystem.Func%7B%60%600%2CResponsible.ITestInstruction%7B%60%601%7D%7D%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/LinqSupport.cs/#L7">View Source</a>
-  </span>
   <a id="Responsible_LinqSupport_SelectMany_" data-uid="Responsible.LinqSupport.SelectMany*"></a>
   <h4 id="Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__" data-uid="Responsible.LinqSupport.SelectMany``3(Responsible.ITestInstruction{``0},System.Func{``0,Responsible.ITestInstruction{``1}},System.Func{``0,``1,``2})">SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Standard extension method required to support LINQ query syntax.
+Should not be used directly.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -307,16 +295,6 @@
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_LinqSupport.md&amp;value=---%0Auid%3A%20Responsible.LinqSupport%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/LinqSupport.cs/#L5" class="contribution-link">View Source</a>
-                  </li>
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

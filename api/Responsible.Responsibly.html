@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -207,7 +198,8 @@
   
   <h1 id="Responsible_Responsibly" data-uid="Responsible.Responsibly" class="text-break">Class Responsibly
   </h1>
-  <div class="markdown level0 summary"><p>Main class for constructing primitive wait conditions and instructions.</p>
+  <div class="markdown level0 summary"><p>Main class for constructing primitive wait conditions and instructions,
+and composing responders.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -224,20 +216,13 @@
   <h5 id="Responsible_Responsibly_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Instead of using a class like <code>WaitFor</code>, we try to avoid conflicting class names by having this class.
 It also allows you to use either <code>Responsibly.WaitForCondition</code> or
-<code>using static Responsible.Responsibly</code> and simply <code>WaitFor</code>.</p>
+<code>using static Responsible.Responsibly;</code> and simply <code>WaitForCondition</code>.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_Do_System_String_System_Action_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.Do(System.String%2CSystem.Action%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.Do.cs/#L35">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_Do_" data-uid="Responsible.Responsibly.Do*"></a>
   <h4 id="Responsible_Responsibly_Do_System_String_System_Action_System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.Do(System.String,System.Action,System.String,System.String,System.Int32)">Do(String, Action, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Do an action safely, and don't return any result.</p>
+  <div class="markdown level1 summary"><p>Execute a synchronous action safely, and return <span class="xref">UniRx.Unit.Default</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -258,27 +243,32 @@ public static ITestInstruction&lt;Unit&gt; Do(string description, Action action,
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
         <td><span class="parametername">action</span></td>
-        <td></td>
+        <td><p>Action to call when the test instruction is executed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -293,20 +283,14 @@ public static ITestInstruction&lt;Unit&gt; Do(string description, Action action,
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>A test instruction which calls <code data-dev-comment-type="paramref" class="paramref">action</code> and returns <span class="xref">UniRx.Unit.Default</span> when executed.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_DoAndReturn__1_System_String_System_Func___0__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.DoAndReturn%60%601(System.String%2CSystem.Func%7B%60%600%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.Do.cs/#L20">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_DoAndReturn_" data-uid="Responsible.Responsibly.DoAndReturn*"></a>
   <h4 id="Responsible_Responsibly_DoAndReturn__1_System_String_System_Func___0__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.DoAndReturn``1(System.String,System.Func{``0},System.String,System.String,System.Int32)">DoAndReturn&lt;T&gt;(String, Func&lt;T&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Do an action safely, and return a result.</p>
+  <div class="markdown level1 summary"><p>Execute a synchronous action safely, and return a result.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -327,27 +311,32 @@ public static ITestInstruction&lt;T&gt; DoAndReturn&lt;T&gt;(string description,
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;T&gt;</td>
         <td><span class="parametername">func</span></td>
-        <td></td>
+        <td><p>Function to call when the test instruction is executed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -362,7 +351,8 @@ public static ITestInstruction&lt;T&gt; DoAndReturn&lt;T&gt;(string description,
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>A test instruction which calls <code data-dev-comment-type="paramref" class="paramref">func</code> and returns its value when executed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -377,24 +367,21 @@ public static ITestInstruction&lt;T&gt; DoAndReturn&lt;T&gt;(string description,
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the returned test instruction and <code data-dev-comment-type="paramref" class="paramref">func</code></p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 id="Responsible_Responsibly_DoAndReturn__1_System_String_System_Func___0__System_String_System_String_System_Int32__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This is not an overload of Do, because C# is bad at overload resolution with lambdas.</p>
+  <div class="markdown level1 remarks"><p>This is not an overload of <a class="xref" href="Responsible.Responsibly.html#Responsible_Responsibly_Do_System_String_System_Action_System_String_System_String_System_Int32_">Do(String, Action, String, String, Int32)</a>, because C# is bad at overload resolution with lambdas.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_RespondToAllOf__1_Responsible_ITestResponder___0____.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.RespondToAllOf%60%601(Responsible.ITestResponder%7B%60%600%7D%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.RespondTo.cs/#L22">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_RespondToAllOf_" data-uid="Responsible.Responsibly.RespondToAllOf*"></a>
   <h4 id="Responsible_Responsibly_RespondToAllOf__1_Responsible_ITestResponder___0____" data-uid="Responsible.Responsibly.RespondToAllOf``1(Responsible.ITestResponder{``0}[])">RespondToAllOf&lt;T&gt;(ITestResponder&lt;T&gt;[])</h4>
   <div class="markdown level1 summary"><p>Constructs a wait condition that will will complete once all given responders have executed.
-Returns the result from the first responder</p>
+All responders are waited for concurrently, but only one will be responding at a time.
+Will complete with an error, if any of the responders completes with an error.</p>
+<p>See <a class="xref" href="Responsible.TestResponder.html#Responsible_TestResponder_Select__2_Responsible_ITestResponder___0__System_Func___0___1__System_String_System_String_System_Int32_">Select&lt;T1, T2&gt;(ITestResponder&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a> and <a class="xref" href="Responsible.TestResponder.html#Responsible_TestResponder_AsUnitResponder__1_Responsible_ITestResponder___0__">AsUnitResponder&lt;T&gt;(ITestResponder&lt;T&gt;)</a>
+for methods which can be used to make the responder types match.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -415,7 +402,8 @@ public static ITestWaitCondition&lt;T[]&gt; RespondToAllOf&lt;T&gt;(params ITest
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;T&gt;[]</td>
         <td><span class="parametername">responders</span></td>
-        <td></td>
+        <td><p>Responders to respond to.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -430,7 +418,9 @@ public static ITestWaitCondition&lt;T[]&gt; RespondToAllOf&lt;T&gt;(params ITest
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T[]&gt;</td>
-        <td></td>
+        <td><p>A wait condition, which completes with the results of <code data-dev-comment-type="paramref" class="paramref">responders</code>
+once all responders have completed executing.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -445,21 +435,19 @@ public static ITestWaitCondition&lt;T[]&gt; RespondToAllOf&lt;T&gt;(params ITest
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the responders.
+The result of the returned wait condition is an array of this type.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_RespondToAnyOf__1_Responsible_ITestResponder___0____.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.RespondToAnyOf%60%601(Responsible.ITestResponder%7B%60%600%7D%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.RespondTo.cs/#L14">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_RespondToAnyOf_" data-uid="Responsible.Responsibly.RespondToAnyOf*"></a>
   <h4 id="Responsible_Responsibly_RespondToAnyOf__1_Responsible_ITestResponder___0____" data-uid="Responsible.Responsibly.RespondToAnyOf``1(Responsible.ITestResponder{``0}[])">RespondToAnyOf&lt;T&gt;(ITestResponder&lt;T&gt;[])</h4>
-  <div class="markdown level1 summary"><p>Constructs an optional test responder, which will respond to any of the given responder.
-While all responders are waited for concurrently, only one will be responding at a time.</p>
+  <div class="markdown level1 summary"><p>Constructs an optional test responder, which will respond to any of the provided responders.
+All responders are waited for concurrently, but only one will be responding at a time.
+Will complete with an error, if any of the responders completes with an error.</p>
+<p>See <a class="xref" href="Responsible.TestResponder.html#Responsible_TestResponder_Select__2_Responsible_ITestResponder___0__System_Func___0___1__System_String_System_String_System_Int32_">Select&lt;T1, T2&gt;(ITestResponder&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a> and <a class="xref" href="Responsible.TestResponder.html#Responsible_TestResponder_AsUnitResponder__1_Responsible_ITestResponder___0__">AsUnitResponder&lt;T&gt;(ITestResponder&lt;T&gt;)</a>
+for methods which can be used to make the responder types match.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -480,7 +468,8 @@ public static IOptionalTestResponder RespondToAnyOf&lt;T&gt;(params ITestRespond
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;T&gt;[]</td>
         <td><span class="parametername">responders</span></td>
-        <td></td>
+        <td><p>Responders to respond to.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -495,7 +484,8 @@ public static IOptionalTestResponder RespondToAnyOf&lt;T&gt;(params ITestRespond
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></td>
-        <td></td>
+        <td><p>Optional responder which executes the responders in <code data-dev-comment-type="paramref" class="paramref">responders</code> optionally, one at a time.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -510,21 +500,19 @@ public static IOptionalTestResponder RespondToAnyOf&lt;T&gt;(params ITestRespond
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the responders.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_Return__1___0_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.Return%60%601(%60%600%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.Return.cs/#L19">View Source</a>
-  </span>
+  <h5 id="Responsible_Responsibly_RespondToAnyOf__1_Responsible_ITestResponder___0_____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The results of the responders are discarded, as returning them optionally is not trivial to implement.
+Returning the values of the completed responders is something that might be implemented
+in later versions of Responsible.</p>
+</div>
   <a id="Responsible_Responsibly_Return_" data-uid="Responsible.Responsibly.Return*"></a>
   <h4 id="Responsible_Responsibly_Return__1___0_System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.Return``1(``0,System.String,System.String,System.Int32)">Return&lt;T&gt;(T, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a test instruction that return a value synchronously.
-Wouldn't be a monad without this ;)</p>
+  <div class="markdown level1 summary"><p>Constructs a test instruction that returns a value synchronously.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -545,22 +533,26 @@ public static ITestInstruction&lt;T&gt; Return&lt;T&gt;(T value, [CallerMemberNa
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">value</span></td>
-        <td></td>
+        <td><p>Value to return from the test instruction.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -575,7 +567,8 @@ public static ITestInstruction&lt;T&gt; Return&lt;T&gt;(T value, [CallerMemberNa
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>A test instruction returning <code data-dev-comment-type="paramref" class="paramref">value</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -590,20 +583,15 @@ public static ITestInstruction&lt;T&gt; Return&lt;T&gt;(T value, [CallerMemberNa
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the returned test instruction.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForAllOf__1_Responsible_ITestWaitCondition___0____.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForAllOf%60%601(Responsible.ITestWaitCondition%7B%60%600%7D%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L167">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForAllOf_" data-uid="Responsible.Responsibly.WaitForAllOf*"></a>
   <h4 id="Responsible_Responsibly_WaitForAllOf__1_Responsible_ITestWaitCondition___0____" data-uid="Responsible.Responsibly.WaitForAllOf``1(Responsible.ITestWaitCondition{``0}[])">WaitForAllOf&lt;T&gt;(ITestWaitCondition&lt;T&gt;[])</h4>
-  <div class="markdown level1 summary"><p>Wait for all conditions to complete, and return their results as an array.</p>
+  <div class="markdown level1 summary"><p>Wait for all conditions to complete, and return their results as an array.
+Will complete with an error if any of the conditions completes with an error.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -624,7 +612,8 @@ public static ITestWaitCondition&lt;T[]&gt; WaitForAllOf&lt;T&gt;(params ITestWa
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;[]</td>
         <td><span class="parametername">conditions</span></td>
-        <td></td>
+        <td><p>Conditions to wait on.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -639,7 +628,9 @@ public static ITestWaitCondition&lt;T[]&gt; WaitForAllOf&lt;T&gt;(params ITestWa
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T[]&gt;</td>
-        <td></td>
+        <td><p>A wait condition which completes with the values of <code data-dev-comment-type="paramref" class="paramref">conditions</code>
+once they have all completed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -654,17 +645,11 @@ public static ITestWaitCondition&lt;T[]&gt; WaitForAllOf&lt;T&gt;(params ITestWa
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the conditions to wait on</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForCondition_System_String_System_Func_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForCondition(System.String%2CSystem.Func%7BSystem.Boolean%7D%2CSystem.Action%7BResponsible.State.StateStringBuilder%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L50">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForCondition_" data-uid="Responsible.Responsibly.WaitForCondition*"></a>
   <h4 id="Responsible_Responsibly_WaitForCondition_System_String_System_Func_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForCondition(System.String,System.Func{System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)">WaitForCondition(String, Func&lt;Boolean&gt;, Action&lt;StateStringBuilder&gt;, String, String, Int32)</h4>
   <div class="markdown level1 summary"><p>Constructs a wait condition, which will poll a condition,
@@ -689,32 +674,38 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCondition(string description
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to wait for, will be polled on every frame.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Responsible.State.StateStringBuilder.html">StateStringBuilder</a>&gt;</td>
         <td><span class="parametername">extraContext</span></td>
-        <td></td>
+        <td><p>Action for producing extra context into state descriptions.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -729,23 +720,18 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCondition(string description
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>A wait condition which completes with <span class="xref">UniRx.Unit.Default</span>
+once <code data-dev-comment-type="paramref" class="paramref">condition</code> returns true.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForConditionOn__1_System_String_System_Func___0__System_Func___0_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForConditionOn%60%601(System.String%2CSystem.Func%7B%60%600%7D%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%2CSystem.Action%7BResponsible.State.StateStringBuilder%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L30">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForConditionOn_" data-uid="Responsible.Responsibly.WaitForConditionOn*"></a>
   <h4 id="Responsible_Responsibly_WaitForConditionOn__1_System_String_System_Func___0__System_Func___0_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForConditionOn``1(System.String,System.Func{``0},System.Func{``0,System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)">WaitForConditionOn&lt;T&gt;(String, Func&lt;T&gt;, Func&lt;T, Boolean&gt;, Action&lt;StateStringBuilder&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a wait condition, which will call an object getter on every frame,
-and check a condition on the returned object.
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will call <code data-dev-comment-type="paramref" class="paramref">getObject</code> on every frame,
+and check <code data-dev-comment-type="paramref" class="paramref">condition</code> on the returned object.
 Will complete once the condition returns true,
-returning the last value returned by the object provider.</p>
+returning the last value returned by <code data-dev-comment-type="paramref" class="paramref">getObject</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -766,37 +752,44 @@ public static ITestWaitCondition&lt;T&gt; WaitForConditionOn&lt;T&gt;(string des
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;T&gt;</td>
         <td><span class="parametername">getObject</span></td>
-        <td></td>
+        <td><p>Function that returns the object to test <code data-dev-comment-type="paramref" class="paramref">condition</code> on.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to check with the return value of <code data-dev-comment-type="paramref" class="paramref">getObject</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Responsible.State.StateStringBuilder.html">StateStringBuilder</a>&gt;</td>
         <td><span class="parametername">extraContext</span></td>
-        <td></td>
+        <td><p>Action for producing extra context into state descriptions.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -811,7 +804,9 @@ public static ITestWaitCondition&lt;T&gt; WaitForConditionOn&lt;T&gt;(string des
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>A wait condition, which completes with the value last returned from <code data-dev-comment-type="paramref" class="paramref">getObject</code>,
+when <code data-dev-comment-type="paramref" class="paramref">condition</code> returns true for it.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -826,21 +821,18 @@ public static ITestWaitCondition&lt;T&gt; WaitForConditionOn&lt;T&gt;(string des
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Type of the object to wait on, and result of the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForConstraint__1_System_String_System_Func___0__NUnit_Framework_Constraints_IResolveConstraint_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForConstraint%60%601(System.String%2CSystem.Func%7B%60%600%7D%2CNUnit.Framework.Constraints.IResolveConstraint%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L69">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForConstraint_" data-uid="Responsible.Responsibly.WaitForConstraint*"></a>
   <h4 id="Responsible_Responsibly_WaitForConstraint__1_System_String_System_Func___0__NUnit_Framework_Constraints_IResolveConstraint_System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForConstraint``1(System.String,System.Func{``0},NUnit.Framework.Constraints.IResolveConstraint,System.String,System.String,System.Int32)">WaitForConstraint&lt;T&gt;(String, Func&lt;T&gt;, IResolveConstraint, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a wait condition that becomes true when the given constraint
-is fulfilled on the object returned by <code>getObject</code>.</p>
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will call <code data-dev-comment-type="paramref" class="paramref">getObject</code> on every frame,
+and check <code data-dev-comment-type="paramref" class="paramref">constraint</code> on the returned object.
+Will complete once the constraint is fulfilled,
+returning the last value returned by <code data-dev-comment-type="paramref" class="paramref">getObject</code>.
+When constructing the state description, will add the constraint state to the description.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -861,32 +853,39 @@ public static ITestWaitCondition&lt;T&gt; WaitForConstraint&lt;T&gt;(string obje
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">objectDescription</span></td>
-        <td></td>
+        <td><p>Description of the object to be tested with <code data-dev-comment-type="paramref" class="paramref">constraint</code>,
+to be included in the operation state description.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;T&gt;</td>
         <td><span class="parametername">getObject</span></td>
-        <td></td>
+        <td><p>Function that returns the object to test <code data-dev-comment-type="paramref" class="paramref">constraint</code> on.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/nunit.framework.constraints.iresolveconstraint">IResolveConstraint</a></td>
         <td><span class="parametername">constraint</span></td>
-        <td></td>
+        <td><p>Constraint to check with the return value of <code data-dev-comment-type="paramref" class="paramref">getObject</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -901,7 +900,9 @@ public static ITestWaitCondition&lt;T&gt; WaitForConstraint&lt;T&gt;(string obje
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>A wait condition, which completes with the value last returned from <code data-dev-comment-type="paramref" class="paramref">getObject</code>,
+when <code data-dev-comment-type="paramref" class="paramref">constraint</code> is met for it.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -916,22 +917,16 @@ public static ITestWaitCondition&lt;T&gt; WaitForConstraint&lt;T&gt;(string obje
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Type of the object to wait on, and result of the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForCoroutine(System.String%2CSystem.Func%7BSystem.Collections.IEnumerator%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L97">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForCoroutine_" data-uid="Responsible.Responsibly.WaitForCoroutine*"></a>
   <h4 id="Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForCoroutine(System.String,System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)">WaitForCoroutine(String, Func&lt;IEnumerator&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Construct a wait condition, which will start the provided coroutine when executed.
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will start the provided coroutine when executed.
 Will complete when the coroutine has terminated.
-<a class="xref" href="Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_">WaitForCoroutineMethod(Func&lt;IEnumerator&gt;, String, String, Int32)</a></p>
+See also <a class="xref" href="Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_">WaitForCoroutineMethod(Func&lt;IEnumerator&gt;, String, String, Int32)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -952,27 +947,32 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCoroutine(string description
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a>&gt;</td>
         <td><span class="parametername">startCoroutine</span></td>
-        <td></td>
+        <td><p>Function to start the coroutine to be waited for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -987,25 +987,20 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCoroutine(string description
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>Wait condition, which completes once the coroutine has terminated.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 id="Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>May be used with local functions and lambdas, as the description is manually provided.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForCoroutineMethod(System.Func%7BSystem.Collections.IEnumerator%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L117">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForCoroutineMethod_" data-uid="Responsible.Responsibly.WaitForCoroutineMethod*"></a>
   <h4 id="Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForCoroutineMethod(System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)">WaitForCoroutineMethod(Func&lt;IEnumerator&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Construct a wait condition, which will start the provided coroutine when executed.
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will start the provided coroutine when executed.
 Will complete when the coroutine has terminated.
-<a class="xref" href="Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_">WaitForCoroutine(String, Func&lt;IEnumerator&gt;, String, String, Int32)</a></p>
+The description will be the coroutine method name.
+See also <a class="xref" href="Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_">WaitForCoroutine(String, Func&lt;IEnumerator&gt;, String, String, Int32)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1026,22 +1021,26 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCoroutineMethod(Func&lt;IEnu
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a>&gt;</td>
         <td><span class="parametername">coroutineMethod</span></td>
-        <td></td>
+        <td><p>Method to start the coroutine to be waited for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1056,23 +1055,18 @@ public static ITestWaitCondition&lt;Unit&gt; WaitForCoroutineMethod(Func&lt;IEnu
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>Wait condition, which completes once the coroutine has terminated.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <h5 id="Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>If used with a lambda or local function, you will get a weird compiler-generated description.</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForFrames_System_Int32_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForFrames(System.Int32%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L142">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForFrames_" data-uid="Responsible.Responsibly.WaitForFrames*"></a>
   <h4 id="Responsible_Responsibly_WaitForFrames_System_Int32_System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForFrames(System.Int32,System.String,System.String,System.Int32)">WaitForFrames(Int32, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Wait for the given amount of WHOLE frames.
+  <div class="markdown level1 summary"><p>Constructs a test instruction, which will complete with <span class="xref">UniRx.Unit.Default</span>,
+after the provided amount of <strong>whole</strong> frames.
 Note that zero frames means to wait until the next frame.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1094,22 +1088,26 @@ public static ITestInstruction&lt;Unit&gt; WaitForFrames(int frames, [CallerMemb
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">frames</span></td>
-        <td></td>
+        <td><p>Whole frames to wait for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1124,20 +1122,17 @@ public static ITestInstruction&lt;Unit&gt; WaitForFrames(int frames, [CallerMemb
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>Test instruction which completes after <code data-dev-comment-type="paramref" class="paramref">frames</code> whole frames.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForLast__1_System_String_System_IObservable___0__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForLast%60%601(System.String%2CSystem.IObservable%7B%60%600%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L152">View Source</a>
-  </span>
   <a id="Responsible_Responsibly_WaitForLast_" data-uid="Responsible.Responsibly.WaitForLast*"></a>
   <h4 id="Responsible_Responsibly_WaitForLast__1_System_String_System_IObservable___0__System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForLast``1(System.String,System.IObservable{``0},System.String,System.String,System.Int32)">WaitForLast&lt;T&gt;(String, IObservable&lt;T&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will subscribe to <code data-dev-comment-type="paramref" class="paramref">observable</code> and complete
+with its last value, once it has completed.
+Will complete with an error if the observable completes empty, or with an error.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1157,27 +1152,32 @@ public static ITestWaitCondition&lt;T&gt; WaitForLast&lt;T&gt;(string descriptio
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the operation, to be included in the state output.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iobservable-1">IObservable</a>&lt;T&gt;</td>
         <td><span class="parametername">observable</span></td>
-        <td></td>
+        <td><p>The observable who's completion will be waited for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1192,7 +1192,8 @@ public static ITestWaitCondition&lt;T&gt; WaitForLast&lt;T&gt;(string descriptio
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>Wait condition that completes with the last value of <code data-dev-comment-type="paramref" class="paramref">observable</code> when it completes.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1207,20 +1208,19 @@ public static ITestWaitCondition&lt;T&gt; WaitForLast&lt;T&gt;(string descriptio
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of <code data-dev-comment-type="paramref" class="paramref">observable</code> and the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly_WaitForSeconds_System_Double_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.Responsibly.WaitForSeconds(System.Double%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L128">View Source</a>
-  </span>
+  <h5 id="Responsible_Responsibly_WaitForLast__1_System_String_System_IObservable___0__System_String_System_String_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You can use e.g. the <code>Take</code> operator on an observable to complete earlier.</p>
+</div>
   <a id="Responsible_Responsibly_WaitForSeconds_" data-uid="Responsible.Responsibly.WaitForSeconds*"></a>
   <h4 id="Responsible_Responsibly_WaitForSeconds_System_Double_System_String_System_String_System_Int32_" data-uid="Responsible.Responsibly.WaitForSeconds(System.Double,System.String,System.String,System.Int32)">WaitForSeconds(Double, String, String, Int32)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Constructs a test instruction, which will complete with <span class="xref">UniRx.Unit.Default</span>
+after <code data-dev-comment-type="paramref" class="paramref">seconds</code> seconds have passed.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1240,22 +1240,26 @@ public static ITestInstruction&lt;Unit&gt; WaitForSeconds(double seconds, [Calle
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">seconds</span></td>
-        <td></td>
+        <td><p>Seconds to wait for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1270,7 +1274,8 @@ public static ITestInstruction&lt;Unit&gt; WaitForSeconds(double seconds, [Calle
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>Test instruction which completes after <code data-dev-comment-type="paramref" class="paramref">seconds</code> seconds.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1279,16 +1284,6 @@ public static ITestInstruction&lt;Unit&gt; WaitForSeconds(double seconds, [Calle
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_Responsibly.md&amp;value=---%0Auid%3A%20Responsible.Responsibly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/Responsibly.WaitFor.cs/#L22" class="contribution-link">View Source</a>
-                  </li>
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

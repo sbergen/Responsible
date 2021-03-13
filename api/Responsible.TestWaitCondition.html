@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -207,7 +198,8 @@
   
   <h1 id="Responsible_TestWaitCondition" data-uid="Responsible.TestWaitCondition" class="text-break">Class TestWaitCondition
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Contains extension methods on <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a>.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -222,17 +214,12 @@
   </div>
   <h3 id="methods">Methods
   </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__Responsible_ITestWaitCondition___1__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.AndThen%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CResponsible.ITestWaitCondition%7B%60%601%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L19">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_AndThen_" data-uid="Responsible.TestWaitCondition.AndThen*"></a>
   <h4 id="Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__Responsible_ITestWaitCondition___1__System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},Responsible.ITestWaitCondition{``1},System.String,System.String,System.Int32)">AndThen&lt;TFirst, TSecond&gt;(ITestWaitCondition&lt;TFirst&gt;, ITestWaitCondition&lt;TSecond&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs wait condition, which will first wait for the first condition to be fulfilled,
-and only then continue waiting on the second.</p>
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will first wait for the first condition to be fulfilled,
+and only then continue waiting on the second.
+The result of <code data-dev-comment-type="paramref" class="paramref">first</code> is discarded.
+Will complete with a failure, if either condition fails.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -253,27 +240,32 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TFirst&gt;</td>
         <td><span class="parametername">first</span></td>
-        <td></td>
+        <td><p>First wait condition to wait on.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TSecond&gt;</td>
         <td><span class="parametername">second</span></td>
-        <td></td>
+        <td><p>Second wait condition to wait on.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -288,7 +280,9 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TSecond&gt;</td>
-        <td></td>
+        <td><p>A wait condition which is completed with the result of <code data-dev-comment-type="paramref" class="paramref">second</code>,
+once both conditions have been fulfilled.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -303,25 +297,21 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
     <tbody>
       <tr>
         <td><span class="parametername">TFirst</span></td>
-        <td></td>
+        <td><p>Result type of first wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">TSecond</span></td>
-        <td></td>
+        <td><p>Result type of second wait condition and the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__System_Func___0_Responsible_ITestWaitCondition___1___System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.AndThen%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.Func%7B%60%600%2CResponsible.ITestWaitCondition%7B%60%601%7D%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L35">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_AndThen_" data-uid="Responsible.TestWaitCondition.AndThen*"></a>
   <h4 id="Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__System_Func___0_Responsible_ITestWaitCondition___1___System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},System.Func{``0,Responsible.ITestWaitCondition{``1}},System.String,System.String,System.Int32)">AndThen&lt;TFirst, TSecond&gt;(ITestWaitCondition&lt;TFirst&gt;, Func&lt;TFirst, ITestWaitCondition&lt;TSecond&gt;&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs wait condition, which will first wait for the first condition to be fulfilled,
-then construct a second condition from <code>continuation</code>, and continue waiting on it.</p>
+  <div class="markdown level1 summary"><p>Constructs a wait condition, which will first wait for the first condition to be fulfilled,
+then construct a second condition using <code data-dev-comment-type="paramref" class="paramref">continuation</code>, and continue waiting on it.
+Will complete with a failure, if either condition, or the continuation function fails.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -342,27 +332,32 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TFirst&gt;</td>
         <td><span class="parametername">first</span></td>
-        <td></td>
+        <td><p>First wait condition to wait on.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TFirst, <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TSecond&gt;&gt;</td>
         <td><span class="parametername">continuation</span></td>
-        <td></td>
+        <td><p>Continuation function to build the second wait condition from the result of <code data-dev-comment-type="paramref" class="paramref">first</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -377,7 +372,9 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TSecond&gt;</td>
-        <td></td>
+        <td><p>A wait condition which is completed with the result of the wait condition returned by
+<code data-dev-comment-type="paramref" class="paramref">continuation</code>, once both conditions have been fulfilled.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -392,24 +389,19 @@ public static ITestWaitCondition&lt;TSecond&gt; AndThen&lt;TFirst, TSecond&gt;(t
     <tbody>
       <tr>
         <td><span class="parametername">TFirst</span></td>
-        <td></td>
+        <td><p>Result type of first wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">TSecond</span></td>
-        <td></td>
+        <td><p>Result type of second wait condition and the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_AsUnitCondition__1_Responsible_ITestWaitCondition___0__.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.AsUnitCondition%60%601(Responsible.ITestWaitCondition%7B%60%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L158">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_AsUnitCondition_" data-uid="Responsible.TestWaitCondition.AsUnitCondition*"></a>
   <h4 id="Responsible_TestWaitCondition_AsUnitCondition__1_Responsible_ITestWaitCondition___0__" data-uid="Responsible.TestWaitCondition.AsUnitCondition``1(Responsible.ITestWaitCondition{``0})">AsUnitCondition&lt;T&gt;(ITestWaitCondition&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Converts a wait condition returning any return type to one returning <span class="xref">UniRx.Unit</span>.</p>
+  <div class="markdown level1 summary"><p>Converts a wait condition returning any value to one returning <span class="xref">UniRx.Unit</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -430,7 +422,8 @@ public static ITestWaitCondition&lt;Unit&gt; AsUnitCondition&lt;T&gt;(this ITest
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Wait condition to wrap.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -445,7 +438,9 @@ public static ITestWaitCondition&lt;Unit&gt; AsUnitCondition&lt;T&gt;(this ITest
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>A wait condition which behaves otherwise identically to <code data-dev-comment-type="paramref" class="paramref">condition</code>,
+but discards its result, and returns <span class="xref">UniRx.Unit.Default</span> instead.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -460,20 +455,19 @@ public static ITestWaitCondition&lt;Unit&gt; AsUnitCondition&lt;T&gt;(this ITest
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Return type of the wait condition to convert.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_ExpectWithinSeconds__1_Responsible_ITestWaitCondition___0__System_Double_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.ExpectWithinSeconds%60%601(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.Double%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L128">View Source</a>
-  </span>
+  <h5 id="Responsible_TestWaitCondition_AsUnitCondition__1_Responsible_ITestWaitCondition___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When called with a wait condition already returning Unit, will return the wait condition itself.</p>
+</div>
   <a id="Responsible_TestWaitCondition_ExpectWithinSeconds_" data-uid="Responsible.TestWaitCondition.ExpectWithinSeconds*"></a>
   <h4 id="Responsible_TestWaitCondition_ExpectWithinSeconds__1_Responsible_ITestWaitCondition___0__System_Double_System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.ExpectWithinSeconds``1(Responsible.ITestWaitCondition{``0},System.Double,System.String,System.String,System.Int32)">ExpectWithinSeconds&lt;T&gt;(ITestWaitCondition&lt;T&gt;, Double, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Converts a wait condition to an instruction, by enforcing a timeout on it.</p>
+  <div class="markdown level1 summary"><p>Constructs a test instruction,
+which will enforce a timeout on the provided wait condition.
+If the condition isn't met within the timeout, the instruction will complete with an error.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -494,27 +488,32 @@ public static ITestInstruction&lt;T&gt; ExpectWithinSeconds&lt;T&gt;(this ITestW
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Wait condition to wait for.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">timeout</span></td>
-        <td></td>
+        <td><p>Timeout for waiting for the condition, in seconds.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -529,7 +528,9 @@ public static ITestInstruction&lt;T&gt; ExpectWithinSeconds&lt;T&gt;(this ITestW
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;T&gt;</td>
-        <td></td>
+        <td><p>A test instruction which completes with the result of the condition,
+or a failure if either the timeout is met, or the condition completes with a failure.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -544,26 +545,21 @@ public static ITestInstruction&lt;T&gt; ExpectWithinSeconds&lt;T&gt;(this ITestW
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>Result type of the wait condition, and the returned instruction.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_Select__2_Responsible_ITestWaitCondition___0__System_Func___0___1__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.Select%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.Func%7B%60%600%2C%60%601%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L143">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_Select_" data-uid="Responsible.TestWaitCondition.Select*"></a>
   <h4 id="Responsible_TestWaitCondition_Select__2_Responsible_ITestWaitCondition___0__System_Func___0___1__System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.Select``2(Responsible.ITestWaitCondition{``0},System.Func{``0,``1},System.String,System.String,System.Int32)">Select&lt;T1, T2&gt;(ITestWaitCondition&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Applies selector to result of wait condition</p>
+  <div class="markdown level1 summary"><p>Applies a selector to the result of a wait condition when the condition completes,
+transforming the result type to another type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Pure]
-public static ITestWaitCondition&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestWaitCondition&lt;T1&gt; first, Func&lt;T1, T2&gt; selector, [CallerMemberName] string memberName = &quot;&quot;, [CallerFilePath] string sourceFilePath = &quot;&quot;, [CallerLineNumber] int sourceLineNumber = 0)</code></pre>
+public static ITestWaitCondition&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestWaitCondition&lt;T1&gt; condition, Func&lt;T1, T2&gt; selector, [CallerMemberName] string memberName = &quot;&quot;, [CallerFilePath] string sourceFilePath = &quot;&quot;, [CallerLineNumber] int sourceLineNumber = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -577,28 +573,33 @@ public static ITestWaitCondition&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestWaitCo
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T1&gt;</td>
-        <td><span class="parametername">first</span></td>
-        <td></td>
+        <td><span class="parametername">condition</span></td>
+        <td><p>A wait condition to apply the selector to.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T1, T2&gt;</td>
         <td><span class="parametername">selector</span></td>
-        <td></td>
+        <td><p>A function to apply to the result of the wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -613,7 +614,9 @@ public static ITestWaitCondition&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestWaitCo
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;T2&gt;</td>
-        <td></td>
+        <td><p>A wait condition whose result is the result of invoking
+<code data-dev-comment-type="paramref" class="paramref">selector</code> on the result of <code data-dev-comment-type="paramref" class="paramref">condition</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -628,25 +631,21 @@ public static ITestWaitCondition&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestWaitCo
     <tbody>
       <tr>
         <td><span class="parametername">T1</span></td>
-        <td></td>
+        <td><p>Return type of the initial wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">T2</span></td>
-        <td></td>
+        <td><p>Return type of the selector and the returned wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_Responsible_ITestInstruction___1__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.ThenRespondWith%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.String%2CResponsible.ITestInstruction%7B%60%601%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L69">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_ThenRespondWith_" data-uid="Responsible.TestWaitCondition.ThenRespondWith*"></a>
   <h4 id="Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_Responsible_ITestInstruction___1__System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)">ThenRespondWith&lt;TWait, TResult&gt;(ITestWaitCondition&lt;TWait&gt;, String, ITestInstruction&lt;TResult&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the given condition,
-and then continue executing the given instruction.</p>
+  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the provided condition,
+and then continue executing the provided instruction.
+Will complete with a failure if the wait condition or instruction completes with a failure.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -667,32 +666,38 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TWait&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to wait on before executing <code data-dev-comment-type="paramref" class="paramref">instruction</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the responder which is constructed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;TResult&gt;</td>
         <td><span class="parametername">instruction</span></td>
-        <td></td>
+        <td><p>Instruction to execute after <code data-dev-comment-type="paramref" class="paramref">condition</code> has been met.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -707,7 +712,8 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;TResult&gt;</td>
-        <td></td>
+        <td><p>A test responder composed of <code data-dev-comment-type="paramref" class="paramref">condition</code> and <code data-dev-comment-type="paramref" class="paramref">instruction</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -722,25 +728,23 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
     <tbody>
       <tr>
         <td><span class="parametername">TWait</span></td>
-        <td></td>
+        <td><p>Result type of the wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">TResult</span></td>
-        <td></td>
+        <td><p>Result type of the instruction and the returned responder.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.ThenRespondWith%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.String%2CSystem.Func%7B%60%600%2CResponsible.ITestInstruction%7B%60%601%7D%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L51">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_ThenRespondWith_" data-uid="Responsible.TestWaitCondition.ThenRespondWith*"></a>
   <h4 id="Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)">ThenRespondWith&lt;TWait, TResult&gt;(ITestWaitCondition&lt;TWait&gt;, String, Func&lt;TWait, ITestInstruction&lt;TResult&gt;&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the given condition,
-and then construct an instruction and continue executing it.</p>
+  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for <code data-dev-comment-type="paramref" class="paramref">condition</code> to complete,
+construct a test instruction using <code data-dev-comment-type="paramref" class="paramref">selector</code>,
+and continue executing the returned instruction.
+Will complete with a failure if the wait condition, selector, or constructed instruction
+completes with a failure.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -761,32 +765,39 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TWait&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to wait on before calling <code data-dev-comment-type="paramref" class="paramref">selector</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the responder which is constructed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TWait, <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;TResult&gt;&gt;</td>
         <td><span class="parametername">selector</span></td>
-        <td></td>
+        <td><p>Function to construct the instruction part of the responder,
+from the result of <code data-dev-comment-type="paramref" class="paramref">condition</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -801,7 +812,8 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;TResult&gt;</td>
-        <td></td>
+        <td><p>A test responder composed of <code data-dev-comment-type="paramref" class="paramref">condition</code> and <code data-dev-comment-type="paramref" class="paramref">selector</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -816,25 +828,21 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWith&lt;TWait, TResult&gt
     <tbody>
       <tr>
         <td><span class="parametername">TWait</span></td>
-        <td></td>
+        <td><p>Result type of the wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">TResult</span></td>
-        <td></td>
+        <td><p>Result type of the instruction and the returned responder.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_ThenRespondWithAction__1_Responsible_ITestWaitCondition___0__System_String_System_Action___0__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.ThenRespondWithAction%60%601(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.String%2CSystem.Action%7B%60%600%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L108">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_ThenRespondWithAction_" data-uid="Responsible.TestWaitCondition.ThenRespondWithAction*"></a>
   <h4 id="Responsible_TestWaitCondition_ThenRespondWithAction__1_Responsible_ITestWaitCondition___0__System_String_System_Action___0__System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.ThenRespondWithAction``1(Responsible.ITestWaitCondition{``0},System.String,System.Action{``0},System.String,System.String,System.Int32)">ThenRespondWithAction&lt;TWait&gt;(ITestWaitCondition&lt;TWait&gt;, String, Action&lt;TWait&gt;, String, String, Int32)</h4>
   <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the given condition,
-and then continue executing a synchronous action.</p>
+and then continue executing a synchronous action, returning <span class="xref">UniRx.Unit.Default</span>.
+Will complete with a failure if the wait condition or action completes with a failure.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -855,32 +863,38 @@ public static ITestResponder&lt;Unit&gt; ThenRespondWithAction&lt;TWait&gt;(this
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TWait&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to wait on before executing <code data-dev-comment-type="paramref" class="paramref">action</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the responder which is constructed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TWait&gt;</td>
         <td><span class="parametername">action</span></td>
-        <td></td>
+        <td><p>Synchronous action to execute with the result of <code data-dev-comment-type="paramref" class="paramref">condition</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -895,7 +909,8 @@ public static ITestResponder&lt;Unit&gt; ThenRespondWithAction&lt;TWait&gt;(this
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;<span class="xref">UniRx.Unit</span>&gt;</td>
-        <td></td>
+        <td><p>A test responder composed of <code data-dev-comment-type="paramref" class="paramref">condition</code> and <code data-dev-comment-type="paramref" class="paramref">action</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -910,21 +925,16 @@ public static ITestResponder&lt;Unit&gt; ThenRespondWithAction&lt;TWait&gt;(this
     <tbody>
       <tr>
         <td><span class="parametername">TWait</span></td>
-        <td></td>
+        <td><p>Result type of the wait condition.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition_ThenRespondWithFunc__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0___1__System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition.ThenRespondWithFunc%60%602(Responsible.ITestWaitCondition%7B%60%600%7D%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%7D%2CSystem.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L87">View Source</a>
-  </span>
   <a id="Responsible_TestWaitCondition_ThenRespondWithFunc_" data-uid="Responsible.TestWaitCondition.ThenRespondWithFunc*"></a>
   <h4 id="Responsible_TestWaitCondition_ThenRespondWithFunc__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0___1__System_String_System_String_System_Int32_" data-uid="Responsible.TestWaitCondition.ThenRespondWithFunc``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,``1},System.String,System.String,System.Int32)">ThenRespondWithFunc&lt;TWait, TResult&gt;(ITestWaitCondition&lt;TWait&gt;, String, Func&lt;TWait, TResult&gt;, String, String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the given condition,
-and then continue executing a synchronous action.</p>
+  <div class="markdown level1 summary"><p>Constructs a test responder, which will wait for the provided condition,
+and then continue executing a synchronous function, returning its result.
+Will complete with a failure if the wait condition or function completes with a failure.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -945,32 +955,39 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWithFunc&lt;TWait, TResul
       <tr>
         <td><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition</a>&lt;TWait&gt;</td>
         <td><span class="parametername">condition</span></td>
-        <td></td>
+        <td><p>Condition to wait on before executing <code data-dev-comment-type="paramref" class="paramref">selector</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">description</span></td>
-        <td></td>
+        <td><p>Description of the responder which is constructed.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TWait, TResult&gt;</td>
         <td><span class="parametername">selector</span></td>
-        <td></td>
+        <td><p>Synchronous function to execute with the result of <code data-dev-comment-type="paramref" class="paramref">condition</code>.
+The returned value will be the result of the returned responder.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td></td>
+        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td></td>
+        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td></td>
+        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -985,7 +1002,8 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWithFunc&lt;TWait, TResul
     <tbody>
       <tr>
         <td><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder</a>&lt;TResult&gt;</td>
-        <td></td>
+        <td><p>A test responder composed of <code data-dev-comment-type="paramref" class="paramref">condition</code> and <code data-dev-comment-type="paramref" class="paramref">selector</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1000,11 +1018,13 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWithFunc&lt;TWait, TResul
     <tbody>
       <tr>
         <td><span class="parametername">TWait</span></td>
-        <td></td>
+        <td><p>Result type of the wait condition.</p>
+</td>
       </tr>
       <tr>
         <td><span class="parametername">TResult</span></td>
-        <td></td>
+        <td><p>Result type of the instruction and the returned responder.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1013,16 +1033,6 @@ public static ITestResponder&lt;TResult&gt; ThenRespondWithFunc&lt;TWait, TResul
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/new/main/apiSpec/new?filename=Responsible_TestWaitCondition.md&amp;value=---%0Auid%3A%20Responsible.TestWaitCondition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
-                  </li>
-                  <li>
-                    <a href="https://github.com/sbergen/Responsible/blob/main/Packages/Responsible/Runtime/TestWaitCondition.cs/#L13" class="contribution-link">View Source</a>
-                  </li>
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

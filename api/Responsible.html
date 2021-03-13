@@ -140,8 +140,14 @@
                           <li class="">
                             <a href="Responsible.Context.RunContext.html" title="RunContext" class="">RunContext</a>
                           </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
+                      <a href="Responsible.Docs.html" title="Responsible.Docs" class="">Responsible.Docs</a>
+                        
+                        <ul class="nav level2">
                           <li class="">
-                            <a href="Responsible.Context.SourceContext.html" title="SourceContext" class="">SourceContext</a>
+                            <a href="Responsible.Docs.Inherit.html" title="Inherit" class="">Inherit</a>
                           </li>
                         </ul>  </li>
                     <li class="">
@@ -173,26 +179,11 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.TestResponders.html" title="Responsible.TestResponders" class="">Responsible.TestResponders</a>
-                        
-                        <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.TestResponders.OptionalTestResponderBase.html" title="OptionalTestResponderBase" class="">OptionalTestResponderBase</a>
-                          </li>
-                        </ul>  </li>
-                    <li class="">
-                      <span class="expand-stub"></span>
                       <a href="Responsible.Utilities.html" title="Responsible.Utilities" class="">Responsible.Utilities</a>
                         
                         <ul class="nav level2">
                           <li class="">
                             <a href="Responsible.Utilities.IndentedStringBuilder-1.html" title="IndentedStringBuilder&lt;T&gt;" class="">IndentedStringBuilder&lt;T&gt;</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed.html" title="Indexed" class="">Indexed</a>
-                          </li>
-                          <li class="">
-                            <a href="Responsible.Utilities.Indexed-1.html" title="Indexed&lt;T&gt;" class="">Indexed&lt;T&gt;</a>
                           </li>
                         </ul>  </li>
                   </ul>        </div>
@@ -206,57 +197,86 @@
   
   <h1 id="Responsible" data-uid="Responsible" class="text-break">Namespace Responsible
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary">
+<p>Namespace for the main functionality of Responsible.
+Other namespaces should not be needed, unless you are extending the base functionality.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="Responsible.LinqSupport.html">LinqSupport</a></h4>
-      <section></section>
+      <section><p>Provides the required extension method on <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>
+for it to be used with the LINQ query syntax.</p>
+</section>
       <h4><a class="xref" href="Responsible.OptionalTestResponder.html">OptionalTestResponder</a></h4>
-      <section></section>
+      <section><p>Provides extension methods on <a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a>.</p>
+</section>
       <h4><a class="xref" href="Responsible.Responsibly.html">Responsibly</a></h4>
-      <section><p>Main class for constructing primitive wait conditions and instructions.</p>
+      <section><p>Main class for constructing primitive wait conditions and instructions,
+and composing responders.</p>
 </section>
       <h4><a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a></h4>
-      <section></section>
+      <section><p>Contains extension methods on <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>,
+for executing, sequencing and transforming their results.</p>
+</section>
       <h4><a class="xref" href="Responsible.TestInstructionExecutor.html">TestInstructionExecutor</a></h4>
-      <section></section>
+      <section><p>Handles execution of test instruction and intercepting logged errors during test execution.</p>
+</section>
       <h4><a class="xref" href="Responsible.TestOperationState.html">TestOperationState</a></h4>
-      <section></section>
+      <section><p>Contains extension methods on <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>.
+These are normally not needed, but can be useful for debugging purposes.</p>
+</section>
       <h4><a class="xref" href="Responsible.TestResponder.html">TestResponder</a></h4>
-      <section></section>
+      <section><p>Contains extension methods on <a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a>.</p>
+</section>
       <h4><a class="xref" href="Responsible.TestWaitCondition.html">TestWaitCondition</a></h4>
-      <section></section>
+      <section><p>Contains extension methods on <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a>.</p>
+</section>
       <h4><a class="xref" href="Responsible.UnhandledLogMessageException.html">UnhandledLogMessageException</a></h4>
-      <section></section>
+      <section><p>Exception type which is used when an unhandled log message is detected during test operation execution.</p>
+</section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></h4>
       <section><p>Represents one or more test responders, which can optionally execute when they are ready.</p>
+<p>See <a class="xref" href="Responsible.OptionalTestResponder.html">OptionalTestResponder</a> for extension methods on optional responders.</p>
 </section>
       <h4><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></h4>
-      <section><p>Represents a test instruction which can be executed.
-Test instructions can be chained, and usually have an internal timeout.</p>
+      <section><p>Represents a test instruction - a synchronous or asynchronous operation producing a single result when executed.
+All standard test instructions in Responsible have an enforced timeout.</p>
+<p>See <a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a> for extension methods for working with test instructions,
+and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for creating basic test instructions.</p>
 </section>
       <h4><a class="xref" href="Responsible.ITestOperation-1.html">ITestOperation&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Base interface for the test operation types in Responsible:</p>
+<ul>
+<li><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></li>
+<li><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></li>
+<li><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></li>
+<li><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></li>
+</ul>
+<p>Test operations should be considered a set of instructions,
+which may be executed one or more times.
+This makes them reusable.</p>
+</section>
       <h4><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></h4>
-      <section><p>Represents a test instruction which can be conditionally executed, if some condition is met.
-Usually constructed from a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></p>
+      <section><p>Represents a test instruction, which is executed once a precondition is met.
+Usually constructed from a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>.</p>
+<p>See <a class="xref" href="Responsible.TestResponder.html">TestResponder</a> for extension methods on test responders,
+<a class="xref" href="Responsible.TestWaitCondition.html">TestWaitCondition</a> for methods for composing wait conditions and instructions into responders, and
+<a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods used to combine multiple test responders.</p>
 </section>
       <h4><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></h4>
       <section><p>Represents a condition to wait on, which returns a result when fulfilled.</p>
+<p>See <a class="xref" href="Responsible.TestWaitCondition.html">TestWaitCondition</a> for extension methods on wait conditions,
+and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for building basic wait conditions.</p>
 </section>
 </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
                 <h5>In This Article</h5>
                 <div></div>

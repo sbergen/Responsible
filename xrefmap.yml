@@ -19,31 +19,118 @@ references:
   commentId: T:Responsible.Context.RunContext
   fullName: Responsible.Context.RunContext
   nameWithType: RunContext
-- uid: Responsible.Context.SourceContext
-  name: SourceContext
-  href: api/Responsible.Context.SourceContext.html
-  commentId: T:Responsible.Context.SourceContext
-  fullName: Responsible.Context.SourceContext
-  nameWithType: SourceContext
-- uid: Responsible.Context.SourceContext.SourceLines
-  name: SourceLines
-  href: api/Responsible.Context.SourceContext.html#Responsible_Context_SourceContext_SourceLines
-  commentId: F:Responsible.Context.SourceContext.SourceLines
-  fullName: Responsible.Context.SourceContext.SourceLines
-  nameWithType: SourceContext.SourceLines
-- uid: Responsible.Context.SourceContext.ToString
-  name: ToString()
-  href: api/Responsible.Context.SourceContext.html#Responsible_Context_SourceContext_ToString
-  commentId: M:Responsible.Context.SourceContext.ToString
-  fullName: Responsible.Context.SourceContext.ToString()
-  nameWithType: SourceContext.ToString()
-- uid: Responsible.Context.SourceContext.ToString*
-  name: ToString
-  href: api/Responsible.Context.SourceContext.html#Responsible_Context_SourceContext_ToString_
-  commentId: Overload:Responsible.Context.SourceContext.ToString
+- uid: Responsible.Docs
+  name: Responsible.Docs
+  href: api/Responsible.Docs.html
+  commentId: N:Responsible.Docs
+  fullName: Responsible.Docs
+  nameWithType: Responsible.Docs
+- uid: Responsible.Docs.Inherit
+  name: Inherit
+  href: api/Responsible.Docs.Inherit.html
+  commentId: T:Responsible.Docs.Inherit
+  fullName: Responsible.Docs.Inherit
+  nameWithType: Inherit
+- uid: Responsible.Docs.Inherit.CallerMember*
+  name: CallerMember
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember_
+  commentId: Overload:Responsible.Docs.Inherit.CallerMember
   isSpec: "True"
-  fullName: Responsible.Context.SourceContext.ToString
-  nameWithType: SourceContext.ToString
+  fullName: Responsible.Docs.Inherit.CallerMember
+  nameWithType: Inherit.CallerMember
+- uid: Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
+  name: CallerMember<T>(T, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__1___0_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T)(T, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMember<T>(T, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T)(T, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMember<T>(T, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMember(Of T)(T, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2>(T1, T2, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__2___0___1_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2)(T1, T2, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2>(T1, T2, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2)(T1, T2, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMember<T1, T2>(T1, T2, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2)(T1, T2, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2, T3>(T1, T2, T3, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__3___0___1___2_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__4___0___1___2___3_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescription*
+  name: CallerMemberWithDescription
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescription_
+  commentId: Overload:Responsible.Docs.Inherit.CallerMemberWithDescription
+  isSpec: "True"
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescription
+  nameWithType: Inherit.CallerMemberWithDescription
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
+  name: CallerMemberWithDescription<T>(String, T, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescription__1_System_String___0_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithDescription(Of T)(String, T, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescription<T>(System.String, T, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescription(Of T)(System.String, T, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMemberWithDescription<T>(String, T, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMemberWithDescription(Of T)(String, T, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext*
+  name: CallerMemberWithDescriptionAndContext
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext_
+  commentId: Overload:Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext
+  isSpec: "True"
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext
+  nameWithType: Inherit.CallerMemberWithDescriptionAndContext
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``1(System.String,``0,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
+  name: CallerMemberWithDescriptionAndContext<T>(String, T, Action<StateStringBuilder>, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext__1_System_String___0_System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``1(System.String,``0,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T>(System.String, T, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T)(System.String, T, System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T>(String, T, Action<StateStringBuilder>, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``2(System.String,``0,``1,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
+  name: CallerMemberWithDescriptionAndContext<T1, T2>(String, T1, T2, Action<StateStringBuilder>, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext__2_System_String___0___1_System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``2(System.String,``0,``1,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(System.String, T1, T2, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(System.String, T1, T2, System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(String, T1, T2, Action<StateStringBuilder>, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMemberWithExecutor*
+  name: CallerMemberWithExecutor
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor_
+  commentId: Overload:Responsible.Docs.Inherit.CallerMemberWithExecutor
+  isSpec: "True"
+  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor
+  nameWithType: Inherit.CallerMemberWithExecutor
+- uid: Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
+  name: CallerMemberWithExecutor<T>(T, TestInstructionExecutor, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor__1___0_Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor<T>(T, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithExecutor(Of T)(T, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMemberWithExecutor<T>(T, TestInstructionExecutor, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, String, String, Int32)
 - uid: Responsible.IOptionalTestResponder
   name: IOptionalTestResponder
   href: api/Responsible.IOptionalTestResponder.html
@@ -489,19 +576,6 @@ references:
   commentId: T:Responsible.State.TestOperationStateNotification
   fullName: Responsible.State.TestOperationStateNotification
   nameWithType: TestOperationStateNotification
-- uid: Responsible.State.TestOperationStateNotification.#ctor(Responsible.State.ITestOperationState)
-  name: TestOperationStateNotification(ITestOperationState)
-  href: api/Responsible.State.TestOperationStateNotification.html#Responsible_State_TestOperationStateNotification__ctor_Responsible_State_ITestOperationState_
-  commentId: M:Responsible.State.TestOperationStateNotification.#ctor(Responsible.State.ITestOperationState)
-  fullName: Responsible.State.TestOperationStateNotification.TestOperationStateNotification(Responsible.State.ITestOperationState)
-  nameWithType: TestOperationStateNotification.TestOperationStateNotification(ITestOperationState)
-- uid: Responsible.State.TestOperationStateNotification.#ctor*
-  name: TestOperationStateNotification
-  href: api/Responsible.State.TestOperationStateNotification.html#Responsible_State_TestOperationStateNotification__ctor_
-  commentId: Overload:Responsible.State.TestOperationStateNotification.#ctor
-  isSpec: "True"
-  fullName: Responsible.State.TestOperationStateNotification.TestOperationStateNotification
-  nameWithType: TestOperationStateNotification.TestOperationStateNotification
 - uid: Responsible.State.TestOperationStateNotification.Finished
   name: TestOperationStateNotification.Finished
   href: api/Responsible.State.TestOperationStateNotification.Finished.html
@@ -552,32 +626,6 @@ references:
   commentId: T:Responsible.State.TestOperationStatus
   fullName: Responsible.State.TestOperationStatus
   nameWithType: TestOperationStatus
-- uid: Responsible.State.TestOperationStatus.AssertNotStarted(Responsible.State.TestOperationStatus)
-  name: AssertNotStarted(TestOperationStatus)
-  href: api/Responsible.State.TestOperationStatus.html#Responsible_State_TestOperationStatus_AssertNotStarted_Responsible_State_TestOperationStatus_
-  commentId: M:Responsible.State.TestOperationStatus.AssertNotStarted(Responsible.State.TestOperationStatus)
-  fullName: Responsible.State.TestOperationStatus.AssertNotStarted(Responsible.State.TestOperationStatus)
-  nameWithType: TestOperationStatus.AssertNotStarted(TestOperationStatus)
-- uid: Responsible.State.TestOperationStatus.AssertNotStarted*
-  name: AssertNotStarted
-  href: api/Responsible.State.TestOperationStatus.html#Responsible_State_TestOperationStatus_AssertNotStarted_
-  commentId: Overload:Responsible.State.TestOperationStatus.AssertNotStarted
-  isSpec: "True"
-  fullName: Responsible.State.TestOperationStatus.AssertNotStarted
-  nameWithType: TestOperationStatus.AssertNotStarted
-- uid: Responsible.State.TestOperationStatus.MakeStatusLine(System.String)
-  name: MakeStatusLine(String)
-  href: api/Responsible.State.TestOperationStatus.html#Responsible_State_TestOperationStatus_MakeStatusLine_System_String_
-  commentId: M:Responsible.State.TestOperationStatus.MakeStatusLine(System.String)
-  fullName: Responsible.State.TestOperationStatus.MakeStatusLine(System.String)
-  nameWithType: TestOperationStatus.MakeStatusLine(String)
-- uid: Responsible.State.TestOperationStatus.MakeStatusLine*
-  name: MakeStatusLine
-  href: api/Responsible.State.TestOperationStatus.html#Responsible_State_TestOperationStatus_MakeStatusLine_
-  commentId: Overload:Responsible.State.TestOperationStatus.MakeStatusLine
-  isSpec: "True"
-  fullName: Responsible.State.TestOperationStatus.MakeStatusLine
-  nameWithType: TestOperationStatus.MakeStatusLine
 - uid: Responsible.TestInstruction
   name: TestInstruction
   href: api/Responsible.TestInstruction.html
@@ -818,14 +866,14 @@ references:
   fullName: Responsible.TestResponder.ExpectWithinSeconds
   nameWithType: TestResponder.ExpectWithinSeconds
 - uid: Responsible.TestResponder.ExpectWithinSeconds``1(Responsible.ITestResponder{``0},System.Double,System.String,System.String,System.Int32)
-  name: ExpectWithinSeconds<TResult>(ITestResponder<TResult>, Double, String, String, Int32)
+  name: ExpectWithinSeconds<T>(ITestResponder<T>, Double, String, String, Int32)
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_ExpectWithinSeconds__1_Responsible_ITestResponder___0__System_Double_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestResponder.ExpectWithinSeconds``1(Responsible.ITestResponder{``0},System.Double,System.String,System.String,System.Int32)
-  name.vb: ExpectWithinSeconds(Of TResult)(ITestResponder(Of TResult), Double, String, String, Int32)
-  fullName: Responsible.TestResponder.ExpectWithinSeconds<TResult>(Responsible.ITestResponder<TResult>, System.Double, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestResponder.ExpectWithinSeconds(Of TResult)(Responsible.ITestResponder(Of TResult), System.Double, System.String, System.String, System.Int32)
-  nameWithType: TestResponder.ExpectWithinSeconds<TResult>(ITestResponder<TResult>, Double, String, String, Int32)
-  nameWithType.vb: TestResponder.ExpectWithinSeconds(Of TResult)(ITestResponder(Of TResult), Double, String, String, Int32)
+  name.vb: ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Int32)
+  fullName: Responsible.TestResponder.ExpectWithinSeconds<T>(Responsible.ITestResponder<T>, System.Double, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestResponder.ExpectWithinSeconds(Of T)(Responsible.ITestResponder(Of T), System.Double, System.String, System.String, System.Int32)
+  nameWithType: TestResponder.ExpectWithinSeconds<T>(ITestResponder<T>, Double, String, String, Int32)
+  nameWithType.vb: TestResponder.ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Int32)
 - uid: Responsible.TestResponder.Optionally*
   name: Optionally
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Optionally_
@@ -858,47 +906,6 @@ references:
   fullName.vb: Responsible.TestResponder.Select(Of T1, T2)(Responsible.ITestResponder(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
   nameWithType: TestResponder.Select<T1, T2>(ITestResponder<T1>, Func<T1, T2>, String, String, Int32)
   nameWithType.vb: TestResponder.Select(Of T1, T2)(ITestResponder(Of T1), Func(Of T1, T2), String, String, Int32)
-- uid: Responsible.TestResponders
-  name: Responsible.TestResponders
-  href: api/Responsible.TestResponders.html
-  commentId: N:Responsible.TestResponders
-  fullName: Responsible.TestResponders
-  nameWithType: Responsible.TestResponders
-- uid: Responsible.TestResponders.OptionalTestResponderBase
-  name: OptionalTestResponderBase
-  href: api/Responsible.TestResponders.OptionalTestResponderBase.html
-  commentId: T:Responsible.TestResponders.OptionalTestResponderBase
-  fullName: Responsible.TestResponders.OptionalTestResponderBase
-  nameWithType: OptionalTestResponderBase
-- uid: Responsible.TestResponders.OptionalTestResponderBase.#ctor(System.Func{Responsible.State.ITestOperationState{Responsible.State.ITestOperationState{UniRx.Unit}}})
-  name: OptionalTestResponderBase(Func<ITestOperationState<ITestOperationState<Unit>>>)
-  href: api/Responsible.TestResponders.OptionalTestResponderBase.html#Responsible_TestResponders_OptionalTestResponderBase__ctor_System_Func_Responsible_State_ITestOperationState_Responsible_State_ITestOperationState_UniRx_Unit____
-  commentId: M:Responsible.TestResponders.OptionalTestResponderBase.#ctor(System.Func{Responsible.State.ITestOperationState{Responsible.State.ITestOperationState{UniRx.Unit}}})
-  name.vb: OptionalTestResponderBase(Func(Of ITestOperationState(Of ITestOperationState(Of Unit))))
-  fullName: Responsible.TestResponders.OptionalTestResponderBase.OptionalTestResponderBase(System.Func<Responsible.State.ITestOperationState<Responsible.State.ITestOperationState<UniRx.Unit>>>)
-  fullName.vb: Responsible.TestResponders.OptionalTestResponderBase.OptionalTestResponderBase(System.Func(Of Responsible.State.ITestOperationState(Of Responsible.State.ITestOperationState(Of UniRx.Unit))))
-  nameWithType: OptionalTestResponderBase.OptionalTestResponderBase(Func<ITestOperationState<ITestOperationState<Unit>>>)
-  nameWithType.vb: OptionalTestResponderBase.OptionalTestResponderBase(Func(Of ITestOperationState(Of ITestOperationState(Of Unit))))
-- uid: Responsible.TestResponders.OptionalTestResponderBase.#ctor*
-  name: OptionalTestResponderBase
-  href: api/Responsible.TestResponders.OptionalTestResponderBase.html#Responsible_TestResponders_OptionalTestResponderBase__ctor_
-  commentId: Overload:Responsible.TestResponders.OptionalTestResponderBase.#ctor
-  isSpec: "True"
-  fullName: Responsible.TestResponders.OptionalTestResponderBase.OptionalTestResponderBase
-  nameWithType: OptionalTestResponderBase.OptionalTestResponderBase
-- uid: Responsible.TestResponders.OptionalTestResponderBase.CreateState
-  name: CreateState()
-  href: api/Responsible.TestResponders.OptionalTestResponderBase.html#Responsible_TestResponders_OptionalTestResponderBase_CreateState
-  commentId: M:Responsible.TestResponders.OptionalTestResponderBase.CreateState
-  fullName: Responsible.TestResponders.OptionalTestResponderBase.CreateState()
-  nameWithType: OptionalTestResponderBase.CreateState()
-- uid: Responsible.TestResponders.OptionalTestResponderBase.CreateState*
-  name: CreateState
-  href: api/Responsible.TestResponders.OptionalTestResponderBase.html#Responsible_TestResponders_OptionalTestResponderBase_CreateState_
-  commentId: Overload:Responsible.TestResponders.OptionalTestResponderBase.CreateState
-  isSpec: "True"
-  fullName: Responsible.TestResponders.OptionalTestResponderBase.CreateState
-  nameWithType: OptionalTestResponderBase.CreateState
 - uid: Responsible.TestWaitCondition
   name: TestWaitCondition
   href: api/Responsible.TestWaitCondition.html
@@ -1041,19 +1048,6 @@ references:
   commentId: T:Responsible.UnhandledLogMessageException
   fullName: Responsible.UnhandledLogMessageException
   nameWithType: UnhandledLogMessageException
-- uid: Responsible.UnhandledLogMessageException.#ctor(System.String)
-  name: UnhandledLogMessageException(String)
-  href: api/Responsible.UnhandledLogMessageException.html#Responsible_UnhandledLogMessageException__ctor_System_String_
-  commentId: M:Responsible.UnhandledLogMessageException.#ctor(System.String)
-  fullName: Responsible.UnhandledLogMessageException.UnhandledLogMessageException(System.String)
-  nameWithType: UnhandledLogMessageException.UnhandledLogMessageException(String)
-- uid: Responsible.UnhandledLogMessageException.#ctor*
-  name: UnhandledLogMessageException
-  href: api/Responsible.UnhandledLogMessageException.html#Responsible_UnhandledLogMessageException__ctor_
-  commentId: Overload:Responsible.UnhandledLogMessageException.#ctor
-  isSpec: "True"
-  fullName: Responsible.UnhandledLogMessageException.UnhandledLogMessageException
-  nameWithType: UnhandledLogMessageException.UnhandledLogMessageException
 - uid: Responsible.Utilities
   name: Responsible.Utilities
   href: api/Responsible.Utilities.html
@@ -1069,75 +1063,6 @@ references:
   fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T)
   nameWithType: IndentedStringBuilder<T>
   nameWithType.vb: IndentedStringBuilder(Of T)
-- uid: Responsible.Utilities.IndentedStringBuilder`1.Add(System.String)
-  name: Add(String)
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_Add_System_String_
-  commentId: M:Responsible.Utilities.IndentedStringBuilder`1.Add(System.String)
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.Add(System.String)
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).Add(System.String)
-  nameWithType: IndentedStringBuilder<T>.Add(String)
-  nameWithType.vb: IndentedStringBuilder(Of T).Add(String)
-- uid: Responsible.Utilities.IndentedStringBuilder`1.Add*
-  name: Add
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_Add_
-  commentId: Overload:Responsible.Utilities.IndentedStringBuilder`1.Add
-  isSpec: "True"
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.Add
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).Add
-  nameWithType: IndentedStringBuilder<T>.Add
-  nameWithType.vb: IndentedStringBuilder(Of T).Add
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddEmptyLine
-  name: AddEmptyLine()
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddEmptyLine
-  commentId: M:Responsible.Utilities.IndentedStringBuilder`1.AddEmptyLine
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddEmptyLine()
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddEmptyLine()
-  nameWithType: IndentedStringBuilder<T>.AddEmptyLine()
-  nameWithType.vb: IndentedStringBuilder(Of T).AddEmptyLine()
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddEmptyLine*
-  name: AddEmptyLine
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddEmptyLine_
-  commentId: Overload:Responsible.Utilities.IndentedStringBuilder`1.AddEmptyLine
-  isSpec: "True"
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddEmptyLine
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddEmptyLine
-  nameWithType: IndentedStringBuilder<T>.AddEmptyLine
-  nameWithType.vb: IndentedStringBuilder(Of T).AddEmptyLine
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddIndented(System.String,System.Action{`0})
-  name: AddIndented(String, Action<T>)
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddIndented_System_String_System_Action__0__
-  commentId: M:Responsible.Utilities.IndentedStringBuilder`1.AddIndented(System.String,System.Action{`0})
-  name.vb: AddIndented(String, Action(Of T))
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddIndented(System.String, System.Action<T>)
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddIndented(System.String, System.Action(Of T))
-  nameWithType: IndentedStringBuilder<T>.AddIndented(String, Action<T>)
-  nameWithType.vb: IndentedStringBuilder(Of T).AddIndented(String, Action(Of T))
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddIndented*
-  name: AddIndented
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddIndented_
-  commentId: Overload:Responsible.Utilities.IndentedStringBuilder`1.AddIndented
-  isSpec: "True"
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddIndented
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddIndented
-  nameWithType: IndentedStringBuilder<T>.AddIndented
-  nameWithType.vb: IndentedStringBuilder(Of T).AddIndented
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddToPreviousLine(System.String)
-  name: AddToPreviousLine(String)
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddToPreviousLine_System_String_
-  commentId: M:Responsible.Utilities.IndentedStringBuilder`1.AddToPreviousLine(System.String)
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddToPreviousLine(System.String)
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddToPreviousLine(System.String)
-  nameWithType: IndentedStringBuilder<T>.AddToPreviousLine(String)
-  nameWithType.vb: IndentedStringBuilder(Of T).AddToPreviousLine(String)
-- uid: Responsible.Utilities.IndentedStringBuilder`1.AddToPreviousLine*
-  name: AddToPreviousLine
-  href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_AddToPreviousLine_
-  commentId: Overload:Responsible.Utilities.IndentedStringBuilder`1.AddToPreviousLine
-  isSpec: "True"
-  fullName: Responsible.Utilities.IndentedStringBuilder<T>.AddToPreviousLine
-  fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).AddToPreviousLine
-  nameWithType: IndentedStringBuilder<T>.AddToPreviousLine
-  nameWithType.vb: IndentedStringBuilder(Of T).AddToPreviousLine
 - uid: Responsible.Utilities.IndentedStringBuilder`1.ToString
   name: ToString()
   href: api/Responsible.Utilities.IndentedStringBuilder-1.html#Responsible_Utilities_IndentedStringBuilder_1_ToString
@@ -1155,115 +1080,3 @@ references:
   fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).ToString
   nameWithType: IndentedStringBuilder<T>.ToString
   nameWithType.vb: IndentedStringBuilder(Of T).ToString
-- uid: Responsible.Utilities.Indexed
-  name: Indexed
-  href: api/Responsible.Utilities.Indexed.html
-  commentId: T:Responsible.Utilities.Indexed
-  fullName: Responsible.Utilities.Indexed
-  nameWithType: Indexed
-- uid: Responsible.Utilities.Indexed.AssignToArray*
-  name: AssignToArray
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_AssignToArray_
-  commentId: Overload:Responsible.Utilities.Indexed.AssignToArray
-  isSpec: "True"
-  fullName: Responsible.Utilities.Indexed.AssignToArray
-  nameWithType: Indexed.AssignToArray
-- uid: Responsible.Utilities.Indexed.AssignToArray``1(``0[],Responsible.Utilities.Indexed{``0})
-  name: AssignToArray<T>(T[], Indexed<T>)
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_AssignToArray__1___0___Responsible_Utilities_Indexed___0__
-  commentId: M:Responsible.Utilities.Indexed.AssignToArray``1(``0[],Responsible.Utilities.Indexed{``0})
-  name.vb: AssignToArray(Of T)(T(), Indexed(Of T))
-  fullName: Responsible.Utilities.Indexed.AssignToArray<T>(T[], Responsible.Utilities.Indexed<T>)
-  fullName.vb: Responsible.Utilities.Indexed.AssignToArray(Of T)(T(), Responsible.Utilities.Indexed(Of T))
-  nameWithType: Indexed.AssignToArray<T>(T[], Indexed<T>)
-  nameWithType.vb: Indexed.AssignToArray(Of T)(T(), Indexed(Of T))
-- uid: Responsible.Utilities.Indexed.Make*
-  name: Make
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_Make_
-  commentId: Overload:Responsible.Utilities.Indexed.Make
-  isSpec: "True"
-  fullName: Responsible.Utilities.Indexed.Make
-  nameWithType: Indexed.Make
-- uid: Responsible.Utilities.Indexed.Make``1(``0,System.Int32)
-  name: Make<T>(T, Int32)
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_Make__1___0_System_Int32_
-  commentId: M:Responsible.Utilities.Indexed.Make``1(``0,System.Int32)
-  name.vb: Make(Of T)(T, Int32)
-  fullName: Responsible.Utilities.Indexed.Make<T>(T, System.Int32)
-  fullName.vb: Responsible.Utilities.Indexed.Make(Of T)(T, System.Int32)
-  nameWithType: Indexed.Make<T>(T, Int32)
-  nameWithType.vb: Indexed.Make(Of T)(T, Int32)
-- uid: Responsible.Utilities.Indexed.WithIndex*
-  name: WithIndex
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_WithIndex_
-  commentId: Overload:Responsible.Utilities.Indexed.WithIndex
-  isSpec: "True"
-  fullName: Responsible.Utilities.Indexed.WithIndex
-  nameWithType: Indexed.WithIndex
-- uid: Responsible.Utilities.Indexed.WithIndex``1(System.IObservable{``0},System.Int32)
-  name: WithIndex<T>(IObservable<T>, Int32)
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_WithIndex__1_System_IObservable___0__System_Int32_
-  commentId: M:Responsible.Utilities.Indexed.WithIndex``1(System.IObservable{``0},System.Int32)
-  name.vb: WithIndex(Of T)(IObservable(Of T), Int32)
-  fullName: Responsible.Utilities.Indexed.WithIndex<T>(System.IObservable<T>, System.Int32)
-  fullName.vb: Responsible.Utilities.Indexed.WithIndex(Of T)(System.IObservable(Of T), System.Int32)
-  nameWithType: Indexed.WithIndex<T>(IObservable<T>, Int32)
-  nameWithType.vb: Indexed.WithIndex(Of T)(IObservable(Of T), Int32)
-- uid: Responsible.Utilities.Indexed.WithIndexFrom*
-  name: WithIndexFrom
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_WithIndexFrom_
-  commentId: Overload:Responsible.Utilities.Indexed.WithIndexFrom
-  isSpec: "True"
-  fullName: Responsible.Utilities.Indexed.WithIndexFrom
-  nameWithType: Indexed.WithIndexFrom
-- uid: Responsible.Utilities.Indexed.WithIndexFrom``2(System.IObservable{``0},Responsible.Utilities.Indexed{``1})
-  name: WithIndexFrom<T, TIndexed>(IObservable<T>, Indexed<TIndexed>)
-  href: api/Responsible.Utilities.Indexed.html#Responsible_Utilities_Indexed_WithIndexFrom__2_System_IObservable___0__Responsible_Utilities_Indexed___1__
-  commentId: M:Responsible.Utilities.Indexed.WithIndexFrom``2(System.IObservable{``0},Responsible.Utilities.Indexed{``1})
-  name.vb: WithIndexFrom(Of T, TIndexed)(IObservable(Of T), Indexed(Of TIndexed))
-  fullName: Responsible.Utilities.Indexed.WithIndexFrom<T, TIndexed>(System.IObservable<T>, Responsible.Utilities.Indexed<TIndexed>)
-  fullName.vb: Responsible.Utilities.Indexed.WithIndexFrom(Of T, TIndexed)(System.IObservable(Of T), Responsible.Utilities.Indexed(Of TIndexed))
-  nameWithType: Indexed.WithIndexFrom<T, TIndexed>(IObservable<T>, Indexed<TIndexed>)
-  nameWithType.vb: Indexed.WithIndexFrom(Of T, TIndexed)(IObservable(Of T), Indexed(Of TIndexed))
-- uid: Responsible.Utilities.Indexed`1
-  name: Indexed<T>
-  href: api/Responsible.Utilities.Indexed-1.html
-  commentId: T:Responsible.Utilities.Indexed`1
-  name.vb: Indexed(Of T)
-  fullName: Responsible.Utilities.Indexed<T>
-  fullName.vb: Responsible.Utilities.Indexed(Of T)
-  nameWithType: Indexed<T>
-  nameWithType.vb: Indexed(Of T)
-- uid: Responsible.Utilities.Indexed`1.#ctor(`0,System.Int32)
-  name: Indexed(T, Int32)
-  href: api/Responsible.Utilities.Indexed-1.html#Responsible_Utilities_Indexed_1__ctor__0_System_Int32_
-  commentId: M:Responsible.Utilities.Indexed`1.#ctor(`0,System.Int32)
-  fullName: Responsible.Utilities.Indexed<T>.Indexed(T, System.Int32)
-  fullName.vb: Responsible.Utilities.Indexed(Of T).Indexed(T, System.Int32)
-  nameWithType: Indexed<T>.Indexed(T, Int32)
-  nameWithType.vb: Indexed(Of T).Indexed(T, Int32)
-- uid: Responsible.Utilities.Indexed`1.#ctor*
-  name: Indexed
-  href: api/Responsible.Utilities.Indexed-1.html#Responsible_Utilities_Indexed_1__ctor_
-  commentId: Overload:Responsible.Utilities.Indexed`1.#ctor
-  isSpec: "True"
-  fullName: Responsible.Utilities.Indexed<T>.Indexed
-  fullName.vb: Responsible.Utilities.Indexed(Of T).Indexed
-  nameWithType: Indexed<T>.Indexed
-  nameWithType.vb: Indexed(Of T).Indexed
-- uid: Responsible.Utilities.Indexed`1.Index
-  name: Index
-  href: api/Responsible.Utilities.Indexed-1.html#Responsible_Utilities_Indexed_1_Index
-  commentId: F:Responsible.Utilities.Indexed`1.Index
-  fullName: Responsible.Utilities.Indexed<T>.Index
-  fullName.vb: Responsible.Utilities.Indexed(Of T).Index
-  nameWithType: Indexed<T>.Index
-  nameWithType.vb: Indexed(Of T).Index
-- uid: Responsible.Utilities.Indexed`1.Value
-  name: Value
-  href: api/Responsible.Utilities.Indexed-1.html#Responsible_Utilities_Indexed_1_Value
-  commentId: F:Responsible.Utilities.Indexed`1.Value
-  fullName: Responsible.Utilities.Indexed<T>.Value
-  fullName.vb: Responsible.Utilities.Indexed(Of T).Value
-  nameWithType: Indexed<T>.Value
-  nameWithType.vb: Indexed(Of T).Value
