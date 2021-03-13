@@ -140,7 +140,7 @@ namespace Responsible
 		/// A test instruction whose result is the result of invoking
 		/// <paramref name="selector"/> on the result of <paramref name="instruction"/>.
 		/// </returns>
-		/// <typeparam name="T1">Return type of the instruction.</typeparam>
+		/// <typeparam name="T1">Return type of the initial instruction.</typeparam>
 		/// <typeparam name="T2">Return type of the selector and the returned instruction.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
@@ -157,7 +157,7 @@ namespace Responsible
 
 		/// <summary>
 		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
-		/// Can be useful for example for using <see cref="Sequence"/>.
+		/// Can be useful for example in conjunction with <see cref="Sequence"/>.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
