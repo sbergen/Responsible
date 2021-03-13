@@ -12,6 +12,13 @@ using UnityEngine.TestTools;
 
 namespace Responsible
 {
+	/// <summary>
+	/// Handles execution of test instruction and intercepting logged errors during test execution.
+	/// </summary>
+	/// <remarks>
+	/// It is recommended to use a base class for your tests using Responsible,
+	/// which sets up and disposes the test instruction executor.
+	/// </remarks>
 	public class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
@@ -26,12 +33,26 @@ namespace Responsible
 		private readonly IScheduler scheduler;
 		private readonly IObservable<Unit> pollObservable;
 
-		/// <summary>
-		/// Notifications for started and finished test operations.
+		/// <summary>Notifications for started and finished test operations.</summary>
+		/// <value>Observable for test operation state notification.</value>
+		/// <remarks>
 		/// Static, so that Unity EditorWindows can access it.
-		/// </summary>
+		/// Used by the test operation window available at "Window/Responsible/Operation State".
+		/// </remarks>
 		public static IObservable<TestOperationStateNotification> StateNotifications => StateNotificationsSubject;
 
+		/// <summary>
+		/// Constructs a new test instruction executor.
+		/// </summary>
+		/// <param name="scheduler">
+		/// Optional scheduler override. <see cref="Scheduler.MainThread"/> is used by default
+		/// </param>
+		/// <param name="pollObservable">
+		/// Optional poll observable override. <see cref="Observable.EveryUpdate"/> is used by default.
+		/// </param>
+		/// <param name="logger">
+		/// Optional logger override. <see cref="Debug.unityLogger"/> is used by default.
+		/// </param>
 		public TestInstructionExecutor(
 			IScheduler scheduler = null,
 			IObservable<Unit> pollObservable = null,
@@ -48,11 +69,24 @@ namespace Responsible
 			this.pollSubscription = pollObservable.Subscribe(pollSubject);
 		}
 
+		/// <summary>
+		/// Disposes the executor. Should be called after finishing with tests.
+		/// </summary>
 		public void Dispose()
 		{
 			this.pollSubscription.Dispose();
 		}
 
+		/// <summary>
+		/// Expect a log message during execution of any subsequent test instructions.
+		/// Similar to <see cref="LogAssert.Expect(LogType, Regex)"/>,
+		/// but needs to be called instead of that in order to work when executing test instructions.
+		/// </summary>
+		/// <remarks>
+		/// Will call <see cref="LogAssert.Expect(LogType, Regex)"/>, so it doesn't need to be called separately.
+		/// </remarks>
+		/// <param name="logType">Log type to expect.</param>
+		/// <param name="regex">Regex to match the message to be expected.</param>
 		public void ExpectLog(LogType logType, Regex regex)
 		{
 			LogAssert.Expect(logType, regex);
