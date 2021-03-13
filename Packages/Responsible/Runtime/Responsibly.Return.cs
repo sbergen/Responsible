@@ -11,7 +11,6 @@ namespace Responsible
 		/// <summary>Constructs a test instruction that returns a value synchronously.</summary>
 		/// <returns>A test instruction returning <paramref name="value"/>.</returns>
 		/// <param name="value">Value to return from the test instruction.</param>
-		/// <remarks>Wouldn't be a monad without this ;)</remarks>
 		/// <typeparam name="T">Result type of the returned test instruction.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]

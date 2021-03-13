@@ -8,8 +8,9 @@ namespace Responsible
 	public static partial class Responsibly
 	{
 		/// <summary>
-		/// Constructs an optional test responder, which will respond to any of the given responders.
+		/// Constructs an optional test responder, which will respond to any of the provided responders.
 		/// All responders are waited for concurrently, but only one will be responding at a time.
+		/// Will complete with an error, if any of the responders completes with an error.
 		///
 		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.AsUnitResponder{T}"/>
 		/// for methods which can be used to make the responder types match.
@@ -31,6 +32,7 @@ namespace Responsible
 		/// <summary>
 		/// Constructs a wait condition that will will complete once all given responders have executed.
 		/// All responders are waited for concurrently, but only one will be responding at a time.
+		/// Will complete with an error, if any of the responders completes with an error.
 		///
 		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.AsUnitResponder{T}"/>
 		/// for methods which can be used to make the responder types match.

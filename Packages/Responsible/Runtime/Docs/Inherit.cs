@@ -128,7 +128,7 @@ namespace Responsible.Docs
 		}
 
 		/// <inheritdoc cref="CallerMember{T1, T2}"/>
-		/// <param name="executor">Test operation executor to use </param>
+		/// <param name="executor">Test operation executor to use.</param>
 		public void CallerMemberWithExecutor<T>(
 			T arg1,
 			TestInstructionExecutor executor,

@@ -16,7 +16,7 @@ namespace Responsible
 	public static class TestWaitCondition
 	{
 		/// <summary>
-		/// Constructs wait condition, which will first wait for the first condition to be fulfilled,
+		/// Constructs a wait condition, which will first wait for the first condition to be fulfilled,
 		/// and only then continue waiting on the second.
 		/// The result of <paramref name="first"/> is discarded.
 		/// Will complete with a failure, if either condition fails.
@@ -43,7 +43,7 @@ namespace Responsible
 				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs wait condition, which will first wait for the first condition to be fulfilled,
+		/// Constructs a wait condition, which will first wait for the first condition to be fulfilled,
 		/// then construct a second condition using <paramref name="continuation"/>, and continue waiting on it.
 		/// Will complete with a failure, if either condition, or the continuation function fails.
 		/// </summary>
@@ -71,8 +71,7 @@ namespace Responsible
 				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test responder, which will, when executed,
-		/// wait for <paramref name="condition"/> to complete,
+		/// Constructs a test responder, which will wait for <paramref name="condition"/> to complete,
 		/// construct a test instruction using <paramref name="selector"/>,
 		/// and continue executing the returned instruction.
 		/// Will complete with a failure if the wait condition, selector, or constructed instruction
@@ -81,7 +80,7 @@ namespace Responsible
 		/// <returns>
 		/// A test responder composed of <paramref name="condition"/> and <paramref name="selector"/>.
 		/// </returns>
-		/// <param name="condition">Condition to wait on before calling <paramref name="selector"/></param>
+		/// <param name="condition">Condition to wait on before calling <paramref name="selector"/>.</param>
 		/// <param name="description">Description of the responder which is constructed.</param>
 		/// <param name="selector">
 		/// Function to construct the instruction part of the responder,
@@ -105,14 +104,14 @@ namespace Responsible
 				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing the given instruction.
+		/// Constructs a test responder, which will wait for the provided condition,
+		/// and then continue executing the provided instruction.
 		/// Will complete with a failure if the wait condition or instruction completes with a failure.
 		/// </summary>
 		/// <returns>
 		/// A test responder composed of <paramref name="condition"/> and <paramref name="instruction"/>.
 		/// </returns>
-		/// <param name="condition">Condition to wait on before executing <paramref name="instruction"/></param>
+		/// <param name="condition">Condition to wait on before executing <paramref name="instruction"/>.</param>
 		/// <param name="description">Description of the responder which is constructed.</param>
 		/// <param name="instruction">Instruction to execute after <paramref name="condition"/> has been met.</param>
 		/// <typeparam name="TWait">Result type of the wait condition.</typeparam>
@@ -133,14 +132,14 @@ namespace Responsible
 				new SourceContext(nameof(ThenRespondWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test responder, which will wait for the given condition,
+		/// Constructs a test responder, which will wait for the provided condition,
 		/// and then continue executing a synchronous function, returning its result.
 		/// Will complete with a failure if the wait condition or function completes with a failure.
 		/// </summary>
 		/// <returns>
 		/// A test responder composed of <paramref name="condition"/> and <paramref name="selector"/>.
 		/// </returns>
-		/// <param name="condition">Condition to wait on before executing <paramref name="selector"/></param>
+		/// <param name="condition">Condition to wait on before executing <paramref name="selector"/>.</param>
 		/// <param name="description">Description of the responder which is constructed.</param>
 		/// <param name="selector">
 		/// Synchronous function to execute with the result of <paramref name="condition"/>.
@@ -174,7 +173,7 @@ namespace Responsible
 		/// <returns>
 		/// A test responder composed of <paramref name="condition"/> and <paramref name="action"/>.
 		/// </returns>
-		/// <param name="condition">Condition to wait on before executing <paramref name="action"/></param>
+		/// <param name="condition">Condition to wait on before executing <paramref name="action"/>.</param>
 		/// <param name="description">Description of the responder which is constructed.</param>
 		/// <param name="action">Synchronous action to execute with the result of <paramref name="condition"/>.</param>
 		/// <typeparam name="TWait">Result type of the wait condition.</typeparam>
@@ -197,7 +196,9 @@ namespace Responsible
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a wait condition to an instruction, by enforcing a timeout on it.
+		/// Constructs a test instruction,
+		/// which will enforce a timeout on the provided wait condition.
+		/// If the condition isn't met within the timeout, the instruction will complete with an error.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which completes with the result of the condition,
@@ -220,7 +221,8 @@ namespace Responsible
 				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Applies a selector to the result of a wait condition when the condition completes.
+		/// Applies a selector to the result of a wait condition when the condition completes,
+		/// transforming the result type to another type.
 		/// </summary>
 		/// <param name="condition">A wait condition to apply the selector to.</param>
 		/// <param name="selector">A function to apply to the result of the wait condition.</param>
@@ -229,7 +231,7 @@ namespace Responsible
 		/// <paramref name="selector"/> on the result of <paramref name="condition"/>.
 		/// </returns>
 		/// <typeparam name="T1">Return type of the initial wait condition.</typeparam>
-		/// <typeparam name="T2">Return type of the selector and the returned wait condition•.</typeparam>
+		/// <typeparam name="T2">Return type of the selector and the returned wait condition.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestWaitCondition<T2> Select<T1, T2>(

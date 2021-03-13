@@ -14,14 +14,14 @@ namespace Responsible
 	public static class TestOperationState
 	{
 		/// <summary>
-		/// Construct an observable, which will start executing the explicitly created operation state.
+		/// Constructs an observable, which will start executing the explicitly created operation state.
 		/// This can be used for e.g. logging the state periodically.
 		/// </summary>
 		/// <remarks>
 		/// Be careful not to call this twice on the same state object: the consequences are undefined.
 		/// </remarks>
 		/// <returns>
-		/// An observable which will complete with the value of the test operations, once it has completed,
+		/// An observable which will complete with the value of the test operation, once it has completed,
 		/// or publish an error if the operation fails.
 		/// </returns>
 		/// <param name="state">Test operation state to start executing.</param>
@@ -46,7 +46,7 @@ namespace Responsible
 		/// Be careful not to call this twice on the same state object: the consequences are undefined.
 		/// </remarks>
 		/// <returns>
-		/// An yield instruction which will complete with the value of the test operations, once it has completed,
+		/// A yield instruction which will complete with the value of the test operation, once it has completed,
 		/// or publish an error if the operation fails.
 		/// </returns>
 		/// <param name="state">Test operation state to start executing.</param>

@@ -45,7 +45,7 @@ namespace Responsible
 		/// Constructs a new test instruction executor.
 		/// </summary>
 		/// <param name="scheduler">
-		/// Optional scheduler override. <see cref="Scheduler.MainThread"/> is used by default
+		/// Optional scheduler override. <see cref="Scheduler.MainThread"/> is used by default.
 		/// </param>
 		/// <param name="pollObservable">
 		/// Optional poll observable override. <see cref="Observable.EveryUpdate"/> is used by default.
@@ -80,7 +80,7 @@ namespace Responsible
 		/// <summary>
 		/// Expect a log message during execution of any subsequent test instructions.
 		/// Similar to <see cref="LogAssert.Expect(LogType, Regex)"/>,
-		/// but needs to be called instead of that in order to work when executing test instructions.
+		/// but needs to be called instead of that, in order to work when executing test instructions.
 		/// </summary>
 		/// <remarks>
 		/// Will call <see cref="LogAssert.Expect(LogType, Regex)"/>, so it doesn't need to be called separately.

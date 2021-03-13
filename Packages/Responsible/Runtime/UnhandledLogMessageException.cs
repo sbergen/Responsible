@@ -3,7 +3,7 @@ using System;
 namespace Responsible
 {
 	/// <summary>
-	/// Exception type to be used when an unhandled log message is detected during test operation execution.
+	/// Exception type which is used when an unhandled log message is detected during test operation execution.
 	/// </summary>
 	public class UnhandledLogMessageException : Exception
 	{

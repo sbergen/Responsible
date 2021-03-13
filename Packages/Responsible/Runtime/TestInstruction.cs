@@ -92,6 +92,13 @@ namespace Responsible
 		/// </returns>
 		/// <typeparam name="T1">Return type of the first instruction.</typeparam>
 		/// <typeparam name="T2">Return type of the continuation instruction.</typeparam>
+		/// <remarks>
+		/// If the instruction fails or is canceled before <paramref name="continuation"/> has been called,
+		/// the description of the second instruction isn't included in the state output, as it is unknown.
+		/// Thus it is better to prefer
+		/// <see cref="ContinueWith{T1,T2}(Responsible.ITestInstruction{T1},Responsible.ITestInstruction{T2},string,string,int)"/>
+		/// when possible, which will always also include the description of the second instruction.
+		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestInstruction<T2> ContinueWith<T1, T2>(
@@ -110,8 +117,8 @@ namespace Responsible
 		/// into one instruction returning the result of the second instruction.
 		/// The second instruction will not execute, if the first instruction fails.
 		/// </summary>
-		/// <param name="first">Instruction to execute first</param>
-		/// <param name="second">Instruction which will be executed after <paramref name="first"/></param>
+		/// <param name="first">Instruction to execute first.</param>
+		/// <param name="second">Instruction which will be executed after <paramref name="first"/>.</param>
 		/// <returns>
 		/// A test instruction that completes with the result from the second instruction,
 		/// once both instructions have completed executing.
@@ -132,7 +139,8 @@ namespace Responsible
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Applies a selector to the result of a test instruction when the instruction completes.
+		/// Applies a selector to the result of a test instruction when the instruction completes,
+		/// transforming the result type to another type.
 		/// </summary>
 		/// <param name="instruction">A test instruction to apply the selector to.</param>
 		/// <param name="selector">A function to apply to the result of the instruction.</param>

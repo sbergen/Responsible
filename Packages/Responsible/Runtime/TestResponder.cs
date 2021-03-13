@@ -14,8 +14,10 @@ namespace Responsible
 	public static class TestResponder
 	{
 		/// <summary>
-		/// Expects the responder to start responding within the given timeout,
-		/// and then continues executing the instruction of the responder.
+		/// Constructs a test instruction,
+		/// which will expect the provided responder to start responding within the provided timeout,
+		/// and then continue executing the instruction of the responder.
+		/// If the condition isn't met within the timeout, the instruction will complete with an error.
 		/// </summary>
 		/// <remarks>
 		/// The timeout for the complete operation will be the sum of the given
@@ -23,7 +25,7 @@ namespace Responsible
 		/// </remarks>
 		/// <returns>
 		/// A test instruction which completes with the result of the responder,
-		/// of a failure, if either the timeout is met or the responder otherwise fails.
+		/// or a failure, if either the timeout is met or the responder otherwise fails.
 		/// </returns>
 		/// <param name="responder">Responder to apply the timeout to.</param>
 		/// <param name="timeoutSeconds">Timeout for the responder to start responding, in seconds.</param>
@@ -55,7 +57,8 @@ namespace Responsible
 			new AnyOfResponder<T>(new[] { responder });
 
 		/// <summary>
-		/// Applies a selector to the result of a test responder when the responder completes.
+		/// Applies a selector to the result of a test responder when the responder completes,
+		/// transforming the result type to another type.
 		/// </summary>
 		/// <param name="responder">A test responder to apply the selector to.</param>
 		/// <param name="selector">A function to apply to the result of the responder.</param>
@@ -89,7 +92,7 @@ namespace Responsible
 		/// </returns>
 		/// <param name="responder">Test responder to wrap.</param>
 		/// <remarks>
-		/// When called with an responder already returning Unit, will return the responder itself.
+		/// When called with a responder already returning Unit, will return the responder itself.
 		/// </remarks>
 		/// <typeparam name="T">Return type of the responder to convert.</typeparam>
 		[Pure]

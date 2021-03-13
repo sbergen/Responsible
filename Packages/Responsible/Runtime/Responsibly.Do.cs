@@ -16,7 +16,7 @@ namespace Responsible
 		/// <param name="func">Function to call when the test instruction is executed.</param>
 		/// <returns>A test instruction which calls <paramref name="func"/> and returns its value when executed.</returns>
 		/// <remarks>
-		/// This is not an overload of Do, because C# is bad at overload resolution with lambdas.
+		/// This is not an overload of <see cref="Do"/>, because C# is bad at overload resolution with lambdas.
 		/// </remarks>
 		/// <typeparam name="T">Result type of the returned test instruction and <paramref name="func"/></typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
