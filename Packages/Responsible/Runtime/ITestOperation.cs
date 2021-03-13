@@ -35,6 +35,7 @@ namespace Responsible
 		/// and might lead to an execution that never completes.
 		/// </remarks>
 		[Pure]
+		[NotNull]
 		ITestOperationState<T> CreateState();
 	}
 }
