@@ -12,23 +12,36 @@ namespace Responsible.Editor
 		private readonly List<(ITestOperationState state, Label label)> stateLabels =
 			new List<(ITestOperationState state, Label label)>();
 
-		private readonly Label noOperationsLabel = new Label("No operations executing");
 		private readonly IDisposable subscription;
 
 		public TestOperationStatusWindowState(
 			VisualElement rootElement,
 			IObservable<TestOperationStateNotification> states)
 		{
+			var currentOperations = new VisualElement();
+			var currentOperationsTitle = new Label("Currently executing operations:");
+			currentOperationsTitle.style.unityFontStyleAndWeight = FontStyle.Bold;
+			currentOperations.Add(currentOperationsTitle);
+			currentOperations.style.paddingBottom = new StyleLength(20);
+
+			var previousOperation = new VisualElement();
+			var previousOperationTitle = new Label("Last finished operation:");
+			previousOperationTitle.style.unityFontStyleAndWeight = FontStyle.Bold;
+			var previousOperationLabel = new Label();
+			previousOperation.Add(previousOperationTitle);
+			previousOperation.Add(previousOperationLabel);
+
 			var scrollView = new ScrollView();
 			rootElement.Add(scrollView);
-			scrollView.Add(this.noOperationsLabel);
+			scrollView.Add(currentOperations);
+			scrollView.Add(previousOperation);
 
 			void AddLabel(ITestOperationState state)
 			{
 				var label = new Label();
 				label.style.paddingBottom = new StyleLength(20);
 				this.stateLabels.Add((state, label));
-				scrollView.Add(label);
+				currentOperations.Add(label);
 			}
 
 			void RemoveLabel(ITestOperationState state)
@@ -40,7 +53,8 @@ namespace Responsible.Editor
 				}
 				else
 				{
-					scrollView.Remove(this.stateLabels[i].label);
+					previousOperationLabel.text = this.stateLabels[i].state.ToString();
+					currentOperations.Remove(this.stateLabels[i].label);
 					this.stateLabels.RemoveAt(i);
 				}
 			}
@@ -66,10 +80,6 @@ namespace Responsible.Editor
 
 		public void Update()
 		{
-			this.noOperationsLabel.style.display = this.stateLabels.Count > 0
-				? DisplayStyle.None
-				: DisplayStyle.Flex;
-
 			foreach (var (state, label) in this.stateLabels)
 			{
 				try

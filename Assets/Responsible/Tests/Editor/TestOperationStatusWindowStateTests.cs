@@ -1,44 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Responsible.Editor;
 using Responsible.State;
 using UniRx;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 namespace Responsible.Tests.Editor
 {
 	public class TestOperationStatusWindowStateTests
 	{
-		private class FakeOperationState : ITestOperationState
-		{
-			public readonly string StringRepresentation;
-			public readonly Exception Exception;
-
-			public FakeOperationState(string stringRepresentation)
-			{
-				this.StringRepresentation = stringRepresentation;
-			}
-
-			public FakeOperationState(Exception exception)
-			{
-				this.Exception = exception;
-			}
-
-			public TestOperationStatus Status => throw new NotImplementedException();
-			public void BuildDescription(StateStringBuilder builder) => throw new NotImplementedException();
-			public override string ToString() => this.Exception != null
-				? throw this.Exception
-				: this.StringRepresentation;
-		}
-
 		private Subject<TestOperationStateNotification> notifications;
 		private TestOperationStatusWindowState state;
 		private ScrollView scrollView;
+
+		// Resolves the elements into a representation of what things look like
+		private class VisualState
+		{
+			public readonly List<string> CurrentOperations = new List<string>();
+			public readonly string PreviousOperation;
+
+			public void AssertEmpty()
+			{
+				Assert.IsEmpty(this.CurrentOperations);
+				Assert.IsNull(this.PreviousOperation);
+			}
+
+			public VisualState(VisualElement parent)
+			{
+				var foundCurrentTitle = false;
+				var foundPreviousTitle = false;
+				foreach (var label in parent.Query<Label>().Build().ToList()
+					.Where(label => !string.IsNullOrEmpty(label.text)))
+				{
+					if (label.text == "Currently executing operations:")
+					{
+						Assert.IsFalse(foundCurrentTitle, "Should have only one title for current operations");
+						foundCurrentTitle = true;
+					}
+					else if (label.text == "Last finished operation:")
+					{
+						Assert.IsFalse(foundPreviousTitle, "Should have only one title for previous operations");
+						Assert.IsTrue(
+							foundCurrentTitle, "Current operations title should precede previous operation title");
+						foundPreviousTitle = true;
+					}
+					else if (foundPreviousTitle)
+					{
+						Assert.IsNull(this.PreviousOperation, "Should have only one previous operation");
+						this.PreviousOperation = label.text;
+						continue;
+					}
+					else if (foundCurrentTitle)
+					{
+						this.CurrentOperations.Add(label.text);
+					}
+					else
+					{
+						Assert.Fail($"Found label before any titles: {label.text}");
+					}
+				}
+
+				Assert.IsTrue(foundCurrentTitle, "Should have title for current instructions");
+				Assert.IsTrue(foundPreviousTitle, "Should have title for previous instruction");
+			}
+		}
 
 		[SetUp]
 		public void SetUp()
@@ -59,59 +92,57 @@ namespace Responsible.Tests.Editor
 		}
 
 		[Test]
-		public void Construction_AddsNoStateLabel()
+		public void Construction_AddsOnlyTitleLabels()
 		{
-			var labels = this.GetAllLabels();
-			Assert.AreEqual(1, labels.Count, "Should have a single label");
-			Assert.AreEqual(labels[0].text, "No operations executing");
+			new VisualState(this.scrollView).AssertEmpty();
 		}
 
 		[Test]
 		public void StartedNotification_AddsStateLabel()
 		{
-			var operationState = new FakeOperationState("Fake State");
-			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState));
+			var operationState1 = new FakeOperationState("Fake State 1");
+			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState1));
+			var operationState2 = new FakeOperationState("Fake State 2");
+			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState2));
 			this.state.Update();
 
-			Assert.That(this.GetAllLabelTexts(), Contains.Item(operationState.StringRepresentation));
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { operationState1.StringRepresentation, operationState2.StringRepresentation },
+				visualState.CurrentOperations);
+			Assert.IsNull(visualState.PreviousOperation);
 		}
 
 		[Test]
-		public void FinishedNotification_RemovesStateLabel()
+		public void FinishedNotification_MovesStateLabelToPrevious()
 		{
 			var operationState = new FakeOperationState("Fake State");
 			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState));
 			this.state.Update();
 			this.notifications.OnNext(new TestOperationStateNotification.Finished(operationState));
 
-			Assert.That(this.GetAllLabelTexts(), Does.Not.Contain(operationState.StringRepresentation));
+			var visualState = new VisualState(this.scrollView);
+			Assert.IsEmpty(visualState.CurrentOperations);
+			Assert.AreEqual(operationState.StringRepresentation, visualState.PreviousOperation);
 		}
 
 		[Test]
 		public void FinishedNotification_OnlyLogsWarning_WhenNotFound()
 		{
 			var operationState = new FakeOperationState("Fake State");
-			var preNotificationLabelCount = this.GetAllLabels().Count;
 			this.notifications.OnNext(new TestOperationStateNotification.Finished(operationState));
 
 			LogAssert.Expect(LogType.Warning, new Regex("Could not find"));
-			Assert.AreEqual(
-				preNotificationLabelCount,
-				this.GetAllLabels().Count,
-				"Should not change label count on mismatched finished notification");
+			new VisualState(this.scrollView).AssertEmpty();
 		}
 
 		[Test]
 		public void Dispose_StopsListeningToNotifications()
 		{
 			this.state.Dispose();
-			var preNotificationLabelCount = this.GetAllLabels().Count;
 			this.notifications.OnNext(new TestOperationStateNotification.Started(default));
 
-			Assert.AreEqual(
-				preNotificationLabelCount,
-				this.GetAllLabels().Count,
-				"Should not add new labels after being disposed");
+			new VisualState(this.scrollView).AssertEmpty();
 		}
 
 		[Test]
@@ -126,9 +157,11 @@ namespace Responsible.Tests.Editor
 			this.notifications.OnNext(new TestOperationStateNotification.Finished(state1));
 			this.state.Update();
 
-			var texts = this.GetAllLabelTexts();
-			Assert.That(texts, Does.Not.Contain(state1.StringRepresentation));
-			Assert.That(texts, Contains.Item(state2.StringRepresentation));
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { state2.StringRepresentation },
+				visualState.CurrentOperations);
+			Assert.AreEqual(state1.StringRepresentation, visualState.PreviousOperation);
 		}
 
 		[Test]
@@ -138,11 +171,8 @@ namespace Responsible.Tests.Editor
 				new FakeOperationState(new Exception("Fake Exception"))));
 			this.state.Update();
 
-			var texts = this.GetAllLabelTexts();
-			Assert.IsTrue(texts.Any(t => t.Contains("Fake Exception")));
+			var visualState = new VisualState(this.scrollView);
+			Assert.IsTrue(visualState.CurrentOperations.Any(t => t.Contains("Fake Exception")));
 		}
-
-		private List<Label> GetAllLabels() => this.scrollView.Query<Label>().Build().ToList();
-		private List<string> GetAllLabelTexts() => this.GetAllLabels().Select(l => l.text).ToList();
 	}
 }
