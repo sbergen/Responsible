@@ -17,7 +17,7 @@ namespace Responsible
 	/// <remarks>
 	/// Instead of using a class like <c>WaitFor</c>, we try to avoid conflicting class names by having this class.
 	/// It also allows you to use either <c>Responsibly.WaitForCondition</c> or
-	/// <c>using static Responsible.Responsibly</c> and simply <c>WaitFor</c>.
+	/// <c>using static Responsible.Responsibly</c> and simply <c>WaitForCondition</c>.
 	/// </remarks>
 	public static partial class Responsibly
 	{

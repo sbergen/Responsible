@@ -30,7 +30,7 @@ namespace Responsible
 
 		/// <summary>
 		/// Constructs wait condition, which will first wait for the first condition to be fulfilled,
-		/// then construct a second condition from <c>continuation</c>, and continue waiting on it.
+		/// then construct a second condition from <paramref name="continuation"/>, and continue waiting on it.
 		/// </summary>
 		[Pure]
 		public static ITestWaitCondition<TSecond> AndThen<TFirst, TSecond>(

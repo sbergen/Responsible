@@ -77,7 +77,8 @@ namespace Responsible
 					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
 
 		/// <summary>
-		/// Constructs a test instruction, which will first construct another instruction using <c>continuation</c>
+		/// Constructs a test instruction,
+		/// which will first construct another instruction using <paramref name="continuation"/>
 		/// from the result of the first instruction, and then continue executing the constructed instruction.
 		/// The continuation will not be called, if the first instruction fails.
 		/// </summary>
@@ -110,7 +111,7 @@ namespace Responsible
 		/// The second instruction will not execute, if the first instruction fails.
 		/// </summary>
 		/// <param name="first">Instruction to execute first</param>
-		/// <param name="second">Instruction which will be executed after <c>first</c></param>
+		/// <param name="second">Instruction which will be executed after <paramref name="first"/></param>
 		/// <returns>
 		/// A test instruction that completes with the result from the second instruction,
 		/// once both instructions have completed executing.
@@ -136,7 +137,8 @@ namespace Responsible
 		/// <param name="instruction">A test instruction to apply the selector to.</param>
 		/// <param name="selector">A function to apply to the result of the instruction.</param>
 		/// <returns>
-		/// A test instruction whose result is the result of invoking <c>selector</c> on the result of <c>instruction</c>
+		/// A test instruction whose result is the result of invoking
+		/// <paramref name="selector"/> on the result of <paramref name="instruction"/>.
 		/// </returns>
 		/// <typeparam name="T1">Return type of the instruction.</typeparam>
 		/// <typeparam name="T2">Return type of the selector and the returned instruction.</typeparam>
@@ -158,7 +160,7 @@ namespace Responsible
 		/// Can be useful for example for using <see cref="Sequence"/>.
 		/// </summary>
 		/// <returns>
-		/// A test instruction which behaves otherwise identically to <c>instruction</c>,
+		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
 		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
 		/// </returns>
 		/// <param name="instruction">Instruction to wrap.</param>

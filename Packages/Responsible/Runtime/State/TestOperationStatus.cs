@@ -4,6 +4,17 @@ using Responsible.Context;
 
 namespace Responsible.State
 {
+	/// <summary>
+	/// Base class for the status of a test operation execution.
+	/// Can be one of:
+	/// * Not executed
+	/// * Waiting
+	/// * Completed
+	/// * Failed
+	/// * Canceled
+	///
+	/// Not intended for public use.
+	/// </summary>
 	public abstract class TestOperationStatus
 	{
 		internal abstract string MakeStatusLine(string description);
