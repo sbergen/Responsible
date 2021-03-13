@@ -21,6 +21,7 @@ namespace Responsible
 		/// <returns>A cold observable that runs the instruction when subscribed to.</returns>
 		/// <param name="instruction">The instruction to wrap into an observable.</param>
 		/// <param name="executor">Executor to use for executing the instruction.</param>
+		/// <typeparam name="T">Return type of the test instruction to wrap.</typeparam>
 		/// /// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		[Pure]
 		public static IObservable<T> ToObservable<T>(
@@ -40,6 +41,7 @@ namespace Responsible
 		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
 		/// <param name="instruction">Instruction to execute.</param>
 		/// <param name="executor">Executor to use for executing the instruction.</param>
+		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		[Pure]
 		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
@@ -87,6 +89,8 @@ namespace Responsible
 		/// A test instruction that completes with the result from the continuation instruction,
 		/// once both instructions have completed executing.
 		/// </returns>
+		/// <typeparam name="T1">Return type of the first instruction.</typeparam>
+		/// <typeparam name="T2">Return type of the continuation instruction.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestInstruction<T2> ContinueWith<T1, T2>(
@@ -111,6 +115,8 @@ namespace Responsible
 		/// A test instruction that completes with the result from the second instruction,
 		/// once both instructions have completed executing.
 		/// </returns>
+		/// <typeparam name="T1">Return type of the first instruction.</typeparam>
+		/// <typeparam name="T2">Return type of the second instruction.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestInstruction<T2> ContinueWith<T1, T2>(
@@ -132,6 +138,8 @@ namespace Responsible
 		/// <returns>
 		/// A test instruction whose result is the result of invoking <c>selector</c> on the result of <c>instruction</c>
 		/// </returns>
+		/// <typeparam name="T1">Return type of the instruction.</typeparam>
+		/// <typeparam name="T2">Return type of the selector and the returned instruction.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
 		[Pure]
 		public static ITestInstruction<T2> Select<T1, T2>(
@@ -157,6 +165,7 @@ namespace Responsible
 		/// <remarks>
 		/// When called with an instruction already returning Unit, will return the instruction itself.
 		/// </remarks>
+		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
 		public static ITestInstruction<Unit> AsUnitInstruction<T>(
 			this ITestInstruction<T> instruction) =>
