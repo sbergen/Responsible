@@ -28,7 +28,7 @@ namespace Responsible.EditorSetup
         /// Code references aren't properly gathered from loose .cs files,
         /// so we need to first generate the solution.
         /// </summary>
-        [MenuItem("CI/Build Documentation")]
+        [MenuItem("CI/Build Documentation %#D")]
         public static void BuildDocumentation()
         {
             Debug.Log("Syncing solution...");

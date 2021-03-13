@@ -4,9 +4,20 @@ using Responsible.Context;
 
 namespace Responsible.State
 {
+	/// <summary>
+	/// Base class for the status of a test operation execution.
+	/// Can be one of:
+	/// * Not executed
+	/// * Waiting
+	/// * Completed
+	/// * Failed
+	/// * Canceled
+	///
+	/// Not intended for public use.
+	/// </summary>
 	public abstract class TestOperationStatus
 	{
-		public abstract string MakeStatusLine(string description);
+		internal abstract string MakeStatusLine(string description);
 
 		internal class NotExecuted : TestOperationStatus
 		{
@@ -16,7 +27,7 @@ namespace Responsible.State
 			{
 			}
 
-			public override string MakeStatusLine(string description) =>
+			internal override string MakeStatusLine(string description) =>
 				$"[ ] {description}";
 		}
 
@@ -30,7 +41,7 @@ namespace Responsible.State
 				this.WaitContext = waitContext;
 			}
 
-			public override string MakeStatusLine(string description) =>
+			internal override string MakeStatusLine(string description) =>
 				$"[.] {description} (Started {this.WaitContext.ElapsedTime} ago)";
 		}
 
@@ -45,7 +56,7 @@ namespace Responsible.State
 				waiting.WaitContext.WaitCompleted();
 			}
 
-			public override string MakeStatusLine(string description) =>
+			internal override string MakeStatusLine(string description) =>
 				$"[✓] {description} (Completed in {this.elapsedTime})";
 		}
 
@@ -64,7 +75,7 @@ namespace Responsible.State
 				this.SourceContext = sourceContext;
 			}
 
-			public override string MakeStatusLine(string description) =>
+			internal override string MakeStatusLine(string description) =>
 				$"[!] {description} (Failed after {this.elapsedTime})";
 		}
 
@@ -78,12 +89,12 @@ namespace Responsible.State
 				this.elapsedTime = waiting.WaitContext.ElapsedTime;
 			}
 
-			public override string MakeStatusLine(string description) =>
+			internal override string MakeStatusLine(string description) =>
 				$"[-] {description} (Canceled after {this.elapsedTime})";
 		}
 
 		[ExcludeFromCodeCoverage] // Unreachable defensive code
-		public static void AssertNotStarted(TestOperationStatus status)
+		internal static void AssertNotStarted(TestOperationStatus status)
 		{
 			if (status != NotExecuted.Instance)
 			{

@@ -7,14 +7,26 @@ using UniRx;
 
 namespace Responsible
 {
+	/// <summary>
+	/// Contains extension methods on <see cref="ITestOperationState{T}"/>.
+	/// These are normally not needed, but can be useful for debugging purposes.
+	/// </summary>
 	public static class TestOperationState
 	{
 		/// <summary>
-		/// Start executing from explicitly created state. This can be used for e.g. logging the state periodically.
+		/// Constructs an observable, which will start executing the explicitly created operation state.
+		/// This can be used for e.g. logging the state periodically.
 		/// </summary>
 		/// <remarks>
-		/// Be careful not to call this twice on the same state object: the consequences are unknown.
+		/// Be careful not to call this twice on the same state object: the consequences are undefined.
 		/// </remarks>
+		/// <returns>
+		/// An observable which will complete with the value of the test operation, once it has completed,
+		/// or publish an error if the operation fails.
+		/// </returns>
+		/// <param name="state">Test operation state to start executing.</param>
+		/// <typeparam name="T">Result type of the test operation.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithExecutor{T}"/>
 		[Pure]
 		public static IObservable<T> ToObservable<T>(
 			this ITestOperationState<T> state,
@@ -27,11 +39,19 @@ namespace Responsible
 				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Start executing from explicitly created state. This can be used for e.g. logging the state periodically.
+		/// Start executing an explicitly created operation state.
+		/// This can be used for e.g. logging the state periodically.
 		/// </summary>
 		/// <remarks>
-		/// Be careful not to call this twice on the same state object: the consequences are unknown.
+		/// Be careful not to call this twice on the same state object: the consequences are undefined.
 		/// </remarks>
+		/// <returns>
+		/// A yield instruction which will complete with the value of the test operation, once it has completed,
+		/// or publish an error if the operation fails.
+		/// </returns>
+		/// <param name="state">Test operation state to start executing.</param>
+		/// <typeparam name="T">Result type of the test operation.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithExecutor{T}"/>
 		[Pure]
 		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestOperationState<T> state,

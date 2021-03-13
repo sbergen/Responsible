@@ -4,6 +4,10 @@ using JetBrains.Annotations;
 
 namespace Responsible.Utilities
 {
+	/// <summary>
+	/// Base class for indented string building. Not intended for public use.
+	/// </summary>
+	/// <typeparam name="T">Type of deriving class</typeparam>
 	public abstract class IndentedStringBuilder<T>
 		where T : IndentedStringBuilder<T>
 	{
@@ -14,17 +18,19 @@ namespace Responsible.Utilities
 
 		private T Self => (T)this;
 
+		/// <summary>Converts the content into a string with the specified indentations.</summary>
+		/// <returns>The string representation of the built content.</returns>
 		// Trim out last newline when converting to final string
 		public override string ToString() => this.stringBuilder.ToString(0, this.stringBuilder.Length - 1);
 
-		protected T Add(string content)
+		private protected T Add(string content)
 		{
 			this.stringBuilder.Append(' ', this.indentAmount);
 			this.stringBuilder.AppendLine(content);
 			return this.Self;
 		}
 
-		protected T AddIndented(string content, [CanBeNull] Action<T> contextAdder)
+		private protected T AddIndented(string content, [CanBeNull] Action<T> contextAdder)
 		{
 			this.Add(content);
 			if (contextAdder != null)
@@ -37,13 +43,13 @@ namespace Responsible.Utilities
 			return this.Self;
 		}
 
-		protected T AddToPreviousLine(string addToEndOfPrevious)
+		private protected T AddToPreviousLine(string addToEndOfPrevious)
 		{
 			this.stringBuilder.Insert(this.stringBuilder.Length - 1, addToEndOfPrevious);
 			return this.Self;
 		}
 
-		protected T AddEmptyLine()
+		private protected T AddEmptyLine()
 		{
 			this.stringBuilder.AppendLine(" "); // Add space so Unity doesn't strip it
 			return this.Self;

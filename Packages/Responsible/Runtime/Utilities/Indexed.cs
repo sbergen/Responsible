@@ -3,7 +3,7 @@ using UniRx;
 
 namespace Responsible.Utilities
 {
-	public readonly struct Indexed<T>
+	internal readonly struct Indexed<T>
 	{
 		public readonly T Value;
 		public readonly int Index;
@@ -15,7 +15,7 @@ namespace Responsible.Utilities
 		}
 	}
 
-	public static class Indexed
+	internal static class Indexed
 	{
 		public static Indexed<T> Make<T>(T value, int index)
 			=> new Indexed<T>(value, index);

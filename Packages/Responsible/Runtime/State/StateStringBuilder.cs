@@ -6,8 +6,19 @@ using Responsible.Utilities;
 
 namespace Responsible.State
 {
+	/// <summary>
+	/// Utility class for building string representations of test operation execution states.
+	/// </summary>
 	public class StateStringBuilder : IndentedStringBuilder<StateStringBuilder>
 	{
+		/// <summary>
+		/// Adds details to the state of an operation.
+		/// </summary>
+		/// <param name="details">Details to add, may be multiple lines</param>
+		/// <remarks>
+		/// The input will be split by the newline character,
+		/// and added as separate lines, to respect indentation.
+		/// </remarks>
 		public void AddDetails(string details)
 		{
 			// Respect indentation by splitting to lines
@@ -17,9 +28,16 @@ namespace Responsible.State
 			}
 		}
 
-		public void AddNestedDetails(string details, Action<StateStringBuilder> addNested)
+		/// <summary>
+		/// Adds nested details using indentation.
+		/// This method may be called recursively from <paramref name="addNested"/>
+		/// to add multiple levels of indentation.
+		/// </summary>
+		/// <param name="description">Description of the details.</param>
+		/// <param name="addNested">Action to add more details at an increased indentation level.</param>
+		public void AddNestedDetails(string description, Action<StateStringBuilder> addNested)
 		{
-			this.AddIndented(details, addNested);
+			this.AddIndented(description, addNested);
 		}
 
 		internal static string MakeState(ITestOperationState state)
