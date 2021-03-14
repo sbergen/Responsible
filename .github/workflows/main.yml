@@ -191,8 +191,8 @@ jobs:
           echo "Current version from package.json: ${{ package-version.outputs.prop }}"
           echo "Current version from CHANGELOG.md: ${{ changelog.outputs.version }}"
 
-      - name: 'Check that changelog is up to date with package.json'
-        run: [ ${{ currentVersion.outputs.prop }} = ${{ changelog.outputs.version }} ]
+      - name: Check that changelog is up to date with package.json
+        run: test ${{ currentVersion.outputs.prop }} = ${{ changelog.outputs.version }}
 
       - name: Create tag name
         id: create-tag-name
