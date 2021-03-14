@@ -165,17 +165,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 50
 
-      - name: Get previous tag
-        id: previous-tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1.0.1"
+      - name: Get latest release info
+        id: latest-release
+        uses: thebritican/fetch-latest-release@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Parse version from tag
         id: parse-tag-version
         run: |
-          tag=$(echo ${{ steps.previous-tag.outputs.tag }})
+          tag=$(echo ${{ steps.latest-release.outputs.tag_name }})
           echo "::set-output name=version::${tag:1}"
 
       - name: Read current package version
