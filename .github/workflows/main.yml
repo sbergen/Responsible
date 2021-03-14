@@ -164,6 +164,8 @@ jobs:
       tag-name: ${{ steps.create-tag-name.outputs.tag }}
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get previous tag
         id: previous-tag
         uses: "WyriHaximus/github-action-get-previous-tag@v1.0.1"
@@ -207,6 +209,8 @@ jobs:
       needs.version-info.outputs.new-version != needs.version-info.outputs.old-version
 
     steps:
+      - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         name: Download Docs
         with:
