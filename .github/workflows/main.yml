@@ -158,10 +158,10 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      old-version: ${{ parse-tag-version.outputs.version }}
-      new-version: ${{ package-version.outputs.prop }}
-      changelog-body: ${{ changelog.outputs.changes }}
-      tag-name: ${{ create-tag-name.outputs.tag }}
+      old-version: ${{ steps.parse-tag-version.outputs.version }}
+      new-version: ${{ steps.package-version.outputs.prop }}
+      changelog-body: ${{ steps.changelog.outputs.changes }}
+      tag-name: ${{ steps.create-tag-name.outputs.tag }}
 
     steps:
       - name: Get previous tag
