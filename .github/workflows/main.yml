@@ -5,9 +5,6 @@ on:
     branches: [ main ]
   pull_request:
 
-env:
-  requestActivation: false
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -28,20 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Request manual activation file
-        if: env.requestActivation == 'true'
-        id: getManualLicenseFile
-        uses: webbertakken/unity-request-manual-activation-file@v2.0-alpha-1
-        with:
-          unityVersion: ${{ matrix.unityVersion }}
-
-      - name: Upload activation atrifact
-        if: env.requestActivation == 'true'
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{ matrix.unityVersion }}
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
-
       - uses: testspace-com/setup-testspace@v1
         with:
           domain: ${{github.repository_owner}}
@@ -53,7 +36,6 @@ jobs:
           key: Library-${{ matrix.unityVersion }}
 
       - name: Run tests
-        if: env.requestActivation == 'false'
         id: tests
         uses: game-ci/unity-test-runner@v2
         env:
@@ -171,3 +153,80 @@ jobs:
           branch: gh-pages
           folder: docfx/docs_site
           dry-run: ${{ github.ref != 'refs/heads/main' }}
+
+  version-info:
+    runs-on: ubuntu-latest
+
+    outputs:
+      old-version: ${{ steps.parse-tag-version.outputs.version }}
+      new-version: ${{ steps.package-version.outputs.prop }}
+      changelog-body: ${{ steps.changelog.outputs.changes }}
+      tag-name: ${{ steps.create-tag-name.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        id: previous-tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1.0.1"
+
+      - name: Parse version from tag
+        id: parse-tag-version
+        run: |
+          tag=$(echo ${{ steps.previous-tag.outputs.tag }})
+          echo "::set-output name=version::${tag:1}"
+
+      - name: Read current package version
+        id: package-version
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: Packages/Responsible/package.json
+          prop_path: 'version'
+
+      - name: Get latest changelog entry
+        id: changelog
+        uses: mindsers/changelog-reader-action@v2
+
+      - name: Output status
+        run: |
+          echo "Previous version from tags: ${{ steps.parse-tag-version.outputs.version }}"
+          echo "Current version from package.json: ${{ steps.package-version.outputs.prop }}"
+          echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
+
+      - name: Check that changelog is up to date with package.json
+        run: test ${{ steps.package-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
+
+      - name: Create tag name
+        id: create-tag-name
+        run: echo "::set-output name=tag::v${{ steps.package-version.outputs.prop }}"
+
+  release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    needs: [ version-info, docs ]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.version-info.outputs.new-version != needs.version-info.outputs.old-version
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        name: Download Docs
+        with:
+          name: Docs
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ needs.version-info.outputs.changelog-body }}
+          tag_name: ${{ needs.version-info.outputs.tag-name }}
+          files: Docs.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+
+        
+
+        
