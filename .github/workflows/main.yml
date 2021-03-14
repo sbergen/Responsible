@@ -217,12 +217,17 @@ jobs:
         name: Download Docs
         with:
           name: Docs
+      
+      - name: Zip package
+        run: cd Packages && zip -r ../Responsible.zip Responsible
 
       - uses: softprops/action-gh-release@v1
         with:
           body: ${{ needs.version-info.outputs.changelog-body }}
           tag_name: ${{ needs.version-info.outputs.tag-name }}
-          files: Docs.zip
+          files: |
+            Docs.zip
+            Responsible.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
