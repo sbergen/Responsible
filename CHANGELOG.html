@@ -83,6 +83,11 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased"><a href="https://github.com/sbergen/Responsible/compare/v2.0.0...HEAD">Unreleased</a></h2>
+<h2 id="301---2021-03-14">[3.0.1] - 2021-03-14</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix inclusion of documentation in releases, no changes in the library itself.</li>
+</ul>
 <h2 id="300---2021-03-14">[3.0.0] - 2021-03-14</h2>
 <h3 id="added">Added</h3>
 <ul>
@@ -106,7 +111,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Splits <code>WaitForCoroutine</code> to two versions: <code>WaitForCoroutine</code> and <code>WaitForCoroutineMethod</code>.</li>
 </ul>
 <h2 id="120---2020-12-02"><a href="https://github.com/sbergen/Responsible/releases/tag/v1.2.0">1.2.0</a> - 2020-12-02</h2>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Fix source context of <code>Responsible.Do</code> (<code>&quot;DoAndReturn&quot;</code> -&gt; <code>&quot;Do&quot;</code>)</li>
 <li>Show canceled wait conditions as canceled instead of running in output. A wait may get canceled e.g. as part of an optional test responder.</li>
@@ -123,7 +128,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Allows executing <code>ITestOperationState</code> using <code>ToYieldInstruction/Observable</code>, allowing you to log the state while executing it.</li>
 <li>Sample project with sample tests.</li>
 </ul>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Add context to output when <code>ExpectWithinSeconds</code> times out.</li>
 <li>Fix referential transparency of <code>WaitForConstraint</code>: <code>IResolveConstraint.Resolve()</code> can mutate the condition and produce weird results when called multiple times.</li>
