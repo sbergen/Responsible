@@ -34,7 +34,7 @@
         "_disableContribution": true
       },
       "markdownEngineName": "markdig",
-      "dest": "docs_site",
+      "dest": "docs_site/ResponsibleDocs",
       "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
       "template": [ "statictoc" ]
     }
