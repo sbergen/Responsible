@@ -20,14 +20,14 @@
         },
         {
           "files": [ "*.md", "toc.yml" ]
+        },
+        {
+          "files": [ "CHANGELOG.md" ],
+          "src": "../"
         }
       ],
       "overwrite": [ "namespaces/**.md" ],
-      "resource": [
-        {
-          "files": [ ]
-        }
-      ],
+      "resource": [],
       "globalMetadata": {
         "_appTitle": "Responsible",
         "_enableSearch": false,
