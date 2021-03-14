@@ -4,3 +4,7 @@
   href: design.md
 - name: API Documentation
   href: obj/api/
+- name: Changelog
+  href: ../CHANGELOG.md
+- name: Responsible on GitHub
+  href: https://github.com/sbergen/Responsible
