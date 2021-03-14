@@ -187,12 +187,12 @@ jobs:
 
       - name: Output status
         run: |
-          echo "Previous version from tags: ${{ parse-tag-version.outputs.version }}"
-          echo "Current version from package.json: ${{ package-version.outputs.prop }}"
-          echo "Current version from CHANGELOG.md: ${{ changelog.outputs.version }}"
+          echo "Previous version from tags: ${{ steps.parse-tag-version.outputs.version }}"
+          echo "Current version from package.json: ${{ steps.package-version.outputs.prop }}"
+          echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
 
       - name: Check that changelog is up to date with package.json
-        run: test ${{ currentVersion.outputs.prop }} = ${{ changelog.outputs.version }}
+        run: test ${{ steps.package-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
 
       - name: Create tag name
         id: create-tag-name
