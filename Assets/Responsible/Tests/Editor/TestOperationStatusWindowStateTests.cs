@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Responsible.Editor;
 using Responsible.State;
 using UniRx;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 namespace Responsible.Tests.Editor
@@ -56,7 +53,6 @@ namespace Responsible.Tests.Editor
 					{
 						Assert.IsNull(this.PreviousOperation, "Should have only one previous operation");
 						this.PreviousOperation = label.text;
-						continue;
 					}
 					else if (foundCurrentTitle)
 					{

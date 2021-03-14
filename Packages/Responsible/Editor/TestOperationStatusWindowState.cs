@@ -53,8 +53,9 @@ namespace Responsible.Editor
 				}
 				else
 				{
-					previousOperationLabel.text = this.stateLabels[i].state.ToString();
-					currentOperations.Remove(this.stateLabels[i].label);
+					var label = this.stateLabels[i].label;
+					previousOperationLabel.text = state.ToString();
+					currentOperations.Remove(label);
 					this.stateLabels.RemoveAt(i);
 				}
 			}
