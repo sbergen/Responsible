@@ -176,9 +176,9 @@ jobs:
      runs-on: ubuntu-latest
 
      steps:
+      - uses: actions/checkout@v2
+
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
-        with:
-          validation_depth: 5
 
