@@ -196,7 +196,7 @@ jobs:
 
       - name: Create tag name
         id: create-tag-name
-        run: echo "::set-output name=tag::v${{ package-version.outputs.prop }}"
+        run: echo "::set-output name=tag::v${{ steps.package-version.outputs.prop }}"
 
   release:
     runs-on: ubuntu-latest
