@@ -151,7 +151,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
-          folder: docfx/docs_site
+          folder: docfx/docs_site/ResponsibleDocs
           dry-run: ${{ github.ref != 'refs/heads/main' }}
 
   version-info:
@@ -218,20 +218,18 @@ jobs:
         with:
           name: Docs
       
-      - name: Zip package
-        run: cd Packages && zip -r ../Responsible.zip Responsible
+      - name: Zip files
+        run: |
+          pushd Packages && zip -r ../Responsible.zip Responsible && popd
+          zip -r ResponsibleDocs.zip ResponsibleDocs
 
       - uses: softprops/action-gh-release@v1
         with:
+          fail_on_unmatched_files: true
           body: ${{ needs.version-info.outputs.changelog-body }}
           tag_name: ${{ needs.version-info.outputs.tag-name }}
           files: |
-            Docs.zip
+            ResponsibleDocs.zip
             Responsible.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-
-        
-
-        
