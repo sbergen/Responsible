@@ -171,3 +171,14 @@ jobs:
           branch: gh-pages
           folder: docfx/docs_site
           dry-run: ${{ github.ref != 'refs/heads/main' }}
+
+  changelog:
+     runs-on: ubuntu-latest
+
+     steps:
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          validation_depth: 5
+
