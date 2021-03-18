@@ -22,3 +22,8 @@ Extensive documentation is available at the
 The online documentation is created from the main branch.
 Starting with version 3.0.1, the documentation for specific versions is also available as static HTML 
 in [releases](https://github.com/sbergen/Responsible/releases).
+
+## Questions? Ideas?
+
+If you have any questions or ideas, don't hesitate to head over to the
+[GitHub Discussions](https://github.com/sbergen/Responsible/discussions)!
