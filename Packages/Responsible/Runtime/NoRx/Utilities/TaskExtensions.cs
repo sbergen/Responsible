@@ -1,29 +1,47 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Responsible.Utilities
+namespace Responsible.NoRx.Utilities
 {
 	internal static class TaskExtensions
 	{
-		public static async Task<T> TimeoutAfter<T>(
-			this Task<T> task,
-			TimeSpan timeout,
+		public static async Task<T> Amb<T>(
+			this IEnumerable<Func<CancellationToken, Task<T>>> taskFactories,
 			CancellationToken cancellationToken)
 		{
-			// Cancel timeout task when either the whole task is canceled, completed or faulted
-			using var timeoutCtsSource = new CancellationTokenSource();
-			using var _ = cancellationToken.Register(timeoutCtsSource.Cancel);
+			var allTasks = taskFactories
+				.Select(factory =>
+				{
+					var ctsSource = new CancellationTokenSource();
+					var task = factory(ctsSource.Token);
+					return (ctsSource, task);
+				})
+				.ToList();
 
-			if (task == await Task.WhenAny(task, Task.Delay(timeout, timeoutCtsSource.Token)))
+			using (cancellationToken.Register(() =>
 			{
-				timeoutCtsSource.Cancel();
-				return await task;
-			}
-			else
+				foreach (var (ctsSource, _) in allTasks)
+				{
+					ctsSource.Cancel();
+				}
+			}))
 			{
-				throw new TimeoutException();
+				var completedTask = await Task.WhenAny(allTasks.Select(data => data.task));
+
+				foreach (var (ctsSource, task) in allTasks)
+				{
+					if (task != completedTask)
+					{
+						ctsSource.Cancel();
+					}
+
+					ctsSource.Dispose();
+				}
+
+				return await completedTask;
 			}
 		}
 	}

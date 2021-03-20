@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -63,8 +64,9 @@ namespace Responsible.NoRx.TestWaitConditions
 				}
 
 				using (cancellationToken.Register(tcs.SetCanceled))
-				using (runContext.RegisterPollCallback(CheckCondition))
+				using (runContext.TimeProvider.RegisterPollCallback(CheckCondition))
 				{
+					CheckCondition(); // Complete immediately if already met
 					return await tcs.Task;
 				}
 			}

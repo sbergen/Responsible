@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Responsible.Utilities;
+using Responsible.NoRx.Utilities;
 
 namespace Responsible.NoRx.State
 {

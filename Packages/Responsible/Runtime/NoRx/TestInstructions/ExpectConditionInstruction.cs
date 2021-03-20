@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
-using Responsible.Utilities;
+using Responsible.NoRx.Utilities;
 
 namespace Responsible.NoRx.TestInstructions
 {
@@ -29,12 +29,11 @@ namespace Responsible.NoRx.TestInstructions
 				this.timeout = timeout;
 			}
 
-			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
-			{
-				return this.condition
-					.Execute(runContext, cancellationToken)
-					.TimeoutAfter(this.timeout, cancellationToken);
-			}
+			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
+				runContext.TimeProvider.TimeoutAfter(
+					this.timeout,
+					cancellationToken,
+					ct => this.condition.Execute(runContext, ct));
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddExpectWithin(this, this.timeout, this.condition);

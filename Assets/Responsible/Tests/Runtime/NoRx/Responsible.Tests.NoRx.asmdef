@@ -1,13 +1,13 @@
 {
-    "name": "Responsible.Tests.Runtime",
+    "name": "Responsible.Tests.NoRx",
     "rootNamespace": "",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "UniRx",
-        "Responsible"
+        "Responsible.NoRx",
+        "UnityEngine.TestRunner"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
@@ -15,10 +15,8 @@
         "nunit.framework.dll",
         "NSubstitute.dll"
     ],
-    "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

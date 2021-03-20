@@ -9,21 +9,18 @@ namespace Responsible.NoRx.Context
 	/// </summary>
 	public readonly struct RunContext
 	{
-		private readonly ITimeProvider timeProvider;
-
+		internal readonly ITimeProvider TimeProvider;
 		internal readonly SourceContext SourceContext;
 
-		internal IDisposable RegisterPollCallback(Action action) => this.timeProvider.RegisterPollCallback(action);
-
-		internal WaitContext MakeWaitContext() => new WaitContext(this.timeProvider);
+		internal WaitContext MakeWaitContext() => new WaitContext(this.TimeProvider);
 
 		internal RunContext MakeNested(SourceContext sourceContext)
-			=> new RunContext(this.SourceContext.Append(sourceContext), this.timeProvider);
+			=> new RunContext(this.SourceContext.Append(sourceContext), this.TimeProvider);
 
 		internal RunContext(SourceContext sourceContext, ITimeProvider timeProvider)
 		{
 			this.SourceContext = sourceContext;
-			this.timeProvider = timeProvider;
+			this.TimeProvider = timeProvider;
 		}
 	}
 }

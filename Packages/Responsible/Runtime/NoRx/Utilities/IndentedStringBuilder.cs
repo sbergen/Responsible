@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using JetBrains.Annotations;
 
-namespace Responsible.Utilities
+namespace Responsible.NoRx.Utilities
 {
 	/// <summary>
 	/// Base class for indented string building. Not intended for public use.

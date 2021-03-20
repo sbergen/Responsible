@@ -1,6 +1,6 @@
 using System;
 
-namespace Responsible.Utilities
+namespace Responsible.NoRx.Utilities
 {
 	internal static class Disposable
 	{

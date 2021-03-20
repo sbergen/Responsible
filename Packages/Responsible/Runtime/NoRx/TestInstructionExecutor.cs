@@ -12,7 +12,7 @@ using Responsible.NoRx.State;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Responsible
+namespace Responsible.NoRx
 {
 	/// <summary>
 	/// Handles execution of test instruction and intercepting logged errors during test execution.
@@ -61,13 +61,25 @@ namespace Responsible
 			SourceContext sourceContext)
 		{
 			var runContext = new RunContext(sourceContext, this.timeProvider);
-			using var ctsSource = new CancellationTokenSource();
+			using var mainTokenSource = new CancellationTokenSource();
+			using var errorTokenSource = new CancellationTokenSource();
 
 			try
 			{
-				return await await Task.WhenAny(
-					this.InterceptErrors<T>(ctsSource.Token),
-					rootState.Execute(runContext, ctsSource.Token));
+				var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
+				var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
+
+				var completedTask = await Task.WhenAny(errorsTask, mainTask);
+				if (completedTask == mainTask)
+				{
+					errorTokenSource.Cancel();
+				}
+				else
+				{
+					mainTokenSource.Cancel();
+				}
+
+				return await completedTask;
 			}
 			catch (Exception e)
 			{
@@ -83,10 +95,6 @@ namespace Responsible
 				this.logger.Log(logType, message);
 
 				throw new AssertionException(message, e);
-			}
-			finally
-			{
-				ctsSource.Cancel();
 			}
 		}
 

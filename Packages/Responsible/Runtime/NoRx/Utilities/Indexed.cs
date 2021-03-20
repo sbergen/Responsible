@@ -1,4 +1,4 @@
-namespace Responsible.Utilities
+namespace Responsible.NoRx.Utilities
 {
 	internal readonly struct Indexed<T>
 	{
