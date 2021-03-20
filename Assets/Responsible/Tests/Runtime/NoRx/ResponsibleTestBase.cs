@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Responsible.NoRx;
 using Responsible.Tests.Runtime.NoRx.Utilities;
 using UnityEngine;
-using static Responsible.Responsibly;
+using static Responsible.NoRx.Responsibly;
 
 namespace Responsible.Tests.Runtime.NoRx
 {

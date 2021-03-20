@@ -1,12 +1,11 @@
 using System;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using Responsible.NoRx;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
 using Responsible.NoRx.TestWaitConditions;
 
-namespace Responsible
+namespace Responsible.NoRx
 {
 	/// <summary>
 	/// Main class for constructing primitive wait conditions and instructions,
