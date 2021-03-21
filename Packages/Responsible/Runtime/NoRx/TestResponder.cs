@@ -55,7 +55,6 @@ namespace Responsible.NoRx
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
 			new AnyOfResponder<T>(new[] { responder });
 
-		/*
 		/// <summary>
 		/// Applies a selector to the result of a test responder when the responder completes,
 		/// transforming the result type to another type.
@@ -80,7 +79,6 @@ namespace Responsible.NoRx
 				responder,
 				selector,
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
-				*/
 
 		/// <summary>
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
