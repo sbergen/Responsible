@@ -45,5 +45,11 @@ namespace Responsible.Tests.Runtime
 			this.TimeProvider = new TestTimeProvider();
 			this.Executor = new TestInstructionExecutor(this.TimeProvider, logger: this.Logger);
 		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			this.Executor.Dispose();
+		}
 	}
 }

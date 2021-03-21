@@ -21,7 +21,7 @@ namespace Responsible
 	/// It is recommended to use a base class for your tests using Responsible,
 	/// which sets up and disposes the test instruction executor.
 	/// </remarks>
-	public class TestInstructionExecutor
+	public class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
@@ -29,6 +29,7 @@ namespace Responsible
 		private static readonly SafeIterationList<Action<TestOperationStateNotification>> NotificationCallbacks =
 			new SafeIterationList<Action<TestOperationStateNotification>>();
 
+		private readonly CancellationTokenSource mainCancellationTokenSource = new CancellationTokenSource();
 		private readonly List<(LogType type, Regex regex)> expectedLogs = new List<(LogType, Regex)>();
 		private readonly ILogger logger;
 		private readonly ITimeProvider timeProvider;
@@ -60,6 +61,15 @@ namespace Responsible
 			this.logger = logger ?? Debug.unityLogger;
 		}
 
+		public virtual void Dispose()
+		{
+			// Ensure that nothing is left hanging.
+			// If the executor is used sloppily, it's possible to otherwise
+			// leave e.g. static Unity log event subscriptions hanging.
+			this.mainCancellationTokenSource.Cancel();
+			this.mainCancellationTokenSource.Dispose();
+		}
+
 		/// <summary>
 		/// Expect a log message during execution of any subsequent test instructions.
 		/// Similar to <see cref="LogAssert.Expect(LogType, Regex)"/>,
@@ -82,8 +92,10 @@ namespace Responsible
 			CancellationToken cancellationToken)
 		{
 			var runContext = new RunContext(sourceContext, this.timeProvider);
-			using (var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
-			using (var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+			using (var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+				cancellationToken, this.mainCancellationTokenSource.Token))
+			using (var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+				cancellationToken, this.mainCancellationTokenSource.Token))
 			{
 				try
 				{
@@ -169,7 +181,7 @@ namespace Responsible
 				else
 				{
 					LogAssert.Expect(type, condition);
-					completionSource.TrySetException(new UnhandledLogMessageException(condition));
+					completionSource.SetException(new UnhandledLogMessageException(condition));
 				}
 			}
 
@@ -182,7 +194,7 @@ namespace Responsible
 				}
 			}
 
-			using (token.Register(() => completionSource.TrySetCanceled()))
+			using (token.Register(() => completionSource.SetCanceled()))
 			{
 				Application.logMessageReceived += LogHandler;
 				try

@@ -4,7 +4,7 @@ using Object = UnityEngine.Object;
 
 namespace Responsible.Unity
 {
-	public class UnityTestInstructionExecutor : TestInstructionExecutor, IDisposable
+	public class UnityTestInstructionExecutor : TestInstructionExecutor
 	{
 		private readonly UnityTimeProvider timeProvider;
 
@@ -19,9 +19,10 @@ namespace Responsible.Unity
 		{
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			Object.DestroyImmediate(this.timeProvider.gameObject);
+			base.Dispose();
 		}
 
 		private static UnityTimeProvider CreateTimeProvider()
