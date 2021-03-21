@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Responsible.NoRx.Utilities
 {
 	internal readonly struct Indexed<T>
@@ -16,6 +18,16 @@ namespace Responsible.NoRx.Utilities
 	{
 		public static Indexed<T> Make<T>(T value, int index)
 			=> new Indexed<T>(value, index);
+
+		public static async Task<Indexed<T>> WithIndex<T>(
+			this Task<T> source,
+			int index)
+			=> new Indexed<T>(await source, index);
+
+		public static async Task<Indexed<T>> WithIndexFrom<T, TIndexed>(
+			this Task<T> source,
+			Indexed<TIndexed> indexed)
+			=> Make(await source, indexed.Index);
 
 		public static T[] AssignToArray<T>(T[] array, Indexed<T> indexed)
 		{
