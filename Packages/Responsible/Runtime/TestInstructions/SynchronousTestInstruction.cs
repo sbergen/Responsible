@@ -1,7 +1,8 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestInstructions
 {
@@ -24,17 +25,8 @@ namespace Responsible.TestInstructions
 				this.action = action;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
-			{
-				try
-				{
-					return Observable.Return(this.action());
-				}
-				catch (Exception e)
-				{
-					return Observable.Throw<T>(e);
-				}
-			});
+			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+				=> Task.FromResult(this.action());
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddInstruction(this, this.description);

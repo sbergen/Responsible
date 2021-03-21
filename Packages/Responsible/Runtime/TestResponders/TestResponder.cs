@@ -1,7 +1,8 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestResponders
 {
@@ -37,11 +38,15 @@ namespace Responsible.TestResponders
 				this.makeInstruction = makeInstruction;
 			}
 
-			protected override IObservable<ITestOperationState<T>> ExecuteInner(RunContext runContext) =>
-				this.waitCondition
-					.Execute(runContext)
-					.Select(arg => this.makeInstruction(arg).CreateState())
-					.Do(instruction => this.InstructionState = instruction);
+			protected override async Task<ITestOperationState<T>> ExecuteInner(
+				RunContext runContext,
+				CancellationToken cancellationToken)
+			{
+				var waitResult = await this.waitCondition.Execute(runContext, cancellationToken);
+				var instruction = this.makeInstruction(waitResult).CreateState();
+				this.InstructionState = instruction;
+				return instruction;
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddResponder(this);
 		}

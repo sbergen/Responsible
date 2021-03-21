@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using NUnit.Framework.Constraints;
@@ -7,7 +6,6 @@ using Responsible.Context;
 using Responsible.State;
 using Responsible.TestInstructions;
 using Responsible.TestWaitConditions;
-using UniRx;
 
 namespace Responsible
 {
@@ -22,20 +20,6 @@ namespace Responsible
 	/// </remarks>
 	public static partial class Responsibly
 	{
-		/// <summary>
-		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
-		/// and check <paramref name="condition"/> on the returned object.
-		/// Will complete once the condition returns true,
-		/// returning the last value returned by <paramref name="getObject"/>.
-		/// </summary>
-		/// <returns>
-		/// A wait condition, which completes with the value last returned from <paramref name="getObject"/>,
-		/// when <paramref name="condition"/> returns true for it.
-		/// </returns>
-		/// <param name="getObject">Function that returns the object to test <paramref name="condition"/> on.</param>
-		/// <param name="condition">Condition to check with the return value of <paramref name="getObject"/>.</param>
-		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T1, T2}"/>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConditionOn<T>(
 			string description,
@@ -52,27 +36,17 @@ namespace Responsible
 				extraContext,
 				new SourceContext(nameof(WaitForConditionOn), memberName, sourceFilePath, sourceLineNumber));
 
-		/// <summary>
-		/// Constructs a wait condition, which will poll a condition,
-		/// and complete once the condition returns true.
-		/// </summary>
-		/// <returns>
-		/// A wait condition which completes with <see cref="Unit.Default"/>
-		/// once <paramref name="condition"/> returns true.
-		/// </returns>
-		/// <param name="condition">Condition to wait for, will be polled on every frame.</param>
-		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T}"/>
 		[Pure]
-		public static ITestWaitCondition<Unit> WaitForCondition(
+		public static ITestWaitCondition<Nothing> WaitForCondition(
 			string description,
 			Func<bool> condition,
 			Action<StateStringBuilder> extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Unit>(
+			=> new PollingWaitCondition<Nothing>(
 				description,
-				() => Unit.Default,
+				() => Nothing.Default,
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
@@ -111,60 +85,14 @@ namespace Responsible
 				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a wait condition, which will start the provided coroutine when executed.
-		/// Will complete when the coroutine has terminated.
-		/// See also <seealso cref="WaitForCoroutineMethod"/>.
-		/// </summary>
-		/// <returns>Wait condition, which completes once the coroutine has terminated.</returns>
-		/// <remarks>
-		///	May be used with local functions and lambdas, as the description is manually provided.
-		/// </remarks>
-		/// <param name="startCoroutine">Function to start the coroutine to be waited for.</param>
-		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
-		[Pure]
-		public static ITestWaitCondition<Unit> WaitForCoroutine(
-			string description,
-			Func<IEnumerator> startCoroutine,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-		=> new CoroutineWaitCondition(
-			description,
-			startCoroutine,
-			new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
-		/// Constructs a wait condition, which will start the provided coroutine when executed.
-		/// Will complete when the coroutine has terminated.
-		/// The description will be the coroutine method name.
-		/// See also <seealso cref="WaitForCoroutine"/>.
-		/// </summary>
-		/// <returns>Wait condition, which completes once the coroutine has terminated.</returns>
-		/// <param name="coroutineMethod">Method to start the coroutine to be waited for.</param>
-		/// <remarks>
-		/// If used with a lambda or local function, you will get a weird compiler-generated description.
-		/// </remarks>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
-		[Pure]
-		public static ITestWaitCondition<Unit> WaitForCoroutineMethod(
-			Func<IEnumerator> coroutineMethod,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new CoroutineWaitCondition(
-				coroutineMethod.Method.Name,
-				coroutineMethod,
-				new SourceContext(nameof(WaitForCoroutineMethod), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
-		/// Constructs a test instruction, which will complete with <see cref="Unit.Default"/>
+		/// Constructs a test instruction, which will complete with <see cref="Nothing.Default"/>
 		/// after <paramref name="seconds"/> seconds have passed.
 		/// </summary>
 		/// <param name="seconds">Seconds to wait for.</param>
 		/// <returns>Test instruction which completes after <paramref name="seconds"/> seconds.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]
-		public static ITestInstruction<Unit> WaitForSeconds(
+		public static ITestInstruction<Nothing> WaitForSeconds(
 			double seconds,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
@@ -182,7 +110,7 @@ namespace Responsible
 		/// <returns>Test instruction which completes after <paramref name="frames"/> whole frames.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]
-		public static ITestInstruction<Unit> WaitForFrames(
+		public static ITestInstruction<Nothing> WaitForFrames(
 			int frames,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
@@ -190,32 +118,6 @@ namespace Responsible
 			=> new WaitForFramesInstruction(
 				frames,
 				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
-		/// Constructs a wait condition, which will subscribe to <paramref name="observable"/> and complete
-		/// with its last value, once it has completed.
-		/// Will complete with an error if the observable completes empty, or with an error.
-		/// </summary>
-		/// <returns>
-		/// Wait condition that completes with the last value of <paramref name="observable"/> when it completes.
-		/// </returns>
-		/// <remarks>
-		/// You can use e.g. the <c>Take</c> operator on an observable to complete earlier.
-		/// </remarks>
-		/// <param name="observable">The observable who's completion will be waited for.</param>
-		/// <typeparam name="T">Result type of <paramref name="observable"/> and the returned wait condition.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
-		[Pure]
-		public static ITestWaitCondition<T> WaitForLast<T>(
-			string description,
-			IObservable<T> observable,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new ObservableWaitCondition<T>(
-				description,
-				observable,
-				new SourceContext(nameof(WaitForLast), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Wait for all conditions to complete, and return their results as an array.

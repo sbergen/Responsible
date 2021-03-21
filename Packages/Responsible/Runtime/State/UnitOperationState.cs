@@ -1,28 +1,31 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
-using UniRx;
 
 namespace Responsible.State
 {
 	/// <summary>
-	/// Converts to unit-something. Difference to Select is that no source context is required,
+	/// Converts to Nothing. Difference to Select is that no source context is required,
 	/// as this is assumed to be safe. The description is just forwarded.
 	/// </summary>
-	internal class UnitOperationState<T, TUnit> : TestOperationState<TUnit>
+	internal class NothingOperationState<T, TNothing> : TestOperationState<TNothing>
 	{
 		private readonly ITestOperationState<T> state;
-		private readonly Func<T, TUnit> unitSelector;
+		private readonly Func<T, TNothing> nothingSelector;
 
-		public UnitOperationState(ITestOperationState<T> state, Func<T, TUnit> unitSelector)
+		public NothingOperationState(ITestOperationState<T> state, Func<T, TNothing> nothingSelector)
 			: base(null)
 		{
 			this.state = state;
-			this.unitSelector = unitSelector;
+			this.nothingSelector = nothingSelector;
 		}
 
-		protected override IObservable<TUnit> ExecuteInner(RunContext runContext) => this.state
-			.Execute(runContext)
-			.Select(this.unitSelector);
+		protected override async Task<TNothing> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+		{
+			var result = await this.state.Execute(runContext, cancellationToken);
+			return this.nothingSelector(result);
+		}
 
 		public override void BuildDescription(StateStringBuilder builder) => this.state.BuildDescription(builder);
 	}

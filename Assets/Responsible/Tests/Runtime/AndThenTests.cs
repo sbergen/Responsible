@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using Responsible.NoRx;
-using static Responsible.NoRx.Responsibly;
+using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime

@@ -2,9 +2,8 @@ using System;
 using System.Text.RegularExpressions;
 using NSubstitute;
 using NUnit.Framework;
-using Responsible.NoRx;
 using UnityEngine;
-using static Responsible.NoRx.Responsibly;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {

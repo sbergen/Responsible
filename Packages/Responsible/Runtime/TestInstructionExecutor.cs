@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -19,62 +21,36 @@ namespace Responsible
 	/// It is recommended to use a base class for your tests using Responsible,
 	/// which sets up and disposes the test instruction executor.
 	/// </remarks>
-	public class TestInstructionExecutor : IDisposable
+	public class TestInstructionExecutor
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
 
-		private static readonly Subject<TestOperationStateNotification> StateNotificationsSubject =
-			new Subject<TestOperationStateNotification>();
+		private static readonly SafeIterationList<Action<TestOperationStateNotification>> NotificationCallbacks =
+			new SafeIterationList<Action<TestOperationStateNotification>>();
 
 		private readonly List<(LogType type, Regex regex)> expectedLogs = new List<(LogType, Regex)>();
-		private readonly IDisposable pollSubscription;
 		private readonly ILogger logger;
-		private readonly IScheduler scheduler;
-		private readonly IObservable<Unit> pollObservable;
+		private readonly ITimeProvider timeProvider;
 
-		/// <summary>Notifications for started and finished test operations.</summary>
-		/// <value>Observable for test operation state notification.</value>
+		/// <summary>
+		/// Will call <paramref name="callback"/> when operations start or finish.
+		/// </summary>
+		/// <param name="callback">Callback to call when an operation starts or finishes.</param>
+		/// <returns>A disposable, which will remove the callback when disposed.</returns>
 		/// <remarks>
 		/// Static, so that Unity EditorWindows can access it.
 		/// Used by the test operation window available at "Window/Responsible/Operation State".
 		/// </remarks>
-		public static IObservable<TestOperationStateNotification> StateNotifications => StateNotificationsSubject;
+		public static IDisposable SubscribeToStates(Action<TestOperationStateNotification> callback)
+			=> NotificationCallbacks.Add(callback);
 
-		/// <summary>
-		/// Constructs a new test instruction executor.
-		/// </summary>
-		/// <param name="scheduler">
-		/// Optional scheduler override. <see cref="Scheduler.MainThread"/> is used by default.
-		/// </param>
-		/// <param name="pollObservable">
-		/// Optional poll observable override. <see cref="Observable.EveryUpdate"/> is used by default.
-		/// </param>
-		/// <param name="logger">
-		/// Optional logger override. <see cref="Debug.unityLogger"/> is used by default.
-		/// </param>
 		public TestInstructionExecutor(
-			IScheduler scheduler = null,
-			IObservable<Unit> pollObservable = null,
+			ITimeProvider timeProvider,
 			ILogger logger = null)
 		{
-			this.scheduler = scheduler ?? Scheduler.MainThread;
+			this.timeProvider = timeProvider;
 			this.logger = logger ?? Debug.unityLogger;
-			pollObservable = pollObservable ?? Observable.EveryUpdate().AsUnitObservable();
-
-			// Workaround for how EveryUpdate works in Unity.
-			// When nobody is subscribed to it, there will be a one-frame delay on the next Subscribe.
-			var pollSubject = new Subject<Unit>();
-			this.pollObservable = pollSubject;
-			this.pollSubscription = pollObservable.Subscribe(pollSubject);
-		}
-
-		/// <summary>
-		/// Disposes the executor. Should be called after finishing with tests.
-		/// </summary>
-		public void Dispose()
-		{
-			this.pollSubscription.Dispose();
 		}
 
 		/// <summary>
@@ -93,16 +69,36 @@ namespace Responsible
 			this.expectedLogs.Add((logType, regex));
 		}
 
-		internal IObservable<T> RunInstruction<T>(
+		internal async Task<T> RunInstruction<T>(
 			ITestOperationState<T> rootState,
-			SourceContext sourceContext)
+			SourceContext sourceContext,
+			CancellationToken cancellationToken)
 		{
-			var runContext = new RunContext(sourceContext, this.scheduler, this.pollObservable);
-			return Observable
-				.Amb(
-					this.InterceptErrors<T>(),
-					rootState.Execute(runContext))
-				.Catch((Exception e) =>
+			var runContext = new RunContext(sourceContext, this.timeProvider);
+			using (var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+			using (var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+			{
+				try
+				{
+					NotificationCallbacks.ForEach(cb =>
+						cb(new TestOperationStateNotification.Started(rootState)));
+
+					var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
+					var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
+
+					var completedTask = await Task.WhenAny(errorsTask, mainTask);
+					if (completedTask == mainTask)
+					{
+						errorTokenSource.Cancel();
+					}
+					else
+					{
+						mainTokenSource.Cancel();
+					}
+
+					return await completedTask;
+				}
+				catch (Exception e)
 				{
 					var message = e is TimeoutException
 						? MakeTimeoutMessage(rootState)
@@ -115,12 +111,14 @@ namespace Responsible
 						: LogType.Error;
 					this.logger.Log(logType, message);
 
-					return Observable.Throw<T>(new AssertionException(message, e));
-				})
-				.DoOnSubscribe(() => StateNotificationsSubject.OnNext(
-					new TestOperationStateNotification.Started(rootState)))
-				.Finally(() => StateNotificationsSubject.OnNext(
-					new TestOperationStateNotification.Finished(rootState)));
+					throw new AssertionException(message, e);
+				}
+				finally
+				{
+					NotificationCallbacks.ForEach(cb =>
+						cb(new TestOperationStateNotification.Finished(rootState)));
+				}
+			}
 		}
 
 		[Pure]
@@ -146,32 +144,49 @@ namespace Responsible
 			};
 
 		// Intercept errors respecting and not toggling the globally mutable (yuck) LogAssert.ignoreFailingMessages
-		[Pure]
-		private IObservable<T> InterceptErrors<T>() => Observable
-			.FromEvent<Application.LogCallback, (string condition, string stackTrace, LogType logType)>(
-				action => (condition, stackTrace, type) => action((condition, stackTrace, type)),
-				handler => Application.logMessageReceived += handler,
-				handler => Application.logMessageReceived -= handler)
-			.Where(data =>
-				!LogAssert.ignoreFailingMessages &&
-				data.logType != LogType.Log && data.logType != LogType.Warning)
-			// Side-effects below!
-			.SelectMany(data =>
+		private async Task<T> InterceptErrors<T>(CancellationToken token)
+		{
+			var completionSource = new TaskCompletionSource<T>();
+
+			void HandleSingleLog(string condition, LogType type)
 			{
 				var index = this.expectedLogs.FindIndex(entry =>
-					entry.type == data.logType &&
-					entry.regex.IsMatch(data.condition));
+					entry.type == type &&
+					entry.regex.IsMatch(condition));
+
 				if (index >= 0)
 				{
 					// Already expected, just remove it
 					this.expectedLogs.RemoveAt(index);
-					return Observable.Empty<T>();
 				}
 				else
 				{
-					LogAssert.Expect(data.logType, data.condition);
-					return Observable.Throw<T>(new UnhandledLogMessageException(data.condition));
+					LogAssert.Expect(type, condition);
+					completionSource.TrySetException(new UnhandledLogMessageException(condition));
 				}
-			});
+			}
+
+			void LogHandler(string condition, string _, LogType type)
+			{
+				if (!LogAssert.ignoreFailingMessages &&
+					(type == LogType.Error || type == LogType.Exception))
+				{
+					HandleSingleLog(condition, type);
+				}
+			}
+
+			using (token.Register(() => completionSource.TrySetCanceled()))
+			{
+				Application.logMessageReceived += LogHandler;
+				try
+				{
+					return await completionSource.Task;
+				}
+				finally
+				{
+					Application.logMessageReceived -= LogHandler;
+				}
+			}
+		}
 	}
 }

@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestResponders
 {
@@ -32,11 +33,15 @@ namespace Responsible.TestResponders
 				this.sourceContext = sourceContext;
 			}
 
-			protected override IObservable<ITestOperationState<T2>> ExecuteInner(RunContext runContext) =>
-				this.responder
-					.Execute(runContext)
-					.Select(state => new SelectOperationState<T1, T2>(state, this.selector, this.sourceContext))
-					.Do(state => this.selectState = state);
+			protected override async Task<ITestOperationState<T2>> ExecuteInner(
+				RunContext runContext,
+				CancellationToken cancellationToken)
+			{
+				var instructionState = await this.responder.Execute(runContext, cancellationToken);
+				this.selectState = new SelectOperationState<T1, T2>(
+					instructionState, this.selector, this.sourceContext);
+				return this.selectState;
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddSelect<T1, T2>(

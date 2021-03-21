@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
@@ -24,9 +24,9 @@ namespace Responsible.TestWaitConditions
 				this.conditions = conditions.Select(c => c.CreateState()).ToList();
 			}
 
-			protected override IObservable<T[]> ExecuteInner(RunContext runContext) => this.conditions
-				.Select(cond => cond.Execute(runContext))
-				.WhenAll();
+			protected override Task<T[]> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
+				Task.WhenAll(this.conditions
+					.Select(cond => cond.Execute(runContext, cancellationToken)));
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren(

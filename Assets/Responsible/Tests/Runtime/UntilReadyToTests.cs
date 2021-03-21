@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Responsible.NoRx;
 using Responsible.Tests.Runtime.Utilities;
 
 // ReSharper disable AccessToModifiedClosure

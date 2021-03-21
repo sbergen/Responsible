@@ -7,7 +7,7 @@ namespace Responsible
 	/// and <see cref="Responsibly"/> for methods for building basic wait conditions.
 	/// </summary>
 	/// <typeparam name="T">Result type of the wait condition.</typeparam>
-	public interface ITestWaitCondition<out T> : ITestOperation<T>
+	public interface ITestWaitCondition<T> : ITestOperation<T>
 	{
 	}
 }

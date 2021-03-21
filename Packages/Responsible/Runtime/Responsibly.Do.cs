@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.Utilities;
-using UniRx;
 
 namespace Responsible
 {
@@ -35,19 +34,19 @@ namespace Responsible
 		/// <summary>Execute a synchronous action safely, and return <see cref="Unit.Default"/>.</summary>
 		/// <param name="action">Action to call when the test instruction is executed.</param>
 		/// <returns>
-		/// A test instruction which calls <paramref name="action"/> and returns <see cref="Unit.Default"/> when executed.
+		/// A test instruction which calls <paramref name="action"/> and returns true when executed.
 		/// </returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]
-		public static ITestInstruction<Unit> Do(
+		public static ITestInstruction<Nothing> Do(
 			string description,
 			Action action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SynchronousTestInstruction<Unit>(
+			=> new SynchronousTestInstruction<Nothing>(
 				description,
-				action.AsUnitFunc(),
+				action.ReturnNothing(),
 				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

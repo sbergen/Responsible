@@ -1,18 +1,20 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible.State
 {
 	internal class UntilResponderState<T> : TestOperationState<T>
 	{
 		private readonly string untilDescription;
-		private readonly ITestOperationState<ITestOperationState<Unit>> respondTo;
+		private readonly ITestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>> respondTo;
 		private readonly ITestOperationState<T> until;
 
 		public UntilResponderState(
 			string untilDescription,
-			ITestOperationState<ITestOperationState<Unit>> respondTo,
+			ITestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>> respondTo,
 			ITestOperationState<T> until,
 			SourceContext sourceContext)
 			: base(sourceContext)
@@ -22,22 +24,33 @@ namespace Responsible.State
 			this.until = until;
 		}
 
-		protected override IObservable<T> ExecuteInner(RunContext runContext) => Observable.Defer(() =>
+		protected override async Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 		{
-			var replayedResult = new AsyncSubject<T>();
-			var resultSubscription = this.until.Execute(runContext).Subscribe(replayedResult);
+			using (var respondTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+			{
+				var untilTask = this.until
+					.Execute(runContext, cancellationToken)
+					.CancelOnCompletion(respondTokenSource, cancellationToken);
 
-			return this.respondTo
-				.Execute(runContext)
-				// Keep waiting for condition even though the instruction stream completes
-				.Concat(Observable.Never<ITestOperationState<Unit>>())
-				.TakeUntil(replayedResult)
-				.Select(state => state.Execute(runContext))
-				.Concat() // Execute the instructions
-				.SelectMany(_ => Observable.Empty<T>()) // Throw away instruction results
-				.Concat(replayedResult)
-				.Finally(resultSubscription.Dispose);
-		});
+				var responsesSource = await this.respondTo.Execute(runContext, respondTokenSource.Token);
+				var responses = responsesSource.Start(respondTokenSource.Token);
+
+				while (responses.HasNext)
+				{
+					try
+					{
+						var responseInstruction = await responses.AwaitNext();
+						await responseInstruction.Execute(runContext, cancellationToken);
+					}
+					catch (OperationCanceledException)
+					{
+						break;
+					}
+				}
+
+				return await untilTask;
+			}
+		}
 
 		public override void BuildDescription(StateStringBuilder builder) =>
 			builder.AddUntilResponder(

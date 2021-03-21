@@ -3,10 +3,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
-using Responsible.NoRx;
 using UnityEngine;
 using UnityEngine.TestTools;
-using static Responsible.NoRx.Responsibly;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {

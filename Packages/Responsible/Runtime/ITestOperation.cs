@@ -15,7 +15,7 @@ namespace Responsible
 	/// This makes them reusable.
 	/// </summary>
 	/// <typeparam name="T">Result type of the operation.</typeparam>
-	public interface ITestOperation<out T>
+	public interface ITestOperation<T>
 	{
 		/// <summary>
 		/// Creates the state object for a single run of this test operation.

@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
-using UniRx;
+using UnityEngine.UI;
 
 namespace Responsible
 {
@@ -15,63 +17,35 @@ namespace Responsible
 	/// </summary>
 	public static class TestInstruction
 	{
-		/// <summary>
-		/// Constructs an observable, which executes the instruction when subscribed to.
-		/// </summary>
-		/// <returns>A cold observable that runs the instruction when subscribed to.</returns>
-		/// <param name="instruction">The instruction to wrap into an observable.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
-		/// <typeparam name="T">Return type of the test instruction to wrap.</typeparam>
-		/// /// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
-		[Pure]
-		public static IObservable<T> ToObservable<T>(
+		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> executor.RunInstruction(
 				instruction.CreateState(),
-				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
-		/// Starts executing an instruction, and returns a yield instruction which can be awaited,
-		/// using <c>yield return</c> in a Unity coroutine.
-		/// </summary>
-		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
-		/// <param name="instruction">Instruction to execute.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
-		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
-		[Pure]
-		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
-			this ITestInstruction<T> instruction,
-			TestInstructionExecutor executor,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> executor.RunInstruction(
-				instruction.CreateState(),
-				new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber))
-				.ToYieldInstruction();
+				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
+				cancellationToken);
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.
 		/// </summary>
 		/// <returns>
-		/// A test instruction which will complete with <see cref="Unit.Default"/>
+		/// A test instruction which will complete with <see cref="CanvasScaler.Unit.Default"/>
 		/// once all provided instructions have completed, or will fail when any of the instructions fails.
 		/// </returns>
 		/// <param name="instructions">Instructions to sequence.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1}"/>
 		[Pure]
-		public static ITestInstruction<Unit> Sequence(
-			this IEnumerable<ITestInstruction<Unit>> instructions,
+		public static ITestInstruction<Nothing> Sequence(
+			this IEnumerable<ITestInstruction<Nothing>> instructions,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
-				new SequencedTestInstruction<Unit, Unit>(
+				new SequencedTestInstruction<Nothing, Nothing>(
 					sequencedInstructions,
 					nextInstruction,
 					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
@@ -96,7 +70,7 @@ namespace Responsible
 		/// If the instruction fails or is canceled before <paramref name="continuation"/> has been called,
 		/// the description of the second instruction isn't included in the state output, as it is unknown.
 		/// Thus it is better to prefer
-		/// <see cref="ContinueWith{T1,T2}(Responsible.ITestInstruction{T1},Responsible.ITestInstruction{T2},string,string,int)"/>
+		/// <see cref="ContinueWith{T1,T2}(ITestInstruction{T},ITestInstruction{T},string,string,int)"/>
 		/// when possible, which will always also include the description of the second instruction.
 		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
@@ -164,12 +138,12 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
+		/// Converts a test instruction returning any value to one returning <see cref="Nothing"/>.
 		/// Can be useful for example in conjunction with <see cref="Sequence"/>.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
-		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
+		/// but discards its result, and returns <see cref="CanvasScaler.Unit.Default"/> instead.
 		/// </returns>
 		/// <param name="instruction">Instruction to wrap.</param>
 		/// <remarks>
@@ -177,10 +151,10 @@ namespace Responsible
 		/// </remarks>
 		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
-		public static ITestInstruction<Unit> AsUnitInstruction<T>(
+		public static ITestInstruction<Nothing> AsNothingInstruction<T>(
 			this ITestInstruction<T> instruction) =>
-			typeof(T) == typeof(Unit)
-				? (ITestInstruction<Unit>)instruction
-				: new UnitTestInstruction<T>(instruction);
+			typeof(T) == typeof(Nothing)
+				? (ITestInstruction<Nothing>)instruction
+				: new NothingTestInstruction<T>(instruction);
 	}
 }

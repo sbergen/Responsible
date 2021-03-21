@@ -3,7 +3,7 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Responsible.NoRx"
+        "Responsible"
     ],
     "includePlatforms": [
         "Editor"

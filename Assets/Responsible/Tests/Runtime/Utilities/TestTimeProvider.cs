@@ -1,6 +1,5 @@
 using System;
-using Responsible.NoRx;
-using Responsible.NoRx.Utilities;
+using Responsible.Utilities;
 
 namespace Responsible.Tests.Runtime.Utilities
 {

@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.TestResponders;
-using UniRx;
 
 namespace Responsible
 {
@@ -96,10 +95,10 @@ namespace Responsible
 		/// </remarks>
 		/// <typeparam name="T">Return type of the responder to convert.</typeparam>
 		[Pure]
-		public static ITestResponder<Unit> AsUnitResponder<T>(
+		public static ITestResponder<Nothing> AsNothingResponder<T>(
 			this ITestResponder<T> responder) =>
-			typeof(T) == typeof(Unit)
-				? (ITestResponder<Unit>)responder
-				: new UnitTestResponder<T>(responder);
+			typeof(T) == typeof(Nothing)
+				? (ITestResponder<Nothing>)responder
+				: new NothingTestResponder<T>(responder);
 	}
 }
