@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
+using Responsible.Unity;
 using UnityEngine.UI;
 
 namespace Responsible
@@ -17,6 +18,13 @@ namespace Responsible
 	/// </summary>
 	public static class TestInstruction
 	{
+		/// <summary>
+		/// Starts executing the instruction as an async task.
+		/// </summary>
+		/// <returns>A task which will complete with the instructions status.</returns>
+		/// <param name="instruction">The instruction to execute.</param>
+		/// <param name="executor">Executor to use for executing the instruction.</param>
+		/// <typeparam name="T">Return type of the test instruction.</typeparam>
 		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
@@ -28,6 +36,28 @@ namespace Responsible
 				instruction.CreateState(),
 				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
 				cancellationToken);
+
+		/// <summary>
+		/// Starts executing an instruction, and returns a yield instruction which can be awaited,
+		/// using <c>yield return</c> in a Unity coroutine.
+		/// </summary>
+		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
+		/// <param name="instruction">Instruction to execute.</param>
+		/// <param name="executor">Executor to use for executing the instruction.</param>
+		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		[Pure]
+		public static TaskYieldInstruction<T> ToYieldInstruction<T>(
+			this ITestInstruction<T> instruction,
+			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new TaskYieldInstruction<T>(executor.RunInstruction(
+					instruction.CreateState(),
+					new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
+					cancellationToken));
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.
