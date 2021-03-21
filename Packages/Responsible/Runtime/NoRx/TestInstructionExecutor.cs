@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NUnit.Framework;
-using Responsible.NoRx;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
+using Responsible.NoRx.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -26,11 +26,24 @@ namespace Responsible.NoRx
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
 
+		private static readonly SafeIterationList<Action<TestOperationStateNotification>> NotificationCallbacks =
+			new SafeIterationList<Action<TestOperationStateNotification>>();
+
 		private readonly List<(LogType type, Regex regex)> expectedLogs = new List<(LogType, Regex)>();
 		private readonly ILogger logger;
 		private readonly ITimeProvider timeProvider;
 
-		// TODO: add state notifications
+		/// <summary>
+		/// Will call <paramref name="callback"/> when operations start or finish.
+		/// </summary>
+		/// <param name="callback">Callback to call when an operation starts or finishes.</param>
+		/// <returns>A disposable, which will remove the callback when disposed.</returns>
+		/// <remarks>
+		/// Static, so that Unity EditorWindows can access it.
+		/// Used by the test operation window available at "Window/Responsible/Operation State".
+		/// </remarks>
+		public static IDisposable SubscribeToStates(Action<TestOperationStateNotification> callback)
+			=> NotificationCallbacks.Add(callback);
 
 		public TestInstructionExecutor(
 			ITimeProvider timeProvider,
@@ -67,6 +80,9 @@ namespace Responsible.NoRx
 
 			try
 			{
+				NotificationCallbacks.ForEach(cb =>
+					cb(new TestOperationStateNotification.Started(rootState)));
+
 				var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
 				var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
 
@@ -96,6 +112,11 @@ namespace Responsible.NoRx
 				this.logger.Log(logType, message);
 
 				throw new AssertionException(message, e);
+			}
+			finally
+			{
+				NotificationCallbacks.ForEach(cb =>
+					cb(new TestOperationStateNotification.Finished(rootState)));
 			}
 		}
 
