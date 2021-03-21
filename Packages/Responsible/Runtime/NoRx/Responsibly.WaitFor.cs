@@ -102,6 +102,24 @@ namespace Responsible.NoRx
 				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
+		/// Constructs a test instruction, which will complete with <see cref="Unit.Default"/>,
+		/// after the provided amount of **whole** frames.
+		/// Note that zero frames means to wait until the next frame.
+		/// </summary>
+		/// <param name="frames">Whole frames to wait for.</param>
+		/// <returns>Test instruction which completes after <paramref name="frames"/> whole frames.</returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
+		[Pure]
+		public static ITestInstruction<Nothing> WaitForFrames(
+			int frames,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new WaitForFramesInstruction(
+				frames,
+				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
 		/// Wait for all conditions to complete, and return their results as an array.
 		/// Will complete with an error if any of the conditions completes with an error.
 		/// </summary>
