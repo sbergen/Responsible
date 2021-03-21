@@ -48,5 +48,19 @@ namespace Responsible.NoRx
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Wait for all conditions to complete, and return their results as an array.
+		/// Will complete with an error if any of the conditions completes with an error.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which completes with the values of <paramref name="conditions"/>
+		/// once they have all completed.
+		/// </returns>
+		/// <param name="conditions">Conditions to wait on.</param>
+		/// <typeparam name="T">Result type of the conditions to wait on</typeparam>
+		[Pure]
+		public static ITestWaitCondition<T[]> WaitForAllOf<T>(params ITestWaitCondition<T>[] conditions)
+			=> new AllOfWaitCondition<T>(conditions);
 	}
 }
