@@ -4,16 +4,16 @@ namespace Responsible.NoRx.Utilities
 {
 	internal static class ActionExtensions
 	{
-		public static Func<bool> ReturnTrue<T>(this Action<T> action, T arg) => () =>
+		public static Func<Nothing> ReturnNothing<T>(this Action<T> action, T arg) => () =>
 		{
 			action(arg);
-			return true;
+			return default;
 		};
 
-		public static Func<bool> ReturnTrue(this Action action) => () =>
+		public static Func<Nothing> ReturnNothing(this Action action) => () =>
 		{
 			action();
-			return true;
+			return default;
 		};
 	}
 }

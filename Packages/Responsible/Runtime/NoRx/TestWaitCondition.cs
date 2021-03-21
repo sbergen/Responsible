@@ -192,7 +192,7 @@ namespace Responsible.NoRx
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing a synchronous action, returning <see cref="CanvasScaler.Unit.Default"/>.
+		/// and then continue executing a synchronous action, returning <see cref="Nothing"/>.
 		/// Will complete with a failure if the wait condition or action completes with a failure.
 		/// </summary>
 		/// <returns>
@@ -204,19 +204,19 @@ namespace Responsible.NoRx
 		/// <typeparam name="TWait">Result type of the wait condition.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
 		[Pure]
-		public static ITestResponder<bool> ThenRespondWithAction<TWait>(
+		public static ITestResponder<Nothing> ThenRespondWithAction<TWait>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
 			Action<TWait> action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TestResponder<TWait, bool>(
+			=> new TestResponder<TWait, Nothing>(
 				description,
 				condition,
-				waitResult => new SynchronousTestInstruction<bool>(
+				waitResult => new SynchronousTestInstruction<Nothing>(
 					description,
-					action.ReturnTrue(waitResult),
+					action.ReturnNothing(waitResult),
 					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
 

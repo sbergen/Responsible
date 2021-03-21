@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using NUnit.Framework;
 using Responsible.NoRx;
-using UnityEngine.TestTools;
 using static Responsible.NoRx.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -26,7 +24,7 @@ namespace Responsible.Tests.Runtime.NoRx
 				"Ready to execute",
 				() => conditionFulfilled);
 
-			var task = MakeBoolResponder(strategy, condition)
+			var task = MakeNothingResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -45,7 +43,7 @@ namespace Responsible.Tests.Runtime.NoRx
 				"Ready to execute",
 				() => throw new Exception("Test"));
 
-			var task = MakeBoolResponder(strategy, condition)
+			var task = MakeNothingResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -62,18 +60,18 @@ namespace Responsible.Tests.Runtime.NoRx
 			Assert.NotNull(GetAssertionException(task));
 		}
 
-		private static ITestResponder<bool> MakeBoolResponder<TWait>(
+		private static ITestResponder<Nothing> MakeNothingResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:
-					return waitCondition.ThenRespondWith("Respond", x => Return(true));
+					return waitCondition.ThenRespondWith("Respond", x => Return(Nothing.Default));
 				case ConstructionStrategy.Instruction:
-					return waitCondition.ThenRespondWith("Respond", Return(true));
+					return waitCondition.ThenRespondWith("Respond", Return(Nothing.Default));
 				case ConstructionStrategy.Func:
-					return waitCondition.ThenRespondWithFunc("Respond", _ => true);
+					return waitCondition.ThenRespondWithFunc("Respond", _ => Nothing.Default);
 				case ConstructionStrategy.Action:
 					return waitCondition.ThenRespondWithAction("Respond", _ => { });
 				default:
@@ -81,12 +79,12 @@ namespace Responsible.Tests.Runtime.NoRx
 			}
 		}
 
-		private static ITestResponder<bool> MakeErrorResponder<TWait>(
+		private static ITestResponder<Nothing> MakeErrorResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
-			bool ThrowException(TWait _) => throw new Exception("Test");
-			ITestInstruction<bool> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
+			Nothing ThrowException(TWait _) => throw new Exception("Test");
+			ITestInstruction<Nothing> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:

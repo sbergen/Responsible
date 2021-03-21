@@ -38,15 +38,15 @@ namespace Responsible.NoRx
 		/// </returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]
-		public static ITestInstruction<bool> Do(
+		public static ITestInstruction<Nothing> Do(
 			string description,
 			Action action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SynchronousTestInstruction<bool>(
+			=> new SynchronousTestInstruction<Nothing>(
 				description,
-				action.ReturnTrue(),
+				action.ReturnNothing(),
 				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 	}
 }
