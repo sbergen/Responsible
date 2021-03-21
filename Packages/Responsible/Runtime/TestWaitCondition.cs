@@ -70,56 +70,6 @@ namespace Responsible
 				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test instruction,
-		/// which will enforce a timeout on the provided wait condition.
-		/// If the condition isn't met within the timeout, the instruction will complete with an error.
-		/// </summary>
-		/// <returns>
-		/// A test instruction which completes with the result of the condition,
-		/// or a failure if either the timeout is met, or the condition completes with a failure.
-		/// </returns>
-		/// <param name="condition">Wait condition to wait for.</param>
-		/// <param name="timeout">Timeout for waiting for the condition, in seconds.</param>
-		/// <typeparam name="T">Result type of the wait condition, and the returned instruction.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
-		[Pure]
-		public static ITestInstruction<T> ExpectWithinSeconds<T>(
-			this ITestWaitCondition<T> condition,
-			double timeout,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new ExpectConditionInstruction<T>(
-				condition,
-				TimeSpan.FromSeconds(timeout),
-				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
-		/// Applies a selector to the result of a wait condition when the condition completes,
-		/// transforming the result type to another type.
-		/// </summary>
-		/// <param name="condition">A wait condition to apply the selector to.</param>
-		/// <param name="selector">A function to apply to the result of the wait condition.</param>
-		/// <returns>
-		/// A wait condition whose result is the result of invoking
-		/// <paramref name="selector"/> on the result of <paramref name="condition"/>.
-		/// </returns>
-		/// <typeparam name="T1">Return type of the initial wait condition.</typeparam>
-		/// <typeparam name="T2">Return type of the selector and the returned wait condition.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
-		[Pure]
-		public static ITestWaitCondition<T2> Select<T1, T2>(
-			this ITestWaitCondition<T1> condition,
-			Func<T1, T2> selector,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SelectWaitCondition<T1, T2>(
-				condition,
-				selector,
-				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
-
-		/// <summary>
 		/// Constructs a test responder, which will wait for <paramref name="condition"/> to complete,
 		/// construct a test instruction using <paramref name="selector"/>,
 		/// and continue executing the returned instruction.
@@ -243,6 +193,56 @@ namespace Responsible
 					action.ReturnNothing(waitResult),
 					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a test instruction,
+		/// which will enforce a timeout on the provided wait condition.
+		/// If the condition isn't met within the timeout, the instruction will complete with an error.
+		/// </summary>
+		/// <returns>
+		/// A test instruction which completes with the result of the condition,
+		/// or a failure if either the timeout is met, or the condition completes with a failure.
+		/// </returns>
+		/// <param name="condition">Wait condition to wait for.</param>
+		/// <param name="timeout">Timeout for waiting for the condition, in seconds.</param>
+		/// <typeparam name="T">Result type of the wait condition, and the returned instruction.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		[Pure]
+		public static ITestInstruction<T> ExpectWithinSeconds<T>(
+			this ITestWaitCondition<T> condition,
+			double timeout,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new ExpectConditionInstruction<T>(
+				condition,
+				TimeSpan.FromSeconds(timeout),
+				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Applies a selector to the result of a wait condition when the condition completes,
+		/// transforming the result type to another type.
+		/// </summary>
+		/// <param name="condition">A wait condition to apply the selector to.</param>
+		/// <param name="selector">A function to apply to the result of the wait condition.</param>
+		/// <returns>
+		/// A wait condition whose result is the result of invoking
+		/// <paramref name="selector"/> on the result of <paramref name="condition"/>.
+		/// </returns>
+		/// <typeparam name="T1">Return type of the initial wait condition.</typeparam>
+		/// <typeparam name="T2">Return type of the selector and the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
+		[Pure]
+		public static ITestWaitCondition<T2> Select<T1, T2>(
+			this ITestWaitCondition<T1> condition,
+			Func<T1, T2> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new SelectWaitCondition<T1, T2>(
+				condition,
+				selector,
+				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Converts a wait condition returning any value to one returning <see cref="Nothing"/>.

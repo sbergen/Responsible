@@ -20,6 +20,20 @@ namespace Responsible
 	/// </remarks>
 	public static partial class Responsibly
 	{
+		/// <summary>
+		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
+		/// and check <paramref name="condition"/> on the returned object.
+		/// Will complete once the condition returns true,
+		/// returning the last value returned by <paramref name="getObject"/>.
+		/// </summary>
+		/// <returns>
+		/// A wait condition, which completes with the value last returned from <paramref name="getObject"/>,
+		/// when <paramref name="condition"/> returns true for it.
+		/// </returns>
+		/// <param name="getObject">Function that returns the object to test <paramref name="condition"/> on.</param>
+		/// <param name="condition">Condition to check with the return value of <paramref name="getObject"/>.</param>
+		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T1, T2}"/>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConditionOn<T>(
 			string description,
@@ -36,6 +50,16 @@ namespace Responsible
 				extraContext,
 				new SourceContext(nameof(WaitForConditionOn), memberName, sourceFilePath, sourceLineNumber));
 
+		/// <summary>
+		/// Constructs a wait condition, which will poll a condition,
+		/// and complete once the condition returns true.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which completes with <see cref="Unit.Default"/>
+		/// once <paramref name="condition"/> returns true.
+		/// </returns>
+		/// <param name="condition">Condition to wait for, will be polled on every frame.</param>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T}"/>
 		[Pure]
 		public static ITestWaitCondition<Nothing> WaitForCondition(
 			string description,

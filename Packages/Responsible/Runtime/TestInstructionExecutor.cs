@@ -45,6 +45,13 @@ namespace Responsible
 		public static IDisposable SubscribeToStates(Action<TestOperationStateNotification> callback)
 			=> NotificationCallbacks.Add(callback);
 
+		/// <summary>
+		/// Constructs a new test instruction executor.
+		/// </summary>
+		/// <param name="timeProvider">Implementation for counting time and frames.</param>
+		/// <param name="logger">
+		/// Optional logger override. <see cref="Debug.unityLogger"/> is used by default.
+		/// </param>
 		public TestInstructionExecutor(
 			ITimeProvider timeProvider,
 			ILogger logger = null)

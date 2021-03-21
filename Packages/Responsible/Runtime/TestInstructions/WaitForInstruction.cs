@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
+using Responsible.Utilities;
 
 namespace Responsible.TestInstructions
 {
@@ -23,27 +24,15 @@ namespace Responsible.TestInstructions
 				this.waitTime = waitTime;
 			}
 
-			protected override async Task<Nothing> ExecuteInner(
+			protected override Task<Nothing> ExecuteInner(
 				RunContext runContext,
 				CancellationToken cancellationToken)
 			{
 				var deadline = runContext.TimeProvider.TimeNow + this.waitTime;
-
-				var tcs = new TaskCompletionSource<Nothing>();
-				using (runContext.TimeProvider.RegisterPollCallback(() =>
-				{
-					if (cancellationToken.IsCancellationRequested)
-					{
-						tcs.SetCanceled();
-					}
-					else if (runContext.TimeProvider.TimeNow >= deadline)
-					{
-						tcs.SetResult(Nothing.Default);
-					}
-				}))
-				{
-					return await tcs.Task;
-				}
+				return runContext.TimeProvider.PollForCondition(
+					() => Nothing.Default,
+					_ => runContext.TimeProvider.TimeNow >= deadline,
+					cancellationToken);
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
