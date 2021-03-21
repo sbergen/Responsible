@@ -1,8 +1,7 @@
 {
     "name": "Responsible.Editor",
     "references": [
-        "Responsible",
-        "UniRx"
+        "Responsible"
     ],
     "includePlatforms": [
         "Editor"

@@ -74,7 +74,7 @@ namespace Responsible.Tests.Editor
 		{
 			var root = new VisualElement();
 			this.notifications = new Subject<TestOperationStateNotification>();
-			this.state = new TestOperationStatusWindowState(root, this.notifications);
+			this.state = new TestOperationStatusWindowState(root, this.notifications.Subscribe);
 			this.scrollView = root.Q<ScrollView>();
 
 			// Precondition

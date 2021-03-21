@@ -47,7 +47,6 @@ namespace ResponsibleGame.PlayModeTests
 		[TearDown]
 		public void TearDown()
 		{
-			this.TestInstructionExecutor.Dispose();
 			PlayerInput.Instance = null;
 		}
 
@@ -62,13 +61,13 @@ namespace ResponsibleGame.PlayModeTests
 		// We could e.g. make the target area appear and disappear in a future version,
 		// and these utilities could easily be modified to support this.
 
-		protected ITestResponder<Unit> TriggerHit(bool shouldHit) => WaitForMainComponents()
+		protected ITestResponder<Nothing> TriggerHit(bool shouldHit) => WaitForMainComponents()
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit))
 			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
 
-		protected ITestInstruction<Unit> MockTriggerInput() =>
+		protected ITestInstruction<Nothing> MockTriggerInput() =>
 			Do("Mock trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();
