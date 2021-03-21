@@ -15,22 +15,16 @@ namespace Responsible.NoRx.Utilities
 			var allTasks = taskFactories
 				.Select(factory =>
 				{
-					var ctsSource = new CancellationTokenSource();
+					var ctsSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 					var task = factory(ctsSource.Token);
 					return (ctsSource, task);
 				})
 				.ToList();
 
-			using (cancellationToken.Register(() =>
-			{
-				foreach (var (ctsSource, _) in allTasks)
-				{
-					ctsSource.Cancel();
-				}
-			}))
-			{
-				var completedTask = await Task.WhenAny(allTasks.Select(data => data.task));
+			var completedTask = await Task.WhenAny(allTasks.Select(data => data.task));
 
+			if (!cancellationToken.IsCancellationRequested)
+			{
 				foreach (var (ctsSource, task) in allTasks)
 				{
 					if (task != completedTask)
@@ -40,9 +34,22 @@ namespace Responsible.NoRx.Utilities
 
 					ctsSource.Dispose();
 				}
-
-				return await completedTask;
 			}
+
+			return await completedTask;
 		}
+
+		public static Task<T> CancelOnCompletion<T>(
+			this Task<T> task,
+			CancellationTokenSource cancellationTokenSource,
+			CancellationToken cancellationToken) =>
+			task.ContinueWith(resultTask =>
+				{
+					cancellationTokenSource.Cancel();
+					return resultTask.Result;
+				},
+				cancellationToken,
+				TaskContinuationOptions.ExecuteSynchronously,
+				TaskScheduler.FromCurrentSynchronizationContext());
 	}
 }

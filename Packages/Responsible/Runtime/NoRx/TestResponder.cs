@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.TestInstructions;
+using Responsible.NoRx.TestResponders;
 
 namespace Responsible.NoRx
 {
@@ -41,7 +42,6 @@ namespace Responsible.NoRx
 				TimeSpan.FromSeconds(timeoutSeconds),
 				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
 
-		/*
 		/// <summary>
 		/// Converts a test responder to an optional test responder.
 		/// An alias for <see cref="Responsibly.RespondToAnyOf{t}"/> with a single argument.
@@ -55,6 +55,7 @@ namespace Responsible.NoRx
 		public static IOptionalTestResponder Optionally<T>(this ITestResponder<T> responder) =>
 			new AnyOfResponder<T>(new[] { responder });
 
+		/*
 		/// <summary>
 		/// Applies a selector to the result of a test responder when the responder completes,
 		/// transforming the result type to another type.

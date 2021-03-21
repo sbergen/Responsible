@@ -25,9 +25,9 @@ namespace Responsible.NoRx
 		/// Returning the values of the completed responders is something that might be implemented
 		/// in later versions of Responsible.
 		/// </remarks>
-		/*[Pure]
+		[Pure]
 		public static IOptionalTestResponder RespondToAnyOf<T>(params ITestResponder<T>[] responders) =>
-			new AnyOfResponder<T>(responders);*/
+			new AnyOfResponder<T>(responders);
 
 		/// <summary>
 		/// Constructs a wait condition that will will complete once all given responders have executed.

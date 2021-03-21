@@ -58,11 +58,12 @@ namespace Responsible.NoRx
 
 		internal async Task<T> RunInstruction<T>(
 			ITestOperationState<T> rootState,
-			SourceContext sourceContext)
+			SourceContext sourceContext,
+			CancellationToken cancellationToken)
 		{
 			var runContext = new RunContext(sourceContext, this.timeProvider);
-			using var mainTokenSource = new CancellationTokenSource();
-			using var errorTokenSource = new CancellationTokenSource();
+			using var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+			using var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
 			try
 			{

@@ -80,9 +80,9 @@ namespace Responsible.NoRx.State
 			}
 		}
 
-		internal void AddUntilResponder(
+		internal void AddUntilResponder<T>(
 			string respondToDescription,
-			ITestOperationState<ITestOperationState> responder,
+			ITestOperationState<IMultipleTaskSource<ITestOperationState<T>>> responder,
 			string untilDescription,
 			ITestOperationState condition)
 			=> this

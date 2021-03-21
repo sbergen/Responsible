@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.NoRx.Context;
@@ -16,12 +17,14 @@ namespace Responsible.NoRx
 		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> executor.RunInstruction(
 				instruction.CreateState(),
-				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
+				cancellationToken);
 
 		/*
 		/// <summary>

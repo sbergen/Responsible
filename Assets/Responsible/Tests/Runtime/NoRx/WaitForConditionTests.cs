@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using NUnit.Framework;
 using Responsible.NoRx;
 using static Responsible.NoRx.Responsibly;
@@ -75,6 +76,49 @@ namespace Responsible.Tests.Runtime.NoRx
 
 			var exception = GetAssertionException(task);
 			StringAssert.Contains("Should be in output", exception.Message);
+		}
+
+		[Test]
+		public void WaitForCondition_CleansUpSuccessfully_AfterCompletion()
+		{
+			var polled = false;
+			var unused = WaitForCondition(
+					"Complete immediately",
+					() =>
+					{
+						polled = true;
+						return true;
+					})
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			this.AdvanceDefaultFrame();
+			polled = false;
+
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(polled, "Should not be polled after completion");
+		}
+
+		[Test]
+		public void WaitForCondition_CleansUpSuccessfully_AfterCancellation()
+		{
+			using var tokenSource = new CancellationTokenSource();
+
+			var polled = false;
+			var unused = WaitForCondition(
+					"Complete immediately",
+					() =>
+					{
+						polled = true;
+						return false;
+					})
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor, tokenSource.Token);
+
+			polled = false; // Reset after initial check
+			tokenSource.Cancel();
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(polled, "Should not be polled after completion");
 		}
 
 		/*

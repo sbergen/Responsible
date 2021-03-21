@@ -48,6 +48,11 @@ namespace Responsible.NoRx.TestWaitConditions
 
 				void CheckCondition()
 				{
+					if (cancellationToken.IsCancellationRequested)
+					{
+						return;
+					}
+
 					try
 					{
 						var state = this.getConditionState();
@@ -60,11 +65,10 @@ namespace Responsible.NoRx.TestWaitConditions
 					{
 						tcs.SetException(e);
 					}
-
 				}
 
-				using (cancellationToken.Register(tcs.SetCanceled))
 				using (runContext.TimeProvider.RegisterPollCallback(CheckCondition))
+				using (cancellationToken.Register(tcs.SetCanceled))
 				{
 					CheckCondition(); // Complete immediately if already met
 					return await tcs.Task;

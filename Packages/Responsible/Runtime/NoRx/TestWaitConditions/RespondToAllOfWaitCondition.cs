@@ -28,19 +28,15 @@ namespace Responsible.NoRx.TestWaitConditions
 
 			protected override async Task<T[]> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 			{
-				var instructionTasks = this.responders
+				var instructionAwaiter = MultipleTaskAwaiter.Make(this.responders
 					.Select((responder, i) => responder
 						.Execute(runContext, cancellationToken)
-						.WithIndex(i))
-					.ToList();
+						.WithIndex(i)));
 
-				var results = new T[instructionTasks.Count];
-				while (instructionTasks.Count > 0)
+				var results = new T[this.responders.Count];
+				while (instructionAwaiter.HasNext && !cancellationToken.IsCancellationRequested)
 				{
-					var readyToExecute = await Task.WhenAny(instructionTasks);
-					instructionTasks.Remove(readyToExecute);
-
-					var indexedInstruction = await readyToExecute;
+					var indexedInstruction = await instructionAwaiter.AwaitNext();
 					var result = await indexedInstruction.Value
 						.Execute(runContext, cancellationToken)
 						.WithIndexFrom(indexedInstruction);

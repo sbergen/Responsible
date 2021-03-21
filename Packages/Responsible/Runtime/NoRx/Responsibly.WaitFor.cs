@@ -35,16 +35,16 @@ namespace Responsible.NoRx
 				new SourceContext(nameof(WaitForConditionOn), memberName, sourceFilePath, sourceLineNumber));
 
 		[Pure]
-		public static ITestWaitCondition<bool> WaitForCondition(
+		public static ITestWaitCondition<Nothing> WaitForCondition(
 			string description,
 			Func<bool> condition,
 			Action<StateStringBuilder> extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<bool>(
+			=> new PollingWaitCondition<Nothing>(
 				description,
-				() => true,
+				() => Nothing.Default,
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
