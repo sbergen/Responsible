@@ -110,7 +110,6 @@ namespace Responsible.NoRx
 				second,
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
 
-		/*
 		/// <summary>
 		/// Applies a selector to the result of a test instruction when the instruction completes,
 		/// transforming the result type to another type.
@@ -135,7 +134,6 @@ namespace Responsible.NoRx
 				instruction,
 				selector,
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
-				*/
 
 		/// <summary>
 		/// Converts a test instruction returning any value to one returning <see cref="Nothing"/>.
