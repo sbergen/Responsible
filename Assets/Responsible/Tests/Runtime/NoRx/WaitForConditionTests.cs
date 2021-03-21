@@ -122,9 +122,8 @@ namespace Responsible.Tests.Runtime.NoRx
 			}
 		}
 
-		/*
-		[UnityTest]
-		public IEnumerator WaitForCondition_ContainsCorrectDetails_WhenCanceled()
+		[Test]
+		public void WaitForCondition_ContainsCorrectDetails_WhenCanceled()
 		{
 			var extraContextRequested = false;
 
@@ -138,20 +137,17 @@ namespace Responsible.Tests.Runtime.NoRx
 			// But error out afterwards, to get a failure message.
 			// We could do this in a simpler way using CreateState,
 			// but that would not be as realistic.
-			using (respond.Optionally()
+			var task = respond.Optionally()
 				.Until(ImmediateTrue)
 				.AndThen(Never)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError))
-			{
-				this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(2));
-				yield return null;
+				.ToTask(this.Executor);
 
-				Assert.IsInstanceOf<AssertionException>(this.Error);
-				Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
-				Assert.That(this.Error.Message, Does.Match(@"\[-\].*Should be canceled.*[Cc]anceled"));
-			}
-		}*/
+			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
+
+			var error = GetAssertionException(task);
+			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
+			Assert.That(error.Message, Does.Match(@"\[-\].*Should be canceled.*[Cc]anceled"));
+		}
 	}
 }
