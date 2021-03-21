@@ -1,13 +1,14 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
-using UniRx;
+using Responsible.NoRx;
 using UnityEngine;
 using UnityEngine.TestTools;
-using static Responsible.Responsibly;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class ErrorLogHandlingTests : ResponsibleTestBase
 	{
@@ -32,18 +33,17 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void LoggingError_CausesProperFailure_WhenErrorIsIntercepted()
 		{
-			this.LogErrorFromInstructionSynchronously();
+			var task = this.LogErrorFromInstructionSynchronously();
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
-			Assert.IsInstanceOf<UnhandledLogMessageException>(this.Error.InnerException);
+			var exception = GetAssertionException(task);
+			Assert.IsInstanceOf<UnhandledLogMessageException>(exception.InnerException);
 		}
 
 		[Test]
 		public void LoggingError_DoesNotAlsoLogWarning_WhenTestTerminatesWithException()
 		{
 			Do("Throw exception", () => throw new Exception())
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
 			this.Logger.DidNotReceive().Log(LogType.Warning, Arg.Any<string>());
 			this.Logger.Received(1).Log(LogType.Error, Arg.Any<string>());
@@ -53,8 +53,8 @@ namespace Responsible.Tests.Runtime
 		public void LoggingError_DoesNotCauseFailure_WhenErrorIsNotIntercepted()
 		{
 			LogAssert.ignoreFailingMessages = true;
-			this.LogErrorFromInstructionSynchronously();
-			Assert.IsNull(this.Error);
+			var task = this.LogErrorFromInstructionSynchronously();
+			Assert.IsFalse(task.IsFaulted);
 		}
 
 		[Test]
@@ -88,11 +88,10 @@ namespace Responsible.Tests.Runtime
 			this.Executor.ExpectLog(LogType.Error, new Regex("foo"));
 		}
 
-		private void LogErrorFromInstructionSynchronously()
+		private Task LogErrorFromInstructionSynchronously()
 		{
-			Do("Log error", () => Debug.LogError(ErrorMessage))
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+			return Do("Log error", () => Debug.LogError(ErrorMessage))
+				.ToTask(this.Executor);
 		}
 	}
 }

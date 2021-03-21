@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class SelectFromWaitConditionTests : ResponsibleTestBase
 	{
@@ -13,8 +14,8 @@ namespace Responsible.Tests.Runtime
 			var result = ImmediateTrue
 				.Select(r => r ? 1 : 0)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Wait();
+				.ToTask(this.Executor)
+				.AssertSynchronousResult();
 
 			Assert.AreEqual(1, result);
 		}
@@ -22,45 +23,46 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void SelectFromCondition_PublishesError_WhenExceptionThrown()
 		{
-			Assert.Throws<AssertionException>(() =>
-				ImmediateTrue
-					.Select<bool, int>(r => throw new Exception("Fail!"))
-					.ExpectWithinSeconds(1)
-					.ToObservable(this.Executor)
-					.Wait());
+			var task = ImmediateTrue
+				.Select<bool, int>(r => throw new Exception("Fail!"))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
 		[Test]
 		public void SelectFromCondition_ContainsFailureDetails_WhenFailed()
 		{
-			ImmediateTrue
+			var task = ImmediateTrue
 				.Select<bool, int>(r => throw new Exception("Fail!"))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
+			var error = GetAssertionException(task);
 			StringAssert.Contains(
 				"[!] SELECT",
-				this.Error.Message);
+				error.Message);
 		}
 
 		[Test]
 		public void SelectFromCondition_ContainsCorrectDetails_WhenConditionFailed()
 		{
-			WaitForCondition("Throw", () => throw new Exception("Fail!"))
+			var task = WaitForCondition("Throw", () => throw new Exception("Fail!"))
 				.Select(r => r)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
+
+			var error = GetAssertionException(task);
 
 			StringAssert.Contains(
 				"[ ] SELECT",
-				this.Error.Message,
+				error.Message,
 				"Should not contain error for Select");
 
 			StringAssert.Contains(
 				"[!] Throw",
-				this.Error.Message,
+				error.Message,
 				"Should contain error for condition");
 		}
 	}

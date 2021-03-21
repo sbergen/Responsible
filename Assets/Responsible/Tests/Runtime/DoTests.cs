@@ -1,35 +1,40 @@
-using System;
 using NUnit.Framework;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class DoTests : ResponsibleTestBase
 	{
 		[Test]
-		public void Do_Executes_WithFunc()
+		public void DoAndReturn_ExecutesWithCorrectResult_WhenToTaskIsCalled()
 		{
-			var result = DoAndReturn("Meaning of life", () => 42)
-				.ToObservable(this.Executor)
-				.Wait(TimeSpan.Zero);
-			Assert.AreEqual(42, result);
+			var executed = false;
+			var instruction = DoAndReturn("Meaning of life",
+				() =>
+				{
+					executed = true;
+					return 42;
+				});
+
+			Assert.IsFalse(executed, "Should not execute before ToTask is called");
+
+			var task = instruction.ToTask(this.Executor);
+			Assert.IsTrue(executed, "Should execute when ToTask is called");
+			Assert.AreEqual(42, task.AssertSynchronousResult());
 		}
 
 		[Test]
-		public void Do_Executes_WithAction()
+		public void Do_Executes_WhenToTaskIsCalled()
 		{
 			var executed = false;
-			Do("Set executed", () => { executed = true; }).ToObservable(this.Executor).Wait(TimeSpan.Zero);
-			Assert.IsTrue(executed);
-		}
+			var instruction = Do("Set executed", () => { executed = true; });
 
-		[Test]
-		public void Do_DoesNotExecute_UntilSubscribedTo()
-		{
-			var executed = false;
-			var unused = Do("Set executed", () => { executed = true; }).ToObservable(this.Executor);
-			Assert.IsFalse(executed, "Instruction should not execute until subscribed to");
+			Assert.IsFalse(executed, "Should not execute before ToTask is called");
+
+			var unused = instruction.ToTask(this.Executor);
+			Assert.IsTrue(executed, "Should execute when ToTask is called");
 		}
 	}
 }

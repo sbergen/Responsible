@@ -1,10 +1,11 @@
 using System;
+using System.Threading;
 using NUnit.Framework;
-using Responsible.State;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.NoRx.State;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class StateNotificationsTests : ResponsibleTestBase
 	{
@@ -15,7 +16,7 @@ namespace Responsible.Tests.Runtime
 		public void SetUp()
 		{
 			this.notification = null;
-			this.subscription = TestInstructionExecutor.StateNotifications.Subscribe(s => this.notification = s);
+			this.subscription = TestInstructionExecutor.SubscribeToStates(s => this.notification = s);
 		}
 
 		[TearDown]
@@ -27,25 +28,25 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void StateNotifications_PublishesStarted_WhenOperationStarted()
 		{
-			var wait = WaitForFrames(0).ToObservable(this.Executor);
+			var wait = WaitForFrames(0);
 			Assert.IsNull(this.notification);
-			using (wait.Subscribe())
-			{
-				Assert.IsInstanceOf<TestOperationStateNotification.Started>(this.notification);
-			}
+			wait.ToTask(this.Executor);
+			Assert.IsInstanceOf<TestOperationStateNotification.Started>(this.notification);
 		}
 
 		[Test]
 		public void StateNotifications_PublishesFinished_WhenOperationCanceled()
 		{
-			WaitForFrames(0).ToObservable(this.Executor).Subscribe().Dispose();
+			var tokenSource = new CancellationTokenSource();
+			WaitForFrames(0).ToTask(this.Executor, tokenSource.Token);
+			tokenSource.Cancel();
 			Assert.IsInstanceOf<TestOperationStateNotification.Finished>(this.notification);
 		}
 
 		[Test]
 		public void StateNotifications_PublishesFinished_WhenOperationCompleted()
 		{
-			ImmediateTrue.ExpectWithinSeconds(1).ToObservable(this.Executor).Subscribe();
+			ImmediateTrue.ExpectWithinSeconds(1).ToTask(this.Executor);
 			Assert.IsInstanceOf<TestOperationStateNotification.Finished>(this.notification);
 		}
 
@@ -53,24 +54,25 @@ namespace Responsible.Tests.Runtime
 		public void StateNotifications_PublishesFinished_WhenOperationFailed()
 		{
 			Do("Throw error", () => throw new Exception())
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 			Assert.IsInstanceOf<TestOperationStateNotification.Finished>(this.notification);
 		}
 
 		[Test]
 		public void StateNotifications_PublishesMatchingStates_WithMultipleOperations()
 		{
-			var subscription1 = WaitForFrames(0).ToObservable(this.Executor).Subscribe();
+			var tokenSource1 = new CancellationTokenSource();
+			WaitForFrames(0).ToTask(this.Executor, tokenSource1.Token);
 			var state1 = this.notification.State;
 
-			var subscription2 = WaitForFrames(0).ToObservable(this.Executor).Subscribe();
+			var tokenSource2 = new CancellationTokenSource();
+			WaitForFrames(0).ToTask(this.Executor, tokenSource2.Token);
 			var state2 = this.notification.State;
 
-			subscription1.Dispose();
+			tokenSource1.Cancel();
 			Assert.AreEqual(state1, this.notification.State);
 
-			subscription2.Dispose();
+			tokenSource2.Cancel();
 			Assert.AreEqual(state2, this.notification.State);
 		}
 	}

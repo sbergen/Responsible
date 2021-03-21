@@ -1,8 +1,8 @@
 using System;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.Utilities
+namespace Responsible.Tests.Runtime.NoRx.Utilities
 {
 	public class ConditionResponder<T> : IConditionResponder
 	{
@@ -54,10 +54,10 @@ namespace Responsible.Tests.Runtime.Utilities
 				}));
 	}
 
-	public class ConditionResponder : ConditionResponder<Unit>
+	public class ConditionResponder : ConditionResponder<bool>
 	{
 		public ConditionResponder(int responseTimeout)
-			: base(responseTimeout, Unit.Default)
+			: base(responseTimeout, true)
 		{
 		}
 	}

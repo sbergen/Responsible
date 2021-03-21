@@ -1,15 +1,13 @@
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class OperationStateTests : ResponsibleTestBase
 	{
-		[UnityTest]
-		public IEnumerator ReusingSameInstruction_ProvidesSeparateState()
+		[Test]
+		public void ReusingSameInstruction_ProvidesSeparateState()
 		{
 			bool condition = true;
 
@@ -26,17 +24,16 @@ namespace Responsible.Tests.Runtime
 
 			var wait = WaitForCondition("Wait for it", WaitForIt);
 
-			wait.AndThen(wait)
+			var task = wait.AndThen(wait)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
+			this.TimeProvider.AdvanceFrame(OneSecond);
 
+			var exception = GetAssertionException(task);
 			Assert.That(
-				this.Error.Message,
-				Does.Contain("[.] Wait for it").And.Contain("[✓] Wait for it"));
+				exception.Message,
+				Does.Contain("[-] Wait for it").And.Contain("[✓] Wait for it"));
 		}
 
 	}

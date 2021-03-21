@@ -1,9 +1,9 @@
-using System;
 using NUnit.Framework;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class ReturnTests : ResponsibleTestBase
 	{
@@ -15,8 +15,8 @@ namespace Responsible.Tests.Runtime
 			Assert.AreEqual(
 				42,
 				returnInstruction
-					.ToObservable(this.Executor)
-					.Wait(TimeSpan.Zero));
+					.ToTask(this.Executor)
+					.AssertSynchronousResult());
 		}
 	}
 }

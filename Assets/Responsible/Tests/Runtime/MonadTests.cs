@@ -1,9 +1,9 @@
-using System;
 using NUnit.Framework;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class MonadTests : ResponsibleTestBase
 	{
@@ -41,7 +41,7 @@ namespace Responsible.Tests.Runtime
 
 		private void AssertEqual<T>(ITestInstruction<T> left, ITestInstruction<T> right)
 			=> Assert.AreEqual(
-				left.ToObservable(this.Executor).Wait(TimeSpan.Zero),
-				right.ToObservable(this.Executor).Wait(TimeSpan.Zero));
+				left.ToTask(this.Executor).AssertSynchronousResult(),
+				right.ToTask(this.Executor).AssertSynchronousResult());
 	}
 }

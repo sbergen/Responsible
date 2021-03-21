@@ -1,13 +1,13 @@
 {
     "name": "Responsible.Tests.Runtime",
-    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UniRx",
-        "Responsible"
+        "Responsible.NoRx"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

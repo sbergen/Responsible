@@ -1,21 +1,19 @@
 using System;
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class ContinueWithTests : ResponsibleTestBase
 	{
 		private bool mayCompleteFirst;
 		private bool mayCompleteSecond;
 
-		private ITestWaitCondition<Unit> waitForFirst;
-		private ITestWaitCondition<Unit> waitForSecond;
+		private ITestWaitCondition<Nothing> waitForFirst;
+		private ITestWaitCondition<Nothing> waitForSecond;
 
-		private ITestInstruction<Unit> errorInstruction = Do("throw", () => { throw new Exception("Test"); });
+		private ITestInstruction<Nothing> errorInstruction = Do("throw", () => { throw new Exception("Test"); });
 
 		public enum Strategy
 		{
@@ -40,50 +38,46 @@ namespace Responsible.Tests.Runtime
 		{
 			this.mayCompleteSecond = shouldCompleteSecond;
 
-			ContinueWithUnit(this.errorInstruction, strategy)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+			var task = ContinueWithNothing(this.errorInstruction, strategy)
+				.ToTask(this.Executor);
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
-		[UnityTest]
-		public IEnumerator ContinueWith_PropagatesErrorFromSecond_AfterFirstCompleted(
+		[Test]
+		public void ContinueWith_PropagatesErrorFromSecond_AfterFirstCompleted(
 			[Values] Strategy strategy)
 		{
-			this.ContinueWithError(this.waitForFirst.ExpectWithinSeconds(1), strategy)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+			var task = this.ContinueWithError(this.waitForFirst.ExpectWithinSeconds(1), strategy)
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsNull(this.Error);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsFaulted);
 
 			this.mayCompleteFirst = true;
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			this.AdvanceDefaultFrame();
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
-		[UnityTest]
-		public IEnumerator ContinueWith_Completes_AfterBothComplete([Values] Strategy strategy)
+		[Test]
+		public void ContinueWith_Completes_AfterBothComplete([Values] Strategy strategy)
 		{
-			var completed = false;
-			this.ContinueWithUnit(this.waitForFirst.ExpectWithinSeconds(1), strategy)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => completed = true);
+			var task = this.ContinueWithNothing(this.waitForFirst.ExpectWithinSeconds(1), strategy)
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			this.mayCompleteFirst = true;
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			this.mayCompleteSecond = true;
-			yield return null;
-			Assert.IsTrue(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsTrue(task.IsCompleted);
 		}
 
-		private ITestInstruction<Unit> ContinueWithUnit<T>(
+		private ITestInstruction<Nothing> ContinueWithNothing<T>(
 			ITestInstruction<T> first,
 			Strategy strategy)
 		{
@@ -99,7 +93,7 @@ namespace Responsible.Tests.Runtime
 			}
 		}
 
-		private ITestInstruction<Unit> ContinueWithError<T>(
+		private ITestInstruction<Nothing> ContinueWithError<T>(
 			ITestInstruction<T> first,
 			Strategy strategy)
 		{

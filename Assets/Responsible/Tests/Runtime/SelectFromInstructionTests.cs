@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class SelectFromInstructionTests : ResponsibleTestBase
 	{
@@ -12,49 +13,50 @@ namespace Responsible.Tests.Runtime
 		{
 			var result = Return(2)
 				.Select(val => val * 2)
-				.ToObservable(this.Executor)
-				.Wait();
+				.ToTask(this.Executor)
+				.AssertSynchronousResult();
 			Assert.AreEqual(4, result);
 		}
 
 		[Test]
 		public void SelectFromInstruction_PublishesCorrectError_WhenExceptionThrown()
 		{
-			var observable = Return(2)
+			var task = Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
-				.ToObservable(this.Executor);
-			Assert.Throws<AssertionException>(() => observable.Wait());
+				.ToTask(this.Executor);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
 		[Test]
 		public void SelectFromInstruction_ContainsFailureDetails_WhenFailed()
 		{
-			Return(2)
+			var task = Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
+			var exception = GetAssertionException(task);
 			StringAssert.Contains(
 				"[!] SELECT",
-				this.Error.Message);
+				exception.Message);
 		}
 
 		[Test]
 		public void SelectFromInstruction_ContainsCorrectDetails_WhenInstructionFailed()
 		{
-			DoAndReturn<int>("Throw", () => throw new Exception("Fail!"))
+			var task = DoAndReturn<int>("Throw", () => throw new Exception("Fail!"))
 				.Select(i => i)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
+
+			var exception = GetAssertionException(task);
 
 			StringAssert.Contains(
 				"[ ] SELECT",
-				this.Error.Message,
+				exception.Message,
 				"Should not contain error for select");
 
 			StringAssert.Contains(
 				"[!] Throw",
-				this.Error.Message,
+				exception.Message,
 				"Should contain error for instruction");
 		}
 	}

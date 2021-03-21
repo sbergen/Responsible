@@ -1,60 +1,53 @@
 using System;
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class WaitForConstraintTests : ResponsibleTestBase
 	{
-		[UnityTest]
-		public IEnumerator WaitForConstraint_Completed_WhenConstraintTrue()
+		[Test]
+		public void WaitForConstraint_Completed_WhenConstraintTrue()
 		{
 			var mayComplete = false;
-			var completed = false;
-			WaitForConstraint(
+			var task = WaitForConstraint(
 					"mayComplete",
 					() => mayComplete, Is.True)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(r => completed = r);
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsFalse(completed, "Should not complete until constraint is true");
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted, "Should not complete until constraint is true");
 
 			mayComplete = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(completed, "Should complete after constraint is true");
+			Assert.IsTrue(task.IsCompleted, "Should complete after constraint is true");
 		}
 
-		[UnityTest]
-		public IEnumerator WaitForConstraint_IsReferentiallyTransparent()
+		[Test]
+		public void WaitForConstraint_IsReferentiallyTransparent()
 		{
 			// We had a bug where using .Not would cause the constraint to be mutated,
 			// due to being resolved multiple times.
 			// This test was added to ensure there are no regressions here.
 
 			var mayComplete = false;
-			var completed = false;
 			var instruction = WaitForConstraint(
 					"mayComplete",
 					() => mayComplete, Is.Not.False)
 				.ExpectWithinSeconds(1);
 
 			// Reuse the condition with ContinueWith
-			instruction.ContinueWith(instruction)
-				.ToObservable(this.Executor)
-				.Subscribe(r => completed = r);
+			var task = instruction.ContinueWith(instruction).ToTask(this.Executor);
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 			mayComplete = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(completed, "Should complete after constraint is true");
+			Assert.IsTrue(task.IsCompleted, "Should complete after constraint is true");
 		}
 
 		[Test]
@@ -70,39 +63,36 @@ namespace Responsible.Tests.Runtime
 				state.ToString());
 		}
 
-		[UnityTest]
-		public IEnumerator WaitForConstraint_HasDetails_OnTimeout()
+		[Test]
+		public void WaitForConstraint_HasDetails_OnTimeout()
 		{
 			var str = "BAR";
-			WaitForConstraint(
+			var task = WaitForConstraint(
 				"Some string",
 				() => str,
 				Does.StartWith("FOO"))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
+			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			Assert.That(this.Error.Message, Does.Contain("Expected").And.Contain("But was"));
+			var error = GetAssertionException(task);
+			Assert.That(error.Message, Does.Contain("Expected").And.Contain("But was"));
 		}
 
-		[UnityTest]
-		public IEnumerator WaitForConstraint_HandlesErrorGracefully()
+		[Test]
+		public void WaitForConstraint_HandlesErrorGracefully()
 		{
-			WaitForConstraint<string>(
+			var task = WaitForConstraint<string>(
 					"Some string",
 					() => throw new Exception("Fail!"),
 					Does.StartWith("FOO"))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			yield return null;
-
+			var error = GetAssertionException(task);
 			Assert.That(
-				this.Error.Message,
+				error.Message,
 				Does.Contain("[!] Some string").And.Contain("Fail!"));
 		}
 	}

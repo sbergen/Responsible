@@ -1,110 +1,96 @@
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class AndThenTests : ResponsibleTestBase
 	{
-		[UnityTest]
-		public IEnumerator AndThen_CompletesWhenAllComplete_WithReadySecondCondition()
+		[Test]
+		public void AndThen_CompletesWhenAllComplete_WithReadySecondCondition()
 		{
 			var cond1 = false;
 			var cond2 = false;
-			var completed = false;
 
-			WaitForCondition("First", () => cond1)
+			var task = WaitForCondition("First", () => cond1)
 				.AndThen(WaitForCondition("Second", () =>
 				{
 					Assert.IsTrue(cond1);
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => completed = true);
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			cond1 = true;
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			cond2 = true;
-			yield return null;
-			Assert.IsTrue(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsTrue(task.IsCompleted);
 		}
 
-		[UnityTest]
-		public IEnumerator AndThen_CompletesWhenAllComplete_WithDeferredSecondCondition()
+		[Test]
+		public void AndThen_CompletesWhenAllComplete_WithDeferredSecondCondition()
 		{
 			var cond1 = false;
 			var cond2 = false;
-			var completed = false;
 
-			WaitForCondition("First", () => cond1)
+			var task = WaitForCondition("First", () => cond1)
 				.AndThen(_ => WaitForCondition("Second", () =>
 				{
 					Assert.IsTrue(cond1);
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => completed = true);
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			cond1 = true;
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			cond2 = true;
-			yield return null;
-			Assert.IsTrue(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsTrue(task.IsCompleted);
 		}
 
-		[UnityTest]
-		public IEnumerator AndThen_TimesOutOnFirst_WithReadySecondCondition()
+		[Test]
+		public void AndThen_TimesOutOnFirst_WithReadySecondCondition()
 		{
-			Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
-		[UnityTest]
-		public IEnumerator AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
+		[Test]
+		public void AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
 		{
-			Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
-		[UnityTest]
-		public IEnumerator AndThen_TimesOutOnSecond_WithReadySecondCondition()
+		[Test]
+		public void AndThen_TimesOutOnSecond_WithReadySecondCondition()
 		{
-			ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
-		[UnityTest]
-		public IEnumerator AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
+		[Test]
+		public void AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
 		{
-			ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 	}
 }

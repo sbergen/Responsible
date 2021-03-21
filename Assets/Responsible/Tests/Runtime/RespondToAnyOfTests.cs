@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using Responsible.Tests.Runtime.Utilities;
-using UnityEngine.TestTools;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class RespondToAnyOfTests : ResponsibleTestBase
 	{
@@ -13,26 +14,25 @@ namespace Responsible.Tests.Runtime
 		private ConditionResponder responder2;
 
 		private bool mayComplete;
-		private bool completed;
+		private Task<Nothing> task;
 
 		[SetUp]
 		public void SetUp()
 		{
-			this.mayComplete = this.completed = false;
+			this.mayComplete = false;
 			this.responder1 = new ConditionResponder(1);
 			this.responder2 = new ConditionResponder(1);
 
-			RespondToAnyOf(
+			this.task = RespondToAnyOf(
 					this.responder1.Responder,
 					this.responder2.Responder)
 				.Until(WaitForCondition("Complete", () => this.mayComplete))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => this.completed = true);
+				.ToTask(this.Executor);
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
+		[Test]
+		public void RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
 		{
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
@@ -46,49 +46,48 @@ namespace Responsible.Tests.Runtime
 				this.responder2.MayRespond = true;
 			}
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			this.mayComplete = true;
 
-			yield return null;
-			yield return null;
+			this.AdvanceDefaultFrame();
+
+			this.task.Wait(TimeSpan.Zero);
 
 			Assert.AreEqual(
 				(true, completeFirst, !completeFirst),
-				(this.completed, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
+				(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
+		[Test]
+		public void RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
 		{
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			this.mayComplete = true;
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			this.responder1.MayRespond = true;
 			this.responder2.MayRespond = true;
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.AreEqual(
 				(true, false, false),
-				(this.completed, this.responder1.StartedToRespond, this.responder2.StartedToRespond));
+				(this.task.IsCompleted, this.responder1.StartedToRespond, this.responder2.StartedToRespond));
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAnyOf_ExecutesRespondersSequentially_WhenMultipleReadyToRespond()
+		[Test]
+		public void RespondToAnyOf_ExecutesRespondersSequentially_WhenMultipleReadyToRespond()
 		{
 			this.responder1.MayRespond = true;
 			this.responder2.MayRespond = true;
 
-			// Yield a few times to be safe
-			yield return null;
-			yield return null;
+			this.AdvanceDefaultFrame();
 			Assert.IsFalse(
 				this.responder1.StartedToRespond && this.responder2.StartedToRespond,
 				"Only one responder should start while the other is executing");
@@ -97,11 +96,11 @@ namespace Responsible.Tests.Runtime
 			this.mayComplete = true;
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.AreEqual(
 				(true, true, true),
-				(this.completed, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
+				(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
 		}
 	}
 }

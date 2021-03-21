@@ -1,37 +1,35 @@
 using System;
-using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using Responsible.Tests.Runtime.Utilities;
-using UnityEngine.TestTools;
-using UniRx;
-using static Responsible.Responsibly;
+using Responsible.Tests.Runtime.NoRx.Utilities;
+using Responsible.NoRx;
+using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime
+namespace Responsible.Tests.Runtime.NoRx
 {
 	public class RespondToAllOfTests : ResponsibleTestBase
 	{
 		private ConditionResponder<TestDataBase> responder1;
-		private ConditionResponder<TestDataDerived> responder2;
+		private ConditionResponder<TestDataBase> responder2;
 
-		TestDataBase[] result;
-		private bool Completed => this.result != null;
+		private Task<TestDataBase[]> task;
+		private bool Completed => this.task.IsCompleted;
 
 		[SetUp]
 		public void SetUp()
 		{
 			this.responder1 = new ConditionResponder<TestDataBase>(1, new TestDataBase(1));
-			this.responder2 = new ConditionResponder<TestDataDerived>(1, new TestDataDerived(2));
-			this.result = null;
+			this.responder2 = new ConditionResponder<TestDataBase>(1, new TestDataDerived(2));
+			this.task = null;
 
-			RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
+			this.task = RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(r => this.result = r, this.StoreError);
+				.ToTask(this.Executor);
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAllOf_Completes_WhenAllCompleted()
+		[Test]
+		public void RespondToAllOf_Completes_WhenAllCompleted()
 		{
 			Assert.AreEqual(
 				(false, false, false),
@@ -40,7 +38,8 @@ namespace Responsible.Tests.Runtime
 
 			this.responder1.AllowFullCompletion();
 			this.responder2.AllowFullCompletion();
-			yield return null;
+			this.AdvanceDefaultFrame();
+
 			Assert.AreEqual(
 				(true, true, true),
 				(this.responder1.CompletedRespond,
@@ -49,17 +48,17 @@ namespace Responsible.Tests.Runtime
 				"Everything should have completed");
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAllOf_ExecutesOnlyOneResponderAtOnce([Values] bool reverseOrder)
+		[Test]
+		public void RespondToAllOf_ExecutesOnlyOneResponderAtOnce([Values] bool reverseOrder)
 		{
 			var first = reverseOrder ? (IConditionResponder)this.responder2 : this.responder1;
 			var second = reverseOrder ? (IConditionResponder)this.responder1 : this.responder2;
 
 			first.MayRespond = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			second.MayRespond = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.AreEqual(
 				(true, false, false),
@@ -67,13 +66,13 @@ namespace Responsible.Tests.Runtime
 				"Second should not have started to respond");
 
 			first.MayComplete = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.IsTrue(second.StartedToRespond, "Second should have started to respond");
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			second.MayComplete = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.AreEqual(
 				(true, true, true),
@@ -83,8 +82,8 @@ namespace Responsible.Tests.Runtime
 			this.AssertResult();
 		}
 
-		[UnityTest]
-		public IEnumerator RespondToAllOf_PublishesError_OnTimeout([Values] bool completeFirst)
+		[Test]
+		public void RespondToAllOf_CompletesWithError_OnTimeout([Values] bool completeFirst)
 		{
 			if (completeFirst)
 			{
@@ -95,15 +94,14 @@ namespace Responsible.Tests.Runtime
 				this.responder2.AllowFullCompletion();
 			}
 
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
+			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsNotNull(GetAssertionException(this.task));
 		}
 
 
-		[UnityTest]
-		public IEnumerator RespondToAllOf_PublishesError_OnAnyResponderError([Values] bool throwFromFirst)
+		[Test]
+		public void RespondToAllOf_CompletesWithError_OnAnyResponderError([Values] bool throwFromFirst)
 		{
 			var error = new Exception("Fail!");
 			if (throwFromFirst)
@@ -117,25 +115,23 @@ namespace Responsible.Tests.Runtime
 				this.responder2.AllowCompletionWithError(error);
 			}
 
-			yield return null;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsNotNull(GetAssertionException(this.task));
 		}
 
 		private void AssertResult()
 		{
-			Assert.IsNull(this.Error);
-			Assert.IsNotNull(this.result);
+			Assert.IsFalse(this.task.IsFaulted);
+			Assert.IsTrue(this.task.IsCompleted);
 
 			Assert.AreEqual(
 				new[] { typeof(TestDataBase), typeof(TestDataDerived)},
-				this.result.Select(r => r.GetType()).ToArray());
+				this.task.AssertSynchronousResult().Select(r => r.GetType()).ToArray());
 
 			Assert.AreEqual(
 				new[] { 1, 2 },
-				this.result.Select(r => r.Value).ToArray());
+				this.task.AssertSynchronousResult().Select(r => r.Value).ToArray());
 		}
-
 	}
 }
