@@ -1,12 +1,12 @@
 using System;
-using System.Collections;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.NoRx;
-using Responsible.Tests.Runtime.NoRx.Utilities;
+using Responsible.Tests.Runtime.Utilities;
+
 // ReSharper disable AccessToModifiedClosure
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class UntilReadyToTests : ResponsibleTestBase
 	{

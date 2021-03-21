@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Responsible.Tests.Runtime.NoRx.Utilities
+namespace Responsible.Tests.Runtime.Utilities
 {
 	internal static class TaskExtensions
 	{

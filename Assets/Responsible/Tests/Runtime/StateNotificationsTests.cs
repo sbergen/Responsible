@@ -5,7 +5,7 @@ using Responsible.NoRx;
 using Responsible.NoRx.State;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class StateNotificationsTests : ResponsibleTestBase
 	{

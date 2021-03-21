@@ -5,7 +5,7 @@ using Responsible.NoRx;
 using static Responsible.NoRx.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class WaitForConditionTests : ResponsibleTestBase
 	{

@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using Responsible.NoRx;
-using Responsible.Tests.Runtime.NoRx.Utilities;
+using Responsible.Tests.Runtime.Utilities;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class DoTests : ResponsibleTestBase
 	{

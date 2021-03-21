@@ -6,7 +6,7 @@ using Responsible.NoRx;
 using UnityEngine;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class ErrorTests : ResponsibleTestBase
 	{

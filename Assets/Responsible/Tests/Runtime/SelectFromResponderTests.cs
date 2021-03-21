@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.NoRx;
-using Responsible.Tests.Runtime.NoRx.Utilities;
+using Responsible.Tests.Runtime.Utilities;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class SelectFromResponderTests : ResponsibleTestBase
 	{

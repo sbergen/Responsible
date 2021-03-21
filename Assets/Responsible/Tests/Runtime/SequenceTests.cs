@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Responsible.NoRx;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class SequenceTests : ResponsibleTestBase
 	{

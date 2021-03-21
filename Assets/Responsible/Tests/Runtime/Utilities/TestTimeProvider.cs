@@ -2,7 +2,7 @@ using System;
 using Responsible.NoRx;
 using Responsible.NoRx.Utilities;
 
-namespace Responsible.Tests.Runtime.NoRx.Utilities
+namespace Responsible.Tests.Runtime.Utilities
 {
 	public class TestTimeProvider : ITimeProvider
 	{

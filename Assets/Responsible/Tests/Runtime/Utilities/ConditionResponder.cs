@@ -2,7 +2,7 @@ using System;
 using Responsible.NoRx;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx.Utilities
+namespace Responsible.Tests.Runtime.Utilities
 {
 	public class ConditionResponder<T> : IConditionResponder
 	{

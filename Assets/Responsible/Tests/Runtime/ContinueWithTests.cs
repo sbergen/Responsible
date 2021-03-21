@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Responsible.NoRx;
 using static Responsible.NoRx.Responsibly;
 
-namespace Responsible.Tests.Runtime.NoRx
+namespace Responsible.Tests.Runtime
 {
 	public class ContinueWithTests : ResponsibleTestBase
 	{
@@ -38,7 +38,7 @@ namespace Responsible.Tests.Runtime.NoRx
 		{
 			this.mayCompleteSecond = shouldCompleteSecond;
 
-			var task = ContinueWithNothing(this.errorInstruction, strategy)
+			var task = this.ContinueWithNothing(this.errorInstruction, strategy)
 				.ToTask(this.Executor);
 
 			Assert.IsNotNull(GetAssertionException(task));
