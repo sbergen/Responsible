@@ -25,6 +25,10 @@ namespace Responsible.Tests.Runtime.NoRx
 
 		protected TestInstructionExecutor Executor { get; private set; }
 
+		protected static void Nop<T>(T unused)
+		{
+		}
+
 		protected void AdvanceDefaultFrame() => this.TimeProvider.AdvanceFrame(OneFrame);
 
 		protected static AssertionException GetAssertionException(Task task)

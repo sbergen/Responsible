@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
+using Responsible.NoRx.TestInstructions;
 using Responsible.NoRx.TestWaitConditions;
 
 namespace Responsible.NoRx
@@ -48,6 +49,23 @@ namespace Responsible.NoRx
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a test instruction, which will complete with <see cref="Nothing.Default"/>
+		/// after <paramref name="seconds"/> seconds have passed.
+		/// </summary>
+		/// <param name="seconds">Seconds to wait for.</param>
+		/// <returns>Test instruction which completes after <paramref name="seconds"/> seconds.</returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
+		[Pure]
+		public static ITestInstruction<Nothing> WaitForSeconds(
+			double seconds,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new WaitForInstruction(
+				TimeSpan.FromSeconds(seconds),
+				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Wait for all conditions to complete, and return their results as an array.
