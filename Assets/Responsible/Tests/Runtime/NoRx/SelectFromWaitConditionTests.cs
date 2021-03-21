@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
 using static Responsible.NoRx.Responsibly;
 
 namespace Responsible.Tests.Runtime.NoRx
@@ -14,7 +15,7 @@ namespace Responsible.Tests.Runtime.NoRx
 				.Select(r => r ? 1 : 0)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor)
-				.Result;
+				.AssertSynchronousResult();
 
 			Assert.AreEqual(1, result);
 		}

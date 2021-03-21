@@ -127,11 +127,11 @@ namespace Responsible.Tests.Runtime.NoRx
 
 			Assert.AreEqual(
 				new[] { typeof(TestDataBase), typeof(TestDataDerived)},
-				this.task.Result.Select(r => r.GetType()).ToArray());
+				this.task.AssertSynchronousResult().Select(r => r.GetType()).ToArray());
 
 			Assert.AreEqual(
 				new[] { 1, 2 },
-				this.task.Result.Select(r => r.Value).ToArray());
+				this.task.AssertSynchronousResult().Select(r => r.Value).ToArray());
 		}
 	}
 }

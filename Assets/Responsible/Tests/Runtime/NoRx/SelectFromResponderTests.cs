@@ -28,7 +28,7 @@ namespace Responsible.Tests.Runtime.NoRx
 		{
 			this.responder.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
-			Assert.AreEqual(4, this.task.Result);
+			Assert.AreEqual(4, this.task.AssertSynchronousResult());
 		}
 
 		[Test]

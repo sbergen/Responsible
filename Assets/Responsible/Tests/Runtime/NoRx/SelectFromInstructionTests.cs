@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
 using static Responsible.NoRx.Responsibly;
 
 namespace Responsible.Tests.Runtime.NoRx
@@ -13,7 +14,7 @@ namespace Responsible.Tests.Runtime.NoRx
 			var result = Return(2)
 				.Select(val => val * 2)
 				.ToTask(this.Executor)
-				.Result;
+				.AssertSynchronousResult();
 			Assert.AreEqual(4, result);
 		}
 

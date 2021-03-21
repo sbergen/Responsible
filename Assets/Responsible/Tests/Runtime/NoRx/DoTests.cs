@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
 using static Responsible.NoRx.Responsibly;
 
 namespace Responsible.Tests.Runtime.NoRx
@@ -21,7 +22,7 @@ namespace Responsible.Tests.Runtime.NoRx
 
 			var task = instruction.ToTask(this.Executor);
 			Assert.IsTrue(executed, "Should execute when ToTask is called");
-			Assert.AreEqual(42, task.Result);
+			Assert.AreEqual(42, task.AssertSynchronousResult());
 		}
 
 		[Test]

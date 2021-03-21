@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Responsible.NoRx;
+using Responsible.Tests.Runtime.NoRx.Utilities;
 using static Responsible.NoRx.Responsibly;
 
 namespace Responsible.Tests.Runtime.NoRx
@@ -32,7 +33,7 @@ namespace Responsible.Tests.Runtime.NoRx
 		{
 			Assert.AreEqual(
 				Nothing.Default,
-				this.returnTrue.AsNothingInstruction().ToTask(this.Executor).Result);
+				this.returnTrue.AsNothingInstruction().ToTask(this.Executor).AssertSynchronousResult());
 		}
 
 		[Test]
