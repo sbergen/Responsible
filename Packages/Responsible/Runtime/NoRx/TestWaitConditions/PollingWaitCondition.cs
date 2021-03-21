@@ -1,10 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
+using Responsible.NoRx.Utilities;
 
 namespace Responsible.NoRx.TestWaitConditions
 {
@@ -42,38 +42,11 @@ namespace Responsible.NoRx.TestWaitConditions
 				this.ExtraContext = extraContext;
 			}
 
-			protected override async Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
-			{
-				var tcs = new TaskCompletionSource<T>();
-
-				void CheckCondition()
-				{
-					if (cancellationToken.IsCancellationRequested)
-					{
-						return;
-					}
-
-					try
-					{
-						var state = this.getConditionState();
-						if (this.condition(state))
-						{
-							tcs.SetResult(state);
-						}
-					}
-					catch (Exception e)
-					{
-						tcs.SetException(e);
-					}
-				}
-
-				using (runContext.TimeProvider.RegisterPollCallback(CheckCondition))
-				using (cancellationToken.Register(tcs.SetCanceled))
-				{
-					CheckCondition(); // Complete immediately if already met
-					return await tcs.Task;
-				}
-			}
+			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+				=> runContext.TimeProvider.PollForCondition(
+					this.getConditionState,
+					this.condition,
+					cancellationToken);
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}

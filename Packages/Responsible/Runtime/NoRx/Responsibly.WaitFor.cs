@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using NUnit.Framework.Constraints;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.State;
 using Responsible.NoRx.TestInstructions;
@@ -49,6 +50,39 @@ namespace Responsible.NoRx
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
+		/// and check <paramref name="constraint"/> on the returned object.
+		/// Will complete once the constraint is fulfilled,
+		/// returning the last value returned by <paramref name="getObject"/>.
+		/// When constructing the state description, will add the constraint state to the description.
+		/// </summary>
+		/// /// <returns>
+		/// A wait condition, which completes with the value last returned from <paramref name="getObject"/>,
+		/// when <paramref name="constraint"/> is met for it.
+		/// </returns>
+		/// <param name="objectDescription">
+		/// Description of the object to be tested with <paramref name="constraint"/>,
+		/// to be included in the operation state description.
+		/// </param>
+		/// <param name="getObject">Function that returns the object to test <paramref name="constraint"/> on.</param>
+		/// <param name="constraint">Constraint to check with the return value of <paramref name="getObject"/>.</param>
+		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2, T3}"/>
+		[Pure]
+		public static ITestWaitCondition<T> WaitForConstraint<T>(
+			string objectDescription,
+			Func<T> getObject,
+			IResolveConstraint constraint,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new ConstraintWaitCondition<T>(
+				objectDescription,
+				getObject,
+				constraint,
+				new SourceContext(nameof(WaitForConstraint), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test instruction, which will complete with <see cref="Nothing.Default"/>

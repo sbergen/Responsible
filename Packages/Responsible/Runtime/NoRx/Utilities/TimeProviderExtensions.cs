@@ -6,6 +6,43 @@ namespace Responsible.NoRx.Utilities
 {
 	internal static class TimeProviderExtensions
 	{
+		public static async Task<T> PollForCondition<T>(
+			this ITimeProvider timeProvider,
+			Func<T> getState,
+			Func<T, bool> condition,
+			CancellationToken cancellationToken)
+		{
+			var tcs = new TaskCompletionSource<T>();
+
+			void CheckCondition()
+			{
+				if (cancellationToken.IsCancellationRequested)
+				{
+					return;
+				}
+
+				try
+				{
+					var state = getState();
+					if (condition(state))
+					{
+						tcs.SetResult(state);
+					}
+				}
+				catch (Exception e)
+				{
+					tcs.SetException(e);
+				}
+			}
+
+			using (timeProvider.RegisterPollCallback(CheckCondition))
+			using (cancellationToken.Register(tcs.SetCanceled))
+			{
+				CheckCondition(); // Complete immediately if already met
+				return await tcs.Task;
+			}
+		}
+
 		public static async Task<T> TimeoutAfter<T>(
 			this ITimeProvider timeProvider,
 			TimeSpan timeout,
