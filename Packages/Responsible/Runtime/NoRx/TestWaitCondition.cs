@@ -4,7 +4,9 @@ using JetBrains.Annotations;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.TestInstructions;
 using Responsible.NoRx.TestResponders;
+using Responsible.NoRx.TestWaitConditions;
 using Responsible.NoRx.Utilities;
+using UnityEngine.UI;
 
 namespace Responsible.NoRx
 {
@@ -13,6 +15,61 @@ namespace Responsible.NoRx
 	/// </summary>
 	public static class TestWaitCondition
 	{
+		/// <summary>
+		/// Constructs a wait condition, which will first wait for the first condition to be fulfilled,
+		/// and only then continue waiting on the second.
+		/// The result of <paramref name="first"/> is discarded.
+		/// Will complete with a failure, if either condition fails.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which is completed with the result of <paramref name="second"/>,
+		/// once both conditions have been fulfilled.
+		/// </returns>
+		/// <param name="first">First wait condition to wait on.</param>
+		/// <param name="second">Second wait condition to wait on.</param>
+		/// <typeparam name="TFirst">Result type of first wait condition.</typeparam>
+		/// <typeparam name="TSecond">Result type of second wait condition and the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		[Pure]
+		public static ITestWaitCondition<TSecond> AndThen<TFirst, TSecond>(
+			this ITestWaitCondition<TFirst> first,
+			ITestWaitCondition<TSecond> second,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new SequencedWaitCondition<TFirst, TSecond>(
+				first,
+				second,
+				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a wait condition, which will first wait for the first condition to be fulfilled,
+		/// then construct a second condition using <paramref name="continuation"/>, and continue waiting on it.
+		/// Will complete with a failure, if either condition, or the continuation function fails.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which is completed with the result of the wait condition returned by
+		/// <paramref name="continuation"/>, once both conditions have been fulfilled.
+		/// </returns>
+		/// <param name="first">First wait condition to wait on.</param>
+		/// <param name="continuation">
+		/// Continuation function to build the second wait condition from the result of <paramref name="first"/>.
+		/// </param>
+		/// <typeparam name="TFirst">Result type of first wait condition.</typeparam>
+		/// <typeparam name="TSecond">Result type of second wait condition and the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		[Pure]
+		public static ITestWaitCondition<TSecond> AndThen<TFirst, TSecond>(
+			this ITestWaitCondition<TFirst> first,
+			Func<TFirst, ITestWaitCondition<TSecond>> continuation,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new ContinuedWaitCondition<TFirst,TSecond>(
+				first,
+				continuation,
+				new SourceContext(nameof(AndThen), memberName, sourceFilePath, sourceLineNumber));
+
 		/// <summary>
 		/// Constructs a test instruction,
 		/// which will enforce a timeout on the provided wait condition.
@@ -135,7 +192,7 @@ namespace Responsible.NoRx
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing a synchronous action, returning <see cref="Unit.Default"/>.
+		/// and then continue executing a synchronous action, returning <see cref="CanvasScaler.Unit.Default"/>.
 		/// Will complete with a failure if the wait condition or action completes with a failure.
 		/// </summary>
 		/// <returns>

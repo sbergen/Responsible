@@ -14,7 +14,6 @@ namespace Responsible.NoRx
 	/// </summary>
 	public static class TestInstruction
 	{
-		[Pure]
 		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
