@@ -32,6 +32,11 @@ namespace Responsible.NoRx.State
 				this.Status = new TestOperationStatus.Completed(this.Status);
 				return result;
 			}
+			catch (OperationCanceledException)
+			{
+				this.Status = new TestOperationStatus.Canceled(this.Status);
+				throw;
+			}
 			catch (Exception e)
 			{
 				this.Status = new TestOperationStatus.Failed(this.Status, e, nestedRunContext.SourceContext);
