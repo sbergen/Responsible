@@ -44,7 +44,7 @@ namespace Responsible.NoRx
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new PollingWaitCondition<bool>(
 				description,
-				() => default,
+				() => true,
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
