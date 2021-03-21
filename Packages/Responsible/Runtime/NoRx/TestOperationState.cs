@@ -9,6 +9,6 @@ namespace Responsible.NoRx
 	public static class TestOperationState
 	{
 		internal static ITestOperationState<Nothing> AsNothingOperationState<T>(this ITestOperationState<T> state)
-			=> new NothingOperationState<T>(state);
+			=> new NothingOperationState<T, Nothing>(state, _ => Nothing.Default);
 	}
 }

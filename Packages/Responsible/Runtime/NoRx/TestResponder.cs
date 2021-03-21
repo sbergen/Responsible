@@ -80,6 +80,7 @@ namespace Responsible.NoRx
 				responder,
 				selector,
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
+				*/
 
 		/// <summary>
 		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
@@ -96,11 +97,10 @@ namespace Responsible.NoRx
 		/// </remarks>
 		/// <typeparam name="T">Return type of the responder to convert.</typeparam>
 		[Pure]
-		public static ITestResponder<Unit> AsUnitResponder<T>(
+		public static ITestResponder<Nothing> AsNothingResponder<T>(
 			this ITestResponder<T> responder) =>
-			typeof(T) == typeof(Unit)
-				? (ITestResponder<Unit>)responder
-				: new UnitTestResponder<T>(responder);
-				*/
+			typeof(T) == typeof(Nothing)
+				? (ITestResponder<Nothing>)responder
+				: new NothingTestResponder<T>(responder);
 	}
 }

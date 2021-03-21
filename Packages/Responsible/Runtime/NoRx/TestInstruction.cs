@@ -135,9 +135,10 @@ namespace Responsible.NoRx
 				instruction,
 				selector,
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
+				*/
 
 		/// <summary>
-		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
+		/// Converts a test instruction returning any value to one returning <see cref="Nothing"/>.
 		/// Can be useful for example in conjunction with <see cref="Sequence"/>.
 		/// </summary>
 		/// <returns>
@@ -150,10 +151,10 @@ namespace Responsible.NoRx
 		/// </remarks>
 		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
-		public static ITestInstruction<Unit> AsUnitInstruction<T>(
+		public static ITestInstruction<Nothing> AsNothingInstruction<T>(
 			this ITestInstruction<T> instruction) =>
-			typeof(T) == typeof(Unit)
-				? (ITestInstruction<Unit>)instruction
-				: new UnitTestInstruction<T>(instruction);*/
+			typeof(T) == typeof(Nothing)
+				? (ITestInstruction<Nothing>)instruction
+				: new NothingTestInstruction<T>(instruction);
 	}
 }

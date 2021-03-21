@@ -219,5 +219,24 @@ namespace Responsible.NoRx
 					action.ReturnTrue(waitResult),
 					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Converts a wait condition returning any value to one returning <see cref="Nothing"/>.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which behaves otherwise identically to <paramref name="condition"/>,
+		/// but discards its result, and returns <see cref="Nothing.Default"/> instead.
+		/// </returns>
+		/// <param name="condition">Wait condition to wrap.</param>
+		/// <remarks>
+		/// When called with a wait condition already returning Unit, will return the wait condition itself.
+		/// </remarks>
+		/// <typeparam name="T">Return type of the wait condition to convert.</typeparam>
+		[Pure]
+		public static ITestWaitCondition<Nothing> AsNothingCondition<T>(
+			this ITestWaitCondition<T> condition) =>
+			typeof(T) == typeof(Nothing)
+				? (ITestWaitCondition<Nothing>)condition
+				: new NothingWaitCondition<T>(condition);
 	}
 }
