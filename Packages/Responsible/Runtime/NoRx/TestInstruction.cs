@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace Responsible.NoRx
 				new SequencedTestInstruction<Unit, Unit>(
 					sequencedInstructions,
 					nextInstruction,
-					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
+					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));*/
 
 		/// <summary>
 		/// Constructs a test instruction,
@@ -68,7 +69,7 @@ namespace Responsible.NoRx
 		/// If the instruction fails or is canceled before <paramref name="continuation"/> has been called,
 		/// the description of the second instruction isn't included in the state output, as it is unknown.
 		/// Thus it is better to prefer
-		/// <see cref="ContinueWith{T1,T2}(Responsible.ITestInstruction{T1},Responsible.ITestInstruction{T2},string,string,int)"/>
+		/// <see cref="ContinueWith{T1,T2}(ITestInstruction{T},ITestInstruction{T},string,string,int)"/>
 		/// when possible, which will always also include the description of the second instruction.
 		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
@@ -83,7 +84,6 @@ namespace Responsible.NoRx
 				first,
 				continuation,
 				new SourceContext(nameof(ContinueWith), memberName, sourceFilePath, sourceLineNumber));
-				*/
 
 		/// <summary>
 		/// Sequences two test instructions to be executed in order,
