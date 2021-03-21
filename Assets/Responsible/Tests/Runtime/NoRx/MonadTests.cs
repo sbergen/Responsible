@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using Responsible.NoRx;
 using Responsible.Tests.Runtime.NoRx.Utilities;

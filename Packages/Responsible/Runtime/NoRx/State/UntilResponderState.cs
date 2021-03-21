@@ -27,28 +27,30 @@ namespace Responsible.NoRx.State
 
 		protected override async Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 		{
-			using var respondTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-			var untilTask = this.until
-				.Execute(runContext, cancellationToken)
-				.CancelOnCompletion(respondTokenSource, cancellationToken);
-
-			var responsesSource = await this.respondTo.Execute(runContext, respondTokenSource.Token);
-			var responses = responsesSource.Start(respondTokenSource.Token);
-
-			while (responses.HasNext)
+			using (var respondTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
 			{
-				try
-				{
-					var responseInstruction = await responses.AwaitNext();
-					await responseInstruction.Execute(runContext, cancellationToken);
-				}
-				catch (OperationCanceledException)
-				{
-					break;
-				}
-			}
+				var untilTask = this.until
+					.Execute(runContext, cancellationToken)
+					.CancelOnCompletion(respondTokenSource, cancellationToken);
 
-			return await untilTask;
+				var responsesSource = await this.respondTo.Execute(runContext, respondTokenSource.Token);
+				var responses = responsesSource.Start(respondTokenSource.Token);
+
+				while (responses.HasNext)
+				{
+					try
+					{
+						var responseInstruction = await responses.AwaitNext();
+						await responseInstruction.Execute(runContext, cancellationToken);
+					}
+					catch (OperationCanceledException)
+					{
+						break;
+					}
+				}
+
+				return await untilTask;
+			}
 		}
 
 		public override void BuildDescription(StateStringBuilder builder) =>

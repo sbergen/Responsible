@@ -102,23 +102,24 @@ namespace Responsible.Tests.Runtime.NoRx
 		[Test]
 		public void WaitForCondition_CleansUpSuccessfully_AfterCancellation()
 		{
-			using var tokenSource = new CancellationTokenSource();
+			using (var tokenSource = new CancellationTokenSource())
+			{
+				var polled = false;
+				var unused = WaitForCondition(
+						"Complete immediately",
+						() =>
+						{
+							polled = true;
+							return false;
+						})
+					.ExpectWithinSeconds(1)
+					.ToTask(this.Executor, tokenSource.Token);
 
-			var polled = false;
-			var unused = WaitForCondition(
-					"Complete immediately",
-					() =>
-					{
-						polled = true;
-						return false;
-					})
-				.ExpectWithinSeconds(1)
-				.ToTask(this.Executor, tokenSource.Token);
-
-			polled = false; // Reset after initial check
-			tokenSource.Cancel();
-			this.AdvanceDefaultFrame();
-			Assert.IsFalse(polled, "Should not be polled after completion");
+				polled = false; // Reset after initial check
+				tokenSource.Cancel();
+				this.AdvanceDefaultFrame();
+				Assert.IsFalse(polled, "Should not be polled after completion");
+			}
 		}
 
 		/*

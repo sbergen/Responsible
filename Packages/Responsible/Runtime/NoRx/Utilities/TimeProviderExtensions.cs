@@ -71,7 +71,7 @@ namespace Responsible.NoRx.Utilities
 				}
 			}
 
-			using var pollHandle = timeProvider.RegisterPollCallback(CheckTimeout);
+			using (var pollHandle = timeProvider.RegisterPollCallback(CheckTimeout))
 			using (cancellationToken.Register(pollHandle.Dispose))
 			{
 				return await completionSource.Task;

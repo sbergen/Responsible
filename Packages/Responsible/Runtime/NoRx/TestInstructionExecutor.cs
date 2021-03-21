@@ -75,48 +75,49 @@ namespace Responsible.NoRx
 			CancellationToken cancellationToken)
 		{
 			var runContext = new RunContext(sourceContext, this.timeProvider);
-			using var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-			using var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-			try
+			using (var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+			using (var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
 			{
-				NotificationCallbacks.ForEach(cb =>
-					cb(new TestOperationStateNotification.Started(rootState)));
-
-				var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
-				var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
-
-				var completedTask = await Task.WhenAny(errorsTask, mainTask);
-				if (completedTask == mainTask)
+				try
 				{
-					errorTokenSource.Cancel();
+					NotificationCallbacks.ForEach(cb =>
+						cb(new TestOperationStateNotification.Started(rootState)));
+
+					var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
+					var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
+
+					var completedTask = await Task.WhenAny(errorsTask, mainTask);
+					if (completedTask == mainTask)
+					{
+						errorTokenSource.Cancel();
+					}
+					else
+					{
+						mainTokenSource.Cancel();
+					}
+
+					return await completedTask;
 				}
-				else
+				catch (Exception e)
 				{
-					mainTokenSource.Cancel();
+					var message = e is TimeoutException
+						? MakeTimeoutMessage(rootState)
+						: MakeErrorMessage(rootState, e);
+
+					// The Unity test runner can swallow exceptions, so both log an error and throw an exception.
+					// For already logged errors, log this as a warning, as it contains extra context.
+					var logType = e is UnhandledLogMessageException
+						? LogType.Warning
+						: LogType.Error;
+					this.logger.Log(logType, message);
+
+					throw new AssertionException(message, e);
 				}
-
-				return await completedTask;
-			}
-			catch (Exception e)
-			{
-				var message = e is TimeoutException
-					? MakeTimeoutMessage(rootState)
-					: MakeErrorMessage(rootState, e);
-
-				// The Unity test runner can swallow exceptions, so both log an error and throw an exception.
-				// For already logged errors, log this as a warning, as it contains extra context.
-				var logType = e is UnhandledLogMessageException
-					? LogType.Warning
-					: LogType.Error;
-				this.logger.Log(logType, message);
-
-				throw new AssertionException(message, e);
-			}
-			finally
-			{
-				NotificationCallbacks.ForEach(cb =>
-					cb(new TestOperationStateNotification.Finished(rootState)));
+				finally
+				{
+					NotificationCallbacks.ForEach(cb =>
+						cb(new TestOperationStateNotification.Finished(rootState)));
+				}
 			}
 		}
 

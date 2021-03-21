@@ -30,7 +30,7 @@ namespace Responsible.NoRx.TestInstructions
 				var deadline = runContext.TimeProvider.TimeNow + this.waitTime;
 
 				var tcs = new TaskCompletionSource<Nothing>();
-				using var _ = runContext.TimeProvider.RegisterPollCallback(() =>
+				using (runContext.TimeProvider.RegisterPollCallback(() =>
 				{
 					if (cancellationToken.IsCancellationRequested)
 					{
@@ -40,9 +40,10 @@ namespace Responsible.NoRx.TestInstructions
 					{
 						tcs.SetResult(Nothing.Default);
 					}
-				});
-
-				return await tcs.Task;
+				}))
+				{
+					return await tcs.Task;
+				}
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
