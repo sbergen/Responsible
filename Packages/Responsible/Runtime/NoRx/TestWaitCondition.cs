@@ -6,7 +6,6 @@ using Responsible.NoRx.TestInstructions;
 using Responsible.NoRx.TestResponders;
 using Responsible.NoRx.TestWaitConditions;
 using Responsible.NoRx.Utilities;
-using UnityEngine.UI;
 
 namespace Responsible.NoRx
 {
@@ -94,6 +93,31 @@ namespace Responsible.NoRx
 				condition,
 				TimeSpan.FromSeconds(timeout),
 				new SourceContext(nameof(ExpectWithinSeconds), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Applies a selector to the result of a wait condition when the condition completes,
+		/// transforming the result type to another type.
+		/// </summary>
+		/// <param name="condition">A wait condition to apply the selector to.</param>
+		/// <param name="selector">A function to apply to the result of the wait condition.</param>
+		/// <returns>
+		/// A wait condition whose result is the result of invoking
+		/// <paramref name="selector"/> on the result of <paramref name="condition"/>.
+		/// </returns>
+		/// <typeparam name="T1">Return type of the initial wait condition.</typeparam>
+		/// <typeparam name="T2">Return type of the selector and the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
+		[Pure]
+		public static ITestWaitCondition<T2> Select<T1, T2>(
+			this ITestWaitCondition<T1> condition,
+			Func<T1, T2> selector,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new SelectWaitCondition<T1, T2>(
+				condition,
+				selector,
+				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for <paramref name="condition"/> to complete,
