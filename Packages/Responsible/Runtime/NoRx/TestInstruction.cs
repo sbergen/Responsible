@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.NoRx.Context;
 using Responsible.NoRx.TestInstructions;
+using UnityEngine.UI;
 
 namespace Responsible.NoRx
 {
@@ -26,27 +29,26 @@ namespace Responsible.NoRx
 				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
 				cancellationToken);
 
-		/*
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.
 		/// </summary>
 		/// <returns>
-		/// A test instruction which will complete with <see cref="Unit.Default"/>
+		/// A test instruction which will complete with <see cref="CanvasScaler.Unit.Default"/>
 		/// once all provided instructions have completed, or will fail when any of the instructions fails.
 		/// </returns>
 		/// <param name="instructions">Instructions to sequence.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1}"/>
 		[Pure]
-		public static ITestInstruction<Unit> Sequence(
-			this IEnumerable<ITestInstruction<Unit>> instructions,
+		public static ITestInstruction<Nothing> Sequence(
+			this IEnumerable<ITestInstruction<Nothing>> instructions,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
-				new SequencedTestInstruction<Unit, Unit>(
+				new SequencedTestInstruction<Nothing, Nothing>(
 					sequencedInstructions,
 					nextInstruction,
-					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));*/
+					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
 
 		/// <summary>
 		/// Constructs a test instruction,
@@ -141,7 +143,7 @@ namespace Responsible.NoRx
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
-		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
+		/// but discards its result, and returns <see cref="CanvasScaler.Unit.Default"/> instead.
 		/// </returns>
 		/// <param name="instruction">Instruction to wrap.</param>
 		/// <remarks>
