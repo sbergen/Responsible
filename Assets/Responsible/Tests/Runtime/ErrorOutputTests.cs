@@ -132,11 +132,11 @@ Failure context:
             System.Exception: 'Exception'
  
           Test operation stack:
-            [ThenRespondWithAction] MakeResponder (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:35)
-            [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:45)
-            [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:46)
-            [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:43)
-            [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:84)
+            [ThenRespondWithAction] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+            [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:44)
+            [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
+            [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:42)
+            [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:83)
  
     [.] Response 3 (Started 0.04 s and 4 frames ago)
       WAIT FOR
@@ -148,9 +148,9 @@ Failed with:
   System.Exception: 'Exception'
  
 Test operation stack:
-  [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:46)
-  [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:43)
-  [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:84)
+  [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
+  [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:42)
+  [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:83)
  
  
 Error: System.Exception: Exception";
