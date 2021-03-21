@@ -2,24 +2,23 @@ using System;
 
 namespace Responsible.NoRx.Context
 {
-	internal class WaitContext : IDisposable
+	internal class WaitContext
 	{
 		private readonly ITimeProvider timeProvider;
 		private readonly DateTimeOffset startTime;
-		private readonly IDisposable frameCountSubscription;
+		private readonly int startFrame;
 
-		private int frameCount;
+		internal string ElapsedString =>
+			$"{this.ElapsedTime.TotalSeconds:0.00} s and {this.ElapsedFrames} frames";
 
-		internal string ElapsedTime =>
-			$"{(this.timeProvider.TimeNow - this.startTime).TotalSeconds:0.00} s and {this.frameCount} frames";
+		private TimeSpan ElapsedTime => this.timeProvider.TimeNow - this.startTime;
+		private int ElapsedFrames => this.timeProvider.FrameNow - this.startFrame;
 
 		internal WaitContext(ITimeProvider timeProvider)
 		{
 			this.timeProvider = timeProvider;
 			this.startTime = timeProvider.TimeNow;
-			this.frameCountSubscription = timeProvider.RegisterPollCallback(() => ++this.frameCount);
+			this.startFrame = timeProvider.FrameNow;
 		}
-
-		public void Dispose() => this.frameCountSubscription.Dispose();
 	}
 }

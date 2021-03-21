@@ -42,7 +42,7 @@ namespace Responsible.NoRx.State
 			}
 
 			internal override string MakeStatusLine(string description) =>
-				$"[.] {description} (Started {this.WaitContext.ElapsedTime} ago)";
+				$"[.] {description} (Started {this.WaitContext.ElapsedString} ago)";
 		}
 
 		internal class Completed : TestOperationStatus
@@ -52,7 +52,7 @@ namespace Responsible.NoRx.State
 			public Completed(TestOperationStatus previous)
 			{
 				var waiting = this.ExpectWaiting(previous);
-				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+				this.elapsedTime = waiting.WaitContext.ElapsedString;
 			}
 
 			internal override string MakeStatusLine(string description) =>
@@ -69,7 +69,7 @@ namespace Responsible.NoRx.State
 			public Failed(TestOperationStatus previous, Exception error, SourceContext sourceContext)
 			{
 				var waiting = this.ExpectWaiting(previous);
-				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+				this.elapsedTime = waiting.WaitContext.ElapsedString;
 				this.Error = error;
 				this.SourceContext = sourceContext;
 			}
@@ -85,7 +85,7 @@ namespace Responsible.NoRx.State
 			public Canceled(TestOperationStatus previous)
 			{
 				var waiting = this.ExpectWaiting(previous);
-				this.elapsedTime = waiting.WaitContext.ElapsedTime;
+				this.elapsedTime = waiting.WaitContext.ElapsedString;
 			}
 
 			internal override string MakeStatusLine(string description) =>

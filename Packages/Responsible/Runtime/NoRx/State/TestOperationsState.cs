@@ -20,11 +20,10 @@ namespace Responsible.NoRx.State
 		{
 			TestOperationStatus.AssertNotStarted(this.Status);
 
-			using var waitContext = runContext.MakeWaitContext();
 			var nestedRunContext = this.sourceContext != null
 				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;
-			this.Status = new TestOperationStatus.Waiting(this.Status, waitContext);
+			this.Status = new TestOperationStatus.Waiting(this.Status, runContext.MakeWaitContext());
 
 			try
 			{

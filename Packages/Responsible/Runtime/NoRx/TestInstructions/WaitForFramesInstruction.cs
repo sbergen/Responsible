@@ -17,7 +17,6 @@ namespace Responsible.NoRx.TestInstructions
 		private class State : TestOperationState<Nothing>
 		{
 			private readonly int wholeFramesToWaitFor;
-			private int passedFrames = -1; // Compensate for immediate poll
 
 			public State(int wholeFramesToWaitFor, SourceContext sourceContext)
 				: base(sourceContext)
@@ -25,11 +24,15 @@ namespace Responsible.NoRx.TestInstructions
 				this.wholeFramesToWaitFor = wholeFramesToWaitFor;
 			}
 
-			protected override Task<Nothing> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
-				runContext.TimeProvider.PollForCondition(
+			protected override Task<Nothing> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			{
+				var timeProvider = runContext.TimeProvider;
+				var deadline = timeProvider.FrameNow + this.wholeFramesToWaitFor;
+				return runContext.TimeProvider.PollForCondition(
 					() => Nothing.Default,
-					_ => this.passedFrames++ >= this.wholeFramesToWaitFor,
+					_ => timeProvider.FrameNow > deadline,
 					cancellationToken);
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddInstruction(this, $"WAIT FOR {this.wholeFramesToWaitFor} FRAME(S)");

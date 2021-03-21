@@ -114,18 +114,18 @@ Failure context:
   UNTIL
     [✓] Cond 1.2 (Completed in 0.02 s and 2 frames)
   RESPOND TO ANY OF
-    [-] Response 1 (Canceled after 0.02 s and 1 frames)
+    [-] Response 1 (Canceled after 0.02 s and 2 frames)
       WAIT FOR
-        [-] Cond 1.1 (Canceled after 0.02 s and 1 frames)
+        [-] Cond 1.1 (Canceled after 0.02 s and 2 frames)
       THEN RESPOND WITH ...
-[!] EXPECT WITHIN 10.00 s (Failed after 0.04 s and 6 frames)
+[!] EXPECT WITHIN 10.00 s (Failed after 0.04 s and 4 frames)
   UNTIL
-    [.] Never (Started 0.04 s and 6 frames ago)
+    [.] Never (Started 0.04 s and 4 frames ago)
   RESPOND TO ANY OF
     [!] Response 2 (Failed after 0.00 s and 0 frames)
       WAIT FOR
-        [✓] Cond 2.1 (Completed in 0.02 s and 3 frames)
-        [✓] Cond 2.2 (Completed in 0.02 s and 3 frames)
+        [✓] Cond 2.1 (Completed in 0.02 s and 2 frames)
+        [✓] Cond 2.2 (Completed in 0.02 s and 2 frames)
       THEN RESPOND WITH
         [!] Response 2 (Failed after 0.00 s and 0 frames)
  
@@ -139,9 +139,9 @@ Failure context:
             [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:43)
             [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/NoRx/ErrorOutputTests.cs:84)
  
-    [.] Response 3 (Started 0.04 s and 5 frames ago)
+    [.] Response 3 (Started 0.04 s and 4 frames ago)
       WAIT FOR
-        [.] Cond 3.1 (Started 0.04 s and 5 frames ago)
+        [.] Cond 3.1 (Started 0.04 s and 4 frames ago)
         [ ] ...
       THEN RESPOND WITH ...
  
