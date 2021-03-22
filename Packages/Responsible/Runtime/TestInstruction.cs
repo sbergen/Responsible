@@ -8,8 +8,6 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.Unity;
-using Responsible.Utilities;
-using UnityEngine.UI;
 
 namespace Responsible
 {
@@ -24,8 +22,8 @@ namespace Responsible
 		/// </summary>
 		/// <returns>A task which will complete with the instructions status.</returns>
 		/// <param name="instruction">The instruction to execute.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
 		/// <typeparam name="T">Return type of the test instruction.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
@@ -44,7 +42,6 @@ namespace Responsible
 		/// </summary>
 		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
 		/// <param name="instruction">Instruction to execute.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
 		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		[Pure]
@@ -64,7 +61,7 @@ namespace Responsible
 		/// Runs all provided test instructions in order, or until one of them fails.
 		/// </summary>
 		/// <returns>
-		/// A test instruction which will complete with <see cref="CanvasScaler.Unit.Default"/>
+		/// A test instruction which will complete with a non-null object
 		/// once all provided instructions have completed, or will fail when any of the instructions fails.
 		/// </returns>
 		/// <param name="instructions">Instructions to sequence.</param>
@@ -169,17 +166,14 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test instruction returning any value to one returning <see cref="Nothing"/>.
-		/// Can be useful for example in conjunction with <see cref="Sequence"/>.
+		/// Converts a test instruction returning value type, to one returning the same value boxed into object.
+		/// Can be useful for example in conjunction with <see cref="Sequence"/>, if used with value types.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
-		/// but discards its result, and returns <see cref="CanvasScaler.Unit.Default"/> instead.
+		/// but returns its result as a boxed object.
 		/// </returns>
 		/// <param name="instruction">Instruction to wrap.</param>
-		/// <remarks>
-		/// When called with an instruction already returning Unit, will return the instruction itself.
-		/// </remarks>
 		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
 		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)

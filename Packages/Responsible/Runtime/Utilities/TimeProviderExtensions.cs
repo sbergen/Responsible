@@ -43,16 +43,14 @@ namespace Responsible.Utilities
 			}
 		}
 
-		public static async Task<T> TimeoutAfter<T>(
+		public static Task<T> TimeoutAfter<T>(
 			this ITimeProvider timeProvider,
 			TimeSpan timeout,
 			CancellationToken cancellationToken,
 			Func<CancellationToken, Task<T>> taskFactory)
-			=> await new[]
-			{
+			=> cancellationToken.Amb(
 				taskFactory,
-				ct => timeProvider.Timeout<T>(timeout, ct)
-			}.Amb(cancellationToken);
+				ct => timeProvider.Timeout<T>(timeout, ct));
 
 		// T is for convenience
 		public static async Task<T> Timeout<T>(

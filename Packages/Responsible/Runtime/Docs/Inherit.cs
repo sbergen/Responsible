@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Responsible.State;
 
 namespace Responsible.Docs
@@ -129,9 +130,11 @@ namespace Responsible.Docs
 
 		/// <inheritdoc cref="CallerMember{T1, T2}"/>
 		/// <param name="executor">Test operation executor to use.</param>
+		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
 		public void CallerMemberWithExecutor<T>(
 			T arg1,
 			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
 			string memberName = "",
 			string sourceFilePath = "",
 			int sourceLineNumber = 0)

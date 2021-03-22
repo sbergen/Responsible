@@ -31,10 +31,10 @@ namespace Responsible
 				func,
 				new SourceContext(nameof(DoAndReturn), memberName, sourceFilePath, sourceLineNumber));
 
-		/// <summary>Execute a synchronous action safely, and return <see cref="Unit.Default"/>.</summary>
+		/// <summary>Execute a synchronous action safely, and return a non-null object.</summary>
 		/// <param name="action">Action to call when the test instruction is executed.</param>
 		/// <returns>
-		/// A test instruction which calls <paramref name="action"/> and returns true when executed.
+		/// A test instruction which calls <paramref name="action"/> and returns a non-null object when executed.
 		/// </returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]

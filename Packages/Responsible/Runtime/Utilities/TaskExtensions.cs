@@ -8,9 +8,13 @@ namespace Responsible.Utilities
 {
 	internal static class TaskExtensions
 	{
+		/// <summary>
+		/// Returns the result of the first completed task, and cancels the rest.
+		/// Cancels all if <paramref name="cancellationToken"/> is canceled.
+		/// </summary>
 		public static async Task<T> Amb<T>(
-			this IEnumerable<Func<CancellationToken, Task<T>>> taskFactories,
-			CancellationToken cancellationToken)
+			this CancellationToken cancellationToken,
+			params Func<CancellationToken, Task<T>>[] taskFactories)
 		{
 			var allTasks = taskFactories
 				.Select(factory =>

@@ -11,6 +11,7 @@ using Responsible.State;
 using Responsible.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
+using TaskExtensions = Responsible.Utilities.TaskExtensions;
 
 namespace Responsible
 {
@@ -61,6 +62,9 @@ namespace Responsible
 			this.logger = logger ?? Debug.unityLogger;
 		}
 
+		/// <summary>
+		/// Disposes the executor. Should be called after finishing with tests.
+		/// </summary>
 		public virtual void Dispose()
 		{
 			// Ensure that nothing is left hanging.
@@ -92,9 +96,7 @@ namespace Responsible
 			CancellationToken cancellationToken)
 		{
 			var runContext = new RunContext(sourceContext, this.timeProvider);
-			using (var mainTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
-				cancellationToken, this.mainCancellationTokenSource.Token))
-			using (var errorTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+			using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
 				cancellationToken, this.mainCancellationTokenSource.Token))
 			{
 				try
@@ -102,20 +104,9 @@ namespace Responsible
 					NotificationCallbacks.ForEach(cb =>
 						cb(new TestOperationStateNotification.Started(rootState)));
 
-					var errorsTask = this.InterceptErrors<T>(errorTokenSource.Token);
-					var mainTask = rootState.Execute(runContext, mainTokenSource.Token);
-
-					var completedTask = await Task.WhenAny(errorsTask, mainTask);
-					if (completedTask == mainTask)
-					{
-						errorTokenSource.Cancel();
-					}
-					else
-					{
-						mainTokenSource.Cancel();
-					}
-
-					return await completedTask;
+					return await linkedTokenSource.Token.Amb(
+						this.InterceptErrors<T>,
+						ct => rootState.Execute(runContext, ct));
 				}
 				catch (Exception e)
 				{
