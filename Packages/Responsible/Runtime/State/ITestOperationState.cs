@@ -35,6 +35,7 @@ namespace Responsible.State
 	/// which will produce a full textual representation of the execution state.
 	/// </remarks>
 	/// <typeparam name="T">Return type of the test operation.</typeparam>
+	// ReSharper disable once UnusedTypeParameter, used for type inference in our covariance hack
 	public interface ITestOperationState<out T> : ITestOperationState
 	{
 		/// <summary>

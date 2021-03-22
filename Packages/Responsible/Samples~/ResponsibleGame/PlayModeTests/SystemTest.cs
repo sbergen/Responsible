@@ -4,8 +4,6 @@ using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
 using Responsible.Unity;
-using Responsible.Utilities;
-using UniRx;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;

@@ -98,7 +98,7 @@ namespace Responsible
 		/// If the instruction fails or is canceled before <paramref name="continuation"/> has been called,
 		/// the description of the second instruction isn't included in the state output, as it is unknown.
 		/// Thus it is better to prefer
-		/// <see cref="ContinueWith{T1,T2}(ITestInstruction{T},ITestInstruction{T},string,string,int)"/>
+		/// <see cref="ContinueWith{T1,T2}(ITestInstruction{T1},ITestInstruction{T2},string,string,int)"/>
 		/// when possible, which will always also include the description of the second instruction.
 		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>

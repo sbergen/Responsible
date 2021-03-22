@@ -12,7 +12,7 @@ namespace Responsible
 		/// All responders are waited for concurrently, but only one will be responding at a time.
 		/// Will complete with an error, if any of the responders completes with an error.
 		///
-		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.AsUnitResponder{T}"/>
+		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.BoxResult{T}"/>
 		/// for methods which can be used to make the responder types match.
 		/// </summary>
 		/// <returns>
@@ -34,7 +34,7 @@ namespace Responsible
 		/// All responders are waited for concurrently, but only one will be responding at a time.
 		/// Will complete with an error, if any of the responders completes with an error.
 		///
-		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.AsUnitResponder{T}"/>
+		/// See <see cref="TestResponder.Select{T1, T2}"/> and <see cref="TestResponder.BoxResult{T}"/>
 		/// for methods which can be used to make the responder types match.
 		/// </summary>
 		/// <returns>

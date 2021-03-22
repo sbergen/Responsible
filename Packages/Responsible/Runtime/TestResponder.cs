@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.TestResponders;
-using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -82,18 +81,14 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test responder returning any value to one returning <see cref="Unit"/>.
+		/// Converts a test responder returning value type, to one returning the same value boxed into object.
 		/// Can be useful for example in conjunction with <see cref="Responsibly.RespondToAllOf{T}"/>
-		/// or <see cref="Responsibly.RespondToAnyOf{T}"/>.
 		/// </summary>
 		/// <returns>
 		/// A test responder which behaves otherwise identically to <paramref name="responder"/>,
-		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
+		/// but returns its result as a boxed object.
 		/// </returns>
 		/// <param name="responder">Test responder to wrap.</param>
-		/// <remarks>
-		/// When called with a responder already returning Unit, will return the responder itself.
-		/// </remarks>
 		/// <typeparam name="T">Return type of the responder to convert.</typeparam>
 		[Pure]
 		public static ITestResponder<object> BoxResult<T>(this ITestResponder<T> responder)

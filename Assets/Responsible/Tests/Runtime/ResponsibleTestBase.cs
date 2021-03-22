@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
-using Responsible.Utilities;
 using UnityEngine;
 using static Responsible.Responsibly;
 

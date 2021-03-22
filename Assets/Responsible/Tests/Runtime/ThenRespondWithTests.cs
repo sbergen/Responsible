@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using Responsible.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 

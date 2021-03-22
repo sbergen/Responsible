@@ -57,8 +57,7 @@ namespace Responsible
 		/// and complete once the condition returns true.
 		/// </summary>
 		/// <returns>
-		/// A wait condition which completes with <see cref="Unit.Default"/>
-		/// once <paramref name="condition"/> returns true.
+		/// A wait condition which completes with a non-null object once <paramref name="condition"/> returns true.
 		/// </returns>
 		/// <param name="condition">Condition to wait for, will be polled on every frame.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T}"/>
@@ -175,7 +174,7 @@ namespace Responsible
 				new SourceContext(nameof(WaitForSeconds), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test instruction, which will complete with <see cref="Unit.Default"/>,
+		/// Constructs a test instruction, which will complete with a non-null object
 		/// after the provided amount of **whole** frames.
 		/// Note that zero frames means to wait until the next frame.
 		/// </summary>

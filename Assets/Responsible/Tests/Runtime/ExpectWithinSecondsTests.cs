@@ -2,7 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using NUnit.Framework;
-using Responsible.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime

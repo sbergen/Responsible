@@ -11,7 +11,6 @@ using Responsible.State;
 using Responsible.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
-using TaskExtensions = Responsible.Utilities.TaskExtensions;
 
 namespace Responsible
 {

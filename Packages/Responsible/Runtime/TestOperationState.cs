@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Unity;
-using Responsible.Utilities;
 
 namespace Responsible
 {
