@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
+using Responsible.Unity;
 using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
@@ -12,6 +13,8 @@ namespace Responsible.Tests.Runtime
 	public class ErrorLogHandlingTests : ResponsibleTestBase
 	{
 		private const string ErrorMessage = "Error!";
+
+		private readonly UnityErrorLogInterceptor errorInterceptor = new UnityErrorLogInterceptor();
 
 		// JIC someone runs these together with their test suite...
 		private bool wereLogsIgnored;
@@ -68,7 +71,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectLog_Works_WhenErrorIsIntercepted()
 		{
-			this.Executor.ExpectLog(LogType.Error, new Regex(ErrorMessage));
+			this.errorInterceptor.ExpectLog(LogType.Error, new Regex(ErrorMessage));
 			this.LogErrorFromInstructionSynchronously();
 		}
 
@@ -84,7 +87,7 @@ namespace Responsible.Tests.Runtime
 		[Ignore("Should fail, can't assert that with the Unity test runner, run manually")]
 		public void NotLoggedButExpectedError_FailsTest()
 		{
-			this.Executor.ExpectLog(LogType.Error, new Regex("foo"));
+			this.errorInterceptor.ExpectLog(LogType.Error, new Regex("foo"));
 		}
 
 		private Task LogErrorFromInstructionSynchronously()
@@ -92,5 +95,7 @@ namespace Responsible.Tests.Runtime
 			return Do("Log error", () => Debug.LogError(ErrorMessage))
 				.ToTask(this.Executor);
 		}
+
+		protected override IExternalResultSource ExternalResultSource() => this.errorInterceptor;
 	}
 }

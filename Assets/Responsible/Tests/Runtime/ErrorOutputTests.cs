@@ -56,7 +56,7 @@ namespace Responsible.Tests.Runtime
 			// We especially do not want to assert things like line numbers in multiple places!
 			var logger = Substitute.For<ILogger>();
 			var timeProvider = new TestTimeProvider();
-			var executor = new TestInstructionExecutor(timeProvider, logger);
+			var executor = new TestInstructionExecutor(timeProvider, null, logger);
 
 			var state1 = new ResponderState
 			{

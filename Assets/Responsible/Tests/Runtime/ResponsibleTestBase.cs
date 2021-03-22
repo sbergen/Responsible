@@ -43,7 +43,7 @@ namespace Responsible.Tests.Runtime
 		{
 			this.Logger = Substitute.For<ILogger>();
 			this.TimeProvider = new TestTimeProvider();
-			this.Executor = new TestInstructionExecutor(this.TimeProvider, logger: this.Logger);
+			this.Executor = new TestInstructionExecutor(this.TimeProvider, this.ExternalResultSource(), this.Logger);
 		}
 
 		[TearDown]
@@ -51,5 +51,7 @@ namespace Responsible.Tests.Runtime
 		{
 			this.Executor.Dispose();
 		}
+
+		protected virtual IExternalResultSource ExternalResultSource() => null;
 	}
 }
