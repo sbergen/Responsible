@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using static Responsible.Responsibly;
@@ -54,6 +55,37 @@ namespace Responsible.Tests.Runtime
 			Assert.AreEqual(
 				new[] { true, true, true },
 				result);
+		}
+
+		[Test]
+		public void WaitForAllOf_Completes_WhenOneHasError()
+		{
+			var canThrow = false;
+
+			var task = WaitForAllOf(
+					Never.BoxResult(),
+					WaitForCondition(
+						"Throw",
+						() =>
+						{
+							if (canThrow)
+							{
+								throw new Exception("Test exception");
+							}
+
+							return canThrow;
+						}))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
+			Assert.IsFalse(task.IsFaulted);
+
+			canThrow = true;
+			this.AdvanceDefaultFrame();
+
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 	}
 }

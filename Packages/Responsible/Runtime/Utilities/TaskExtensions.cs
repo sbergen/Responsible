@@ -43,17 +43,33 @@ namespace Responsible.Utilities
 			return await completedTask;
 		}
 
-		public static Task<T> CancelOnCompletion<T>(
+		public static async Task<T> CancelOnError<T>(
 			this Task<T> task,
-			CancellationTokenSource cancellationTokenSource,
-			CancellationToken cancellationToken) =>
-			task.ContinueWith(resultTask =>
-				{
-					cancellationTokenSource.Cancel();
-					return resultTask.Result;
-				},
-				cancellationToken,
-				TaskContinuationOptions.ExecuteSynchronously,
-				TaskScheduler.FromCurrentSynchronizationContext());
+			CancellationTokenSource cancellationTokenSource)
+		{
+			try
+			{
+				return await task;
+			}
+			catch (Exception e) when (!(e is OperationCanceledException))
+			{
+				cancellationTokenSource.Cancel();
+				throw;
+			}
+		}
+
+		public static async Task<T> CancelOnTermination<T>(
+			this Task<T> task,
+			CancellationTokenSource cancellationTokenSource)
+		{
+			try
+			{
+				return await task;
+			}
+			finally
+			{
+				cancellationTokenSource.Cancel();
+			}
+		}
 	}
 }

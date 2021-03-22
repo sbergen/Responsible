@@ -33,7 +33,7 @@ namespace Responsible.Tests.Runtime
 
 		protected static AssertionException GetAssertionException(Task task)
 		{
-			Assert.IsNotNull(task.Exception);
+			Assert.IsNotNull(task.Exception, "Should have exception");
 			Assert.AreEqual(1, task.Exception.InnerExceptions.Count);
 			Assert.IsInstanceOf<AssertionException>(task.Exception.InnerExceptions[0]);
 			return task.Exception.InnerExceptions[0] as AssertionException;

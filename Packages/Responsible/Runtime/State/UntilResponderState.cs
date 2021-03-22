@@ -30,7 +30,7 @@ namespace Responsible.State
 			{
 				var untilTask = this.until
 					.Execute(runContext, cancellationToken)
-					.CancelOnCompletion(respondTokenSource, cancellationToken);
+					.CancelOnTermination(respondTokenSource);
 
 				var responsesSource = await this.respondTo.Execute(runContext, respondTokenSource.Token);
 				var responses = responsesSource.Start(respondTokenSource.Token);

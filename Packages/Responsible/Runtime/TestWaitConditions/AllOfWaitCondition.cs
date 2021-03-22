@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
+using Responsible.Utilities;
 
 namespace Responsible.TestWaitConditions
 {
@@ -24,9 +26,18 @@ namespace Responsible.TestWaitConditions
 				this.conditions = conditions.Select(c => c.CreateState()).ToList();
 			}
 
-			protected override Task<T[]> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
-				Task.WhenAll(this.conditions
-					.Select(cond => cond.Execute(runContext, cancellationToken)));
+			protected override async Task<T[]> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			{
+				using (var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+				{
+					return await Task.WhenAll(this.conditions
+						.Select(cond => cond
+							.Execute(runContext, cancellationSource.Token)
+							.CancelOnError(cancellationSource))
+						.ToArray());
+				}
+			}
+
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren(
