@@ -166,7 +166,7 @@ namespace Responsible
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing a synchronous action, returning <see cref="Nothing"/>.
+		/// and then continue executing a synchronous action, returning a non-null object.
 		/// Will complete with a failure if the wait condition or action completes with a failure.
 		/// </summary>
 		/// <returns>
@@ -245,16 +245,13 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a wait condition returning any value to one returning <see cref="Nothing"/>.
+		/// Converts a wait condition returning value type, to one returning the same value boxed into object.
 		/// </summary>
 		/// <returns>
 		/// A wait condition which behaves otherwise identically to <paramref name="condition"/>,
-		/// but discards its result, and returns <see cref="Nothing.Default"/> instead.
+		/// but returns its result as a boxed object.
 		/// </returns>
 		/// <param name="condition">Wait condition to wrap.</param>
-		/// <remarks>
-		/// When called with a wait condition already returning Unit, will return the wait condition itself.
-		/// </remarks>
 		/// <typeparam name="T">Return type of the wait condition to convert.</typeparam>
 		[Pure]
 		public static ITestWaitCondition<object> BoxResult<T>(this ITestWaitCondition<T> condition)

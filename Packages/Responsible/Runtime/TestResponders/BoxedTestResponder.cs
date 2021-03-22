@@ -6,9 +6,9 @@ namespace Responsible.TestResponders
 		where T : struct
 	{
 		public BoxedTestResponder(ITestResponder<T> responder)
-		: base(() => new BoxedOperationState<ITestOperationState<T>, ITestOperationState<object>>(
-			responder.CreateState(),
-			TestOperationState.BoxResult))
+			: base(() => new BoxedOperationState<ITestOperationState<T>, ITestOperationState<object>>(
+				responder.CreateState(),
+				TestOperationState.BoxResult))
 		{
 		}
 	}
