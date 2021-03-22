@@ -16,7 +16,7 @@ namespace Responsible.TestResponders
 		{
 		}
 
-		private class State : TestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>>
+		private class State : TestOperationState<IMultipleTaskSource<ITestOperationState<object>>>
 		{
 			private readonly IReadOnlyList<ITestOperationState<ITestOperationState<T>>> responders;
 
@@ -26,13 +26,13 @@ namespace Responsible.TestResponders
 				this.responders = responders.Select(r => r.CreateState()).ToList();
 			}
 
-			protected override Task<IMultipleTaskSource<ITestOperationState<Nothing>>> ExecuteInner(
+			protected override Task<IMultipleTaskSource<ITestOperationState<object>>> ExecuteInner(
 				RunContext runContext,
 				CancellationToken cancellationToken)
 			{
-				Func<CancellationToken, Task<ITestOperationState<Nothing>>> MakeLauncher(
+				Func<CancellationToken, Task<ITestOperationState<object>>> MakeLauncher(
 					ITestOperationState<ITestOperationState<T>> responder)
-					=> async ct => (await responder.Execute(runContext, ct)).AsNothingOperationState();
+					=> async ct => (await responder.Execute(runContext, ct)).BoxResult();
 
 				return Task.FromResult(MultipleTaskSource.Make(this.responders.Select(MakeLauncher)));
 			}

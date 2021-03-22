@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Responsible.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -9,10 +10,10 @@ namespace Responsible.Tests.Runtime
 		private bool mayCompleteFirst;
 		private bool mayCompleteSecond;
 
-		private ITestWaitCondition<Nothing> waitForFirst;
-		private ITestWaitCondition<Nothing> waitForSecond;
+		private ITestWaitCondition<object> waitForFirst;
+		private ITestWaitCondition<object> waitForSecond;
 
-		private ITestInstruction<Nothing> errorInstruction = Do("throw", () => { throw new Exception("Test"); });
+		private ITestInstruction<object> errorInstruction = Do("throw", () => { throw new Exception("Test"); });
 
 		public enum Strategy
 		{
@@ -76,7 +77,7 @@ namespace Responsible.Tests.Runtime
 			Assert.IsTrue(task.IsCompleted);
 		}
 
-		private ITestInstruction<Nothing> ContinueWithNothing<T>(
+		private ITestInstruction<object> ContinueWithNothing<T>(
 			ITestInstruction<T> first,
 			Strategy strategy)
 		{
@@ -92,7 +93,7 @@ namespace Responsible.Tests.Runtime
 			}
 		}
 
-		private ITestInstruction<Nothing> ContinueWithError<T>(
+		private ITestInstruction<object> ContinueWithError<T>(
 			ITestInstruction<T> first,
 			Strategy strategy)
 		{

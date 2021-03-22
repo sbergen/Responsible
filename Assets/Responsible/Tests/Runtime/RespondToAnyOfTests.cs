@@ -12,7 +12,7 @@ namespace Responsible.Tests.Runtime
 		private ConditionResponder responder2;
 
 		private bool mayComplete;
-		private Task<Nothing> task;
+		private Task<object> task;
 
 		[SetUp]
 		public void SetUp()

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
 using Responsible.Unity;
+using Responsible.Utilities;
 using UniRx;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -63,13 +64,13 @@ namespace ResponsibleGame.PlayModeTests
 		// We could e.g. make the target area appear and disappear in a future version,
 		// and these utilities could easily be modified to support this.
 
-		protected ITestResponder<Nothing> TriggerHit(bool shouldHit) => WaitForMainComponents()
+		protected ITestResponder<object> TriggerHit(bool shouldHit) => WaitForMainComponents()
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit))
 			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
 
-		protected ITestInstruction<Nothing> MockTriggerInput() =>
+		protected ITestInstruction<object> MockTriggerInput() =>
 			Do("Mock trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();

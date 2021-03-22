@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Responsible.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -23,7 +24,7 @@ namespace Responsible.Tests.Runtime
 				"Ready to execute",
 				() => conditionFulfilled);
 
-			var task = MakeNothingResponder(strategy, condition)
+			var task = MakeObjectResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -42,7 +43,7 @@ namespace Responsible.Tests.Runtime
 				"Ready to execute",
 				() => throw new Exception("Test"));
 
-			var task = MakeNothingResponder(strategy, condition)
+			var task = MakeObjectResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -59,18 +60,20 @@ namespace Responsible.Tests.Runtime
 			Assert.NotNull(GetAssertionException(task));
 		}
 
-		private static ITestResponder<Nothing> MakeNothingResponder<TWait>(
+		private static ITestResponder<object> MakeObjectResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
+			var obj = new object();
+
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:
-					return waitCondition.ThenRespondWith("Respond", x => Return(Nothing.Default));
+					return waitCondition.ThenRespondWith("Respond", x => Return(obj));
 				case ConstructionStrategy.Instruction:
-					return waitCondition.ThenRespondWith("Respond", Return(Nothing.Default));
+					return waitCondition.ThenRespondWith("Respond", Return(obj));
 				case ConstructionStrategy.Func:
-					return waitCondition.ThenRespondWithFunc("Respond", _ => Nothing.Default);
+					return waitCondition.ThenRespondWithFunc("Respond", _ => obj);
 				case ConstructionStrategy.Action:
 					return waitCondition.ThenRespondWithAction("Respond", _ => { });
 				default:
@@ -78,12 +81,12 @@ namespace Responsible.Tests.Runtime
 			}
 		}
 
-		private static ITestResponder<Nothing> MakeErrorResponder<TWait>(
+		private static ITestResponder<object> MakeErrorResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
-			Nothing ThrowException(TWait _) => throw new Exception("Test");
-			ITestInstruction<Nothing> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
+			object ThrowException(TWait _) => throw new Exception("Test");
+			ITestInstruction<object> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:

@@ -104,6 +104,11 @@ namespace Responsible.State
 				? $"{timeout:g}"
 				: $"{timeout.TotalSeconds:0.00 s}";
 
+			if (operation is IBoxedOperationState boxedState)
+			{
+				operation = boxedState.WrappedState;
+			}
+
 			if (operation is IDiscreteWaitConditionState discreteSate)
 			{
 				this.AddStatus(

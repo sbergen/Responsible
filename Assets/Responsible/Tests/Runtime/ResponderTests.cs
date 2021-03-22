@@ -11,7 +11,7 @@ namespace Responsible.Tests.Runtime
 
 		private bool startedToReact;
 
-		private ITestResponder<Nothing> respondToConditions;
+		private ITestResponder<object> respondToConditions;
 
 		[SetUp]
 		public void SetUp()

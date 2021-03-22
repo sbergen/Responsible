@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using Responsible.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -24,7 +25,7 @@ namespace Responsible.Tests.Runtime
 		public void ExpectCondition_ContainsErrorDetails_WhenTimedOut()
 		{
 			this.AssertErrorDetailsAfterOneSecond(
-				Never.ExpectWithinSeconds(1),
+				Never.ExpectWithinSeconds(1).BoxResult(),
 				@"\[!\] Never EXPECTED WITHIN.*
 \s+Failed with.*
 \s+Test operation stack");
@@ -123,7 +124,7 @@ Test operation stack");
 		{
 			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
 			this.AssertErrorDetailsAfterOneSecond(
-				responder.ExpectWithinSeconds(1),
+				responder.BoxResult().ExpectWithinSeconds(1),
 				@"timed out.*
 \[!\] Response EXPECTED WITHIN.*
 \s+\[!\] Never EXPECTED WITHIN.*
@@ -145,7 +146,7 @@ Test operation stack");
 		}
 
 		private void AssertErrorDetailsAfterOneSecond(
-			ITestInstruction<Nothing> instruction,
+			ITestInstruction<object> instruction,
 			[RegexPattern] string regex)
 		{
 			var task = instruction.ToTask(this.Executor);

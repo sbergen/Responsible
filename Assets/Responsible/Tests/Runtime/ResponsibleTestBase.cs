@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
+using Responsible.Utilities;
 using UnityEngine;
 using static Responsible.Responsibly;
 
@@ -13,8 +14,8 @@ namespace Responsible.Tests.Runtime
 		protected static readonly ITestWaitCondition<bool> ImmediateTrue =
 			WaitForConditionOn("True", () => true, val => val);
 
-		protected static readonly ITestWaitCondition<Nothing> Never =
-			WaitForCondition("Never", () => false);
+		protected static readonly ITestWaitCondition<bool> Never =
+			WaitForConditionOn("Never", () => false, _ => false);
 
 		protected static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);

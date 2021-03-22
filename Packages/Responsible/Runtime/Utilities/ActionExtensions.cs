@@ -4,16 +4,16 @@ namespace Responsible.Utilities
 {
 	internal static class ActionExtensions
 	{
-		public static Func<Nothing> ReturnNothing<T>(this Action<T> action, T arg) => () =>
+		public static Func<object> ReturnUnit<T>(this Action<T> action, T arg) => () =>
 		{
 			action(arg);
-			return default;
+			return Unit.Instance;
 		};
 
-		public static Func<Nothing> ReturnNothing(this Action action) => () =>
+		public static Func<object> ReturnUnit(this Action action) => () =>
 		{
 			action();
-			return default;
+			return Unit.Instance;
 		};
 	}
 }

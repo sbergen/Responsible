@@ -6,15 +6,15 @@ namespace Responsible.TestResponders
 {
 	internal class OptionalTestResponderBase : IOptionalTestResponder
 	{
-		private readonly Func<ITestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>>> createState;
+		private readonly Func<ITestOperationState<IMultipleTaskSource<ITestOperationState<object>>>> createState;
 
 		protected OptionalTestResponderBase(
-			Func<ITestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>>> createState)
+			Func<ITestOperationState<IMultipleTaskSource<ITestOperationState<object>>>> createState)
 		{
 			this.createState = createState;
 		}
 
-		public ITestOperationState<IMultipleTaskSource<ITestOperationState<Nothing>>> CreateState() =>
+		public ITestOperationState<IMultipleTaskSource<ITestOperationState<object>>> CreateState() =>
 			this.createState();
 	}
 }

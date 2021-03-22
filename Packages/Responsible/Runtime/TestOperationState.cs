@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Unity;
+using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -74,7 +75,10 @@ namespace Responsible
 			CancellationToken cancellationToken)
 			=> state.ExecuteUnsafe<T>(runContext, cancellationToken);
 
-		internal static ITestOperationState<Nothing> AsNothingOperationState<T>(this ITestOperationState<T> state)
-			=> new NothingOperationState<T, Nothing>(state, _ => Nothing.Default);
+		// This is needed in some internals, so for convenience, we don't constrain it to structs
+		internal static ITestOperationState<object> BoxResult<T>(this ITestOperationState<T> state) =>
+			typeof(T).IsClass
+				? (ITestOperationState<object>)state
+				: new BoxedOperationState<T, object>(state, value => (object)value);
 	}
 }

@@ -178,19 +178,19 @@ namespace Responsible
 		/// <typeparam name="TWait">Result type of the wait condition.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
 		[Pure]
-		public static ITestResponder<Nothing> ThenRespondWithAction<TWait>(
+		public static ITestResponder<object> ThenRespondWithAction<TWait>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
 			Action<TWait> action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TestResponder<TWait, Nothing>(
+			=> new TestResponder<TWait, object>(
 				description,
 				condition,
-				waitResult => new SynchronousTestInstruction<Nothing>(
+				waitResult => new SynchronousTestInstruction<object>(
 					description,
-					action.ReturnNothing(waitResult),
+					action.ReturnUnit(waitResult),
 					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
 
@@ -257,10 +257,8 @@ namespace Responsible
 		/// </remarks>
 		/// <typeparam name="T">Return type of the wait condition to convert.</typeparam>
 		[Pure]
-		public static ITestWaitCondition<Nothing> AsNothingCondition<T>(
-			this ITestWaitCondition<T> condition) =>
-			typeof(T) == typeof(Nothing)
-				? (ITestWaitCondition<Nothing>)condition
-				: new NothingWaitCondition<T>(condition);
+		public static ITestWaitCondition<object> BoxResult<T>(this ITestWaitCondition<T> condition)
+			where T : struct
+			=> new BoxedWaitCondition<T>(condition);
 	}
 }

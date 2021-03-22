@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.Unity;
+using Responsible.Utilities;
 using UnityEngine.UI;
 
 namespace Responsible
@@ -69,13 +70,13 @@ namespace Responsible
 		/// <param name="instructions">Instructions to sequence.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1}"/>
 		[Pure]
-		public static ITestInstruction<Nothing> Sequence(
-			this IEnumerable<ITestInstruction<Nothing>> instructions,
+		public static ITestInstruction<object> Sequence(
+			this IEnumerable<ITestInstruction<object>> instructions,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
-				new SequencedTestInstruction<Nothing, Nothing>(
+				new SequencedTestInstruction<object, object>(
 					sequencedInstructions,
 					nextInstruction,
 					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
@@ -181,10 +182,8 @@ namespace Responsible
 		/// </remarks>
 		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
-		public static ITestInstruction<Nothing> AsNothingInstruction<T>(
-			this ITestInstruction<T> instruction) =>
-			typeof(T) == typeof(Nothing)
-				? (ITestInstruction<Nothing>)instruction
-				: new NothingTestInstruction<T>(instruction);
+		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)
+			where T : struct
+			=> new BoxedTestInstruction<T>(instruction);
 	}
 }

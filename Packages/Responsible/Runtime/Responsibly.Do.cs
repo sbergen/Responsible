@@ -38,15 +38,15 @@ namespace Responsible
 		/// </returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]
-		public static ITestInstruction<Nothing> Do(
+		public static ITestInstruction<object> Do(
 			string description,
 			Action action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new SynchronousTestInstruction<Nothing>(
+			=> new SynchronousTestInstruction<object>(
 				description,
-				action.ReturnNothing(),
+				action.ReturnUnit(),
 				new SourceContext(nameof(Do), memberName, sourceFilePath, sourceLineNumber));
 	}
 }

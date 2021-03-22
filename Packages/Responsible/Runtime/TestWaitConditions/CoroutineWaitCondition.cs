@@ -6,10 +6,11 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Unity;
+using Responsible.Utilities;
 
 namespace Responsible.TestWaitConditions
 {
-	internal class CoroutineWaitCondition : TestWaitConditionBase<Nothing>
+	internal class CoroutineWaitCondition : TestWaitConditionBase<object>
 	{
 		public CoroutineWaitCondition(
 			string description,
@@ -19,7 +20,7 @@ namespace Responsible.TestWaitConditions
 		{
 		}
 
-		private class State : TestOperationState<Nothing>, IDiscreteWaitConditionState
+		private class State : TestOperationState<object>, IDiscreteWaitConditionState
 		{
 			private readonly Func<IEnumerator> startCoroutine;
 
@@ -36,10 +37,10 @@ namespace Responsible.TestWaitConditions
 				this.startCoroutine = startCoroutine;
 			}
 
-			protected override async Task<Nothing> ExecuteInner(
+			protected override async Task<object> ExecuteInner(
 				RunContext runContext, CancellationToken cancellationToken)
 			{
-				var completionSource = new TaskCompletionSource<Nothing>();
+				var completionSource = new TaskCompletionSource<object>();
 
 				// TODO, use some interface here
 				var unityTimeProvider = runContext.TimeProvider as UnityTimeProvider;
@@ -58,7 +59,7 @@ namespace Responsible.TestWaitConditions
 			}
 
 			private IEnumerator RunCoroutine(
-				TaskCompletionSource<Nothing> completionSource,
+				TaskCompletionSource<object> completionSource,
 				CancellationToken cancellationToken)
 			{
 				var enumerator = this.startCoroutine();
@@ -67,7 +68,7 @@ namespace Responsible.TestWaitConditions
 					yield return enumerator.Current;
 				}
 
-				completionSource.SetResult(Nothing.Default);
+				completionSource.SetResult(Unit.Instance);
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);

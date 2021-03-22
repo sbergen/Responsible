@@ -7,14 +7,14 @@ using Responsible.Utilities;
 
 namespace Responsible.TestInstructions
 {
-	internal class WaitForInstruction : TestInstructionBase<Nothing>
+	internal class WaitForInstruction : TestInstructionBase<object>
 	{
 		public WaitForInstruction(TimeSpan waitTime, SourceContext sourceContext)
 		: base(() => new State(waitTime, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<Nothing>
+		private class State : TestOperationState<object>
 		{
 			private readonly TimeSpan waitTime;
 
@@ -24,13 +24,13 @@ namespace Responsible.TestInstructions
 				this.waitTime = waitTime;
 			}
 
-			protected override Task<Nothing> ExecuteInner(
+			protected override Task<object> ExecuteInner(
 				RunContext runContext,
 				CancellationToken cancellationToken)
 			{
 				var deadline = runContext.TimeProvider.TimeNow + this.waitTime;
 				return runContext.TimeProvider.PollForCondition(
-					() => Nothing.Default,
+					() => Unit.Instance,
 					_ => runContext.TimeProvider.TimeNow >= deadline,
 					cancellationToken);
 			}

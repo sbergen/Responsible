@@ -5,7 +5,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
-	public class AsNothingTests : ResponsibleTestBase
+	public class BoxResultTests : ResponsibleTestBase
 	{
 		private bool complete;
 
@@ -28,32 +28,25 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void UnitTestInstruction_DoesNotThrow_WhenSuccessful()
+		public void BoxedTestInstruction_DoesNotThrow_WhenSuccessful()
 		{
 			Assert.AreEqual(
-				Nothing.Default,
-				this.returnTrue.AsNothingInstruction().ToTask(this.Executor).AssertSynchronousResult());
+				true,
+				this.returnTrue.BoxResult().ToTask(this.Executor).AssertSynchronousResult());
 		}
 
 		[Test]
-		public void UnitTestInstruction_HasError_WhenInstructionHasError()
+		public void BoxedTestInstruction_HasError_WhenInstructionHasError()
 		{
-			var task = this.throwError.AsNothingInstruction().ToTask(this.Executor);
+			var task = this.throwError.BoxResult().ToTask(this.Executor);
 			Assert.NotNull(GetAssertionException(task));
 		}
 
 		[Test]
-		public void AsNothingInstruction_ReturnsSelf_WhenAlreadyUnit()
-		{
-			var instruction = Return(Nothing.Default);
-			Assert.AreSame(instruction, instruction.AsNothingInstruction());
-		}
-
-		[Test]
-		public void AsNothingCondition_Completes_WhenCompleted()
+		public void BoxedCondition_Completes_WhenCompleted()
 		{
 			var task = this.waitForComplete
-				.AsNothingCondition()
+				.BoxResult()
 				.ExpectWithinSeconds(10)
 				.ToTask(this.Executor);
 
@@ -66,10 +59,10 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void AsNothingCondition_PublishesError_WhenTimedOut()
+		public void BoxedCondition_PublishesError_WhenTimedOut()
 		{
 			var task = Never
-				.AsNothingCondition()
+				.BoxResult()
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -81,18 +74,11 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void AsNothingCondition_ReturnsSelf_WhenAlreadyUnit()
-		{
-			var condition = WaitForCondition("Unit", () => false);
-			Assert.AreSame(condition, condition.AsNothingCondition());
-		}
-
-		[Test]
-		public void UnitTestResponder_Completes_WhenCompleted()
+		public void BoxedTestResponder_Completes_WhenCompleted()
 		{
 			var task = this.waitForComplete
 				.ThenRespondWith("Respond", this.returnTrue)
-				.AsNothingResponder()
+				.BoxResult()
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -105,11 +91,11 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void UnitTestResponder_PublishesError_OnError()
+		public void BoxedTestResponder_PublishesError_OnError()
 		{
 			var task = this.waitForComplete
 				.ThenRespondWith("Respond", this.throwError)
-				.AsNothingResponder()
+				.BoxResult()
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -122,11 +108,11 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void UnitTestResponder_PublishesError_OnTimeout()
+		public void BoxedTestResponder_PublishesError_OnTimeout()
 		{
 			var task = this.waitForComplete
 				.ThenRespondWith("Respond", this.returnTrue)
-				.AsNothingResponder()
+				.BoxResult()
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -135,13 +121,6 @@ namespace Responsible.Tests.Runtime
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetAssertionException(task));
-		}
-
-		[Test]
-		public void AsNothingResponder_ReturnsSelf_WhenAlreadyUnit()
-		{
-			var responder = Never.ThenRespondWith("Return Unit", Return(Nothing.Default));
-			Assert.AreSame(responder, responder.AsNothingResponder());
 		}
 	}
 }

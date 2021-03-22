@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using static Responsible.Responsibly;
 
@@ -16,9 +19,9 @@ namespace Responsible.Tests.Runtime
 			TestInstruction
 				.Sequence(new[]
 				{
-					DoAndReturn("Set completed1", () => completed1 = true).AsNothingInstruction(),
-					DoAndReturn("Set completed2", () => completed2 = true).AsNothingInstruction(),
-					DoAndReturn("Set completed3", () => completed3 = true).AsNothingInstruction(),
+					DoAndReturn("Set completed1", () => completed1 = true).BoxResult(),
+					DoAndReturn("Set completed2", () => completed2 = true).BoxResult(),
+					DoAndReturn("Set completed3", () => completed3 = true).BoxResult(),
 				})
 				.ToTask(this.Executor);
 
@@ -36,9 +39,9 @@ namespace Responsible.Tests.Runtime
 			var task = TestInstruction
 				.Sequence(new[]
 				{
-					DoAndReturn("Set completed1", () => completed1 = true).AsNothingInstruction(),
-					Do("Throw error", () => throw new Exception()).AsNothingInstruction(),
-					DoAndReturn("Set completed2", () => completed2 = true).AsNothingInstruction(),
+					DoAndReturn("Set completed1", () => completed1 = true).BoxResult(),
+					Do("Throw error", () => throw new Exception()),
+					DoAndReturn("Set completed2", () => completed2 = true).BoxResult(),
 				})
 				.ToTask(this.Executor);
 

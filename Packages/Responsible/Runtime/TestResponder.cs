@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 using Responsible.TestResponders;
+using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -95,10 +96,8 @@ namespace Responsible
 		/// </remarks>
 		/// <typeparam name="T">Return type of the responder to convert.</typeparam>
 		[Pure]
-		public static ITestResponder<Nothing> AsNothingResponder<T>(
-			this ITestResponder<T> responder) =>
-			typeof(T) == typeof(Nothing)
-				? (ITestResponder<Nothing>)responder
-				: new NothingTestResponder<T>(responder);
+		public static ITestResponder<object> BoxResult<T>(this ITestResponder<T> responder)
+			where T : struct
+			=> new BoxedTestResponder<T>(responder);
 	}
 }

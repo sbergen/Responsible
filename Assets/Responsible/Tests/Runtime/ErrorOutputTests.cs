@@ -22,18 +22,18 @@ namespace Responsible.Tests.Runtime
 			public Action ResponseAction { get; set; }
 		}
 
-		private static ITestWaitCondition<Nothing> MakeOptionalResponder(ResponderState state) =>
+		private static ITestWaitCondition<object> MakeOptionalResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction())
 				.Optionally()
 				.Until(WaitForCondition(state.Condition2Name, () => state.Condition2));
 
-		private static ITestResponder<Nothing> MakeResponder(ResponderState state) =>
+		private static ITestResponder<object> MakeResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.AndThen(_ => WaitForCondition(state.Condition2Name, () => state.Condition2))
 				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction());
 
-		private static ITestInstruction<Nothing> MakeInstruction(
+		private static ITestInstruction<object> MakeInstruction(
 			ResponderState state1,
 			ResponderState state2,
 			ResponderState state3) =>

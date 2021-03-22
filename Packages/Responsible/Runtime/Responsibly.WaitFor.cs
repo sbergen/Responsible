@@ -7,6 +7,7 @@ using Responsible.Context;
 using Responsible.State;
 using Responsible.TestInstructions;
 using Responsible.TestWaitConditions;
+using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -62,16 +63,16 @@ namespace Responsible
 		/// <param name="condition">Condition to wait for, will be polled on every frame.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T}"/>
 		[Pure]
-		public static ITestWaitCondition<Nothing> WaitForCondition(
+		public static ITestWaitCondition<object> WaitForCondition(
 			string description,
 			Func<bool> condition,
 			Action<StateStringBuilder> extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new PollingWaitCondition<Nothing>(
+			=> new PollingWaitCondition<object>(
 				description,
-				() => Nothing.Default,
+				() => Unit.Instance,
 				_ => condition(),
 				extraContext,
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
@@ -122,7 +123,7 @@ namespace Responsible
 		/// <param name="startCoroutine">Function to start the coroutine to be waited for.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]
-		public static ITestWaitCondition<Nothing> WaitForCoroutine(
+		public static ITestWaitCondition<object> WaitForCoroutine(
 			string description,
 			Func<IEnumerator> startCoroutine,
 			[CallerMemberName] string memberName = "",
@@ -146,7 +147,7 @@ namespace Responsible
 		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]
-		public static ITestWaitCondition<Nothing> WaitForCoroutineMethod(
+		public static ITestWaitCondition<object> WaitForCoroutineMethod(
 			Func<IEnumerator> coroutineMethod,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
@@ -157,14 +158,14 @@ namespace Responsible
 				new SourceContext(nameof(WaitForCoroutineMethod), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Constructs a test instruction, which will complete with <see cref="Nothing.Default"/>
+		/// Constructs a test instruction, which will complete with <see cref="Unit.Instance"/>
 		/// after <paramref name="seconds"/> seconds have passed.
 		/// </summary>
 		/// <param name="seconds">Seconds to wait for.</param>
 		/// <returns>Test instruction which completes after <paramref name="seconds"/> seconds.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]
-		public static ITestInstruction<Nothing> WaitForSeconds(
+		public static ITestInstruction<object> WaitForSeconds(
 			double seconds,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
@@ -182,7 +183,7 @@ namespace Responsible
 		/// <returns>Test instruction which completes after <paramref name="frames"/> whole frames.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
 		[Pure]
-		public static ITestInstruction<Nothing> WaitForFrames(
+		public static ITestInstruction<object> WaitForFrames(
 			int frames,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",

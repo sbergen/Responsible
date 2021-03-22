@@ -6,14 +6,14 @@ using Responsible.Utilities;
 
 namespace Responsible.TestInstructions
 {
-	internal class WaitForFramesInstruction : TestInstructionBase<Nothing>
+	internal class WaitForFramesInstruction : TestInstructionBase<object>
 	{
 		public WaitForFramesInstruction(int frames, SourceContext sourceContext)
 			: base(() => new State(frames, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<Nothing>
+		private class State : TestOperationState<object>
 		{
 			private readonly int wholeFramesToWaitFor;
 
@@ -23,12 +23,12 @@ namespace Responsible.TestInstructions
 				this.wholeFramesToWaitFor = wholeFramesToWaitFor;
 			}
 
-			protected override Task<Nothing> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			protected override Task<object> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 			{
 				var timeProvider = runContext.TimeProvider;
 				var deadline = timeProvider.FrameNow + this.wholeFramesToWaitFor;
 				return runContext.TimeProvider.PollForCondition(
-					() => Nothing.Default,
+					() => Unit.Instance,
 					_ => timeProvider.FrameNow > deadline,
 					cancellationToken);
 			}
