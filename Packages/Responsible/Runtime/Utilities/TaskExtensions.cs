@@ -14,9 +14,9 @@ namespace Responsible.Utilities
 		/// </summary>
 		public static async Task<T> Amb<T>(
 			this CancellationToken cancellationToken,
-			params Func<CancellationToken, Task<T>>[] taskFactories)
+			params DeferredTask<T>[] deferredTasks)
 		{
-			var allTasks = taskFactories
+			var allTasks = deferredTasks
 				.Select(factory =>
 				{
 					var ctsSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);

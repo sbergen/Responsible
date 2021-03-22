@@ -47,9 +47,9 @@ namespace Responsible.Utilities
 			this ITimeProvider timeProvider,
 			TimeSpan timeout,
 			CancellationToken cancellationToken,
-			Func<CancellationToken, Task<T>> taskFactory)
+			DeferredTask<T> deferredTask)
 			=> cancellationToken.Amb(
-				taskFactory,
+				deferredTask,
 				ct => timeProvider.Timeout<T>(timeout, ct));
 
 		// T is for convenience

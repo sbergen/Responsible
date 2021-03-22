@@ -9,7 +9,7 @@ using Responsible.Utilities;
 namespace Responsible
 {
 	/// <summary>
-	/// Contains extension methods on <see cref="ITestOperationState"/>.
+	/// Contains extension methods on <see cref="ITestOperationState{T}"/>.
 	/// These are normally not needed, but can be useful for debugging purposes.
 	/// </summary>
 	public static class TestOperationState

@@ -30,7 +30,7 @@ namespace Responsible.TestResponders
 				RunContext runContext,
 				CancellationToken cancellationToken)
 			{
-				Func<CancellationToken, Task<ITestOperationState<object>>> MakeLauncher(
+				DeferredTask<ITestOperationState<object>> MakeLauncher(
 					ITestOperationState<ITestOperationState<T>> responder)
 					=> async ct => (await responder.Execute(runContext, ct)).BoxResult();
 

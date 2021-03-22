@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Responsible.Utilities
 {
-	public static class MultipleTaskSource
+	internal static class MultipleTaskSource
 	{
-		public static IMultipleTaskSource<T> Make<T>(IEnumerable<Func<CancellationToken, Task<T>>> taskFactories)
-			=> new MultipleTaskSource<T>(taskFactories);
+		public static IMultipleTaskSource<T> Make<T>(IEnumerable<DeferredTask<T>> deferredTasks)
+			=> new MultipleTaskSource<T>(deferredTasks);
 	}
 
-	public class MultipleTaskSource<T> : IMultipleTaskSource<T>
+	internal class MultipleTaskSource<T> : IMultipleTaskSource<T>
 	{
-		private readonly List<Func<CancellationToken, Task<T>>> taskFactories;
+		private readonly List<DeferredTask<T>> taskFactories;
 
-		public MultipleTaskSource(IEnumerable<Func<CancellationToken, Task<T>>> taskFactories)
+		public MultipleTaskSource(IEnumerable<DeferredTask<T>> deferredTasks)
 		{
-			this.taskFactories = taskFactories.ToList();
+			this.taskFactories = deferredTasks.ToList();
 		}
 
 		public IMultipleTaskAwaiter<T> Start(CancellationToken cancellationToken)
