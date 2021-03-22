@@ -16,7 +16,7 @@ namespace Responsible.State
 			this.sourceContext = sourceContext;
 		}
 
-		public async Task<T> Execute(RunContext runContext, CancellationToken cancellationToken)
+		public async Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken)
 		{
 			TestOperationStatus.AssertNotStarted(this.Status);
 
@@ -29,7 +29,7 @@ namespace Responsible.State
 			{
 				var result = await this.ExecuteInner(nestedRunContext, cancellationToken);
 				this.Status = new TestOperationStatus.Completed(this.Status);
-				return result;
+				return (TResult)(object)result; // See the Execute extension method for why this is safe.
 			}
 			catch (OperationCanceledException)
 			{

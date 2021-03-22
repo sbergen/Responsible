@@ -35,7 +35,7 @@ namespace Responsible.State
 	/// which will produce a full textual representation of the execution state.
 	/// </remarks>
 	/// <typeparam name="T">Return type of the test operation.</typeparam>
-	public interface ITestOperationState<T> : ITestOperationState
+	public interface ITestOperationState<out T> : ITestOperationState
 	{
 		/// <summary>
 		/// Starts execution of the the operation this state was created from.
@@ -49,9 +49,16 @@ namespace Responsible.State
 		/// for public ways of executing operations.
 		/// </summary>
 		/// <param name="runContext">The test operation run context this run is part of.</param>
+		/// <param name="cancellationToken">Cancellation token for canceling the run.</param>
 		/// <returns>
 		/// An task, which will complete with the result of the operation, or an error on failure.
 		/// </returns>
-		Task<T> Execute(RunContext runContext, CancellationToken cancellationToken);
+		/// <remarks>
+		/// Due to lack of support for covariant generic classes, or covariant generic constraints in C#,
+		/// we have to use this unsafe method. However, it is used only from an extension method,
+		/// which does the correct type inference for us, so overall, things are safe.
+		/// </remarks>
+		Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken);
+			// where T : TResult <-- not supported in C#
 	}
 }

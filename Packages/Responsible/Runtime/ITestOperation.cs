@@ -15,7 +15,7 @@ namespace Responsible
 	/// This makes them reusable.
 	/// </summary>
 	/// <typeparam name="T">Result type of the operation.</typeparam>
-	public interface ITestOperation<T>
+	public interface ITestOperation<out T>
 	{
 		/// <summary>
 		/// Creates the state object for a single run of this test operation.
@@ -23,7 +23,7 @@ namespace Responsible
 		/// You should normally prefer the following extension methods over
 		/// creating a state instance manually:
 		/// * <seealso cref="TestInstruction.ToYieldInstruction{T}"/>
-		/// * <seealso cref="TestInstruction.ToObservable{T}"/>
+		/// * <seealso cref="TestInstruction.ToTask{T}"/>
 		/// </summary>
 		/// <returns>A state object for this run of the test operation.</returns>
 		/// <remarks>

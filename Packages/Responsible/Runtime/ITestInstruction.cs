@@ -8,7 +8,7 @@ namespace Responsible
 	/// and <see cref="Responsibly"/> for methods for creating basic test instructions.
 	/// </summary>
 	/// <typeparam name="T">Result type of the test instruction.</typeparam>
-	public interface ITestInstruction<T> : ITestOperation<T>
+	public interface ITestInstruction<out T> : ITestOperation<T>
 	{
 	}
 }

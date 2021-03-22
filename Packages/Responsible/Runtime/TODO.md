@@ -1,4 +1,3 @@
-* Covariance?
-* `Unit`?
+* `Unit` -> replace with `object`?
 * Logger abstraction
-* Wait for coroutine
+* Wait for coroutine tests

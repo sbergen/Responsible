@@ -65,6 +65,15 @@ namespace Responsible
 				new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
 				cancellationToken));
 
+		/// <summary>
+		/// Type inference to hack around lack of covariant generic classes in C#.
+		/// </summary>
+		internal static Task<T> Execute<T>(
+			this ITestOperationState<T> state,
+			RunContext runContext,
+			CancellationToken cancellationToken)
+			=> state.ExecuteUnsafe<T>(runContext, cancellationToken);
+
 		internal static ITestOperationState<Nothing> AsNothingOperationState<T>(this ITestOperationState<T> state)
 			=> new NothingOperationState<T, Nothing>(state, _ => Nothing.Default);
 	}

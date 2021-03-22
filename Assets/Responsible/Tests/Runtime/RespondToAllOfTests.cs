@@ -10,7 +10,7 @@ namespace Responsible.Tests.Runtime
 	public class RespondToAllOfTests : ResponsibleTestBase
 	{
 		private ConditionResponder<TestDataBase> responder1;
-		private ConditionResponder<TestDataBase> responder2;
+		private ConditionResponder<TestDataDerived> responder2;
 
 		private Task<TestDataBase[]> task;
 		private bool Completed => this.task.IsCompleted;
@@ -19,7 +19,7 @@ namespace Responsible.Tests.Runtime
 		public void SetUp()
 		{
 			this.responder1 = new ConditionResponder<TestDataBase>(1, new TestDataBase(1));
-			this.responder2 = new ConditionResponder<TestDataBase>(1, new TestDataDerived(2));
+			this.responder2 = new ConditionResponder<TestDataDerived>(1, new TestDataDerived(2));
 			this.task = null;
 
 			this.task = RespondToAllOf(this.responder1.Responder, this.responder2.Responder)

@@ -47,7 +47,7 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[TearDown]
-		public void TearDown()
+		public void BaseTearDown()
 		{
 			this.Executor.Dispose();
 		}

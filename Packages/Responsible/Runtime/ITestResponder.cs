@@ -11,7 +11,7 @@ namespace Responsible
 	/// <see cref="Responsibly"/> for methods used to combine multiple test responders.
 	/// </summary>
 	/// <typeparam name="T">Result type of the test responder.</typeparam>
-	public interface ITestResponder<T> : ITestOperation<ITestOperationState<T>>
+	public interface ITestResponder<out T> : ITestOperation<ITestOperationState<T>>
 	{
 	}
 }
