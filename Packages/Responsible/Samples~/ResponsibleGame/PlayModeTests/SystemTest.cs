@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
-using UniRx;
+using Responsible.Unity;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +19,7 @@ namespace ResponsibleGame.PlayModeTests
 		private string scenePath;
 		private MockInput mockInput;
 
-		protected TestInstructionExecutor TestInstructionExecutor { get; private set; }
+		protected UnityTestInstructionExecutor TestInstructionExecutor { get; private set; }
 
 		[OneTimeSetUp]
 		public void ResolveScenePath()
@@ -35,7 +35,7 @@ namespace ResponsibleGame.PlayModeTests
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
-			this.TestInstructionExecutor = new TestInstructionExecutor();
+			this.TestInstructionExecutor = new UnityTestInstructionExecutor();
 			this.mockInput = new MockInput();
 			PlayerInput.Instance = this.mockInput;
 
@@ -62,13 +62,13 @@ namespace ResponsibleGame.PlayModeTests
 		// We could e.g. make the target area appear and disappear in a future version,
 		// and these utilities could easily be modified to support this.
 
-		protected ITestResponder<Unit> TriggerHit(bool shouldHit) => WaitForMainComponents()
+		protected ITestResponder<object> TriggerHit(bool shouldHit) => WaitForMainComponents()
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit))
 			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
 
-		protected ITestInstruction<Unit> MockTriggerInput() =>
+		protected ITestInstruction<object> MockTriggerInput() =>
 			Do("Mock trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();

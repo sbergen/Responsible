@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -18,26 +15,24 @@ namespace Responsible.Tests.Runtime
 			Action
 		}
 
-		[UnityTest]
-		public IEnumerator ThenRespondWith_WaitsForCondition([Values] ConstructionStrategy strategy)
+		[Test]
+		public void ThenRespondWith_WaitsForCondition([Values] ConstructionStrategy strategy)
 		{
 			var conditionFulfilled = false;
 			var condition = WaitForCondition(
 				"Ready to execute",
 				() => conditionFulfilled);
-			var completed = false;
 
-			MakeUnitResponder(strategy, condition)
+			var task = MakeObjectResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => completed = true);
+				.ToTask(this.Executor);
 
-			yield return null;
-			Assert.IsFalse(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsFalse(task.IsCompleted);
 
 			conditionFulfilled = true;
-			yield return null;
-			Assert.IsTrue(completed);
+			this.AdvanceDefaultFrame();
+			Assert.IsTrue(task.IsCompleted);
 		}
 
 		[Test]
@@ -47,37 +42,37 @@ namespace Responsible.Tests.Runtime
 				"Ready to execute",
 				() => throw new Exception("Test"));
 
-			MakeUnitResponder(strategy, condition)
+			var task = MakeObjectResponder(strategy, condition)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.NotNull(GetAssertionException(task));
 		}
 
 		[Test]
 		public void ThenRespondWith_PropagatesErrorFromInstruction([Values] ConstructionStrategy strategy)
 		{
-			MakeErrorResponder(strategy, ImmediateTrue)
+			var task = MakeErrorResponder(strategy, ImmediateTrue)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.NotNull(GetAssertionException(task));
 		}
 
-		private static ITestResponder<Unit> MakeUnitResponder<TWait>(
+		private static ITestResponder<object> MakeObjectResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
+			var obj = new object();
+
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:
-					return waitCondition.ThenRespondWith("Respond", x => Return(Unit.Default));
+					return waitCondition.ThenRespondWith("Respond", x => Return(obj));
 				case ConstructionStrategy.Instruction:
-					return waitCondition.ThenRespondWith("Respond", Return(Unit.Default));
+					return waitCondition.ThenRespondWith("Respond", Return(obj));
 				case ConstructionStrategy.Func:
-					return waitCondition.ThenRespondWithFunc("Respond", _ => Unit.Default);
+					return waitCondition.ThenRespondWithFunc("Respond", _ => obj);
 				case ConstructionStrategy.Action:
 					return waitCondition.ThenRespondWithAction("Respond", _ => { });
 				default:
@@ -85,12 +80,12 @@ namespace Responsible.Tests.Runtime
 			}
 		}
 
-		private static ITestResponder<Unit> MakeErrorResponder<TWait>(
+		private static ITestResponder<object> MakeErrorResponder<TWait>(
 			ConstructionStrategy strategy,
 			ITestWaitCondition<TWait> waitCondition)
 		{
-			Unit ThrowException(TWait _) => throw new Exception("Test");
-			ITestInstruction<Unit> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
+			object ThrowException(TWait _) => throw new Exception("Test");
+			ITestInstruction<object> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:

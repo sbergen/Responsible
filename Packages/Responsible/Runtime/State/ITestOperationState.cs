@@ -1,4 +1,5 @@
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 
 namespace Responsible.State
@@ -34,6 +35,7 @@ namespace Responsible.State
 	/// which will produce a full textual representation of the execution state.
 	/// </remarks>
 	/// <typeparam name="T">Return type of the test operation.</typeparam>
+	// ReSharper disable once UnusedTypeParameter, used for type inference in our covariance hack
 	public interface ITestOperationState<out T> : ITestOperationState
 	{
 		/// <summary>
@@ -42,15 +44,22 @@ namespace Responsible.State
 		/// Intended for internal use only. See
 		/// * <see cref="TestInstruction.ToYieldInstruction{T}"/>,
 		/// * <see cref="TestOperationState.ToYieldInstruction{T}"/>
-		/// * <see cref="TestInstruction.ToObservable{T}"/>, and
-		/// * <see cref="TestOperationState.ToObservable{T}"/>
+		/// * <see cref="TestInstruction.ToTask{T}"/>, and
+		/// * <see cref="TestOperationState.ToTask{T}"/>
 		///
 		/// for public ways of executing operations.
 		/// </summary>
 		/// <param name="runContext">The test operation run context this run is part of.</param>
+		/// <param name="cancellationToken">Cancellation token for canceling the run.</param>
 		/// <returns>
-		/// An observable, which will complete with the result of the operation, or an error on failure.
+		/// An task, which will complete with the result of the operation, or an error on failure.
 		/// </returns>
-		IObservable<T> Execute(RunContext runContext);
+		/// <remarks>
+		/// Due to lack of support for covariant generic classes, or covariant generic constraints in C#,
+		/// we have to use this unsafe method. However, it is used only from an extension method,
+		/// which does the correct type inference for us, so overall, things are safe.
+		/// </remarks>
+		Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken);
+			// where T : TResult <-- not supported in C#
 	}
 }

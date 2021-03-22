@@ -1,24 +1,22 @@
-using System.Collections;
 using NUnit.Framework;
 using Responsible.State;
-using UniRx;
-using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
 {
 	public class StateLoggingTests : ResponsibleTestBase
 	{
-		private Subject<int> observable;
+		private int result;
 		private ITestOperationState<int> state;
 
 		[SetUp]
 		public void SetUp()
 		{
-			this.observable = new Subject<int>();
-			this.state = WaitForLast(
-					"Wait for value",
-					this.observable)
+			this.result = -1;
+			this.state = WaitForConditionOn(
+				"Wait for value",
+				() => this.result,
+				val => val != -1)
 				.ExpectWithinSeconds(1)
 				.CreateState();
 		}
@@ -31,24 +29,11 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void ToObservable_ProducesCorrectOutput_AfterCompletion()
+		public void ToTask_ProducesCorrectOutput_AfterCompletion()
 		{
-			this.state.ToObservable(this.Executor).Subscribe();
-			this.observable.OnNext(42);
-			this.observable.OnCompleted();
-
-			var stateString = this.state.ToString();
-			StringAssert.Contains("[✓] Wait for value EXPECTED WITHIN", stateString);
-		}
-
-		[UnityTest]
-		public IEnumerator ToYieldInstruction_ProducesCorrectOutput_AfterCompletion()
-		{
-			var instruction = this.state.ToYieldInstruction(this.Executor);
-			this.observable.OnNext(42);
-			this.observable.OnCompleted();
-
-			yield return instruction;
+			this.state.ToTask(this.Executor);
+			this.result = 42;
+			this.AdvanceDefaultFrame();
 
 			var stateString = this.state.ToString();
 			StringAssert.Contains("[✓] Wait for value EXPECTED WITHIN", stateString);

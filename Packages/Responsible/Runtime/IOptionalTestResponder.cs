@@ -1,5 +1,5 @@
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -8,7 +8,7 @@ namespace Responsible
 	///
 	/// See <see cref="OptionalTestResponder"/> for extension methods on optional responders.
 	/// </summary>
-	public interface IOptionalTestResponder : ITestOperation<ITestOperationState<Unit>>
+	public interface IOptionalTestResponder : ITestOperation<IMultipleTaskSource<ITestOperationState<object>>>
 	{
 	}
 }

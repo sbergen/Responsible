@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Utilities;
-using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
@@ -25,17 +25,26 @@ namespace Responsible.TestWaitConditions
 				this.responders = responders.Select(r => r.CreateState()).ToList();
 			}
 
-			protected override IObservable<T[]> ExecuteInner(RunContext runContext) =>
-				this.responders
+			protected override async Task<T[]> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			{
+				var instructionAwaiter = MultipleTaskAwaiter.Make(this.responders
 					.Select((responder, i) => responder
-						.Execute(runContext)
-						.WithIndex(i))
-					.Merge() // Allow instructions to become ready in any order,
-					.Select(indexedInstruction => indexedInstruction.Value
-						.Execute(runContext)
-						.WithIndexFrom(indexedInstruction))
-					.Concat() // ...but sequence execution of instruction
-					.Aggregate(new T[this.responders.Count], Indexed.AssignToArray);
+						.Execute(runContext, cancellationToken)
+						.WithIndex(i)));
+
+				var results = new T[this.responders.Count];
+				while (instructionAwaiter.HasNext && !cancellationToken.IsCancellationRequested)
+				{
+					var indexedInstruction = await instructionAwaiter.AwaitNext();
+					var result = await indexedInstruction.Value
+						.Execute(runContext, cancellationToken)
+						.WithIndexFrom(indexedInstruction);
+
+					Indexed.AssignToArray(results, result);
+				}
+
+				return results;
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddToPreviousLineWithChildren(" ALL OF", this.responders);

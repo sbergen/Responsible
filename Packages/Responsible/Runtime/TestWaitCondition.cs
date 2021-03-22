@@ -6,7 +6,6 @@ using Responsible.TestInstructions;
 using Responsible.TestResponders;
 using Responsible.TestWaitConditions;
 using Responsible.Utilities;
-using UniRx;
 
 namespace Responsible
 {
@@ -167,7 +166,7 @@ namespace Responsible
 
 		/// <summary>
 		/// Constructs a test responder, which will wait for the given condition,
-		/// and then continue executing a synchronous action, returning <see cref="Unit.Default"/>.
+		/// and then continue executing a synchronous action, returning a non-null object.
 		/// Will complete with a failure if the wait condition or action completes with a failure.
 		/// </summary>
 		/// <returns>
@@ -179,19 +178,19 @@ namespace Responsible
 		/// <typeparam name="TWait">Result type of the wait condition.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
 		[Pure]
-		public static ITestResponder<Unit> ThenRespondWithAction<TWait>(
+		public static ITestResponder<object> ThenRespondWithAction<TWait>(
 			this ITestWaitCondition<TWait> condition,
 			string description,
 			Action<TWait> action,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TestResponder<TWait, Unit>(
+			=> new TestResponder<TWait, object>(
 				description,
 				condition,
-				waitResult => new SynchronousTestInstruction<Unit>(
+				waitResult => new SynchronousTestInstruction<object>(
 					description,
-					action.AsUnitFunc(waitResult),
+					action.ReturnUnit(waitResult),
 					new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber)),
 				new SourceContext(nameof(ThenRespondWithAction), memberName, sourceFilePath, sourceLineNumber));
 
@@ -246,22 +245,17 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a wait condition returning any value to one returning <see cref="Unit"/>.
+		/// Converts a wait condition returning value type, to one returning the same value boxed into object.
 		/// </summary>
 		/// <returns>
 		/// A wait condition which behaves otherwise identically to <paramref name="condition"/>,
-		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
+		/// but returns its result as a boxed object.
 		/// </returns>
 		/// <param name="condition">Wait condition to wrap.</param>
-		/// <remarks>
-		/// When called with a wait condition already returning Unit, will return the wait condition itself.
-		/// </remarks>
 		/// <typeparam name="T">Return type of the wait condition to convert.</typeparam>
 		[Pure]
-		public static ITestWaitCondition<Unit> AsUnitCondition<T>(
-			this ITestWaitCondition<T> condition) =>
-			typeof(T) == typeof(Unit)
-				? (ITestWaitCondition<Unit>)condition
-				: new UnitWaitCondition<T>(condition);
+		public static ITestWaitCondition<object> BoxResult<T>(this ITestWaitCondition<T> condition)
+			where T : struct
+			=> new BoxedWaitCondition<T>(condition);
 	}
 }

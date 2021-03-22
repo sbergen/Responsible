@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
-using UniRx;
+using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 using static Responsible.Responsibly;
 
@@ -30,43 +28,36 @@ namespace Responsible.Tests.Runtime
 			public bool IsCompleted { get; set; }
 		}
 
-		[UnityTest]
-		public IEnumerator CreateDocumentationFailure()
+		[Test]
+		public void CreateDocumentationFailure()
 		{
 			var foo = new Foo();
 			var bar = new Bar();
 
-			WaitForCondition("Foo to be ready", () => foo.IsReady)
+			var task = WaitForCondition("Foo to be ready", () => foo.IsReady)
 				.AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
 				.ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
 				.ExpectWithinSeconds(10)
 				.ContinueWith(Do("Continue operation", foo.ContinueOperation))
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
 
 			foo.IsReady = true;
 
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
 
 			bar.IsCompleted = true;
 
-			yield return null;
-			this.Scheduler.AdvanceBy(TimeSpan.FromSeconds(Time.deltaTime));
+			this.AdvanceDefaultFrame();
 
-			Debug.Log(this.Error.Message.Replace(
-				nameof(TestInstruction.ToObservable),
+			var error = GetAssertionException(task);
+			Debug.Log(error.Message.Replace(
+				nameof(TestInstruction.ToTask),
 				nameof(TestInstruction.ToYieldInstruction)));
 		}
 	}

@@ -1,9 +1,7 @@
 {
     "name": "Responsible",
     "references": [
-        "UniRx",
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEngine.TestRunner"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

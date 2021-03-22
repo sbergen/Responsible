@@ -80,9 +80,9 @@ namespace Responsible.State
 			}
 		}
 
-		internal void AddUntilResponder(
+		internal void AddUntilResponder<T>(
 			string respondToDescription,
-			ITestOperationState<ITestOperationState> responder,
+			ITestOperationState<IMultipleTaskSource<ITestOperationState<T>>> responder,
 			string untilDescription,
 			ITestOperationState condition)
 			=> this
@@ -103,6 +103,11 @@ namespace Responsible.State
 			var timeoutString = timeout > TimeSpan.FromMinutes(1)
 				? $"{timeout:g}"
 				: $"{timeout.TotalSeconds:0.00 s}";
+
+			if (operation is IBoxedOperationState boxedState)
+			{
+				operation = boxedState.WrappedState;
+			}
 
 			if (operation is IDiscreteWaitConditionState discreteSate)
 			{

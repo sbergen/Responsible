@@ -20,7 +20,7 @@ namespace Responsible.Editor
 		{
 			this.state = new TestOperationStatusWindowState(
 				this.rootVisualElement,
-				TestInstructionExecutor.StateNotifications);
+				TestInstructionExecutor.SubscribeToStates);
 		}
 
 		private void OnDestroy() => this.state.Dispose();

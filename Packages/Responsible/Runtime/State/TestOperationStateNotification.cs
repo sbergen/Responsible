@@ -2,7 +2,7 @@ namespace Responsible.State
 {
 	/// <summary>
 	/// Represents a notification for test operation state changes.
-	/// See <see cref="TestInstructionExecutor.StateNotifications"/>.
+	/// See <see cref="TestInstructionExecutor.SubscribeToStates"/>.
 	/// </summary>
 	/// <remarks>
 	/// This is mostly intended to be used with the Editor tools that ship with Responsible,

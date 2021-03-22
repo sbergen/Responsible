@@ -2,7 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using NUnit.Framework;
-using UniRx;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -12,21 +11,20 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectCondition_TerminatesWithError_AfterTimeout()
 		{
-			Never
+			var task = Never
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			Assert.IsNull(this.Error);
-			this.Scheduler.AdvanceBy(OneSecond);
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsFalse(task.IsFaulted);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
 		[Test]
 		public void ExpectCondition_ContainsErrorDetails_WhenTimedOut()
 		{
 			this.AssertErrorDetailsAfterOneSecond(
-				Never.ExpectWithinSeconds(1),
+				Never.ExpectWithinSeconds(1).BoxResult(),
 				@"\[!\] Never EXPECTED WITHIN.*
 \s+Failed with.*
 \s+Test operation stack");
@@ -79,37 +77,33 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
 		{
-			Never
+			var task = Never
 				.ThenRespondWithAction("NOP", Nop)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			Assert.IsNull(this.Error);
-			this.Scheduler.AdvanceBy(OneSecond);
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsFalse(task.IsFaulted);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 
 		[Test]
 		public void ExpectResponder_DoesNotTerminateWithTimeout_IfWaitFulfilled()
 		{
-			var completed = false;
-
 			// The instruction takes longer than the timeout
 			// => The timeout applies only to the wait!
-			ImmediateTrue
+			var task = ImmediateTrue
 				.ThenRespondWith("Wait for two seconds", WaitForSeconds(2))
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => completed = true, this.StoreError);
+				.ToTask(this.Executor);
 
-			this.Scheduler.AdvanceBy(OneSecond);
-			Assert.IsNull(this.Error);
-			Assert.IsFalse(completed);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsFalse(task.IsFaulted);
+			Assert.IsFalse(task.IsCompleted);
 
-			this.Scheduler.AdvanceBy(OneSecond);
-			Assert.IsNull(this.Error);
-			Assert.IsTrue(completed);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsFalse(task.IsFaulted);
+			Assert.IsTrue(task.IsCompleted);
 		}
 
 		[Test]
@@ -129,7 +123,7 @@ Test operation stack");
 		{
 			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
 			this.AssertErrorDetailsAfterOneSecond(
-				responder.ExpectWithinSeconds(1),
+				responder.BoxResult().ExpectWithinSeconds(1),
 				@"timed out.*
 \[!\] Response EXPECTED WITHIN.*
 \s+\[!\] Never EXPECTED WITHIN.*
@@ -151,31 +145,28 @@ Test operation stack");
 		}
 
 		private void AssertErrorDetailsAfterOneSecond(
-			ITestInstruction<Unit> instruction,
+			ITestInstruction<object> instruction,
 			[RegexPattern] string regex)
 		{
-			using (instruction
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError))
-			{
-				this.Scheduler.AdvanceBy(OneSecond);
+			var task = instruction.ToTask(this.Executor);
 
-				Assert.IsInstanceOf<AssertionException>(this.Error);
-				Assert.That(this.Error.Message, Does.Match($"(?s:{regex})"));
+			this.TimeProvider.AdvanceFrame(OneSecond);
 
-				var multipleFailuresDescription =
-					$"Should contain only singe failure details, but was:\n{this.Error.Message}";
+			var exception = GetAssertionException(task);
+			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));
 
-				Assert.AreEqual(
-					1,
-					Regex.Matches(this.Error.Message, "Failed with").Count,
-					multipleFailuresDescription);
+			var multipleFailuresDescription =
+				$"Should contain only singe failure details, but was:\n{exception.Message}";
 
-				Assert.AreEqual(
-					1,
-					Regex.Matches(this.Error.Message, "Test operation stack").Count,
-					multipleFailuresDescription);
+			Assert.AreEqual(
+				1,
+				Regex.Matches(exception.Message, "Failed with").Count,
+				multipleFailuresDescription);
+
+			Assert.AreEqual(
+				1,
+				Regex.Matches(exception.Message, "Test operation stack").Count,
+				multipleFailuresDescription);
 			}
-		}
 	}
 }

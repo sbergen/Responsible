@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
-using UniRx;
-using UnityEngine.TestTools;
+
 // ReSharper disable AccessToModifiedClosure
 
 namespace Responsible.Tests.Runtime
@@ -12,69 +11,66 @@ namespace Responsible.Tests.Runtime
 	{
 		private ConditionResponder<int> first;
 		private ConditionResponder<int> second;
-		private bool completed;
+		private Task task;
 
 		[SetUp]
 		public void SetUp()
 		{
 			this.first = new ConditionResponder<int>(1, 1);
 			this.second = new ConditionResponder<int>(1, 2);
-			this.completed = false;
 
-			this.first.Responder.Optionally()
+			this.task = this.first.Responder.Optionally()
 				.UntilReadyTo(this.second.Responder)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(_ => this.completed = true, this.StoreError);
+				.ToTask(this.Executor);
 		}
 
-		[UnityTest]
-		public IEnumerator UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
+		[Test]
+		public void UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
 		{
 			this.second.MayRespond = true;
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			this.first.AllowFullCompletion();
 
-			// Yield a few times to be safe
-			yield return null;
-			yield return null;
-
+			// Adcvnce a few times to be safe
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
 			Assert.IsFalse(this.first.StartedToRespond, "Second should not have started to respond");
-			Assert.IsFalse(this.completed, "Full operation should not be completed before response is complete");
+			Assert.IsFalse(this.task.IsCompleted, "Full operation should not be completed before response is complete");
 
 			this.second.AllowFullCompletion();
-			yield return null;
+			this.AdvanceDefaultFrame();
 			Assert.IsTrue(this.second.CompletedRespond, "Second should have completed");
-			Assert.IsTrue(this.completed, "Full operation should have completed");
+			Assert.IsTrue(this.task.IsCompleted, "Full operation should have completed");
 		}
 
-		[UnityTest]
-		public IEnumerator UntilReadyToRespond_CompletesResponderExecution_IfStarted()
+		[Test]
+		public void UntilReadyToRespond_CompletesResponderExecution_IfStarted()
 		{
 			this.first.MayRespond = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 			this.second.MayRespond = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.IsFalse(
 				this.second.StartedToRespond,
 				"Second should not have started to respond before first completed");
 
 			this.first.AllowFullCompletion();
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.IsTrue(this.first.CompletedRespond, "First should be completed");
 			Assert.IsTrue(this.second.StartedToRespond, "Second should have started to respond");
 
 			this.second.AllowFullCompletion();
-			yield return null;
+			this.AdvanceDefaultFrame();
 			Assert.IsTrue(this.second.CompletedRespond, "Second should have completed response");
 		}
 
-		[UnityTest]
-		public IEnumerator UntilReadyToRespond_PublishesError_FromAnyResponder([Values] bool errorInFirst)
+		[Test]
+		public void UntilReadyToRespond_PublishesError_FromAnyResponder([Values] bool errorInFirst)
 		{
 			var exception = new Exception("Fail!");
 			if (errorInFirst)
@@ -86,18 +82,15 @@ namespace Responsible.Tests.Runtime
 				this.second.AllowCompletionWithError(exception);
 			}
 
-			yield return null;
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			this.AdvanceDefaultFrame();
+			Assert.IsNotNull(GetAssertionException(this.task));
 		}
 
-		[UnityTest]
-		public IEnumerator UntilReadyToRespond_TimesOut_AsExpected()
+		[Test]
+		public void UntilReadyToRespond_TimesOut_AsExpected()
 		{
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
-
-			Assert.IsFalse(this.completed);
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsNotNull(GetAssertionException(this.task));
 		}
 	}
 }

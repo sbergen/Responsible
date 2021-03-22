@@ -1,7 +1,4 @@
-using System.Collections;
 using NUnit.Framework;
-using UniRx;
-using UnityEngine.TestTools;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -9,15 +6,14 @@ namespace Responsible.Tests.Runtime
 {
 	public class UntilTests : ResponsibleTestBase
 	{
-		[UnityTest]
-		public IEnumerator Until_CompletesResponder_WhenReadyBeforeCompletion()
+		[Test]
+		public void Until_CompletesResponder_WhenReadyBeforeCompletion()
 		{
 			var readyToReact = false;
 			var startedToReact = false;
 			var mayCompleteReaction = false;
 			var reactionCompleted = false;
 			var shouldContinue = false;
-			var completed = false;
 
 			var react = DoAndReturn("Set started to react", () => startedToReact = true)
 				.ContinueWith(WaitForCondition("May complete", () => mayCompleteReaction)
@@ -30,28 +26,26 @@ namespace Responsible.Tests.Runtime
 				.Until(WaitForCondition("Continue", () => shouldContinue))
 				.ExpectWithinSeconds(1);
 
-			respondUntil.ToObservable(this.Executor).Subscribe(_ => completed = true);
+			var task = respondUntil.ToTask(this.Executor);
 
 			readyToReact = true;
 
-			yield return null;
+			this.AdvanceDefaultFrame();
 			Assert.IsTrue(startedToReact);
 
 			shouldContinue = true;
 
-			// Yield a few times just to be safe
-			yield return null;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			mayCompleteReaction = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.IsTrue(reactionCompleted);
-			Assert.IsTrue(completed);
+			Assert.IsTrue(task.IsCompleted);
 		}
 
-		[UnityTest]
-		public IEnumerator Until_DoesNotExecute_IfConditionIsMetFirst()
+		[Test]
+		public void Until_DoesNotExecute_IfConditionIsMetFirst()
 		{
 			var cond1 = false;
 			var untilCond = false;
@@ -60,7 +54,7 @@ namespace Responsible.Tests.Runtime
 			var firstCompleted = false;
 			var secondCompleted = false;
 
-			var state = WaitForCondition("Wait for first cond", () => cond1)
+			var task = WaitForCondition("Wait for first cond", () => cond1)
 				.ThenRespondWithAction("First response", _ => firstCompleted = true)
 				.Optionally()
 				.Until(WaitForCondition("Until cond", () => untilCond))
@@ -68,52 +62,44 @@ namespace Responsible.Tests.Runtime
 					.ExpectWithinSeconds(1)
 					.ContinueWith(_ => DoAndReturn("Set second completed", () => secondCompleted = true)))
 				.ExpectWithinSeconds(1)
-				.CreateState();
-
-			state.ToObservable(this.Executor)
-				.Subscribe(_ => secondCompleted = true);
+				.ToTask(this.Executor);
 
 			untilCond = true;
-			yield return null;
-			yield return null;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			cond1 = true;
 
-			// A couple of extra yields to be safe
-			yield return null;
-			yield return null;
-			yield return null;
+			// A couple of extra frames to be safe
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
+			this.AdvanceDefaultFrame();
 			Assert.IsFalse(firstCompleted);
 			Assert.IsFalse(secondCompleted);
 
 			cond2 = true;
-			yield return null;
+			this.AdvanceDefaultFrame();
 
 			Assert.AreEqual(
-				(false, true),
-				(firstCompleted, secondCompleted));
+				(false, true, true),
+				(firstCompleted, secondCompleted, task.IsCompleted));
 		}
 
-		[UnityTest]
-		public IEnumerator Until_TimesOut_AsExpected()
+		[Test]
+		public void Until_TimesOut_AsExpected()
 		{
 			var completed = false;
 
-			Never
+			var task = Never
 				.ThenRespondWithAction("complete", _ => completed = true)
 				.Optionally()
 				.Until(Never)
 				.ExpectWithinSeconds(1)
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
-			yield return null;
-			this.Scheduler.AdvanceBy(OneSecond);
-			yield return null;
+			this.TimeProvider.AdvanceFrame(OneSecond);
 
 			Assert.IsFalse(completed);
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 	}
 }

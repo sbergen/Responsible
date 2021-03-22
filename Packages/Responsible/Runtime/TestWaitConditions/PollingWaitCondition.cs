@@ -1,8 +1,10 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible.TestWaitConditions
 {
@@ -40,12 +42,11 @@ namespace Responsible.TestWaitConditions
 				this.ExtraContext = extraContext;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => runContext
-				.PollObservable
-				.StartWith(Unit.Default) // Allow immediate completion
-				.Select(_ => this.getConditionState())
-				.Where(this.condition)
-				.Take(1);
+			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+				=> runContext.TimeProvider.PollForCondition(
+					this.getConditionState,
+					this.condition,
+					cancellationToken);
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}

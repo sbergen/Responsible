@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible.TestResponders
 {
@@ -14,7 +15,7 @@ namespace Responsible.TestResponders
 		{
 		}
 
-		private class State : TestOperationState<ITestOperationState<Unit>>
+		private class State : TestOperationState<IMultipleTaskSource<ITestOperationState<object>>>
 		{
 			private readonly IReadOnlyList<ITestOperationState<ITestOperationState<T>>> responders;
 
@@ -24,10 +25,16 @@ namespace Responsible.TestResponders
 				this.responders = responders.Select(r => r.CreateState()).ToList();
 			}
 
-			protected override IObservable<ITestOperationState<Unit>> ExecuteInner(RunContext runContext) => this.responders
-				.Select(responder => responder.Execute(runContext))
-				.Merge()
-				.Select(instruction => instruction.AsUnitOperationState());
+			protected override Task<IMultipleTaskSource<ITestOperationState<object>>> ExecuteInner(
+				RunContext runContext,
+				CancellationToken cancellationToken)
+			{
+				DeferredTask<ITestOperationState<object>> MakeLauncher(
+					ITestOperationState<ITestOperationState<T>> responder)
+					=> async ct => (await responder.Execute(runContext, ct)).BoxResult();
+
+				return Task.FromResult(MultipleTaskSource.Make(this.responders.Select(MakeLauncher)));
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddToPreviousLineWithChildren(" ANY OF", this.responders);

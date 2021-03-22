@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using UniRx;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -9,15 +8,12 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void WaitForSeconds_Completes_AfterTimeout()
 		{
-			var completed = false;
-			using (WaitForSeconds(2).ToObservable(this.Executor).Subscribe(_ => completed = true))
-			{
-				Assert.IsFalse(completed);
-				this.Scheduler.AdvanceBy(OneSecond);
-				Assert.IsFalse(completed);
-				this.Scheduler.AdvanceBy(OneSecond);
-				Assert.IsTrue(completed);
-			}
+			var task = WaitForSeconds(2).ToTask(this.Executor);
+			Assert.IsFalse(task.IsCompleted);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsFalse(task.IsCompleted);
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			Assert.IsTrue(task.IsCompleted);
 		}
 
 		[Test]
@@ -25,12 +21,10 @@ namespace Responsible.Tests.Runtime
 		{
 			var state = WaitForSeconds(1).CreateState();
 			StringAssert.Contains("[ ]", state.ToString());
-			using (state.ToObservable(this.Executor).Subscribe())
-			{
-				StringAssert.Contains("[.]", state.ToString());
-				this.Scheduler.AdvanceBy(OneSecond);
-				StringAssert.Contains("[✓]", state.ToString());
-			}
+			state.ToTask(this.Executor);
+			StringAssert.Contains("[.]", state.ToString());
+			this.TimeProvider.AdvanceFrame(OneSecond);
+			StringAssert.Contains("[✓]", state.ToString());
 		}
 	}
 }

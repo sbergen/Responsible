@@ -1,39 +1,24 @@
 using System;
-using UniRx;
 
 namespace Responsible.Context
 {
-	internal class WaitContext : IDisposable
+	internal class WaitContext
 	{
-		private readonly Subject<Unit> pollSubject = new Subject<Unit>();
+		private readonly ITimeProvider timeProvider;
 		private readonly DateTimeOffset startTime;
-		private readonly IScheduler scheduler;
-		private readonly IDisposable frameSubscription;
+		private readonly int startFrame;
 
-		private int frameCount;
-		private bool anyWaitsCompleted;
+		internal string ElapsedString =>
+			$"{this.ElapsedTime.TotalSeconds:0.00} s and {this.ElapsedFrames} frames";
 
-		internal string ElapsedTime =>
-			$"{(this.scheduler.Now - this.startTime).TotalSeconds:0.00} s and {this.frameCount} frames";
+		private TimeSpan ElapsedTime => this.timeProvider.TimeNow - this.startTime;
+		private int ElapsedFrames => this.timeProvider.FrameNow - this.startFrame;
 
-		internal void WaitCompleted() => this.anyWaitsCompleted = true;
-
-		internal WaitContext(IScheduler scheduler, IObservable<Unit> frameObservable)
+		internal WaitContext(ITimeProvider timeProvider)
 		{
-			this.startTime = scheduler.Now;
-			this.scheduler = scheduler;
-			this.frameSubscription = frameObservable.Subscribe(_ =>
-			{
-				++this.frameCount;
-
-				do
-				{
-					this.anyWaitsCompleted = false;
-					this.pollSubject.OnNext(Unit.Default);
-				} while (this.anyWaitsCompleted);
-			});
+			this.timeProvider = timeProvider;
+			this.startTime = timeProvider.TimeNow;
+			this.startFrame = timeProvider.FrameNow;
 		}
-
-		public void Dispose() => this.frameSubscription.Dispose();
 	}
 }

@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using UniRx;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -17,12 +16,11 @@ namespace Responsible.Tests.Runtime
 			TestInstruction
 				.Sequence(new[]
 				{
-					DoAndReturn("Set completed1", () => completed1 = true).AsUnitInstruction(),
-					DoAndReturn("Set completed2", () => completed2 = true).AsUnitInstruction(),
-					DoAndReturn("Set completed3", () => completed3 = true).AsUnitInstruction(),
+					DoAndReturn("Set completed1", () => completed1 = true).BoxResult(),
+					DoAndReturn("Set completed2", () => completed2 = true).BoxResult(),
+					DoAndReturn("Set completed3", () => completed3 = true).BoxResult(),
 				})
-				.ToObservable(this.Executor)
-				.Subscribe();
+				.ToTask(this.Executor);
 
 			Assert.AreEqual(
 				(true, true, true),
@@ -35,20 +33,19 @@ namespace Responsible.Tests.Runtime
 			var completed1 = false;
 			var completed2 = false;
 
-			TestInstruction
+			var task = TestInstruction
 				.Sequence(new[]
 				{
-					DoAndReturn("Set completed1", () => completed1 = true).AsUnitInstruction(),
-					Do("Throw error", () => throw new Exception()).AsUnitInstruction(),
-					DoAndReturn("Set completed2", () => completed2 = true).AsUnitInstruction(),
+					DoAndReturn("Set completed1", () => completed1 = true).BoxResult(),
+					Do("Throw error", () => throw new Exception()),
+					DoAndReturn("Set completed2", () => completed2 = true).BoxResult(),
 				})
-				.ToObservable(this.Executor)
-				.Subscribe(Nop, this.StoreError);
+				.ToTask(this.Executor);
 
 			Assert.AreEqual(
 				(true, false),
 				(completed1, completed2));
-			Assert.IsInstanceOf<AssertionException>(this.Error);
+			Assert.IsNotNull(GetAssertionException(task));
 		}
 	}
 }

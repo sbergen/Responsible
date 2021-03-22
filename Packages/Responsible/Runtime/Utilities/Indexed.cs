@@ -1,5 +1,4 @@
-using System;
-using UniRx;
+using System.Threading.Tasks;
 
 namespace Responsible.Utilities
 {
@@ -20,15 +19,15 @@ namespace Responsible.Utilities
 		public static Indexed<T> Make<T>(T value, int index)
 			=> new Indexed<T>(value, index);
 
-		public static IObservable<Indexed<T>> WithIndex<T>(
-			this IObservable<T> source,
+		public static async Task<Indexed<T>> WithIndex<T>(
+			this Task<T> source,
 			int index)
-			=> source.Select(value => Make(value, index));
+			=> new Indexed<T>(await source, index);
 
-		public static IObservable<Indexed<T>> WithIndexFrom<T, TIndexed>(
-			this IObservable<T> source,
+		public static async Task<Indexed<T>> WithIndexFrom<T, TIndexed>(
+			this Task<T> source,
 			Indexed<TIndexed> indexed)
-			=> source.Select(value => Make(value, indexed.Index));
+			=> Make(await source, indexed.Index);
 
 		public static T[] AssignToArray<T>(T[] array, Indexed<T> indexed)
 		{

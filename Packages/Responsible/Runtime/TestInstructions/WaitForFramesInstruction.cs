@@ -1,32 +1,40 @@
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible.TestInstructions
 {
-	internal class WaitForFramesInstruction : TestInstructionBase<Unit>
+	internal class WaitForFramesInstruction : TestInstructionBase<object>
 	{
 		public WaitForFramesInstruction(int frames, SourceContext sourceContext)
 			: base(() => new State(frames, sourceContext))
 		{
 		}
 
-		private class State : TestOperationState<Unit>
+		private class State : TestOperationState<object>
 		{
-			private readonly int frames;
+			private readonly int wholeFramesToWaitFor;
 
-			public State(int frames, SourceContext sourceContext)
+			public State(int wholeFramesToWaitFor, SourceContext sourceContext)
 				: base(sourceContext)
 			{
-				this.frames = frames;
+				this.wholeFramesToWaitFor = wholeFramesToWaitFor;
 			}
 
-			protected override IObservable<Unit> ExecuteInner(RunContext runContext)
-				=> Observable.TimerFrame(this.frames).AsUnitObservable();
+			protected override Task<object> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			{
+				var timeProvider = runContext.TimeProvider;
+				var deadline = timeProvider.FrameNow + this.wholeFramesToWaitFor;
+				return runContext.TimeProvider.PollForCondition(
+					() => Unit.Instance,
+					_ => timeProvider.FrameNow > deadline,
+					cancellationToken);
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddInstruction(this, $"WAIT FOR {this.frames} FRAME(S)");
+				builder.AddInstruction(this, $"WAIT FOR {this.wholeFramesToWaitFor} FRAME(S)");
 		}
 	}
 }

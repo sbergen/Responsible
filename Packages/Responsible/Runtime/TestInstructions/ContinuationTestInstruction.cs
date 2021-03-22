@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestInstructions
 {
@@ -33,13 +34,12 @@ namespace Responsible.TestInstructions
 				this.selector = selector;
 			}
 
-			protected override IObservable<T2> ExecuteInner(RunContext runContext) => this.first
-				.Execute(runContext)
-				.ContinueWith(result =>
-				{
-					this.nextInstruction = this.selector(result).CreateState();
-					return this.nextInstruction.Execute(runContext);
-				});
+			protected override async Task<T2> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
+			{
+				var firstResult = await this.first.Execute(runContext, cancellationToken);
+				this.nextInstruction = this.selector(firstResult).CreateState();
+				return await this.nextInstruction.Execute(runContext, cancellationToken);
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.nextInstruction);

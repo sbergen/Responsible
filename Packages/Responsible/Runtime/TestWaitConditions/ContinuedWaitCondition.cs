@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
@@ -33,13 +34,14 @@ namespace Responsible.TestWaitConditions
 				this.continuation = continuation;
 			}
 
-			protected override IObservable<TSecond> ExecuteInner(RunContext runContext) => this.first
-				.Execute(runContext)
-				.ContinueWith(result =>
-				{
-					this.second = this.continuation(result).CreateState();
-					return this.second.Execute(runContext);
-				});
+			protected override async Task<TSecond> ExecuteInner(
+				RunContext runContext,
+				CancellationToken cancellationToken)
+			{
+				var firstResult = await this.first.Execute(runContext, cancellationToken);
+				this.second = this.continuation(firstResult).CreateState();
+				return await this.second.Execute(runContext, cancellationToken);
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.second);

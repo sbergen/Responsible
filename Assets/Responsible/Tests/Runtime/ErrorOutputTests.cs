@@ -2,7 +2,6 @@ using System;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
-using UniRx;
 using UnityEngine;
 using static Responsible.Responsibly;
 
@@ -23,18 +22,18 @@ namespace Responsible.Tests.Runtime
 			public Action ResponseAction { get; set; }
 		}
 
-		private static ITestWaitCondition<Unit> MakeOptionalResponder(ResponderState state) =>
+		private static ITestWaitCondition<object> MakeOptionalResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction())
 				.Optionally()
 				.Until(WaitForCondition(state.Condition2Name, () => state.Condition2));
 
-		private static ITestResponder<Unit> MakeResponder(ResponderState state) =>
+		private static ITestResponder<object> MakeResponder(ResponderState state) =>
 			WaitForCondition(state.Condition1Name, () => state.Condition1)
 				.AndThen(_ => WaitForCondition(state.Condition2Name, () => state.Condition2))
 				.ThenRespondWithAction(state.ResponseName, _ => state.ResponseAction());
 
-		private static ITestInstruction<Unit> MakeInstruction(
+		private static ITestInstruction<object> MakeInstruction(
 			ResponderState state1,
 			ResponderState state2,
 			ResponderState state3) =>
@@ -56,62 +55,54 @@ namespace Responsible.Tests.Runtime
 			// If issues with output arise, maybe this will be changed.
 			// We especially do not want to assert things like line numbers in multiple places!
 			var logger = Substitute.For<ILogger>();
-			var scheduler = new TestScheduler();
-			var poll = new Subject<Unit>();
-			using (var executor = new TestInstructionExecutor(scheduler, poll, logger))
+			var timeProvider = new TestTimeProvider();
+			var executor = new TestInstructionExecutor(timeProvider, logger);
+
+			var state1 = new ResponderState
 			{
-				var state1 = new ResponderState
-				{
-					Condition1Name = "Cond 1.1",
-					Condition2Name = "Cond 1.2",
-					ResponseName = "Response 1",
-				};
+				Condition1Name = "Cond 1.1",
+				Condition2Name = "Cond 1.2",
+				ResponseName = "Response 1",
+			};
 
-				var state2 = new ResponderState
-				{
-					Condition1Name = "Cond 2.1",
-					Condition2Name = "Cond 2.2",
-					ResponseName = "Response 2",
-					ResponseAction = () => throw new Exception("Exception"),
-				};
+			var state2 = new ResponderState
+			{
+				Condition1Name = "Cond 2.1",
+				Condition2Name = "Cond 2.2",
+				ResponseName = "Response 2",
+				ResponseAction = () => throw new Exception("Exception"),
+			};
 
-				var state3 = new ResponderState
-				{
-					Condition1Name = "Cond 3.1",
-					Condition2Name = "Cond 3.2",
-					ResponseName = "Response 3",
-				};
+			var state3 = new ResponderState
+			{
+				Condition1Name = "Cond 3.1",
+				Condition2Name = "Cond 3.2",
+				ResponseName = "Response 3",
+			};
 
-				MakeInstruction(state1, state2, state3)
-					.ToObservable(executor)
-					.CatchIgnore()
-					.Subscribe();
+			MakeInstruction(state1, state2, state3).ToTask(executor);
 
-				// Store logger output to variable, for easier setup (can be actually logged)
-				string message = null;
-				logger.Log(LogType.Error, Arg.Do<string>(msg => message = msg));
+			// Store logger output to variable, for easier setup (can be actually logged)
+			string message = null;
+			logger.Log(LogType.Error, Arg.Do<string>(msg => message = msg));
 
-				// Advance time and frames, and complete condition that cancels the first wait
-				scheduler.AdvanceBy(TimeSpan.FromMilliseconds(20));
-				poll.OnNext(Unit.Default);
-				state1.Condition2 = true;
-				poll.OnNext(Unit.Default);
+			// Advance time and frames, and complete condition that cancels the first wait
+			timeProvider.AdvanceFrame(TimeSpan.FromMilliseconds(20));
+			state1.Condition2 = true;
+			timeProvider.AdvanceFrame(TimeSpan.Zero);
 
-				// Advance time and frames, and complete one condition of second responder
-				scheduler.AdvanceBy(TimeSpan.FromMilliseconds(20));
-				poll.OnNext(Unit.Default);
-				state2.Condition1 = true;
-				poll.OnNext(Unit.Default);
+			// Advance time and frames, and complete one condition of second responder
+			timeProvider.AdvanceFrame(TimeSpan.FromMilliseconds(20));
+			state2.Condition1 = true;
+			timeProvider.AdvanceFrame(TimeSpan.Zero);
 
-				// Advance time and frames, and complete second condition of second responder
-				scheduler.AdvanceBy(TimeSpan.FromMilliseconds(20));
-				poll.OnNext(Unit.Default);
-				state2.Condition2 = true;
-				poll.OnNext(Unit.Default);
+			// Advance time and frames, and complete second condition of second responder
+			timeProvider.AdvanceFrame(TimeSpan.FromMilliseconds(20));
+			state2.Condition2 = true;
+			timeProvider.AdvanceFrame(TimeSpan.Zero);
 
-				// Second responder should trigger error, third one is not executed
-				StringAssert.StartsWith(ExpectedOutput, message);
-			}
+			// Second responder should trigger error, third one is not executed
+			StringAssert.StartsWith(ExpectedOutput, message);
 		}
 
 		private const string ExpectedOutput =
@@ -122,9 +113,9 @@ Failure context:
   UNTIL
     [✓] Cond 1.2 (Completed in 0.02 s and 2 frames)
   RESPOND TO ANY OF
-    [-] Response 1 (Canceled after 0.02 s and 1 frames)
+    [-] Response 1 (Canceled after 0.02 s and 2 frames)
       WAIT FOR
-        [-] Cond 1.1 (Canceled after 0.02 s and 1 frames)
+        [-] Cond 1.1 (Canceled after 0.02 s and 2 frames)
       THEN RESPOND WITH ...
 [!] EXPECT WITHIN 10.00 s (Failed after 0.04 s and 4 frames)
   UNTIL
@@ -133,7 +124,7 @@ Failure context:
     [!] Response 2 (Failed after 0.00 s and 0 frames)
       WAIT FOR
         [✓] Cond 2.1 (Completed in 0.02 s and 2 frames)
-        [.] Cond 2.2 (Started 0.02 s and 2 frames ago)
+        [✓] Cond 2.2 (Completed in 0.02 s and 2 frames)
       THEN RESPOND WITH
         [!] Response 2 (Failed after 0.00 s and 0 frames)
  
@@ -141,11 +132,11 @@ Failure context:
             System.Exception: 'Exception'
  
           Test operation stack:
-            [ThenRespondWithAction] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:35)
-            [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
-            [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:46)
-            [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:43)
-            [ToObservable] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:86)
+            [ThenRespondWithAction] MakeResponder (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:34)
+            [Until] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:44)
+            [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
+            [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:42)
+            [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:83)
  
     [.] Response 3 (Started 0.04 s and 4 frames ago)
       WAIT FOR
@@ -157,9 +148,9 @@ Failed with:
   System.Exception: 'Exception'
  
 Test operation stack:
-  [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:46)
-  [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:43)
-  [ToObservable] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:86)
+  [ExpectWithinSeconds] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:45)
+  [ContinueWith] MakeInstruction (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:42)
+  [ToTask] ErrorOutput_IsAsExpected (at Assets/Responsible/Tests/Runtime/ErrorOutputTests.cs:83)
  
  
 Error: System.Exception: Exception";

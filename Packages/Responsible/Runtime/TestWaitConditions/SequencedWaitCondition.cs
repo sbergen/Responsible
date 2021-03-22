@@ -1,7 +1,7 @@
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
 
 namespace Responsible.TestWaitConditions
 {
@@ -30,10 +30,13 @@ namespace Responsible.TestWaitConditions
 				this.second = second.CreateState();
 			}
 
-			protected override IObservable<TSecond> ExecuteInner(RunContext runContext) =>
-				this.first
-					.Execute(runContext)
-					.ContinueWith(_ => this.second.Execute(runContext));
+			protected override async Task<TSecond> ExecuteInner(
+				RunContext runContext,
+				CancellationToken cancellationToken)
+			{
+				await this.first.Execute(runContext, cancellationToken);
+				return await this.second.Execute(runContext, cancellationToken);
+			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.second);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Responsible.State;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,7 +15,7 @@ namespace Responsible.Editor
 
 		public TestOperationStatusWindowState(
 			VisualElement rootElement,
-			IObservable<TestOperationStateNotification> states)
+			Func<Action<TestOperationStateNotification>, IDisposable> subscribeFunction)
 		{
 			var currentOperations = new VisualElement();
 			var currentOperationsTitle = new Label("Currently executing operations:");
@@ -60,7 +59,7 @@ namespace Responsible.Editor
 				}
 			}
 
-			this.subscription = states.Subscribe(notification =>
+			this.subscription = subscribeFunction(notification =>
 			{
 				switch (notification)
 				{

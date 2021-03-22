@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
-using UniRx;
+using Responsible.Unity;
 
 namespace Responsible
 {
@@ -16,23 +18,23 @@ namespace Responsible
 	public static class TestInstruction
 	{
 		/// <summary>
-		/// Constructs an observable, which executes the instruction when subscribed to.
+		/// Starts executing the instruction as an async task.
 		/// </summary>
-		/// <returns>A cold observable that runs the instruction when subscribed to.</returns>
-		/// <param name="instruction">The instruction to wrap into an observable.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
-		/// <typeparam name="T">Return type of the test instruction to wrap.</typeparam>
-		/// /// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
-		[Pure]
-		public static IObservable<T> ToObservable<T>(
+		/// <returns>A task which will complete with the instructions status.</returns>
+		/// <param name="instruction">The instruction to execute.</param>
+		/// <typeparam name="T">Return type of the test instruction.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> executor.RunInstruction(
 				instruction.CreateState(),
-				new SourceContext(nameof(ToObservable), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
+				cancellationToken);
 
 		/// <summary>
 		/// Starts executing an instruction, and returns a yield instruction which can be awaited,
@@ -40,38 +42,38 @@ namespace Responsible
 		/// </summary>
 		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
 		/// <param name="instruction">Instruction to execute.</param>
-		/// <param name="executor">Executor to use for executing the instruction.</param>
 		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		[Pure]
-		public static ObservableYieldInstruction<T> ToYieldInstruction<T>(
+		public static TaskYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
+			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> executor.RunInstruction(
-				instruction.CreateState(),
-				new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber))
-				.ToYieldInstruction();
+			=> new TaskYieldInstruction<T>(executor.RunInstruction(
+					instruction.CreateState(),
+					new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
+					cancellationToken));
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.
 		/// </summary>
 		/// <returns>
-		/// A test instruction which will complete with <see cref="Unit.Default"/>
+		/// A test instruction which will complete with a non-null object
 		/// once all provided instructions have completed, or will fail when any of the instructions fails.
 		/// </returns>
 		/// <param name="instructions">Instructions to sequence.</param>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1}"/>
 		[Pure]
-		public static ITestInstruction<Unit> Sequence(
-			this IEnumerable<ITestInstruction<Unit>> instructions,
+		public static ITestInstruction<object> Sequence(
+			this IEnumerable<ITestInstruction<object>> instructions,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
-				new SequencedTestInstruction<Unit, Unit>(
+				new SequencedTestInstruction<object, object>(
 					sequencedInstructions,
 					nextInstruction,
 					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
@@ -96,7 +98,7 @@ namespace Responsible
 		/// If the instruction fails or is canceled before <paramref name="continuation"/> has been called,
 		/// the description of the second instruction isn't included in the state output, as it is unknown.
 		/// Thus it is better to prefer
-		/// <see cref="ContinueWith{T1,T2}(Responsible.ITestInstruction{T1},Responsible.ITestInstruction{T2},string,string,int)"/>
+		/// <see cref="ContinueWith{T1,T2}(ITestInstruction{T1},ITestInstruction{T2},string,string,int)"/>
 		/// when possible, which will always also include the description of the second instruction.
 		/// </remarks>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2}"/>
@@ -164,23 +166,18 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test instruction returning any value to one returning <see cref="Unit"/>.
-		/// Can be useful for example in conjunction with <see cref="Sequence"/>.
+		/// Converts a test instruction returning value type, to one returning the same value boxed into object.
+		/// Can be useful for example in conjunction with <see cref="Sequence"/>, if used with value types.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
-		/// but discards its result, and returns <see cref="Unit.Default"/> instead.
+		/// but returns its result as a boxed object.
 		/// </returns>
 		/// <param name="instruction">Instruction to wrap.</param>
-		/// <remarks>
-		/// When called with an instruction already returning Unit, will return the instruction itself.
-		/// </remarks>
 		/// <typeparam name="T">Return type of the instruction to convert.</typeparam>
 		[Pure]
-		public static ITestInstruction<Unit> AsUnitInstruction<T>(
-			this ITestInstruction<T> instruction) =>
-			typeof(T) == typeof(Unit)
-				? (ITestInstruction<Unit>)instruction
-				: new UnitTestInstruction<T>(instruction);
+		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)
+			where T : struct
+			=> new BoxedTestInstruction<T>(instruction);
 	}
 }

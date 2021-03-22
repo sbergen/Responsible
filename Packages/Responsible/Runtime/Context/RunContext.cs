@@ -1,6 +1,3 @@
-using System;
-using UniRx;
-
 namespace Responsible.Context
 {
 	/// <summary>
@@ -9,20 +6,18 @@ namespace Responsible.Context
 	/// </summary>
 	public readonly struct RunContext
 	{
+		internal readonly ITimeProvider TimeProvider;
 		internal readonly SourceContext SourceContext;
-		internal readonly IScheduler Scheduler;
-		internal readonly IObservable<Unit> PollObservable;
 
-		internal WaitContext MakeWaitContext() => new WaitContext(this.Scheduler, this.PollObservable);
+		internal WaitContext MakeWaitContext() => new WaitContext(this.TimeProvider);
 
 		internal RunContext MakeNested(SourceContext sourceContext)
-			=> new RunContext(this.SourceContext.Append(sourceContext), this.Scheduler, this.PollObservable);
+			=> new RunContext(this.SourceContext.Append(sourceContext), this.TimeProvider);
 
-		internal RunContext(SourceContext sourceContext, IScheduler scheduler, IObservable<Unit> pollObservable)
+		internal RunContext(SourceContext sourceContext, ITimeProvider timeProvider)
 		{
 			this.SourceContext = sourceContext;
-			this.Scheduler = scheduler;
-			this.PollObservable = pollObservable;
+			this.TimeProvider = timeProvider;
 		}
 	}
 }

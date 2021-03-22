@@ -23,7 +23,7 @@ namespace Responsible
 		/// You should normally prefer the following extension methods over
 		/// creating a state instance manually:
 		/// * <seealso cref="TestInstruction.ToYieldInstruction{T}"/>
-		/// * <seealso cref="TestInstruction.ToObservable{T}"/>
+		/// * <seealso cref="TestInstruction.ToTask{T}"/>
 		/// </summary>
 		/// <returns>A state object for this run of the test operation.</returns>
 		/// <remarks>

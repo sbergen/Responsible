@@ -1,6 +1,5 @@
-using System;
 using NUnit.Framework;
-using UniRx;
+using Responsible.Tests.Runtime.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -12,7 +11,7 @@ namespace Responsible.Tests.Runtime
 		{
 			Assert.AreEqual(
 				10,
-				BuildQuery().ToObservable(this.Executor).Wait(TimeSpan.Zero));
+				BuildQuery().ToTask(this.Executor).AssertSynchronousResult());
 		}
 
 		private static ITestInstruction<int> BuildQuery() =>

@@ -1,6 +1,5 @@
-using System;
 using NUnit.Framework;
-using UniRx;
+using Responsible.Tests.Runtime.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -15,8 +14,8 @@ namespace Responsible.Tests.Runtime
 			Assert.AreEqual(
 				42,
 				returnInstruction
-					.ToObservable(this.Executor)
-					.Wait(TimeSpan.Zero));
+					.ToTask(this.Executor)
+					.AssertSynchronousResult());
 		}
 	}
 }

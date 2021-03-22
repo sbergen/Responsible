@@ -1,7 +1,9 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Responsible.Context;
 using Responsible.State;
-using UniRx;
+using Responsible.Utilities;
 
 namespace Responsible.TestInstructions
 {
@@ -27,9 +29,11 @@ namespace Responsible.TestInstructions
 				this.timeout = timeout;
 			}
 
-			protected override IObservable<T> ExecuteInner(RunContext runContext) => this.condition
-				.Execute(runContext)
-				.Timeout(this.timeout, runContext.Scheduler);
+			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
+				runContext.TimeProvider.TimeoutAfter(
+					this.timeout,
+					cancellationToken,
+					ct => this.condition.Execute(runContext, ct));
 
 			public override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddExpectWithin(this, this.timeout, this.condition);
