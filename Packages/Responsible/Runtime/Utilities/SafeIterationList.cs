@@ -7,7 +7,7 @@ namespace Responsible.Utilities
 	/// <summary>
 	/// Safe, but not very efficient way of iterating through a list while it's modified.
 	/// </summary>
-	public class SafeIterationList<T>
+	internal class SafeIterationList<T>
 	{
 		private readonly List<Entry> entries = new List<Entry>();
 		private bool modified;
@@ -69,9 +69,7 @@ namespace Responsible.Utilities
 		{
 			public readonly T Item;
 			public bool Enumerated { get; set; }
-
-			public Entry(T item)
-				=> this.Item = item;
+			public Entry(T item) => this.Item = item;
 		}
 	}
 }
