@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
-using UnityEngine;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -19,7 +17,7 @@ namespace Responsible.Tests.Runtime
 		protected static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);
 
-		protected ILogger Logger { get; private set; }
+		protected IFailureListener FailureListener { get; private set; }
 		protected TestTimeProvider TimeProvider { get; private set; }
 
 		protected TestInstructionExecutor Executor { get; private set; }
@@ -41,9 +39,9 @@ namespace Responsible.Tests.Runtime
 		[SetUp]
 		public void BaseSetUp()
 		{
-			this.Logger = Substitute.For<ILogger>();
+			this.FailureListener = this.MakeFailureListener();
 			this.TimeProvider = new TestTimeProvider();
-			this.Executor = new TestInstructionExecutor(this.TimeProvider, logger: this.Logger);
+			this.Executor = new TestInstructionExecutor(this.TimeProvider, this.ExternalResultSource(), this.FailureListener);
 		}
 
 		[TearDown]
@@ -51,5 +49,8 @@ namespace Responsible.Tests.Runtime
 		{
 			this.Executor.Dispose();
 		}
+
+		protected virtual IExternalResultSource ExternalResultSource() => null;
+		protected virtual IFailureListener MakeFailureListener() => null;
 	}
 }

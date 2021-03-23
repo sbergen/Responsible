@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -6,9 +7,15 @@ namespace Responsible.Unity
 	public class UnityTestInstructionExecutor : TestInstructionExecutor
 	{
 		private readonly UnityTimeProvider timeProvider;
+		private readonly UnityErrorLogInterceptor errorLogInterceptor = new UnityErrorLogInterceptor();
+
+		public void ExpectLog(LogType logType, Regex regex) => this.errorLogInterceptor.ExpectLog(logType, regex);
 
 		private UnityTestInstructionExecutor(UnityTimeProvider timeProvider)
-			: base(timeProvider)
+			: base(
+				timeProvider,
+				new UnityErrorLogInterceptor(),
+				new UnityFailureListener())
 		{
 			this.timeProvider = timeProvider;
 		}

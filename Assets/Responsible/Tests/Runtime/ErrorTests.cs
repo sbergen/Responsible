@@ -2,7 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests.Runtime
@@ -11,28 +10,13 @@ namespace Responsible.Tests.Runtime
 	{
 		private const string ExceptionMessage = "Test Exception";
 
-		[Test]
-		public void Executor_PublishesAndLogsError_WhenOperationTimesOut()
-		{
-			var task = Never
-				.ExpectWithinSeconds(2)
-				.ToTask(this.Executor);
-
-			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsFalse(task.IsFaulted);
-
-			this.TimeProvider.AdvanceFrame(OneSecond);
-
-			Assert.IsNotNull(GetAssertionException(task));
-			this.Logger.Received(1).Log(
-				LogType.Error,
-				Arg.Any<string>());
-		}
+		protected override IFailureListener MakeFailureListener()
+			=> Substitute.For<IFailureListener>();
 
 		[Test]
-		public void Executor_LogsErrorWithContext_WhenOperationTimesOut()
+		public void Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
 		{
-			WaitForAllOf(
+			var task = WaitForAllOf(
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
 				.ExpectWithinSeconds(1)
@@ -40,8 +24,9 @@ namespace Responsible.Tests.Runtime
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			this.Logger.Received(1).Log(
-				LogType.Error,
+			Assert.IsNotNull(GetAssertionException(task));
+			this.FailureListener.Received(1).OperationFailed(
+				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(log => Regex.IsMatch(
 					log,
 					@"timed out.*\[\-\] NO.*\[✓\] YES",
@@ -49,7 +34,7 @@ namespace Responsible.Tests.Runtime
 		}
 
 		[Test]
-		public void Executor_PublishesAndLogsError_WhenWaitThrows()
+		public void Executor_PropagatesAndNotifiesFailure_WhenWaitThrows()
 		{
 			var task = WaitForCondition(
 					"FAIL",
@@ -58,13 +43,13 @@ namespace Responsible.Tests.Runtime
 				.ToTask(this.Executor);
 
 			Assert.IsNotNull(GetAssertionException(task));
-			this.Logger.Received(1).Log(
-				LogType.Error,
+			this.FailureListener.Received(1).OperationFailed(
+				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
 		}
 
 		[Test]
-		public void Executor_LogsExtraWaitContext_WhenWaitTimesOut()
+		public void Executor_NotifiesWaitContext_WhenWaitTimesOut()
 		{
 			WaitForCondition(
 					"Never",
@@ -77,8 +62,8 @@ namespace Responsible.Tests.Runtime
 
 			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			this.Logger.Received(1).Log(
-				LogType.Error,
+			this.FailureListener.Received(1).OperationFailed(
+				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(str =>
 					str.Contains("Should be in logs") &&
 					str.Contains("Nested details")));

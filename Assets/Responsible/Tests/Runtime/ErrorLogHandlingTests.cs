@@ -1,8 +1,11 @@
+/* TODO reimplement as Unity test with UnityErrorLogInterceptor
+
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
+using Responsible.Unity;
 using UnityEngine;
 using UnityEngine.TestTools;
 using static Responsible.Responsibly;
@@ -12,6 +15,8 @@ namespace Responsible.Tests.Runtime
 	public class ErrorLogHandlingTests : ResponsibleTestBase
 	{
 		private const string ErrorMessage = "Error!";
+
+		private readonly UnityErrorLogInterceptor errorInterceptor = new UnityErrorLogInterceptor();
 
 		// JIC someone runs these together with their test suite...
 		private bool wereLogsIgnored;
@@ -44,8 +49,8 @@ namespace Responsible.Tests.Runtime
 			Do("Throw exception", () => throw new Exception())
 				.ToTask(this.Executor);
 
-			this.Logger.DidNotReceive().Log(LogType.Warning, Arg.Any<string>());
-			this.Logger.Received(1).Log(LogType.Error, Arg.Any<string>());
+			this.FailureListener.DidNotReceive().Log(LogType.Warning, Arg.Any<string>());
+			this.FailureListener.Received(1).Log(LogType.Error, Arg.Any<string>());
 		}
 
 		[Test]
@@ -60,7 +65,7 @@ namespace Responsible.Tests.Runtime
 		public void LoggingError_LogsDetailsAsWarning()
 		{
 			this.LogErrorFromInstructionSynchronously();
-			this.Logger.Received().Log(
+			this.FailureListener.Received().Log(
 				LogType.Warning,
 				Arg.Is<string>(msg => msg.Contains("Failure context")));
 		}
@@ -68,7 +73,7 @@ namespace Responsible.Tests.Runtime
 		[Test]
 		public void ExpectLog_Works_WhenErrorIsIntercepted()
 		{
-			this.Executor.ExpectLog(LogType.Error, new Regex(ErrorMessage));
+			this.errorInterceptor.ExpectLog(LogType.Error, new Regex(ErrorMessage));
 			this.LogErrorFromInstructionSynchronously();
 		}
 
@@ -84,7 +89,7 @@ namespace Responsible.Tests.Runtime
 		[Ignore("Should fail, can't assert that with the Unity test runner, run manually")]
 		public void NotLoggedButExpectedError_FailsTest()
 		{
-			this.Executor.ExpectLog(LogType.Error, new Regex("foo"));
+			this.errorInterceptor.ExpectLog(LogType.Error, new Regex("foo"));
 		}
 
 		private Task LogErrorFromInstructionSynchronously()
@@ -92,5 +97,8 @@ namespace Responsible.Tests.Runtime
 			return Do("Log error", () => Debug.LogError(ErrorMessage))
 				.ToTask(this.Executor);
 		}
+
+		protected override IExternalResultSource ExternalResultSource() => this.errorInterceptor;
 	}
 }
+*/
