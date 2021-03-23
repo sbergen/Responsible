@@ -2,8 +2,8 @@ using System;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
-using UnityEngine;
 using static Responsible.Responsibly;
+// Placeholder to not have to change expected output right now :/
 
 namespace Responsible.Tests.Runtime
 {
@@ -54,9 +54,9 @@ namespace Responsible.Tests.Runtime
 			// more important than the output details in various situations.
 			// If issues with output arise, maybe this will be changed.
 			// We especially do not want to assert things like line numbers in multiple places!
-			var logger = Substitute.For<ILogger>();
+			var failureListener = Substitute.For<IFailureListener>();
 			var timeProvider = new TestTimeProvider();
-			var executor = new TestInstructionExecutor(timeProvider, null, logger);
+			var executor = new TestInstructionExecutor(timeProvider, null, failureListener);
 
 			var state1 = new ResponderState
 			{
@@ -84,7 +84,9 @@ namespace Responsible.Tests.Runtime
 
 			// Store logger output to variable, for easier setup (can be actually logged)
 			string message = null;
-			logger.Log(LogType.Error, Arg.Do<string>(msg => message = msg));
+			failureListener.OperationFailed(
+				Arg.Any<Exception>(),
+				Arg.Do<string>(msg => message = msg));
 
 			// Advance time and frames, and complete condition that cancels the first wait
 			timeProvider.AdvanceFrame(TimeSpan.FromMilliseconds(20));

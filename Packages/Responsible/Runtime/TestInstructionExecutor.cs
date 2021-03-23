@@ -8,7 +8,6 @@ using NUnit.Framework;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Utilities;
-using UnityEngine;
 
 namespace Responsible
 {
@@ -30,7 +29,7 @@ namespace Responsible
 		private readonly CancellationTokenSource mainCancellationTokenSource = new CancellationTokenSource();
 		private readonly ITimeProvider timeProvider;
 		private readonly IExternalResultSource externalResultSource;
-		private readonly ILogger logger;
+		private readonly IFailureListener failureListener;
 
 		/// <summary>
 		/// Will call <paramref name="callback"/> when operations start or finish.
@@ -48,17 +47,20 @@ namespace Responsible
 		/// Constructs a new test instruction executor.
 		/// </summary>
 		/// <param name="timeProvider">Implementation for counting time and frames.</param>
-		/// <param name="logger">
-		/// Optional logger override. <see cref="Debug.unityLogger"/> is used by default.
+		/// <param name="externalResultSource">
+		/// Optional source for premature completion of test operations.
+		/// </param>
+		/// <param name="failureListener">
+		/// Optional failure listener, to get notifications on test operation failures.
 		/// </param>
 		public TestInstructionExecutor(
 			ITimeProvider timeProvider,
 			IExternalResultSource externalResultSource = null,
-			ILogger logger = null)
+			IFailureListener failureListener = null)
 		{
 			this.timeProvider = timeProvider;
 			this.externalResultSource = externalResultSource;
-			this.logger = logger ?? Debug.unityLogger;
+			this.failureListener = failureListener;
 		}
 
 		/// <summary>
@@ -103,14 +105,7 @@ namespace Responsible
 					var message = e is TimeoutException
 						? MakeTimeoutMessage(rootState)
 						: MakeErrorMessage(rootState, e);
-
-					// The Unity test runner can swallow exceptions, so both log an error and throw an exception.
-					// For already logged errors, log this as a warning, as it contains extra context.
-					var logType = e is UnhandledLogMessageException
-						? LogType.Warning
-						: LogType.Error;
-					this.logger.Log(logType, message);
-
+					this.failureListener?.OperationFailed(e, message);
 					throw new AssertionException(message, e);
 				}
 				finally

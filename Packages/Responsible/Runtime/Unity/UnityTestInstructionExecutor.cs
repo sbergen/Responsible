@@ -12,7 +12,10 @@ namespace Responsible.Unity
 		public void ExpectLog(LogType logType, Regex regex) => this.errorLogInterceptor.ExpectLog(logType, regex);
 
 		private UnityTestInstructionExecutor(UnityTimeProvider timeProvider)
-			: base(timeProvider)
+			: base(
+				timeProvider,
+				new UnityErrorLogInterceptor(),
+				new UnityFailureListener())
 		{
 			this.timeProvider = timeProvider;
 		}
