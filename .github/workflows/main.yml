@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, DotNetStandard ]
   pull_request:
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-${{ matrix.unityVersion }}
 
       - name: Run tests
@@ -40,10 +40,11 @@ jobs:
         uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
           customParameters: -enableCodeCoverage
-            -coverageResultsPath "artifacts/CodeCoverage/"
+            -coverageResultsPath "../artifacts/CodeCoverage/"
             -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
             -nographics
             -disable-assembly-updater
@@ -59,8 +60,8 @@ jobs:
         if: matrix.unityVersion == '2019.4.14f1'
         with:
           files: |
-            artifacts/CodeCoverage/workspace-opencov/EditMode/TestCoverageResults_0000.xml,
-            artifacts/CodeCoverage/workspace-opencov/PlayMode/TestCoverageResults_0000.xml
+            artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,
+            artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
           fail_ci_if_error: true
           verbose: true
 
@@ -90,14 +91,15 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-resharper
 
       - name: Run ReSharper in Unity
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           customImage: thesbergen/unityci-resharper
           targetPlatform: StandaloneLinux64
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.InspectCode
@@ -128,14 +130,15 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-docfx
 
       - name: Generate docs
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           customImage: thesbergen/unityci-docfx
           targetPlatform: StandaloneLinux64
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.BuildDocumentation
@@ -182,7 +185,7 @@ jobs:
         id: package-version
         uses: notiz-dev/github-action-json-property@release
         with: 
-          path: Packages/Responsible/package.json
+          path: com.beatwaves.responsible/package.json
           prop_path: 'version'
 
       - name: Get latest changelog entry

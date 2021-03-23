@@ -4,7 +4,7 @@
         "src": [
           {
             "files": [ "Responsible.csproj" ],
-            "src": "../"
+            "src": "../ResponsibleUnity"
           }
         ],
         "dest": "obj/api",
