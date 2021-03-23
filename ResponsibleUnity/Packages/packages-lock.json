@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.beatwaves.responsible": {
-      "version": "file:../com.beatwaves.responsible",
+      "version": "file:../../com.beatwaves.responsible",
       "depth": 0,
       "source": "local",
       "dependencies": {
