@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -13,9 +14,8 @@ namespace Responsible.EditorSetup
 {
     public static class ContinuousIntegration
     {
-
-        // ReSharper disable once PossibleNullReferenceException, will not happen
-        private static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.FullName;
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        private static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.Parent.FullName;
         private static readonly string DocFxDir = Path.Combine(RepositoryPath, "docfx");
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
         private static readonly string ResharperDir = Path.Combine(RepositoryPath, "resharper");
