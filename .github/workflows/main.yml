@@ -44,7 +44,7 @@ jobs:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
           customParameters: -enableCodeCoverage
-            -coverageResultsPath "artifacts/CodeCoverage/"
+            -coverageResultsPath "../artifacts/CodeCoverage/"
             -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
             -nographics
             -disable-assembly-updater
