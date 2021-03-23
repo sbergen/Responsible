@@ -32,7 +32,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-${{ matrix.unityVersion }}
 
       - name: Run tests
@@ -91,7 +91,7 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-resharper
 
       - name: Run ReSharper in Unity
@@ -130,7 +130,7 @@ jobs:
       - name: Cache Library
         uses: actions/cache@v2.1.2
         with:
-          path: Library
+          path: ResponsibleUnity/Library
           key: Library-docfx
 
       - name: Generate docs
