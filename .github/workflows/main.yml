@@ -40,7 +40,8 @@ jobs:
         uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
           customParameters: -enableCodeCoverage
             -coverageResultsPath "artifacts/CodeCoverage/"
@@ -97,7 +98,8 @@ jobs:
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           customImage: thesbergen/unityci-resharper
           targetPlatform: StandaloneLinux64
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.InspectCode
@@ -135,7 +137,8 @@ jobs:
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
-        with: 
+        with:
+          projectPath: ResponsibleUnity
           customImage: thesbergen/unityci-docfx
           targetPlatform: StandaloneLinux64
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.BuildDocumentation
