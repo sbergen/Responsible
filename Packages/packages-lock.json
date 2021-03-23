@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.beatwaves.responsible": {
-      "version": "file:Responsible",
+      "version": "file:../com.beatwaves.responsible",
       "depth": 0,
-      "source": "embedded",
+      "source": "local",
       "dependencies": {
         "com.neuecc.unirx": "7.1.0"
       }

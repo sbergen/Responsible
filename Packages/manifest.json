@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.beatwaves.responsible": "file:../com.beatwaves.responsible",
     "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.test-framework": "1.1.19",
