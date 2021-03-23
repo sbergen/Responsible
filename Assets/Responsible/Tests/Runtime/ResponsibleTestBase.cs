@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Runtime.Utilities;
 using static Responsible.Responsibly;
@@ -52,6 +51,6 @@ namespace Responsible.Tests.Runtime
 		}
 
 		protected virtual IExternalResultSource ExternalResultSource() => null;
-		protected virtual IFailureListener MakeFailureListener() => Substitute.For<IFailureListener>();
+		protected virtual IFailureListener MakeFailureListener() => null;
 	}
 }

@@ -7,6 +7,10 @@ using UnityEngine.TestTools;
 
 namespace Responsible.Unity
 {
+	/// <summary>
+	/// Class used to replicate the Unity test runner behaviour of failing tests when either
+	/// <see cref="Debug.LogError(object)"/> or <see cref="Debug.LogException(System.Exception)"/> is called.
+	/// </summary>
 	public class UnityErrorLogInterceptor : IExternalResultSource
 	{
 		private readonly List<(LogType type, Regex regex)> expectedLogs = new List<(LogType, Regex)>();
@@ -27,7 +31,15 @@ namespace Responsible.Unity
 			this.expectedLogs.Add((logType, regex));
 		}
 
-		// Intercept errors respecting and not toggling the globally mutable (yuck) LogAssert.ignoreFailingMessages
+		/// <summary>
+		/// Intercept errors respecting, and not toggling the globally mutable
+		/// <see cref="LogAssert.ignoreFailingMessages"/>.
+		/// Will complete with an error if either an error or exception is logged,
+		/// and will never complete if neither of those happens.
+		/// </summary>
+		/// <param name="cancellationToken">Token used to cancel this operation.</param>
+		/// <typeparam name="T">Type of the test operation being run.</typeparam>
+		/// <returns>Task, which will complete with an error if either an error or exception is logged.</returns>
 		public async Task<T> GetExternalResult<T>(CancellationToken cancellationToken)
 		{
 			var completionSource = new TaskCompletionSource<T>();
