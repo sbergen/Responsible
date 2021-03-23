@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, DotNetStandard ]
   pull_request:
 
 jobs:
@@ -185,7 +185,7 @@ jobs:
         id: package-version
         uses: notiz-dev/github-action-json-property@release
         with: 
-          path: Packages/Responsible/package.json
+          path: com.beatwaves.responsible/package.json
           prop_path: 'version'
 
       - name: Get latest changelog entry
