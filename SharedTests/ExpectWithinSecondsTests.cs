@@ -17,7 +17,7 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -84,7 +84,7 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -152,7 +152,7 @@ Test operation stack");
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));
 
 			var multipleFailuresDescription =

@@ -35,7 +35,7 @@ namespace Responsible.Tests
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetAssertionException(this.task));
+			Assert.IsNotNull(GetFailureException(this.task));
 		}
 
 		[Test]
@@ -44,7 +44,7 @@ namespace Responsible.Tests
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
 
-			var error = GetAssertionException(this.task);
+			var error = GetFailureException(this.task);
 
 			StringAssert.Contains(
 				"[ ] SELECT",
@@ -64,7 +64,7 @@ namespace Responsible.Tests
 			this.responder.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
-			var error = GetAssertionException(this.task);
+			var error = GetFailureException(this.task);
 
 			StringAssert.Contains(
 				"[!] SELECT",

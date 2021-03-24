@@ -46,7 +46,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.NotNull(GetAssertionException(task));
+			Assert.NotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -56,7 +56,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.NotNull(GetAssertionException(task));
+			Assert.NotNull(GetFailureException(task));
 		}
 
 		private static ITestResponder<object> MakeObjectResponder<TWait>(

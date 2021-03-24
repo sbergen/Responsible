@@ -39,7 +39,7 @@ namespace Responsible.Tests.Runtime
 		{
 			var task = this.LogErrorFromInstructionSynchronously();
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 			Assert.IsInstanceOf<UnhandledLogMessageException>(exception.InnerException);
 		}
 

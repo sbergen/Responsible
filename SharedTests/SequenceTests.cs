@@ -45,7 +45,7 @@ namespace Responsible.Tests
 			Assert.AreEqual(
 				(true, false),
 				(completed1, completed2));
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
 }

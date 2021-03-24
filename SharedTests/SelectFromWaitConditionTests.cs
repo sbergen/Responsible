@@ -27,7 +27,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -38,7 +38,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			StringAssert.Contains(
 				"[!] SELECT",
 				error.Message);
@@ -52,7 +52,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 
 			StringAssert.Contains(
 				"[ ] SELECT",

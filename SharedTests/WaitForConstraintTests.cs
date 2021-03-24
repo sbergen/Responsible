@@ -75,7 +75,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			Assert.That(error.Message, Does.Contain("Expected").And.Contain("But was"));
 		}
 
@@ -89,7 +89,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			Assert.That(
 				error.Message,
 				Does.Contain("[!] Some string").And.Contain("Fail!"));

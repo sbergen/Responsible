@@ -54,7 +54,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			Debug.Log(error.Message.Replace(
 				nameof(TestInstruction.ToTask),
 				nameof(TestInstruction.ToYieldInstruction)));

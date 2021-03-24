@@ -83,14 +83,14 @@ namespace Responsible.Tests
 			}
 
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetAssertionException(this.task));
+			Assert.IsNotNull(GetFailureException(this.task));
 		}
 
 		[Test]
 		public void UntilReadyToRespond_TimesOut_AsExpected()
 		{
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(this.task));
+			Assert.IsNotNull(GetFailureException(this.task));
 		}
 	}
 }

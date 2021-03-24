@@ -28,12 +28,12 @@ namespace Responsible.Tests
 
 		protected void AdvanceDefaultFrame() => this.TimeProvider.AdvanceFrame(OneFrame);
 
-		protected static AssertionException GetAssertionException(Task task)
+		protected static TestFailureException GetFailureException(Task task)
 		{
 			Assert.IsNotNull(task.Exception, "Should have exception");
 			Assert.AreEqual(1, task.Exception.InnerExceptions.Count);
-			Assert.IsInstanceOf<AssertionException>(task.Exception.InnerExceptions[0]);
-			return task.Exception.InnerExceptions[0] as AssertionException;
+			Assert.IsInstanceOf<TestFailureException>(task.Exception.InnerExceptions[0]);
+			return task.Exception.InnerExceptions[0] as TestFailureException;
 		}
 
 		[SetUp]

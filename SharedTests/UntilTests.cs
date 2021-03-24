@@ -99,7 +99,7 @@ namespace Responsible.Tests
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
 			Assert.IsFalse(completed);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
 }

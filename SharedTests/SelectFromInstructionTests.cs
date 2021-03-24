@@ -23,7 +23,7 @@ namespace Responsible.Tests
 			var task = Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
 				.ToTask(this.Executor);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -33,7 +33,7 @@ namespace Responsible.Tests
 				.Select<int, int>(_ => throw new Exception("Fail!"))
 				.ToTask(this.Executor);
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 			StringAssert.Contains(
 				"[!] SELECT",
 				exception.Message);
@@ -46,7 +46,7 @@ namespace Responsible.Tests
 				.Select(i => i)
 				.ToTask(this.Executor);
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 
 			StringAssert.Contains(
 				"[ ] SELECT",

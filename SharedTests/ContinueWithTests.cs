@@ -40,7 +40,7 @@ namespace Responsible.Tests
 			var task = this.ContinueWithNothing(this.errorInstruction, strategy)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ namespace Responsible.Tests
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]

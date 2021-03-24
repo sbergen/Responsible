@@ -41,13 +41,7 @@ namespace Responsible.State
 		/// <summary>
 		/// Starts execution of the the operation this state was created from.
 		///
-		/// Intended for internal use only. See
-		/// * <see cref="TestInstruction.ToYieldInstruction{T}"/>,
-		/// * <see cref="TestOperationState.ToYieldInstruction{T}"/>
-		/// * <see cref="TestInstruction.ToTask{T}"/>, and
-		/// * <see cref="TestOperationState.ToTask{T}"/>
-		///
-		/// for public ways of executing operations.
+		/// Intended for internal use only.
 		/// </summary>
 		/// <param name="runContext">The test operation run context this run is part of.</param>
 		/// <param name="cancellationToken">Cancellation token for canceling the run.</param>
