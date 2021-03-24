@@ -11,10 +11,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="coverlet.collector" Version="3.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
       <PackageReference Include="NSubstitute" Version="4.2.2" />
       <PackageReference Include="NUnit" Version="3.13.1" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     </ItemGroup>
 
     <ItemGroup>
