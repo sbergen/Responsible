@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests;
 using UnityEngine;
 using static Responsible.Responsibly;
 
-namespace Responsible.Tests
+namespace Responsible.UnityTests
 {
 	public class DocumentationExample : ResponsibleTestBase
 	{
@@ -54,7 +55,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			Debug.Log(error.Message.Replace(
 				nameof(TestInstruction.ToTask),
 				nameof(TestInstruction.ToYieldInstruction)));

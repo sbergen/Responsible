@@ -24,7 +24,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(log => Regex.IsMatch(
@@ -42,7 +42,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));

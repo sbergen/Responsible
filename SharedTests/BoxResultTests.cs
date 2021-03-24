@@ -39,7 +39,7 @@ namespace Responsible.Tests
 		public void BoxedTestInstruction_HasError_WhenInstructionHasError()
 		{
 			var task = this.throwError.BoxResult().ToTask(this.Executor);
-			Assert.NotNull(GetAssertionException(task));
+			Assert.NotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -104,7 +104,7 @@ namespace Responsible.Tests
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -120,7 +120,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
 }

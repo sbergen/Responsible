@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using NUnit.Framework;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Utilities;
@@ -106,7 +105,7 @@ namespace Responsible
 						? MakeTimeoutMessage(rootState)
 						: MakeErrorMessage(rootState, e);
 					this.failureListener?.OperationFailed(e, message);
-					throw new AssertionException(message, e);
+					throw new TestFailureException(message, e);
 				}
 				finally
 				{

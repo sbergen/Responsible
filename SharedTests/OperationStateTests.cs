@@ -29,7 +29,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 			Assert.That(
 				exception.Message,
 				Does.Contain("[-] Wait for it").And.Contain("[✓] Wait for it"));

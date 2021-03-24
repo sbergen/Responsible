@@ -2,13 +2,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using UnityEngine;
 
 namespace Responsible.Context
 {
 	internal readonly struct SourceContext
 	{
-		private static readonly int StripFromPaths;
+		private static readonly int StripFromPaths = 0;
 
 		public readonly IReadOnlyList<string> SourceLines;
 
@@ -17,7 +16,7 @@ namespace Responsible.Context
 			// If this were to be run in a player, using these paths would not be reliable.
 			// Could be fixed with some build processor maybe, but is it worth it?
 #if UNITY_EDITOR
-			StripFromPaths = Application.dataPath.Length - "Assets".Length;
+			StripFromPaths = UnityEngine.Application.dataPath.Length - "Assets".Length;
 #endif
 		}
 

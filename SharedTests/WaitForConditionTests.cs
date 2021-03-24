@@ -73,7 +73,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			var exception = GetAssertionException(task);
+			var exception = GetFailureException(task);
 			StringAssert.Contains("Should be in output", exception.Message);
 		}
 
@@ -144,7 +144,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			var error = GetAssertionException(task);
+			var error = GetFailureException(task);
 			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
 			Assert.That(error.Message, Does.Match(@"\[-\].*Should be canceled.*[Cc]anceled"));
 		}

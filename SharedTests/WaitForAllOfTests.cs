@@ -85,7 +85,7 @@ namespace Responsible.Tests
 			canThrow = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
 }

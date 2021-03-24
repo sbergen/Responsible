@@ -95,7 +95,7 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(GetAssertionException(this.task));
+			Assert.IsNotNull(GetFailureException(this.task));
 		}
 
 
@@ -116,7 +116,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(GetAssertionException(this.task));
+			Assert.IsNotNull(GetFailureException(this.task));
 		}
 
 		private void AssertResult()

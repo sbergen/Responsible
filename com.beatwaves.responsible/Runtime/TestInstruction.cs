@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
-using Responsible.Unity;
 
 namespace Responsible
 {
@@ -15,7 +14,8 @@ namespace Responsible
 	/// Contains extension methods on <see cref="ITestInstruction{T}"/>,
 	/// for executing, sequencing and transforming their results.
 	/// </summary>
-	public static class TestInstruction
+	// ReSharper disable once PartialTypeWithSinglePart, has a Unity part
+	public static partial class TestInstruction
 	{
 		/// <summary>
 		/// Starts executing the instruction as an async task.
@@ -35,27 +35,6 @@ namespace Responsible
 				instruction.CreateState(),
 				new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
 				cancellationToken);
-
-		/// <summary>
-		/// Starts executing an instruction, and returns a yield instruction which can be awaited,
-		/// using <c>yield return</c> in a Unity coroutine.
-		/// </summary>
-		/// <returns>Yield instruction for Unity, which will complete when the instruction has completed.</returns>
-		/// <param name="instruction">Instruction to execute.</param>
-		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
-		[Pure]
-		public static TaskYieldInstruction<T> ToYieldInstruction<T>(
-			this ITestInstruction<T> instruction,
-			TestInstructionExecutor executor,
-			CancellationToken cancellationToken = default,
-			[CallerMemberName] string memberName = "",
-			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TaskYieldInstruction<T>(executor.RunInstruction(
-					instruction.CreateState(),
-					new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
-					cancellationToken));
 
 		/// <summary>
 		/// Runs all provided test instructions in order, or until one of them fails.

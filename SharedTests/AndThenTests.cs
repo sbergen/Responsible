@@ -65,7 +65,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -73,7 +73,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -81,7 +81,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 
 		[Test]
@@ -89,7 +89,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetAssertionException(task));
+			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
 }

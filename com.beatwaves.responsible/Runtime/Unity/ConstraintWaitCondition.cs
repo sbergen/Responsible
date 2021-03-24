@@ -5,9 +5,10 @@ using NUnit.Framework.Constraints;
 using NUnit.Framework.Internal;
 using Responsible.Context;
 using Responsible.State;
+using Responsible.TestWaitConditions;
 using Responsible.Utilities;
 
-namespace Responsible.TestWaitConditions
+namespace Responsible.Unity
 {
 	internal class ConstraintWaitCondition<T> : TestWaitConditionBase<T>
 	{

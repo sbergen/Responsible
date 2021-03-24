@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
-using Responsible.Unity;
+using Responsible.TestWaitConditions;
 using Responsible.Utilities;
 
-namespace Responsible.TestWaitConditions
+namespace Responsible.Unity
 {
 	internal class CoroutineWaitCondition : TestWaitConditionBase<object>
 	{
@@ -68,7 +68,14 @@ namespace Responsible.TestWaitConditions
 					yield return enumerator.Current;
 				}
 
-				completionSource.SetResult(Unit.Instance);
+				if (cancellationToken.IsCancellationRequested)
+				{
+					completionSource.SetCanceled();
+				}
+				else
+				{
+					completionSource.SetResult(Unit.Instance);
+				}
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
