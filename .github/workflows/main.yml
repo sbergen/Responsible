@@ -59,7 +59,7 @@ jobs:
         uses: codecov/codecov-action@v1
         if: matrix.unityVersion == '2019.4.14f1'
         with:
-          flag: Unity
+          flags: Unity
           files: |
             artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,
             artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
@@ -81,6 +81,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: testspace-com/setup-testspace@v1
+        with:
+          domain: ${{github.repository_owner}}
+
       - name: Run Tests
         id: run-tests
         working-directory: Responsible
@@ -97,7 +101,7 @@ jobs:
         uses: codecov/codecov-action@v1
         if: ${{ always() }}
         with:
-          flag: netstandard
+          flags: netstandard
           files: ${{ steps.run-tests.outputs.coverage }}
           fail_ci_if_error: true
 
