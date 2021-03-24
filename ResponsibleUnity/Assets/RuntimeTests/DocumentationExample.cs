@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests;
 using UnityEngine;
 using static Responsible.Responsibly;
 
-namespace Responsible.Tests
+namespace Responsible.UnityTests
 {
 	public class DocumentationExample : ResponsibleTestBase
 	{

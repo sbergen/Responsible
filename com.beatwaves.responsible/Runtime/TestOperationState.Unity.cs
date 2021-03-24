@@ -9,6 +9,8 @@ namespace Responsible
 	public static partial class TestOperationState
 	{
 		/// <summary>
+		/// **Unity-only!**
+		///
 		/// Start executing an explicitly created operation state.
 		/// This can be used for e.g. logging the state periodically.
 		/// </summary>

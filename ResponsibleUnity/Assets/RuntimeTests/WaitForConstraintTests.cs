@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
-namespace Responsible.Tests
+namespace Responsible.UnityTests
 {
 	public class WaitForConstraintTests : ResponsibleTestBase
 	{

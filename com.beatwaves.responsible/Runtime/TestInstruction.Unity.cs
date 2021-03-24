@@ -8,6 +8,8 @@ namespace Responsible
 	public static partial class TestInstruction
 	{
 		/// <summary>
+		/// **Unity-only!**
+		///
 		/// Starts executing an instruction, and returns a yield instruction which can be awaited,
 		/// using <c>yield return</c> in a Unity coroutine.
 		/// </summary>

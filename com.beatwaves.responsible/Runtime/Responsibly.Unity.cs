@@ -11,6 +11,8 @@ namespace Responsible
 	public static partial class Responsibly
 	{
 		/// <summary>
+		/// **Unity-only!**
+		///
 		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
 		/// and check <paramref name="constraint"/> on the returned object.
 		/// Will complete once the constraint is fulfilled,
@@ -46,6 +48,8 @@ namespace Responsible
 
 
 		/// <summary>
+		/// **Unity-only!**
+		///
 		/// Constructs a wait condition, which will start the provided coroutine when executed.
 		/// Will complete when the coroutine has terminated.
 		/// See also <seealso cref="WaitForCoroutineMethod"/>.
@@ -69,6 +73,8 @@ namespace Responsible
 			new SourceContext(nameof(WaitForCoroutine), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
+		/// **Unity-only!**
+		///
 		/// Constructs a wait condition, which will start the provided coroutine when executed.
 		/// Will complete when the coroutine has terminated.
 		/// The description will be the coroutine method name.
