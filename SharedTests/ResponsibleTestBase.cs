@@ -41,7 +41,10 @@ namespace Responsible.Tests
 		{
 			this.FailureListener = this.MakeFailureListener();
 			this.TimeProvider = new TestTimeProvider();
-			this.Executor = new TestInstructionExecutor(this.TimeProvider, this.ExternalResultSource(), this.FailureListener);
+			this.Executor = new TestInstructionExecutor(
+				this.TimeProvider,
+				this.ExternalResultSource(),
+				this.FailureListener);
 		}
 
 		[TearDown]
