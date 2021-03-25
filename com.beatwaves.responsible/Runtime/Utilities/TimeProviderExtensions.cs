@@ -50,16 +50,15 @@ namespace Responsible.Utilities
 			DeferredTask<T> deferredTask)
 			=> cancellationToken.Amb(
 				deferredTask,
-				ct => timeProvider.Timeout<T>(timeout, ct));
+				ct => timeProvider.Timeout(timeout, ct).ThrowResult<T>());
 
-		// T is for convenience
-		public static async Task<T> Timeout<T>(
+		private static async Task<Exception> Timeout(
 			this ITimeProvider timeProvider,
 			TimeSpan timeout,
 			CancellationToken cancellationToken)
 		{
 			var deadline = timeProvider.TimeNow + timeout;
-			var completionSource = new TaskCompletionSource<T>();
+			var completionSource = new TaskCompletionSource<object>();
 
 			void CheckTimeout()
 			{
@@ -69,10 +68,10 @@ namespace Responsible.Utilities
 				}
 			}
 
-			using (var pollHandle = timeProvider.RegisterPollCallback(CheckTimeout))
-			using (cancellationToken.Register(pollHandle.Dispose))
+			using (timeProvider.RegisterPollCallback(CheckTimeout))
+			using (cancellationToken.Register(completionSource.SetCanceled))
 			{
-				return await completionSource.Task;
+				return await completionSource.Task.ExpectException();
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using static Responsible.Responsibly;
@@ -17,7 +19,21 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			var error = GetFailureException(task);
+			Assert.IsInstanceOf<TimeoutException>(error.InnerException);
+		}
+
+		[Test]
+		public void ExpectWithinSeconds_CancelsSuccessfully()
+		{
+			var cts = new CancellationTokenSource();
+			var task = Never
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor, cts.Token);
+
+			cts.Cancel();
+			var error = GetFailureException(task);
+			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 		}
 
 		[Test]
