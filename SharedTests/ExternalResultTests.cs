@@ -13,7 +13,6 @@ namespace Responsible.Tests
 		private static readonly ITestInstruction<int> NeverZero =
 			Never.ExpectWithinSeconds(1).Select(_ => 0);
 
-		private IExternalResultSource externalResultSource;
 		private TaskCompletionSource<int> completionSource;
 		private CancellationToken cancellationToken;
 
@@ -25,14 +24,14 @@ namespace Responsible.Tests
 
 		protected override IExternalResultSource ExternalResultSource()
 		{
-			this.externalResultSource = Substitute.For<IExternalResultSource>();
+			var externalResultSource = Substitute.For<IExternalResultSource>();
 			this.completionSource = new TaskCompletionSource<int>();
-			this.externalResultSource
+			externalResultSource
 				.GetExternalResult<int>(Arg.Do<CancellationToken>(ct =>
 					this.cancellationToken = ct))
 				.ReturnsForAnyArgs(this.completionSource.Task);
 
-			return this.externalResultSource;
+			return externalResultSource;
 		}
 
 		[Test]
@@ -64,6 +63,30 @@ namespace Responsible.Tests
 			Assert.IsTrue(task.IsCompleted);
 			Assert.IsTrue(this.cancellationToken.IsCancellationRequested);
 			Assert.DoesNotThrow(() => this.completionSource.SetResult(0));
+		}
+
+		[Test]
+		public void Instruction_IsCanceled_WhenExternalResult([Values] bool error)
+		{
+			var polled = false;
+			var unused = Responsibly
+				.WaitForCondition("Fake condition", () =>
+				{
+					polled = true;
+					return false;
+				})
+				.ExpectWithinSeconds(1);
+
+			if (error)
+			{
+				this.completionSource.SetException(new Exception());
+			}
+			else
+			{
+				this.completionSource.SetResult(1);
+			}
+
+			Assert.IsFalse(polled);
 		}
 	}
 }
