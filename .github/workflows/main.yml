@@ -112,7 +112,27 @@ jobs:
           name: netstandard Test Results
           path: Responsible/TestResults
 
-  markdown:
+  pack-netstandard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      
+      - name: Build nupkg
+        run: dotnet pack Responsible --output nupkg
+
+      - name: Archive nupkg
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: nupkg
+          path: nupkg/*
+
+  check-markdown-links:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

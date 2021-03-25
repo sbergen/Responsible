@@ -2,15 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageId>Beatwaves.Responsible</PackageId>
+        <Version>4.0.0-alpha</Version>
+        <Authors>Sakari Bergen</Authors>
+        <PackageTags>test;automation;testing;reactive;asynchronous</PackageTags>
+        <PackageProjectUrl>https://www.beatwaves.net/Responsible/</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>Responsible is a testing utility that helps you write maintainable asynchronous tests. It allows you to write declarative and composable test code, which produces informative output on test failures.</Description>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Remove="**\*.Unity.cs" />
         <Compile Remove="Unity\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
+        <Compile Include="..\..\Responsible\JetBrains.Annotations.cs" />
     </ItemGroup>
     
 </Project>
