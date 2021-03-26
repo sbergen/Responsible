@@ -86,6 +86,8 @@ namespace Responsible.Tests
 				this.completionSource.SetResult(1);
 			}
 
+			this.AdvanceDefaultFrame();
+
 			Assert.IsFalse(polled);
 		}
 	}
