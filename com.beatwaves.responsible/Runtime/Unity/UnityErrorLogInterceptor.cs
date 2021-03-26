@@ -64,7 +64,8 @@ namespace Responsible.Unity
 
 			void LogHandler(string condition, string _, LogType type)
 			{
-				if (!LogAssert.ignoreFailingMessages &&
+				if (!cancellationToken.IsCancellationRequested &&
+					!LogAssert.ignoreFailingMessages &&
 					(type == LogType.Error || type == LogType.Exception))
 				{
 					HandleSingleLog(condition, type);

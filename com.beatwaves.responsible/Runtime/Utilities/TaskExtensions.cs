@@ -27,17 +27,14 @@ namespace Responsible.Utilities
 
 			var completedTask = await Task.WhenAny(allTasks.Select(data => data.task));
 
-			if (!cancellationToken.IsCancellationRequested)
+			foreach (var (ctsSource, task) in allTasks)
 			{
-				foreach (var (ctsSource, task) in allTasks)
+				if (task != completedTask)
 				{
-					if (task != completedTask)
-					{
-						ctsSource.Cancel();
-					}
-
-					ctsSource.Dispose();
+					ctsSource.Cancel();
 				}
+
+				ctsSource.Dispose();
 			}
 
 			return await completedTask;
