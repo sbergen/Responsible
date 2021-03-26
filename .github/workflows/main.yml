@@ -57,9 +57,8 @@ jobs:
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v1
-        if: matrix.unityVersion == '2019.4.14f1'
         with:
-          flags: Unity
+          flags: Unity ${{ matrix.unityVersion }}
           files: |
             artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,
             artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
