@@ -124,9 +124,9 @@ namespace Responsible.UnityTests
 				.WaitForCondition("may complete", () => this.mayComplete)
 				.Select<object, int>(_ => throw exception)
 				.ExpectWithinSeconds(1)
-				.ToYieldInstruction(this.Executor, true);
+				.ToYieldInstruction(this.Executor, throwOnError: true);
 
-			AggregateException aggregateException = null;
+			AggregateException aggregateException;
 			while (true)
 			{
 				try

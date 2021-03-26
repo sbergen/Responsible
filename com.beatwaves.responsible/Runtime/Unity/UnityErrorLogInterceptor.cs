@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Responsible.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -40,9 +42,12 @@ namespace Responsible.Unity
 		/// <param name="cancellationToken">Token used to cancel this operation.</param>
 		/// <typeparam name="T">Type of the test operation being run.</typeparam>
 		/// <returns>Task, which will complete with an error if either an error or exception is logged.</returns>
-		public async Task<T> GetExternalResult<T>(CancellationToken cancellationToken)
+		public Task<T> GetExternalResult<T>(CancellationToken cancellationToken)
+			=> this.InterceptLoggedErrors(cancellationToken).ThrowResult<T>();
+
+		private async Task<Exception> InterceptLoggedErrors(CancellationToken cancellationToken)
 		{
-			var completionSource = new TaskCompletionSource<T>();
+			var completionSource = new TaskCompletionSource<object>();
 
 			void HandleSingleLog(string condition, LogType type)
 			{
@@ -77,7 +82,7 @@ namespace Responsible.Unity
 				Application.logMessageReceived += LogHandler;
 				try
 				{
-					return await completionSource.Task;
+					return await completionSource.Task.ExpectException();
 				}
 				finally
 				{
