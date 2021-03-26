@@ -11,7 +11,7 @@ namespace Responsible.Unity
 	public class UnityFailureListener : IFailureListener
 	{
 		/// <summary>
-		/// Will log the failure message as a warning, if it was caused by an unhandled exception,
+		/// Will log the failure message as a warning, if it was caused by an unhandled log message,
 		/// or as an error, if it was caused by any other error.
 		/// </summary>
 		/// <inheritdoc cref="IFailureListener.OperationFailed"/>

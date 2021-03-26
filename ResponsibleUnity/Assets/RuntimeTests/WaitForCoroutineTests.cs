@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -11,7 +12,7 @@ namespace Responsible.UnityTests
 	{
 		private bool coroutineCompleted;
 		private bool coroutineRan;
-		private Exception testException = new Exception("Test exception");
+		private readonly Exception testException = new Exception("Test exception");
 
 		[SetUp]
 		public void SetUp()
@@ -98,6 +99,36 @@ namespace Responsible.UnityTests
 			StringAssert.Contains("ThrowImmediately (Coroutine)", instruction.Error.Message);
 		}
 
+		[UnityTest]
+		public IEnumerator CompoundCoroutineWait_ContainsCorrectDescription()
+		{
+			var instruction = Responsibly
+				.WaitForCoroutineMethod(this.CompleteAfterOneFrame)
+				.AndThen(Responsibly.WaitForCoroutineMethod(this.ThrowImmediately))
+				.ExpectWithinSeconds(1)
+				.ToYieldInstruction(this.Executor, throwOnError: false);
+
+			yield return instruction;
+
+			Assert.IsTrue(instruction.CompletedWithError);
+			Assert.That(
+				instruction.Error.Message,
+				Does.Match(@"\[✓\] CompleteAfterOneFrame.*\n.*\[!\] ThrowImmediately"));
+		}
+
+		[Test]
+		public void WaitForCoroutine_ThrowsWithInvalidExecutor()
+		{
+			var nonUnityExecutor = new TestInstructionExecutor(new TestTimeProvider());
+			var instruction = Responsibly
+				.WaitForCoroutineMethod(this.Forever)
+				.ExpectWithinSeconds(1)
+				.ToYieldInstruction(nonUnityExecutor);
+
+			Assert.IsTrue(instruction.CompletedWithError);
+			StringAssert.Contains(nameof(MonoBehaviour), instruction.Error.Message);
+		}
+
 		private IEnumerator CompleteAfterOneFrame()
 		{
 			yield return null;
@@ -122,6 +153,7 @@ namespace Responsible.UnityTests
 				this.coroutineRan = true;
 				yield return null;
 			}
+			// ReSharper disable once IteratorNeverReturns, intended behaviour
 		}
 	}
 }

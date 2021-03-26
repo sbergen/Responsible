@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -65,7 +66,18 @@ namespace Responsible.Unity
 				TaskCompletionSource<object> completionSource,
 				CancellationToken cancellationToken)
 			{
-				var enumerator = this.startCoroutine();
+				IEnumerator enumerator;
+
+				try
+				{
+					enumerator = this.startCoroutine();
+				}
+				catch (Exception e)
+				{
+					completionSource.SetException(e);
+					yield break;
+				}
+
 				while (!cancellationToken.IsCancellationRequested)
 				{
 					try
@@ -84,8 +96,20 @@ namespace Responsible.Unity
 					yield return enumerator.Current;
 				}
 
+				HandleImpossibleConcurrentCancellation(cancellationToken, completionSource);
+			}
+
+			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
+
+			[ExcludeFromCodeCoverage]
+			private static void HandleImpossibleConcurrentCancellation(
+				CancellationToken cancellationToken,
+				TaskCompletionSource<object> completionSource)
+			{
 				if (cancellationToken.IsCancellationRequested)
 				{
+					// It should never be possible to reach this state in a single thread,
+					// but better safe than sorry...
 					completionSource.SetCanceled();
 				}
 				else
@@ -93,8 +117,6 @@ namespace Responsible.Unity
 					completionSource.SetResult(Unit.Instance);
 				}
 			}
-
-			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }

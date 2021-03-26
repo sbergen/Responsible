@@ -24,6 +24,20 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
+		public void UnhandledErrorLog_IsLoggedAsWarning_WhenLogErrorsIsTrue()
+		{
+			using (var executor = new UnityTestInstructionExecutor(logErrors: true))
+			{
+				var expected = "expected message";
+				Responsibly
+					.Do("Throw exception", () => Debug.LogError(expected))
+					.ToYieldInstruction(executor, throwOnError: false); // Should complete synchronously
+
+				LogAssert.Expect(LogType.Warning, new Regex(expected)); // The one from us
+			}
+		}
+
+		[Test]
 		public void Errors_AreNotLogged_WhenLogErrorsIsFalse()
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: false))

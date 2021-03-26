@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -111,6 +112,40 @@ namespace Responsible.UnityTests
 				Assert.Throws<InvalidOperationException>(() => unused = yieldInstruction.Result);
 				Assert.IsInstanceOf<TaskCanceledException>(yieldInstruction.Error.InnerException);
 			}
+		}
+
+		[UnityTest]
+		public IEnumerator ToYieldInstruction_Throws_WhenThrowOnErrorTrue()
+		{
+			this.coroutineRunner.StartCoroutine(this.YieldOneFrame());
+
+			var exception = new Exception("Test exception");
+			var yieldInstruction = Responsibly
+				.WaitForCondition("may complete", () => this.mayComplete)
+				.Select<object, int>(_ => throw exception)
+				.ExpectWithinSeconds(1)
+				.ToYieldInstruction(this.Executor, true);
+
+			AggregateException aggregateException = null;
+			while (true)
+			{
+				try
+				{
+					yieldInstruction.MoveNext();
+				}
+				catch (AggregateException e)
+				{
+					aggregateException = e;
+					break;
+				}
+
+				yield return null;
+				this.mayComplete = true;
+			}
+
+			var singleException = aggregateException.InnerExceptions.Single();
+			Assert.IsInstanceOf<TestFailureException>(singleException);
+			Assert.AreEqual(exception, singleException.InnerException);
 		}
 
 		private IEnumerator YieldOneFrame()
