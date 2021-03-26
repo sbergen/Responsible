@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,6 +70,29 @@ namespace Responsible.Utilities
 			{
 				cancellationTokenSource.Cancel();
 			}
+		}
+
+		public static async Task<T> ThrowResult<T>(this Task<Exception> task)
+		{
+			throw await task;
+		}
+
+		// Get 100% coverage with tasks that never return a result.
+		// Also, adds a bit of safety!
+		[ExcludeFromCodeCoverage]
+		public static async Task<Exception> ExpectException(this Task task)
+		{
+			try
+			{
+				await task;
+			}
+			catch (Exception e)
+			{
+				return e;
+			}
+
+			throw new InvalidOperationException(
+				"Task completed successfully when exception was expected!");
 		}
 	}
 }
