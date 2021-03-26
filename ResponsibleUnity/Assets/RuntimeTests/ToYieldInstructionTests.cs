@@ -19,11 +19,6 @@ namespace Responsible.UnityTests
 		private int? completedOnFrame;
 		private bool mayComplete;
 
-		public ToYieldInstructionTests()
-			: base(false)
-		{
-		}
-
 		[SetUp]
 		public void SetUp()
 		{
