@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Responsible.Editor;
 using Responsible.State;
-using UniRx;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
@@ -14,7 +13,7 @@ namespace Responsible.EditorTests
 {
 	public class TestOperationStatusWindowStateTests
 	{
-		private Subject<TestOperationStateNotification> notifications;
+		private Action<TestOperationStateNotification> notificationsCallback;
 		private TestOperationStatusWindowState state;
 		private ScrollView scrollView;
 
@@ -69,12 +68,32 @@ namespace Responsible.EditorTests
 			}
 		}
 
+		private class ResetNotifications : IDisposable
+		{
+			private readonly TestOperationStatusWindowStateTests parent;
+
+			public ResetNotifications(TestOperationStatusWindowStateTests parent)
+			{
+				this.parent = parent;
+			}
+
+			public void Dispose()
+			{
+				this.parent.notificationsCallback = null;
+			}
+		}
+
 		[SetUp]
 		public void SetUp()
 		{
 			var root = new VisualElement();
-			this.notifications = new Subject<TestOperationStateNotification>();
-			this.state = new TestOperationStatusWindowState(root, this.notifications.Subscribe);
+			this.state = new TestOperationStatusWindowState(
+				root,
+				callback =>
+				{
+					this.notificationsCallback = callback;
+					return new ResetNotifications(this);
+				});
 			this.scrollView = root.Q<ScrollView>();
 
 			// Precondition
@@ -97,9 +116,9 @@ namespace Responsible.EditorTests
 		public void StartedNotification_AddsStateLabel()
 		{
 			var operationState1 = new FakeOperationState("Fake State 1");
-			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState1));
+			this.notificationsCallback(new TestOperationStateNotification.Started(operationState1));
 			var operationState2 = new FakeOperationState("Fake State 2");
-			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState2));
+			this.notificationsCallback(new TestOperationStateNotification.Started(operationState2));
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);
@@ -113,9 +132,9 @@ namespace Responsible.EditorTests
 		public void FinishedNotification_MovesStateLabelToPrevious()
 		{
 			var operationState = new FakeOperationState("Fake State");
-			this.notifications.OnNext(new TestOperationStateNotification.Started(operationState));
+			this.notificationsCallback(new TestOperationStateNotification.Started(operationState));
 			this.state.Update();
-			this.notifications.OnNext(new TestOperationStateNotification.Finished(operationState));
+			this.notificationsCallback(new TestOperationStateNotification.Finished(operationState));
 
 			var visualState = new VisualState(this.scrollView);
 			Assert.IsEmpty(visualState.CurrentOperations);
@@ -126,7 +145,7 @@ namespace Responsible.EditorTests
 		public void FinishedNotification_OnlyLogsWarning_WhenNotFound()
 		{
 			var operationState = new FakeOperationState("Fake State");
-			this.notifications.OnNext(new TestOperationStateNotification.Finished(operationState));
+			this.notificationsCallback(new TestOperationStateNotification.Finished(operationState));
 
 			LogAssert.Expect(LogType.Warning, new Regex("Could not find"));
 			new VisualState(this.scrollView).AssertEmpty();
@@ -136,9 +155,7 @@ namespace Responsible.EditorTests
 		public void Dispose_StopsListeningToNotifications()
 		{
 			this.state.Dispose();
-			this.notifications.OnNext(new TestOperationStateNotification.Started(default));
-
-			new VisualState(this.scrollView).AssertEmpty();
+			Assert.IsNull(this.notificationsCallback);
 		}
 
 		[Test]
@@ -146,11 +163,11 @@ namespace Responsible.EditorTests
 		{
 			var state1 = new FakeOperationState("Fake State 1");
 			var state2 = new FakeOperationState("Fake State 2");
-			this.notifications.OnNext(new TestOperationStateNotification.Started(state1));
+			this.notificationsCallback(new TestOperationStateNotification.Started(state1));
 			this.state.Update();
-			this.notifications.OnNext(new TestOperationStateNotification.Started(state2));
+			this.notificationsCallback(new TestOperationStateNotification.Started(state2));
 			this.state.Update();
-			this.notifications.OnNext(new TestOperationStateNotification.Finished(state1));
+			this.notificationsCallback(new TestOperationStateNotification.Finished(state1));
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);
@@ -163,7 +180,7 @@ namespace Responsible.EditorTests
 		[Test]
 		public void ErrorInState_ContainsErrorInUI()
 		{
-			this.notifications.OnNext(new TestOperationStateNotification.Started(
+			this.notificationsCallback(new TestOperationStateNotification.Started(
 				new FakeOperationState(new Exception("Fake Exception"))));
 			this.state.Update();
 
