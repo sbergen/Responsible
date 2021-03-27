@@ -10,7 +10,9 @@ namespace Responsible.UnityTests
 		[SetUp]
 		public void SetUpUnityTest()
 		{
-			this.Executor = new UnityTestInstructionExecutor();
+			// Logging errors really complicates testing failures.
+			// We have error logging tests separately.
+			this.Executor = new UnityTestInstructionExecutor(logErrors: false);
 		}
 
 		[TearDown]

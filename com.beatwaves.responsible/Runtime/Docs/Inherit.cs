@@ -140,5 +140,20 @@ namespace Responsible.Docs
 			int sourceLineNumber = 0)
 		{
 		}
+
+		/// <inheritdoc cref="CallerMember{T1, T2, T3, T4}"/>
+		/// <param name="executor">Test operation executor to use.</param>
+		/// <param name="throwOnError">Whether or not to throw on cancellation or errors.</param>
+		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
+		public void YieldInstruction<T>(
+			T arg1,
+			TestInstructionExecutor executor,
+			bool throwOnError,
+			CancellationToken cancellationToken = default,
+			string memberName = "",
+			string sourceFilePath = "",
+			int sourceLineNumber = 0)
+		{
+		}
 	}
 }

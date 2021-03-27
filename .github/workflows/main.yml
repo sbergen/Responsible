@@ -43,9 +43,11 @@ jobs:
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
+          # TaskExtensions is excluded from coverage, because Unity is having a hard time with some attributes.
+          # It's covered in .NET standard, so shouldn't be a problem excluding it here...
           customParameters: -enableCodeCoverage
             -coverageResultsPath "../artifacts/CodeCoverage/"
-            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
+            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor;pathFilters:-*TaskExtensions.cs*
             -nographics
             -disable-assembly-updater
       
@@ -56,10 +58,10 @@ jobs:
           [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
 
       - name: Push to codecov.io
+        if: ${{ always() }}
         uses: codecov/codecov-action@v1
-        if: matrix.unityVersion == '2019.4.14f1'
         with:
-          flags: Unity
+          flags: Unity ${{ matrix.unityVersion }}
           files: |
             artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,
             artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
