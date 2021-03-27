@@ -1,5 +1,5 @@
-using System;
-using System.Text;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 
 namespace Responsible.Tests.Utilities
@@ -10,7 +10,7 @@ namespace Responsible.Tests.Utilities
 	public class AssertStateString
 	{
 		private readonly string str;
-		private readonly StringBuilder assertedStrings = new StringBuilder();
+		private readonly List<string> assertedStrings = new List<string>();
 
 		private int currentIndex;
 
@@ -23,6 +23,7 @@ namespace Responsible.Tests.Utilities
 		public AssertStateString Completed(string description) => this.DetailsWithMarker('✓', description);
 		public AssertStateString Failed(string description) => this.DetailsWithMarker('!', description);
 		public AssertStateString Waiting(string description) => this.DetailsWithMarker('.', description);
+		public AssertStateString Canceled(string description) => this.DetailsWithMarker('-', description);
 
 		public AssertStateString FailureDetails() => this.Details("Failed with:");
 
@@ -32,28 +33,28 @@ namespace Responsible.Tests.Utilities
 			return this;
 		}
 
-		public AssertStateString Details(string text)
+		public AssertStateString Details(string regex)
 		{
-			var markerIndex = this.str.IndexOf(text, this.currentIndex, StringComparison.Ordinal);
+			var match = Regex.Match(this.str.Substring(this.currentIndex), regex);
 
-			if (markerIndex < 0)
+			if (!match.Success)
 			{
 				var alreadyAsserted = string.Join("\n  ", this.assertedStrings);
 				Assert.Fail(
 $@"Expected to find
-  {text}
+  {regex}
 After consuming
   {alreadyAsserted}
 In:
 {this.str}");
 			}
 
-			this.assertedStrings.Append(text);
-			this.currentIndex = markerIndex + text.Length;
+			this.assertedStrings.Add(regex);
+			this.currentIndex = match.Index + match.Value.Length;
 			return this;
 		}
 
 		private AssertStateString DetailsWithMarker(char marker, string description) =>
-			this.Details($"[{marker}] {description}");
+			this.Details($@"\[{marker}\] {description}");
 	}
 }

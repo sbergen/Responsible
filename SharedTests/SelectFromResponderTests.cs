@@ -46,7 +46,7 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			AssertState.StringContains(error.Message)
+			StateAssert.StringContainsInOrder(error.Message)
 				.Details(ConditionResponder.WaitForCompletionDescription)
 				.NotStarted("SELECT");
 		}
@@ -60,7 +60,7 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			AssertState.StringContains(error.Message)
+			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("SELECT")
 				.FailureDetails()
 				.Nowhere(ConditionResponder.WaitForCompletionDescription);

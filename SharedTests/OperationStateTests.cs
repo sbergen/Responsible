@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -21,7 +22,8 @@ namespace Responsible.Tests
 				return condition;
 			}
 
-			var wait = WaitForCondition("Wait for it", WaitForIt);
+			var description = "Wait for it";
+			var wait = WaitForCondition(description, WaitForIt);
 
 			var task = wait.AndThen(wait)
 				.ExpectWithinSeconds(1)
@@ -30,9 +32,10 @@ namespace Responsible.Tests
 			this.TimeProvider.AdvanceFrame(OneSecond);
 
 			var exception = GetFailureException(task);
-			Assert.That(
-				exception.Message,
-				Does.Contain("[-] Wait for it").And.Contain("[✓] Wait for it"));
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Failed("EXPECT WITHIN")
+				.Completed(description)
+				.Canceled(description);
 		}
 
 	}

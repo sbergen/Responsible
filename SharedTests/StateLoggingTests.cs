@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Responsible.State;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -25,7 +26,8 @@ namespace Responsible.Tests
 		public void InitialState_ProducesCorrectOutput()
 		{
 			var stateString = this.state.ToString();
-			StringAssert.Contains("[ ] Wait for value EXPECTED WITHIN", stateString);
+			StateAssert.StringContainsInOrder(stateString)
+				.NotStarted("Wait for value EXPECTED WITHIN");
 		}
 
 		[Test]
@@ -36,7 +38,8 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 
 			var stateString = this.state.ToString();
-			StringAssert.Contains("[✓] Wait for value EXPECTED WITHIN", stateString);
+			StateAssert.StringContainsInOrder(stateString)
+				.Completed("Wait for value EXPECTED WITHIN");
 		}
 	}
 }
