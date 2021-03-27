@@ -100,5 +100,19 @@ namespace Responsible.Tests
 				(true, true, true),
 				(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
 		}
+
+		// This exists to test the boxing conversion bypass case, when it's not necessary
+		[Test]
+		public void RespondToAnyOf_WorksCorrectlyWithReferenceTypes()
+		{
+			var expectedObject = new object();
+			var instruction = RespondToAnyOf(
+					ImmediateTrue.ThenRespondWith("Return object", Return(expectedObject)),
+					this.responder1.Responder.BoxResult())
+				.Until(Never)
+				.ExpectWithinSeconds(1);
+
+			Assert.DoesNotThrow(() => instruction.ToTask(this.Executor));
+		}
 	}
 }
