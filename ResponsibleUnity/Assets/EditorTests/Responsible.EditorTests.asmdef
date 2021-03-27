@@ -3,7 +3,6 @@
     "references": [
         "Responsible",
         "Responsible.Editor",
-        "UniRx",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
