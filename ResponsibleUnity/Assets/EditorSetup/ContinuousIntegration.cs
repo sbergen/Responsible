@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using NUnit.Framework;
-using Packages.Rider.Editor;
+using Unity.CodeEditor;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -94,9 +94,11 @@ namespace Responsible.EditorSetup
 
         private static string SyncSolution()
         {
-            var projectGeneration = new ProjectGeneration();
-            projectGeneration.Sync();
-            return projectGeneration.SolutionFile();
+            CodeEditor.CurrentEditor.SyncAll();
+            return Path.Combine(
+                // ReSharper disable once PossibleNullReferenceException, won't happen
+                new DirectoryInfo(Application.dataPath).Parent.FullName,
+                "ResponsibleUnity.sln");
         }
 
         private static string Quote(string str) => $"\"{str}\"";
