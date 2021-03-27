@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using NUnit.Framework;
-using Unity.CodeEditor;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
