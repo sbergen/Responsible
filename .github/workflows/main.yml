@@ -48,6 +48,7 @@ jobs:
           customParameters: -enableCodeCoverage
             -coverageResultsPath "../artifacts/CodeCoverage/"
             -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor;pathFilters:-*TaskExtensions.cs*
+            -debugCodeOptimization
             -nographics
             -disable-assembly-updater
       
