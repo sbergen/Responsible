@@ -10,7 +10,7 @@ namespace Responsible.Unity
 	/// <c>[UnityTest]</c> playmode test.
 	/// </summary>
 	/// <typeparam name="T">Result type of the test operation being run.</typeparam>
-	public class TaskYieldInstruction<T> : CustomYieldInstruction
+	public class TestOperationYieldInstruction<T> : CustomYieldInstruction
 	{
 		private readonly Task<T> task;
 		private readonly bool throwOnError;
@@ -42,7 +42,7 @@ namespace Responsible.Unity
 		/// <value>The exception that caused the test operation to fail.</value>
 		public TestFailureException Error => this.GetException();
 
-		internal TaskYieldInstruction(Task<T> task, bool throwOnError)
+		internal TestOperationYieldInstruction(Task<T> task, bool throwOnError)
 		{
 			this.task = task;
 			this.throwOnError = throwOnError;

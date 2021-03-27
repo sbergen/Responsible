@@ -17,7 +17,7 @@ namespace Responsible
 		/// <param name="instruction">Instruction to execute.</param>
 		/// <typeparam name="T">Return type of the test instruction to start.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.YieldInstruction{T}"/>
-		public static TaskYieldInstruction<T> ToYieldInstruction<T>(
+		public static TestOperationYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
 			bool throwOnError = true,
@@ -25,7 +25,7 @@ namespace Responsible
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TaskYieldInstruction<T>(executor.RunInstruction(
+			=> new TestOperationYieldInstruction<T>(executor.RunInstruction(
 					instruction.CreateState(),
 					new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
 					cancellationToken),

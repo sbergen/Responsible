@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -50,7 +49,7 @@ namespace Responsible.UnityTests
 		[UnityTest]
 		public IEnumerator ToYieldInstruction_CompletesAsExpected()
 		{
-			this.coroutineRunner.StartCoroutine(this.YieldOneFrame());
+			this.coroutineRunner.StartCoroutine(this.CompleteAfterOneFrame());
 
 			var yieldInstruction = Responsibly
 				.WaitForCondition("may complete", () => this.mayComplete)
@@ -71,9 +70,26 @@ namespace Responsible.UnityTests
 		}
 
 		[UnityTest]
+		public IEnumerator ToYieldInstruction_CompletesAsExpected_WhenConstructedFromWait()
+		{
+			this.coroutineRunner.StartCoroutine(this.CompleteAfterOneFrame());
+
+			var yieldInstruction = Responsibly
+				.WaitForCondition("may complete", () => this.mayComplete)
+				.CreateState()
+				.ToYieldInstruction(this.Executor);
+
+			yield return yieldInstruction;
+
+			// Completes one frame "late", because of Update ordering
+			Assert.AreEqual(this.completedOnFrame + 1, Time.frameCount);
+			Assert.IsTrue(yieldInstruction.CompletedSuccessfully);
+		}
+
+		[UnityTest]
 		public IEnumerator ToYieldInstruction_ErrorsAsExpected()
 		{
-			this.coroutineRunner.StartCoroutine(this.YieldOneFrame());
+			this.coroutineRunner.StartCoroutine(this.CompleteAfterOneFrame());
 
 			var exception = new Exception("Test exception");
 			var yieldInstruction = Responsibly
@@ -84,7 +100,7 @@ namespace Responsible.UnityTests
 
 			yield return yieldInstruction;
 
-			// Completes one frame after
+			// Completes one frame "late", because of Update ordering
 			Assert.AreEqual(this.completedOnFrame + 1, Time.frameCount);
 
 			object unused;
@@ -117,7 +133,7 @@ namespace Responsible.UnityTests
 		[UnityTest]
 		public IEnumerator ToYieldInstruction_Throws_WhenThrowOnErrorTrue()
 		{
-			this.coroutineRunner.StartCoroutine(this.YieldOneFrame());
+			this.coroutineRunner.StartCoroutine(this.CompleteAfterOneFrame());
 
 			var exception = new Exception("Test exception");
 			var yieldInstruction = Responsibly
@@ -146,7 +162,7 @@ namespace Responsible.UnityTests
 			Assert.AreEqual(exception, failureException.InnerException);
 		}
 
-		private IEnumerator YieldOneFrame()
+		private IEnumerator CompleteAfterOneFrame()
 		{
 			yield return null;
 			this.mayComplete = true;

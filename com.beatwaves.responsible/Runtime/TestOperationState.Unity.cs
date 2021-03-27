@@ -24,15 +24,15 @@ namespace Responsible
 		/// <param name="state">Test operation state to start executing.</param>
 		/// <typeparam name="T">Result type of the test operation.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.YieldInstruction{T}"/>
-		public static TaskYieldInstruction<T> ToYieldInstruction<T>(
+		public static TestOperationYieldInstruction<T> ToYieldInstruction<T>(
 			this ITestOperationState<T> state,
 			TestInstructionExecutor executor,
-			bool throwOnError,
+			bool throwOnError = true,
 			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
-			=> new TaskYieldInstruction<T>(executor.RunInstruction(
+			=> new TestOperationYieldInstruction<T>(executor.RunInstruction(
 					state,
 					new SourceContext(nameof(ToYieldInstruction), memberName, sourceFilePath, sourceLineNumber),
 					cancellationToken),
