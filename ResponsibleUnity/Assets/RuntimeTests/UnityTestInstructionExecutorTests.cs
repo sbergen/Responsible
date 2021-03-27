@@ -46,7 +46,7 @@ namespace Responsible.UnityTests
 				var instruction = Responsibly
 					.Do("Throw exception", () => throw new Exception())
 					.ToYieldInstruction(executor, throwOnError: false);
-				Assert.IsTrue(instruction.CompletedSuccessfully);
+				Assert.IsTrue(instruction.CompletedWithError);
 				// Should not fail the test with logged errors
 			}
 		}
