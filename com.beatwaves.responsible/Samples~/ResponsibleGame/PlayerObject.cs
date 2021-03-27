@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UniRx;
+﻿using UnityEngine;
 
 namespace ResponsibleGame
 {
@@ -11,30 +9,35 @@ namespace ResponsibleGame
 		[SerializeField] private TargetArea targetArea = null;
 		[SerializeField] private Status status = null;
 
-		private IDisposable inputSubscription;
 		private bool goingLeft;
 
 		private Vector2 CurrentPosition => this.rectTransform.localPosition;
 
 		private void Awake()
 		{
-			this.inputSubscription = PlayerInput.Instance.TriggerPressed.Subscribe(_ =>
-			{
-				if (this.status.IsAlive)
-				{
-					this.targetArea.AddMarker(this.CurrentPosition);
-				}
-				else
-				{
-					this.status.Restart();
-					this.targetArea.ClearMarkers();
-				}
-			});
+			PlayerInput.Instance.TriggerPressed += this.HandleTriggerPressed;
 		}
 
 		private void OnDestroy()
 		{
-			this.inputSubscription.Dispose();
+			var inputInstance = PlayerInput.Instance;
+			if (inputInstance != null)
+			{
+				inputInstance.TriggerPressed -= this.HandleTriggerPressed;
+			}
+		}
+
+		private void HandleTriggerPressed()
+		{
+			if (this.status.IsAlive)
+			{
+				this.targetArea.AddMarker(this.CurrentPosition);
+			}
+			else
+			{
+				this.status.Restart();
+				this.targetArea.ClearMarkers();
+			}
 		}
 
 		void Update()
