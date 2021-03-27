@@ -39,6 +39,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void SelectFromResponder_PublishesCorrectError_WhenResponderWaitFails()
+		{
+			this.responder.CompleteWaitWithError(new Exception("Fail!"));
+			this.AdvanceDefaultFrame();
+			Assert.IsNotNull(GetFailureException(this.task));
+		}
+
+		[Test]
 		public void SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
@@ -64,6 +72,21 @@ namespace Responsible.Tests
 				.Failed("SELECT")
 				.FailureDetails()
 				.Nowhere(ConditionResponder.WaitForCompletionDescription);
+		}
+
+		[Test]
+		public void SelectFromResponder_ContainsCorrectDetails_WhenResponderFails()
+		{
+			var failMessage = "Test failure";
+			this.responder.CompleteWaitWithError(new Exception(failMessage));
+			this.AdvanceDefaultFrame();
+
+			var error = GetFailureException(this.task);
+
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("Respond")
+				.Details(failMessage)
+				.NotStarted("SELECT");
 		}
 	}
 }

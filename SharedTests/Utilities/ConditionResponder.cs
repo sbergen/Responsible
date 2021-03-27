@@ -8,6 +8,7 @@ namespace Responsible.Tests.Utilities
 		public const string WaitForCompletionDescription = "Wait for completion";
 
 		private Exception exception;
+		private Exception waitException;
 
 		public bool MayRespond { get; set; }
 		public bool MayComplete { get; set; }
@@ -28,9 +29,22 @@ namespace Responsible.Tests.Utilities
 			this.AllowFullCompletion();
 		}
 
+		public void CompleteWaitWithError(Exception e)
+		{
+			this.waitException = e;
+			this.AllowFullCompletion();
+		}
+
 		public ConditionResponder(int responseTimeout, T returnValue)
 		{
-			this.Responder = WaitForCondition("Wait to be ready", () => this.MayRespond)
+			this.Responder = WaitForCondition("Wait to be ready", () =>
+				{
+					if (this.waitException != null)
+					{
+						throw this.waitException;
+					}
+					return this.MayRespond;
+				})
 				.ThenRespondWith(
 					"Respond",
 					DoAndReturn("Set started to respond", () => this.StartedToRespond = true)
