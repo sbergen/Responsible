@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using NUnit.Framework;
-using Packages.Rider.Editor;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -92,11 +92,20 @@ namespace Responsible.EditorSetup
             }
         }
 
+        [SuppressMessage(
+            "ReSharper",
+            "PossibleNullReferenceException",
+            Justification = "Having to use reflection because of internal types :/")]
         private static string SyncSolution()
         {
-            var projectGeneration = new ProjectGeneration();
-            projectGeneration.Sync();
-            return projectGeneration.SolutionFile();
+            Type
+                .GetType("Packages.Rider.Editor.RiderScriptEditor, Unity.Rider.Editor")
+                .GetMethod("SyncSolution", BindingFlags.Static | BindingFlags.Public)
+                .Invoke(null, Array.Empty<object>());
+
+            return Path.Combine(
+                new DirectoryInfo(Application.dataPath).Parent.FullName,
+                "ResponsibleUnity.sln");
         }
 
         private static string Quote(string str) => $"\"{str}\"";
