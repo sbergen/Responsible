@@ -44,7 +44,6 @@ namespace Responsible.Unity
 			{
 				var completionSource = new TaskCompletionSource<object>();
 
-				// TODO, use some interface here
 				var unityTimeProvider = runContext.TimeProvider as MonoBehaviour;
 				if (unityTimeProvider == null)
 				{

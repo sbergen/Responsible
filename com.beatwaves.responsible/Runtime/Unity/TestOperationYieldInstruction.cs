@@ -15,15 +15,15 @@ namespace Responsible.Unity
 		private readonly Task<T> task;
 		private readonly bool throwOnError;
 
-		/// <summary>Indicates if the test operation has completed with an error.</summary>
-		/// <value>True if the test operation completed with an error, false otherwise.</value>
-		public bool CompletedWithError => this.task.IsFaulted && !this.WasCanceled;
-
 		/// <summary>Indicates if the test operation was canceled.</summary>
 		/// <value>True if the test operation was canceled, false otherwise.</value>
 		public bool WasCanceled =>
 			this.task.IsFaulted &&
 			this.GetException().InnerException is TaskCanceledException;
+
+		/// <summary>Indicates if the test operation has completed with an error.</summary>
+		/// <value>True if the test operation completed with an error, false otherwise.</value>
+		public bool CompletedWithError => this.task.IsFaulted && !this.WasCanceled;
 
 		/// <summary>Indicates if the test operation has completed successfully.</summary>
 		/// <value>True if the test operation completed successfully, false otherwise.</value>
@@ -37,7 +37,7 @@ namespace Responsible.Unity
 			: throw new InvalidOperationException("Test operation has not completed successfully!");
 
 		/// <summary>
-		/// Gets the TestFailureException that caused the test operation to fail.
+		/// Gets the <see cref="TestFailureException"/> that caused the test operation to fail.
 		/// Will throw an error if the task has not failed or was not canceled.</summary>
 		/// <value>The exception that caused the test operation to fail.</value>
 		public TestFailureException Error => this.GetException();
@@ -85,9 +85,7 @@ namespace Responsible.Unity
 			}
 		}
 
-		// Should never fail, unless we have a bug in our code,
-		// which means it should be caught by other tests.
-		// We don't test internals directly in Responsible.
+		// Should never fail, unless we have an issue in our code, which means it should be caught by other tests.
 		[ExcludeFromCodeCoverage]
 		private TestFailureException ExpectTestFailureException(Exception e)
 		{

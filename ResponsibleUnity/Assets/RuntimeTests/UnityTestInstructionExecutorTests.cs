@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Responsible.Unity;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Object = UnityEngine.Object;
 
 namespace Responsible.UnityTests
 {
@@ -42,10 +43,11 @@ namespace Responsible.UnityTests
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: false))
 			{
-				Responsibly
+				var instruction = Responsibly
 					.Do("Throw exception", () => throw new Exception())
 					.ToYieldInstruction(executor, throwOnError: false);
-				// Should complete synchronously and not fail the test with logged errors
+				Assert.IsTrue(instruction.CompletedSuccessfully);
+				// Should not fail the test with logged errors
 			}
 		}
 
@@ -132,6 +134,22 @@ namespace Responsible.UnityTests
 				Assert.IsFalse(yieldInstruction.CompletedSuccessfully);
 				Assert.IsFalse(yieldInstruction.CompletedWithError);
 			}
+		}
+
+		[UnityTest]
+		public IEnumerator Dispose_CleansUpAllCreatedComponents()
+		{
+			int GetComponentCount() => Object.FindObjectsOfType(typeof(MonoBehaviour)).Length;
+			var componentCountAtStart = GetComponentCount();
+
+			using (new UnityTestInstructionExecutor())
+			{
+				yield return null;
+				Assert.Greater(GetComponentCount(), componentCountAtStart);
+			}
+
+			yield return null;
+			Assert.AreEqual(componentCountAtStart, GetComponentCount());
 		}
 	}
 }
