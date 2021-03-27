@@ -46,15 +46,9 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			StringAssert.Contains(
-				"[ ] SELECT",
-				error.Message,
-				"Should Not have started select");
-
-			StringAssert.Contains(
-				ConditionResponder.WaitForCompletionDescription,
-				error.Message,
-				"Should contain responder details");
+			AssertState.StringContains(error.Message)
+				.Details(ConditionResponder.WaitForCompletionDescription)
+				.NotStarted("SELECT");
 		}
 
 		[Test]
@@ -66,20 +60,10 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			StringAssert.Contains(
-				"[!] SELECT",
-				error.Message,
-				"Should contain error for select");
-
-			StringAssert.Contains(
-				"Failed with:",
-				error.Message,
-				"Should contain failure details for select");
-
-			StringAssert.DoesNotContain(
-				ConditionResponder.WaitForCompletionDescription,
-				error.Message,
-				"Should not contain responder details");
+			AssertState.StringContains(error.Message)
+				.Failed("SELECT")
+				.FailureDetails()
+				.Nowhere(ConditionResponder.WaitForCompletionDescription);
 		}
 	}
 }
