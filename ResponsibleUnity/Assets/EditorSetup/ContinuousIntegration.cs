@@ -69,6 +69,7 @@ namespace Responsible.EditorSetup
                 command: "inspectcode",
                 Quote(solution),
                 $"-o={Quote(ResharperResults)}",
+                "-a", // Use absolute paths to make this work better in GitHub
                 "-s=WARNING");
 
             File.WriteAllText(ResharperStdout, stdout);
