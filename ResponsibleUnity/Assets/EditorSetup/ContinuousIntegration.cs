@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using NUnit.Framework;
 using Unity.CodeEditor;
@@ -92,11 +93,18 @@ namespace Responsible.EditorSetup
             }
         }
 
+        [SuppressMessage(
+            "ReSharper",
+            "PossibleNullReferenceException",
+            Justification = "Having to use reflection because of internal types :/")]
         private static string SyncSolution()
         {
-            CodeEditor.CurrentEditor.SyncAll();
+            Type
+                .GetType("Packages.Rider.Editor.RiderScriptEditor, Unity.Rider.Editor")
+                .GetMethod("SyncSolution", BindingFlags.Static | BindingFlags.Public)
+                .Invoke(null, Array.Empty<object>());
+
             return Path.Combine(
-                // ReSharper disable once PossibleNullReferenceException, won't happen
                 new DirectoryInfo(Application.dataPath).Parent.FullName,
                 "ResponsibleUnity.sln");
         }

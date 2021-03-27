@@ -2,7 +2,7 @@
   "dependencies": {
     "com.beatwaves.responsible": "file:../../com.beatwaves.responsible",
     "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
-    "com.unity.ide.rider": "2.0.7",
+    "com.unity.ide.rider": "3.0.5",
     "com.unity.test-framework": "1.1.22",
     "com.unity.testtools.codecoverage": "0.4.0-preview",
     "com.unity.ugui": "1.0.0",
