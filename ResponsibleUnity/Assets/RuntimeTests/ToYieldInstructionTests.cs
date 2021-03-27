@@ -126,16 +126,16 @@ namespace Responsible.UnityTests
 				.ExpectWithinSeconds(1)
 				.ToYieldInstruction(this.Executor, throwOnError: true);
 
-			AggregateException aggregateException;
+			TestFailureException failureException;
 			while (true)
 			{
 				try
 				{
 					yieldInstruction.MoveNext();
 				}
-				catch (AggregateException e)
+				catch (TestFailureException e)
 				{
-					aggregateException = e;
+					failureException = e;
 					break;
 				}
 
@@ -143,9 +143,7 @@ namespace Responsible.UnityTests
 				this.mayComplete = true;
 			}
 
-			var singleException = aggregateException.InnerExceptions.Single();
-			Assert.IsInstanceOf<TestFailureException>(singleException);
-			Assert.AreEqual(exception, singleException.InnerException);
+			Assert.AreEqual(exception, failureException.InnerException);
 		}
 
 		private IEnumerator YieldOneFrame()

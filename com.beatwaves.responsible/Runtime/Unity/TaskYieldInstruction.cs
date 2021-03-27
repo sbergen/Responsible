@@ -60,7 +60,7 @@ namespace Responsible.Unity
 				if (this.throwOnError)
 				{
 					// ReSharper disable once PossibleNullReferenceException, Condition is checked above...
-					throw this.task.Exception;
+					throw this.GetException();
 				}
 				else
 				{
