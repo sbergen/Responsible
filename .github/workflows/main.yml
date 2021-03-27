@@ -43,9 +43,11 @@ jobs:
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
+          # TaskExtensions is excluded from coverage, because Unity is having a hard time with some attributes.
+          # It's covered in .NET standard, so shouldn't be a problem excluding it here...
           customParameters: -enableCodeCoverage
             -coverageResultsPath "../artifacts/CodeCoverage/"
-            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
+            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor;pathFilters:-*TaskExtensions.cs*
             -debugCodeOptimization
             -nographics
             -disable-assembly-updater
