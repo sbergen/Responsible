@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -144,9 +145,39 @@ namespace Responsible.Tests
 
 			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			var error = GetFailureException(task);
+
 			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
-			Assert.That(error.Message, Does.Match(@"\[-\].*Should be canceled.*[Cc]anceled"));
+
+			var error = GetFailureException(task);
+			StateAssert.StringContainsInOrder(error.Message)
+				.Canceled("Should be canceled")
+				.FailureDetails();
+		}
+
+
+		[Test]
+		public void InlinedOutput_IsGeneratedForInitialState_WhenExpected()
+		{
+			var state = WaitForCondition("Never", () => false)
+				.ExpectWithinSeconds(1)
+				.CreateState();
+
+			var stateString = state.ToString();
+			StateAssert.StringContainsInOrder(stateString)
+				.NotStarted("Never EXPECTED WITHIN");
+		}
+
+		[Test]
+		public void InlinedOutput_IsGeneratedForCompletedState_WhenExpected()
+		{
+			var state = WaitForCondition("Immediately", () => true)
+				.ExpectWithinSeconds(1)
+				.CreateState();
+			state.ToTask(this.Executor); // Trigger completion
+
+			var stateString = state.ToString();
+			StateAssert.StringContainsInOrder(stateString)
+				.Completed("Immediately EXPECTED WITHIN");
 		}
 	}
 }

@@ -39,6 +39,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void SelectFromResponder_PublishesCorrectError_WhenResponderWaitFails()
+		{
+			this.responder.CompleteWaitWithError(new Exception("Fail!"));
+			this.AdvanceDefaultFrame();
+			Assert.IsNotNull(GetFailureException(this.task));
+		}
+
+		[Test]
 		public void SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
@@ -46,15 +54,9 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			StringAssert.Contains(
-				"[ ] SELECT",
-				error.Message,
-				"Should Not have started select");
-
-			StringAssert.Contains(
-				ConditionResponder.WaitForCompletionDescription,
-				error.Message,
-				"Should contain responder details");
+			StateAssert.StringContainsInOrder(error.Message)
+				.Details(ConditionResponder.WaitForCompletionDescription)
+				.NotStarted("SELECT");
 		}
 
 		[Test]
@@ -66,20 +68,25 @@ namespace Responsible.Tests
 
 			var error = GetFailureException(this.task);
 
-			StringAssert.Contains(
-				"[!] SELECT",
-				error.Message,
-				"Should contain error for select");
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("SELECT")
+				.FailureDetails()
+				.Nowhere(ConditionResponder.WaitForCompletionDescription);
+		}
 
-			StringAssert.Contains(
-				"Failed with:",
-				error.Message,
-				"Should contain failure details for select");
+		[Test]
+		public void SelectFromResponder_ContainsCorrectDetails_WhenResponderFails()
+		{
+			var failMessage = "Test failure";
+			this.responder.CompleteWaitWithError(new Exception(failMessage));
+			this.AdvanceDefaultFrame();
 
-			StringAssert.DoesNotContain(
-				ConditionResponder.WaitForCompletionDescription,
-				error.Message,
-				"Should not contain responder details");
+			var error = GetFailureException(this.task);
+
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("Respond")
+				.Details(failMessage)
+				.NotStarted("SELECT");
 		}
 	}
 }

@@ -6,7 +6,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
-	public class ErrorTests : ResponsibleTestBase
+	public class ExecutorFailureTests : ResponsibleTestBase
 	{
 		private const string ExceptionMessage = "Test Exception";
 

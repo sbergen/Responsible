@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -20,11 +21,12 @@ namespace Responsible.Tests
 		public void WaitForSeconds_ContainsCorrectStatusInDescription()
 		{
 			var state = WaitForSeconds(1).CreateState();
-			StringAssert.Contains("[ ]", state.ToString());
+			var description = "WAIT FOR 0:00:01";
+			StateAssert.StringContainsInOrder(state.ToString()).NotStarted(description);
 			state.ToTask(this.Executor);
-			StringAssert.Contains("[.]", state.ToString());
+			StateAssert.StringContainsInOrder(state.ToString()).Waiting(description);
 			this.TimeProvider.AdvanceFrame(OneSecond);
-			StringAssert.Contains("[✓]", state.ToString());
+			StateAssert.StringContainsInOrder(state.ToString()).Completed(description);
 		}
 	}
 }

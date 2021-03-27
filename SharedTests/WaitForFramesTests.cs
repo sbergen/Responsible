@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -32,11 +33,12 @@ namespace Responsible.Tests
 		public void WaitForFrames_ContainsCorrectStatusInDescription()
 		{
 			var state = WaitForFrames(0).CreateState();
-			StringAssert.Contains("[ ]", state.ToString());
+			var description = @"WAIT FOR 0 FRAME\(S\)";
+			StateAssert.StringContainsInOrder(state.ToString()).NotStarted(description);
 			state.ToTask(this.Executor);
-			StringAssert.Contains("[.]", state.ToString());
+			StateAssert.StringContainsInOrder(state.ToString()).Waiting(description);
 			this.AdvanceDefaultFrame();
-			StringAssert.Contains("[✓]", state.ToString());
+			StateAssert.StringContainsInOrder(state.ToString()).Completed(description);
 		}
 	}
 }

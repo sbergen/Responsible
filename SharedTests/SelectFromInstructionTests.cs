@@ -34,9 +34,9 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var exception = GetFailureException(task);
-			StringAssert.Contains(
-				"[!] SELECT",
-				exception.Message);
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Failed("SELECT")
+				.FailureDetails();
 		}
 
 		[Test]
@@ -47,16 +47,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var exception = GetFailureException(task);
-
-			StringAssert.Contains(
-				"[ ] SELECT",
-				exception.Message,
-				"Should not contain error for select");
-
-			StringAssert.Contains(
-				"[!] Throw",
-				exception.Message,
-				"Should contain error for instruction");
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Failed("Throw")
+				.FailureDetails()
+				.NotStarted("SELECT");
 		}
 	}
 }

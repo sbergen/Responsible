@@ -39,9 +39,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var error = GetFailureException(task);
-			StringAssert.Contains(
-				"[!] SELECT",
-				error.Message);
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("EXPECT WITHIN")
+				.Failed("SELECT")
+				.FailureDetails();
 		}
 
 		[Test]
@@ -53,16 +54,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var error = GetFailureException(task);
-
-			StringAssert.Contains(
-				"[ ] SELECT",
-				error.Message,
-				"Should not contain error for Select");
-
-			StringAssert.Contains(
-				"[!] Throw",
-				error.Message,
-				"Should contain error for condition");
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("Throw")
+				.FailureDetails()
+				.NotStarted("SELECT");
 		}
 	}
 }
