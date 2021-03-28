@@ -122,15 +122,91 @@ references:
   isSpec: "True"
   fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor
   nameWithType: Inherit.CallerMemberWithExecutor
-- uid: Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name: CallerMemberWithExecutor<T>(T, TestInstructionExecutor, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor__1___0_Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name.vb: CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor<T>(T, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithExecutor(Of T)(T, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMemberWithExecutor<T>(T, TestInstructionExecutor, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, String, String, Int32)
+- uid: Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor__1___0_Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor<T>(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithExecutor(Of T)(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: Inherit.CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  nameWithType.vb: Inherit.CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+- uid: Responsible.Docs.Inherit.YieldInstruction*
+  name: YieldInstruction
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_YieldInstruction_
+  commentId: Overload:Responsible.Docs.Inherit.YieldInstruction
+  isSpec: "True"
+  fullName: Responsible.Docs.Inherit.YieldInstruction
+  nameWithType: Inherit.YieldInstruction
+- uid: Responsible.Docs.Inherit.YieldInstruction``1(``0,Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: YieldInstruction<T>(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_YieldInstruction__1___0_Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.YieldInstruction``1(``0,Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  fullName: Responsible.Docs.Inherit.YieldInstruction<T>(T, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Docs.Inherit.YieldInstruction(Of T)(T, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: Inherit.YieldInstruction<T>(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  nameWithType.vb: Inherit.YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+- uid: Responsible.IExternalResultSource
+  name: IExternalResultSource
+  href: api/Responsible.IExternalResultSource.html
+  commentId: T:Responsible.IExternalResultSource
+  fullName: Responsible.IExternalResultSource
+  nameWithType: IExternalResultSource
+- uid: Responsible.IExternalResultSource.GetExternalResult*
+  name: GetExternalResult
+  href: api/Responsible.IExternalResultSource.html#Responsible_IExternalResultSource_GetExternalResult_
+  commentId: Overload:Responsible.IExternalResultSource.GetExternalResult
+  isSpec: "True"
+  fullName: Responsible.IExternalResultSource.GetExternalResult
+  nameWithType: IExternalResultSource.GetExternalResult
+- uid: Responsible.IExternalResultSource.GetExternalResult``1(System.Threading.CancellationToken)
+  name: GetExternalResult<T>(CancellationToken)
+  href: api/Responsible.IExternalResultSource.html#Responsible_IExternalResultSource_GetExternalResult__1_System_Threading_CancellationToken_
+  commentId: M:Responsible.IExternalResultSource.GetExternalResult``1(System.Threading.CancellationToken)
+  name.vb: GetExternalResult(Of T)(CancellationToken)
+  fullName: Responsible.IExternalResultSource.GetExternalResult<T>(System.Threading.CancellationToken)
+  fullName.vb: Responsible.IExternalResultSource.GetExternalResult(Of T)(System.Threading.CancellationToken)
+  nameWithType: IExternalResultSource.GetExternalResult<T>(CancellationToken)
+  nameWithType.vb: IExternalResultSource.GetExternalResult(Of T)(CancellationToken)
+- uid: Responsible.IFailureListener
+  name: IFailureListener
+  href: api/Responsible.IFailureListener.html
+  commentId: T:Responsible.IFailureListener
+  fullName: Responsible.IFailureListener
+  nameWithType: IFailureListener
+- uid: Responsible.IFailureListener.OperationFailed(System.Exception,System.String)
+  name: OperationFailed(Exception, String)
+  href: api/Responsible.IFailureListener.html#Responsible_IFailureListener_OperationFailed_System_Exception_System_String_
+  commentId: M:Responsible.IFailureListener.OperationFailed(System.Exception,System.String)
+  fullName: Responsible.IFailureListener.OperationFailed(System.Exception, System.String)
+  nameWithType: IFailureListener.OperationFailed(Exception, String)
+- uid: Responsible.IFailureListener.OperationFailed*
+  name: OperationFailed
+  href: api/Responsible.IFailureListener.html#Responsible_IFailureListener_OperationFailed_
+  commentId: Overload:Responsible.IFailureListener.OperationFailed
+  isSpec: "True"
+  fullName: Responsible.IFailureListener.OperationFailed
+  nameWithType: IFailureListener.OperationFailed
+- uid: Responsible.IGlobalContextProvider
+  name: IGlobalContextProvider
+  href: api/Responsible.IGlobalContextProvider.html
+  commentId: T:Responsible.IGlobalContextProvider
+  fullName: Responsible.IGlobalContextProvider
+  nameWithType: IGlobalContextProvider
+- uid: Responsible.IGlobalContextProvider.BuildGlobalContext(Responsible.State.StateStringBuilder)
+  name: BuildGlobalContext(StateStringBuilder)
+  href: api/Responsible.IGlobalContextProvider.html#Responsible_IGlobalContextProvider_BuildGlobalContext_Responsible_State_StateStringBuilder_
+  commentId: M:Responsible.IGlobalContextProvider.BuildGlobalContext(Responsible.State.StateStringBuilder)
+  fullName: Responsible.IGlobalContextProvider.BuildGlobalContext(Responsible.State.StateStringBuilder)
+  nameWithType: IGlobalContextProvider.BuildGlobalContext(StateStringBuilder)
+- uid: Responsible.IGlobalContextProvider.BuildGlobalContext*
+  name: BuildGlobalContext
+  href: api/Responsible.IGlobalContextProvider.html#Responsible_IGlobalContextProvider_BuildGlobalContext_
+  commentId: Overload:Responsible.IGlobalContextProvider.BuildGlobalContext
+  isSpec: "True"
+  fullName: Responsible.IGlobalContextProvider.BuildGlobalContext
+  nameWithType: IGlobalContextProvider.BuildGlobalContext
 - uid: Responsible.IOptionalTestResponder
   name: IOptionalTestResponder
   href: api/Responsible.IOptionalTestResponder.html
@@ -181,6 +257,51 @@ references:
   fullName.vb: Responsible.ITestResponder(Of T)
   nameWithType: ITestResponder<T>
   nameWithType.vb: ITestResponder(Of T)
+- uid: Responsible.ITestScheduler
+  name: ITestScheduler
+  href: api/Responsible.ITestScheduler.html
+  commentId: T:Responsible.ITestScheduler
+  fullName: Responsible.ITestScheduler
+  nameWithType: ITestScheduler
+- uid: Responsible.ITestScheduler.FrameNow
+  name: FrameNow
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_FrameNow
+  commentId: P:Responsible.ITestScheduler.FrameNow
+  fullName: Responsible.ITestScheduler.FrameNow
+  nameWithType: ITestScheduler.FrameNow
+- uid: Responsible.ITestScheduler.FrameNow*
+  name: FrameNow
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_FrameNow_
+  commentId: Overload:Responsible.ITestScheduler.FrameNow
+  isSpec: "True"
+  fullName: Responsible.ITestScheduler.FrameNow
+  nameWithType: ITestScheduler.FrameNow
+- uid: Responsible.ITestScheduler.RegisterPollCallback(System.Action)
+  name: RegisterPollCallback(Action)
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_RegisterPollCallback_System_Action_
+  commentId: M:Responsible.ITestScheduler.RegisterPollCallback(System.Action)
+  fullName: Responsible.ITestScheduler.RegisterPollCallback(System.Action)
+  nameWithType: ITestScheduler.RegisterPollCallback(Action)
+- uid: Responsible.ITestScheduler.RegisterPollCallback*
+  name: RegisterPollCallback
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_RegisterPollCallback_
+  commentId: Overload:Responsible.ITestScheduler.RegisterPollCallback
+  isSpec: "True"
+  fullName: Responsible.ITestScheduler.RegisterPollCallback
+  nameWithType: ITestScheduler.RegisterPollCallback
+- uid: Responsible.ITestScheduler.TimeNow
+  name: TimeNow
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_TimeNow
+  commentId: P:Responsible.ITestScheduler.TimeNow
+  fullName: Responsible.ITestScheduler.TimeNow
+  nameWithType: ITestScheduler.TimeNow
+- uid: Responsible.ITestScheduler.TimeNow*
+  name: TimeNow
+  href: api/Responsible.ITestScheduler.html#Responsible_ITestScheduler_TimeNow_
+  commentId: Overload:Responsible.ITestScheduler.TimeNow
+  isSpec: "True"
+  fullName: Responsible.ITestScheduler.TimeNow
+  nameWithType: ITestScheduler.TimeNow
 - uid: Responsible.ITestWaitCondition`1
   name: ITestWaitCondition<T>
   href: api/Responsible.ITestWaitCondition-1.html
@@ -442,22 +563,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Responsibly.WaitForFrames
   nameWithType: Responsibly.WaitForFrames
-- uid: Responsible.Responsibly.WaitForLast*
-  name: WaitForLast
-  href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForLast_
-  commentId: Overload:Responsible.Responsibly.WaitForLast
-  isSpec: "True"
-  fullName: Responsible.Responsibly.WaitForLast
-  nameWithType: Responsibly.WaitForLast
-- uid: Responsible.Responsibly.WaitForLast``1(System.String,System.IObservable{``0},System.String,System.String,System.Int32)
-  name: WaitForLast<T>(String, IObservable<T>, String, String, Int32)
-  href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForLast__1_System_String_System_IObservable___0__System_String_System_String_System_Int32_
-  commentId: M:Responsible.Responsibly.WaitForLast``1(System.String,System.IObservable{``0},System.String,System.String,System.Int32)
-  name.vb: WaitForLast(Of T)(String, IObservable(Of T), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForLast<T>(System.String, System.IObservable<T>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForLast(Of T)(System.String, System.IObservable(Of T), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForLast<T>(String, IObservable<T>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForLast(Of T)(String, IObservable(Of T), String, String, Int32)
 - uid: Responsible.Responsibly.WaitForSeconds(System.Double,System.String,System.String,System.Int32)
   name: WaitForSeconds(Double, String, String, Int32)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForSeconds_System_Double_System_String_System_String_System_Int32_
@@ -471,6 +576,22 @@ references:
   isSpec: "True"
   fullName: Responsible.Responsibly.WaitForSeconds
   nameWithType: Responsibly.WaitForSeconds
+- uid: Responsible.Responsibly.WaitForTask*
+  name: WaitForTask
+  href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForTask_
+  commentId: Overload:Responsible.Responsibly.WaitForTask
+  isSpec: "True"
+  fullName: Responsible.Responsibly.WaitForTask
+  nameWithType: Responsibly.WaitForTask
+- uid: Responsible.Responsibly.WaitForTask``1(System.String,System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.String,System.String,System.Int32)
+  name: WaitForTask<T>(String, Func<CancellationToken, Task<T>>, String, String, Int32)
+  href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForTask__1_System_String_System_Func_System_Threading_CancellationToken_System_Threading_Tasks_Task___0___System_String_System_String_System_Int32_
+  commentId: M:Responsible.Responsibly.WaitForTask``1(System.String,System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.String,System.String,System.Int32)
+  name.vb: WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Int32)
+  fullName: Responsible.Responsibly.WaitForTask<T>(System.String, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<T>>, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.Responsibly.WaitForTask(Of T)(System.String, System.Func(Of System.Threading.CancellationToken, System.Threading.Tasks.Task(Of T)), System.String, System.String, System.Int32)
+  nameWithType: Responsibly.WaitForTask<T>(String, Func<CancellationToken, Task<T>>, String, String, Int32)
+  nameWithType.vb: Responsibly.WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Int32)
 - uid: Responsible.State
   name: Responsible.State
   href: api/Responsible.State.html
@@ -518,23 +639,24 @@ references:
   fullName.vb: Responsible.State.ITestOperationState(Of T)
   nameWithType: ITestOperationState<T>
   nameWithType.vb: ITestOperationState(Of T)
-- uid: Responsible.State.ITestOperationState`1.Execute(Responsible.Context.RunContext)
-  name: Execute(RunContext)
-  href: api/Responsible.State.ITestOperationState-1.html#Responsible_State_ITestOperationState_1_Execute_Responsible_Context_RunContext_
-  commentId: M:Responsible.State.ITestOperationState`1.Execute(Responsible.Context.RunContext)
-  fullName: Responsible.State.ITestOperationState<T>.Execute(Responsible.Context.RunContext)
-  fullName.vb: Responsible.State.ITestOperationState(Of T).Execute(Responsible.Context.RunContext)
-  nameWithType: ITestOperationState<T>.Execute(RunContext)
-  nameWithType.vb: ITestOperationState(Of T).Execute(RunContext)
-- uid: Responsible.State.ITestOperationState`1.Execute*
-  name: Execute
-  href: api/Responsible.State.ITestOperationState-1.html#Responsible_State_ITestOperationState_1_Execute_
-  commentId: Overload:Responsible.State.ITestOperationState`1.Execute
+- uid: Responsible.State.ITestOperationState`1.ExecuteUnsafe*
+  name: ExecuteUnsafe
+  href: api/Responsible.State.ITestOperationState-1.html#Responsible_State_ITestOperationState_1_ExecuteUnsafe_
+  commentId: Overload:Responsible.State.ITestOperationState`1.ExecuteUnsafe
   isSpec: "True"
-  fullName: Responsible.State.ITestOperationState<T>.Execute
-  fullName.vb: Responsible.State.ITestOperationState(Of T).Execute
-  nameWithType: ITestOperationState<T>.Execute
-  nameWithType.vb: ITestOperationState(Of T).Execute
+  fullName: Responsible.State.ITestOperationState<T>.ExecuteUnsafe
+  fullName.vb: Responsible.State.ITestOperationState(Of T).ExecuteUnsafe
+  nameWithType: ITestOperationState<T>.ExecuteUnsafe
+  nameWithType.vb: ITestOperationState(Of T).ExecuteUnsafe
+- uid: Responsible.State.ITestOperationState`1.ExecuteUnsafe``1(Responsible.Context.RunContext,System.Threading.CancellationToken)
+  name: ExecuteUnsafe<TResult>(RunContext, CancellationToken)
+  href: api/Responsible.State.ITestOperationState-1.html#Responsible_State_ITestOperationState_1_ExecuteUnsafe__1_Responsible_Context_RunContext_System_Threading_CancellationToken_
+  commentId: M:Responsible.State.ITestOperationState`1.ExecuteUnsafe``1(Responsible.Context.RunContext,System.Threading.CancellationToken)
+  name.vb: ExecuteUnsafe(Of TResult)(RunContext, CancellationToken)
+  fullName: Responsible.State.ITestOperationState<T>.ExecuteUnsafe<TResult>(Responsible.Context.RunContext, System.Threading.CancellationToken)
+  fullName.vb: Responsible.State.ITestOperationState(Of T).ExecuteUnsafe(Of TResult)(Responsible.Context.RunContext, System.Threading.CancellationToken)
+  nameWithType: ITestOperationState<T>.ExecuteUnsafe<TResult>(RunContext, CancellationToken)
+  nameWithType.vb: ITestOperationState(Of T).ExecuteUnsafe(Of TResult)(RunContext, CancellationToken)
 - uid: Responsible.State.StateStringBuilder
   name: StateStringBuilder
   href: api/Responsible.State.StateStringBuilder.html
@@ -570,84 +692,58 @@ references:
   isSpec: "True"
   fullName: Responsible.State.StateStringBuilder.AddNestedDetails
   nameWithType: StateStringBuilder.AddNestedDetails
-- uid: Responsible.State.TestOperationStateNotification
-  name: TestOperationStateNotification
-  href: api/Responsible.State.TestOperationStateNotification.html
-  commentId: T:Responsible.State.TestOperationStateNotification
-  fullName: Responsible.State.TestOperationStateNotification
-  nameWithType: TestOperationStateNotification
-- uid: Responsible.State.TestOperationStateNotification.Finished
-  name: TestOperationStateNotification.Finished
-  href: api/Responsible.State.TestOperationStateNotification.Finished.html
-  commentId: T:Responsible.State.TestOperationStateNotification.Finished
-  fullName: Responsible.State.TestOperationStateNotification.Finished
-  nameWithType: TestOperationStateNotification.Finished
-- uid: Responsible.State.TestOperationStateNotification.Finished.#ctor(Responsible.State.ITestOperationState)
-  name: Finished(ITestOperationState)
-  href: api/Responsible.State.TestOperationStateNotification.Finished.html#Responsible_State_TestOperationStateNotification_Finished__ctor_Responsible_State_ITestOperationState_
-  commentId: M:Responsible.State.TestOperationStateNotification.Finished.#ctor(Responsible.State.ITestOperationState)
-  fullName: Responsible.State.TestOperationStateNotification.Finished.Finished(Responsible.State.ITestOperationState)
-  nameWithType: TestOperationStateNotification.Finished.Finished(ITestOperationState)
-- uid: Responsible.State.TestOperationStateNotification.Finished.#ctor*
+- uid: Responsible.State.TestOperationStateTransition
+  name: TestOperationStateTransition
+  href: api/Responsible.State.TestOperationStateTransition.html
+  commentId: T:Responsible.State.TestOperationStateTransition
+  fullName: Responsible.State.TestOperationStateTransition
+  nameWithType: TestOperationStateTransition
+- uid: Responsible.State.TestOperationStateTransition.Finished
   name: Finished
-  href: api/Responsible.State.TestOperationStateNotification.Finished.html#Responsible_State_TestOperationStateNotification_Finished__ctor_
-  commentId: Overload:Responsible.State.TestOperationStateNotification.Finished.#ctor
-  isSpec: "True"
-  fullName: Responsible.State.TestOperationStateNotification.Finished.Finished
-  nameWithType: TestOperationStateNotification.Finished.Finished
-- uid: Responsible.State.TestOperationStateNotification.Started
-  name: TestOperationStateNotification.Started
-  href: api/Responsible.State.TestOperationStateNotification.Started.html
-  commentId: T:Responsible.State.TestOperationStateNotification.Started
-  fullName: Responsible.State.TestOperationStateNotification.Started
-  nameWithType: TestOperationStateNotification.Started
-- uid: Responsible.State.TestOperationStateNotification.Started.#ctor(Responsible.State.ITestOperationState)
-  name: Started(ITestOperationState)
-  href: api/Responsible.State.TestOperationStateNotification.Started.html#Responsible_State_TestOperationStateNotification_Started__ctor_Responsible_State_ITestOperationState_
-  commentId: M:Responsible.State.TestOperationStateNotification.Started.#ctor(Responsible.State.ITestOperationState)
-  fullName: Responsible.State.TestOperationStateNotification.Started.Started(Responsible.State.ITestOperationState)
-  nameWithType: TestOperationStateNotification.Started.Started(ITestOperationState)
-- uid: Responsible.State.TestOperationStateNotification.Started.#ctor*
+  href: api/Responsible.State.TestOperationStateTransition.html#Responsible_State_TestOperationStateTransition_Finished
+  commentId: F:Responsible.State.TestOperationStateTransition.Finished
+  fullName: Responsible.State.TestOperationStateTransition.Finished
+  nameWithType: TestOperationStateTransition.Finished
+- uid: Responsible.State.TestOperationStateTransition.Started
   name: Started
-  href: api/Responsible.State.TestOperationStateNotification.Started.html#Responsible_State_TestOperationStateNotification_Started__ctor_
-  commentId: Overload:Responsible.State.TestOperationStateNotification.Started.#ctor
-  isSpec: "True"
-  fullName: Responsible.State.TestOperationStateNotification.Started.Started
-  nameWithType: TestOperationStateNotification.Started.Started
-- uid: Responsible.State.TestOperationStateNotification.State
-  name: State
-  href: api/Responsible.State.TestOperationStateNotification.html#Responsible_State_TestOperationStateNotification_State
-  commentId: F:Responsible.State.TestOperationStateNotification.State
-  fullName: Responsible.State.TestOperationStateNotification.State
-  nameWithType: TestOperationStateNotification.State
+  href: api/Responsible.State.TestOperationStateTransition.html#Responsible_State_TestOperationStateTransition_Started
+  commentId: F:Responsible.State.TestOperationStateTransition.Started
+  fullName: Responsible.State.TestOperationStateTransition.Started
+  nameWithType: TestOperationStateTransition.Started
 - uid: Responsible.State.TestOperationStatus
   name: TestOperationStatus
   href: api/Responsible.State.TestOperationStatus.html
   commentId: T:Responsible.State.TestOperationStatus
   fullName: Responsible.State.TestOperationStatus
   nameWithType: TestOperationStatus
+- uid: Responsible.TestFailureException
+  name: TestFailureException
+  href: api/Responsible.TestFailureException.html
+  commentId: T:Responsible.TestFailureException
+  fullName: Responsible.TestFailureException
+  nameWithType: TestFailureException
 - uid: Responsible.TestInstruction
   name: TestInstruction
   href: api/Responsible.TestInstruction.html
   commentId: T:Responsible.TestInstruction
   fullName: Responsible.TestInstruction
   nameWithType: TestInstruction
-- uid: Responsible.TestInstruction.AsUnitInstruction*
-  name: AsUnitInstruction
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_AsUnitInstruction_
-  commentId: Overload:Responsible.TestInstruction.AsUnitInstruction
+- uid: Responsible.TestInstruction.BoxResult*
+  name: BoxResult
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_BoxResult_
+  commentId: Overload:Responsible.TestInstruction.BoxResult
   isSpec: "True"
-  fullName: Responsible.TestInstruction.AsUnitInstruction
-  nameWithType: TestInstruction.AsUnitInstruction
-- uid: Responsible.TestInstruction.AsUnitInstruction``1(Responsible.ITestInstruction{``0})
-  name: AsUnitInstruction<T>(ITestInstruction<T>)
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_AsUnitInstruction__1_Responsible_ITestInstruction___0__
-  commentId: M:Responsible.TestInstruction.AsUnitInstruction``1(Responsible.ITestInstruction{``0})
-  name.vb: AsUnitInstruction(Of T)(ITestInstruction(Of T))
-  fullName: Responsible.TestInstruction.AsUnitInstruction<T>(Responsible.ITestInstruction<T>)
-  fullName.vb: Responsible.TestInstruction.AsUnitInstruction(Of T)(Responsible.ITestInstruction(Of T))
-  nameWithType: TestInstruction.AsUnitInstruction<T>(ITestInstruction<T>)
-  nameWithType.vb: TestInstruction.AsUnitInstruction(Of T)(ITestInstruction(Of T))
+  fullName: Responsible.TestInstruction.BoxResult
+  nameWithType: TestInstruction.BoxResult
+- uid: Responsible.TestInstruction.BoxResult``1(Responsible.ITestInstruction{``0})
+  name: BoxResult<T>(ITestInstruction<T>)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_BoxResult__1_Responsible_ITestInstruction___0__
+  commentId: M:Responsible.TestInstruction.BoxResult``1(Responsible.ITestInstruction{``0})
+  name.vb: BoxResult(Of T)(ITestInstruction(Of T))
+  fullName: Responsible.TestInstruction.BoxResult<T>(Responsible.ITestInstruction<T>)
+  fullName.vb: Responsible.TestInstruction.BoxResult(Of T)(Responsible.ITestInstruction(Of T))
+  nameWithType: TestInstruction.BoxResult<T>(ITestInstruction<T>)
+  nameWithType.vb: TestInstruction.BoxResult(Of T)(ITestInstruction(Of T))
 - uid: Responsible.TestInstruction.ContinueWith*
   name: ContinueWith
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith_
@@ -689,15 +785,15 @@ references:
   fullName.vb: Responsible.TestInstruction.Select(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
   nameWithType: TestInstruction.Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, String, String, Int32)
   nameWithType.vb: TestInstruction.Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Int32)
-- uid: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{UniRx.Unit}},System.String,System.String,System.Int32)
-  name: Sequence(IEnumerable<ITestInstruction<Unit>>, String, String, Int32)
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_UniRx_Unit___System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{UniRx.Unit}},System.String,System.String,System.Int32)
-  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Unit)), String, String, Int32)
-  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<UniRx.Unit>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of UniRx.Unit)), System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<Unit>>, String, String, Int32)
-  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Unit)), String, String, Int32)
+- uid: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32)
+  name: Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32)
+  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32)
+  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<System.Object>>, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of System.Object)), System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32)
+  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32)
 - uid: Responsible.TestInstruction.Sequence*
   name: Sequence
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_
@@ -705,22 +801,22 @@ references:
   isSpec: "True"
   fullName: Responsible.TestInstruction.Sequence
   nameWithType: TestInstruction.Sequence
-- uid: Responsible.TestInstruction.ToObservable*
-  name: ToObservable
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToObservable_
-  commentId: Overload:Responsible.TestInstruction.ToObservable
+- uid: Responsible.TestInstruction.ToTask*
+  name: ToTask
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask_
+  commentId: Overload:Responsible.TestInstruction.ToTask
   isSpec: "True"
-  fullName: Responsible.TestInstruction.ToObservable
-  nameWithType: TestInstruction.ToObservable
-- uid: Responsible.TestInstruction.ToObservable``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name: ToObservable<T>(ITestInstruction<T>, TestInstructionExecutor, String, String, Int32)
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToObservable__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestInstruction.ToObservable``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name.vb: ToObservable(Of T)(ITestInstruction(Of T), TestInstructionExecutor, String, String, Int32)
-  fullName: Responsible.TestInstruction.ToObservable<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ToObservable(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ToObservable<T>(ITestInstruction<T>, TestInstructionExecutor, String, String, Int32)
-  nameWithType.vb: TestInstruction.ToObservable(Of T)(ITestInstruction(Of T), TestInstructionExecutor, String, String, Int32)
+  fullName: Responsible.TestInstruction.ToTask
+  nameWithType: TestInstruction.ToTask
+- uid: Responsible.TestInstruction.ToTask``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.ToTask``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
+  fullName: Responsible.TestInstruction.ToTask<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.ToTask(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestInstruction.ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
 - uid: Responsible.TestInstruction.ToYieldInstruction*
   name: ToYieldInstruction
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction_
@@ -728,30 +824,27 @@ references:
   isSpec: "True"
   fullName: Responsible.TestInstruction.ToYieldInstruction
   nameWithType: TestInstruction.ToYieldInstruction
-- uid: Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name: ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, String, String, Int32)
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name.vb: ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, String, String, Int32)
-  fullName: Responsible.TestInstruction.ToYieldInstruction<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ToYieldInstruction(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, String, String, Int32)
-  nameWithType.vb: TestInstruction.ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, String, String, Int32)
+- uid: Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  fullName: Responsible.TestInstruction.ToYieldInstruction<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.ToYieldInstruction(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestInstruction.ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
 - uid: Responsible.TestInstructionExecutor
   name: TestInstructionExecutor
   href: api/Responsible.TestInstructionExecutor.html
   commentId: T:Responsible.TestInstructionExecutor
   fullName: Responsible.TestInstructionExecutor
   nameWithType: TestInstructionExecutor
-- uid: Responsible.TestInstructionExecutor.#ctor(UniRx.IScheduler,System.IObservable{UniRx.Unit},UnityEngine.ILogger)
-  name: TestInstructionExecutor(IScheduler, IObservable<Unit>, ILogger)
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_UniRx_IScheduler_System_IObservable_UniRx_Unit__UnityEngine_ILogger_
-  commentId: M:Responsible.TestInstructionExecutor.#ctor(UniRx.IScheduler,System.IObservable{UniRx.Unit},UnityEngine.ILogger)
-  name.vb: TestInstructionExecutor(IScheduler, IObservable(Of Unit), ILogger)
-  fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor(UniRx.IScheduler, System.IObservable<UniRx.Unit>, UnityEngine.ILogger)
-  fullName.vb: Responsible.TestInstructionExecutor.TestInstructionExecutor(UniRx.IScheduler, System.IObservable(Of UniRx.Unit), UnityEngine.ILogger)
-  nameWithType: TestInstructionExecutor.TestInstructionExecutor(IScheduler, IObservable<Unit>, ILogger)
-  nameWithType.vb: TestInstructionExecutor.TestInstructionExecutor(IScheduler, IObservable(Of Unit), ILogger)
+- uid: Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider)
+  name: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider)
+  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_
+  commentId: M:Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider)
+  fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider)
+  nameWithType: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider)
 - uid: Responsible.TestInstructionExecutor.#ctor*
   name: TestInstructionExecutor
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_
@@ -772,54 +865,47 @@ references:
   isSpec: "True"
   fullName: Responsible.TestInstructionExecutor.Dispose
   nameWithType: TestInstructionExecutor.Dispose
-- uid: Responsible.TestInstructionExecutor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
-  name: ExpectLog(LogType, Regex)
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_ExpectLog_UnityEngine_LogType_System_Text_RegularExpressions_Regex_
-  commentId: M:Responsible.TestInstructionExecutor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
-  fullName: Responsible.TestInstructionExecutor.ExpectLog(UnityEngine.LogType, System.Text.RegularExpressions.Regex)
-  nameWithType: TestInstructionExecutor.ExpectLog(LogType, Regex)
-- uid: Responsible.TestInstructionExecutor.ExpectLog*
-  name: ExpectLog
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_ExpectLog_
-  commentId: Overload:Responsible.TestInstructionExecutor.ExpectLog
+- uid: Responsible.TestInstructionExecutor.StateNotificationCallback
+  name: TestInstructionExecutor.StateNotificationCallback
+  href: api/Responsible.TestInstructionExecutor.StateNotificationCallback.html
+  commentId: T:Responsible.TestInstructionExecutor.StateNotificationCallback
+  fullName: Responsible.TestInstructionExecutor.StateNotificationCallback
+  nameWithType: TestInstructionExecutor.StateNotificationCallback
+- uid: Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
+  name: SubscribeToStates(TestInstructionExecutor.StateNotificationCallback)
+  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_SubscribeToStates_Responsible_TestInstructionExecutor_StateNotificationCallback_
+  commentId: M:Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
+  fullName: Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
+  nameWithType: TestInstructionExecutor.SubscribeToStates(TestInstructionExecutor.StateNotificationCallback)
+- uid: Responsible.TestInstructionExecutor.SubscribeToStates*
+  name: SubscribeToStates
+  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_SubscribeToStates_
+  commentId: Overload:Responsible.TestInstructionExecutor.SubscribeToStates
   isSpec: "True"
-  fullName: Responsible.TestInstructionExecutor.ExpectLog
-  nameWithType: TestInstructionExecutor.ExpectLog
-- uid: Responsible.TestInstructionExecutor.StateNotifications
-  name: StateNotifications
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_StateNotifications
-  commentId: P:Responsible.TestInstructionExecutor.StateNotifications
-  fullName: Responsible.TestInstructionExecutor.StateNotifications
-  nameWithType: TestInstructionExecutor.StateNotifications
-- uid: Responsible.TestInstructionExecutor.StateNotifications*
-  name: StateNotifications
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_StateNotifications_
-  commentId: Overload:Responsible.TestInstructionExecutor.StateNotifications
-  isSpec: "True"
-  fullName: Responsible.TestInstructionExecutor.StateNotifications
-  nameWithType: TestInstructionExecutor.StateNotifications
+  fullName: Responsible.TestInstructionExecutor.SubscribeToStates
+  nameWithType: TestInstructionExecutor.SubscribeToStates
 - uid: Responsible.TestOperationState
   name: TestOperationState
   href: api/Responsible.TestOperationState.html
   commentId: T:Responsible.TestOperationState
   fullName: Responsible.TestOperationState
   nameWithType: TestOperationState
-- uid: Responsible.TestOperationState.ToObservable*
-  name: ToObservable
-  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToObservable_
-  commentId: Overload:Responsible.TestOperationState.ToObservable
+- uid: Responsible.TestOperationState.ToTask*
+  name: ToTask
+  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToTask_
+  commentId: Overload:Responsible.TestOperationState.ToTask
   isSpec: "True"
-  fullName: Responsible.TestOperationState.ToObservable
-  nameWithType: TestOperationState.ToObservable
-- uid: Responsible.TestOperationState.ToObservable``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name: ToObservable<T>(ITestOperationState<T>, TestInstructionExecutor, String, String, Int32)
-  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToObservable__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestOperationState.ToObservable``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name.vb: ToObservable(Of T)(ITestOperationState(Of T), TestInstructionExecutor, String, String, Int32)
-  fullName: Responsible.TestOperationState.ToObservable<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestOperationState.ToObservable(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  nameWithType: TestOperationState.ToObservable<T>(ITestOperationState<T>, TestInstructionExecutor, String, String, Int32)
-  nameWithType.vb: TestOperationState.ToObservable(Of T)(ITestOperationState(Of T), TestInstructionExecutor, String, String, Int32)
+  fullName: Responsible.TestOperationState.ToTask
+  nameWithType: TestOperationState.ToTask
+- uid: Responsible.TestOperationState.ToTask``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToTask__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestOperationState.ToTask``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
+  fullName: Responsible.TestOperationState.ToTask<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestOperationState.ToTask(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestOperationState.ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestOperationState.ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
 - uid: Responsible.TestOperationState.ToYieldInstruction*
   name: ToYieldInstruction
   href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToYieldInstruction_
@@ -827,37 +913,37 @@ references:
   isSpec: "True"
   fullName: Responsible.TestOperationState.ToYieldInstruction
   nameWithType: TestOperationState.ToYieldInstruction
-- uid: Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name: ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, String, String, Int32)
-  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToYieldInstruction__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.String,System.String,System.Int32)
-  name.vb: ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, String, String, Int32)
-  fullName: Responsible.TestOperationState.ToYieldInstruction<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestOperationState.ToYieldInstruction(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.String, System.String, System.Int32)
-  nameWithType: TestOperationState.ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, String, String, Int32)
-  nameWithType.vb: TestOperationState.ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, String, String, Int32)
+- uid: Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToYieldInstruction__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  fullName: Responsible.TestOperationState.ToYieldInstruction<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestOperationState.ToYieldInstruction(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestOperationState.ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestOperationState.ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
 - uid: Responsible.TestResponder
   name: TestResponder
   href: api/Responsible.TestResponder.html
   commentId: T:Responsible.TestResponder
   fullName: Responsible.TestResponder
   nameWithType: TestResponder
-- uid: Responsible.TestResponder.AsUnitResponder*
-  name: AsUnitResponder
-  href: api/Responsible.TestResponder.html#Responsible_TestResponder_AsUnitResponder_
-  commentId: Overload:Responsible.TestResponder.AsUnitResponder
+- uid: Responsible.TestResponder.BoxResult*
+  name: BoxResult
+  href: api/Responsible.TestResponder.html#Responsible_TestResponder_BoxResult_
+  commentId: Overload:Responsible.TestResponder.BoxResult
   isSpec: "True"
-  fullName: Responsible.TestResponder.AsUnitResponder
-  nameWithType: TestResponder.AsUnitResponder
-- uid: Responsible.TestResponder.AsUnitResponder``1(Responsible.ITestResponder{``0})
-  name: AsUnitResponder<T>(ITestResponder<T>)
-  href: api/Responsible.TestResponder.html#Responsible_TestResponder_AsUnitResponder__1_Responsible_ITestResponder___0__
-  commentId: M:Responsible.TestResponder.AsUnitResponder``1(Responsible.ITestResponder{``0})
-  name.vb: AsUnitResponder(Of T)(ITestResponder(Of T))
-  fullName: Responsible.TestResponder.AsUnitResponder<T>(Responsible.ITestResponder<T>)
-  fullName.vb: Responsible.TestResponder.AsUnitResponder(Of T)(Responsible.ITestResponder(Of T))
-  nameWithType: TestResponder.AsUnitResponder<T>(ITestResponder<T>)
-  nameWithType.vb: TestResponder.AsUnitResponder(Of T)(ITestResponder(Of T))
+  fullName: Responsible.TestResponder.BoxResult
+  nameWithType: TestResponder.BoxResult
+- uid: Responsible.TestResponder.BoxResult``1(Responsible.ITestResponder{``0})
+  name: BoxResult<T>(ITestResponder<T>)
+  href: api/Responsible.TestResponder.html#Responsible_TestResponder_BoxResult__1_Responsible_ITestResponder___0__
+  commentId: M:Responsible.TestResponder.BoxResult``1(Responsible.ITestResponder{``0})
+  name.vb: BoxResult(Of T)(ITestResponder(Of T))
+  fullName: Responsible.TestResponder.BoxResult<T>(Responsible.ITestResponder<T>)
+  fullName.vb: Responsible.TestResponder.BoxResult(Of T)(Responsible.ITestResponder(Of T))
+  nameWithType: TestResponder.BoxResult<T>(ITestResponder<T>)
+  nameWithType.vb: TestResponder.BoxResult(Of T)(ITestResponder(Of T))
 - uid: Responsible.TestResponder.ExpectWithinSeconds*
   name: ExpectWithinSeconds
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_ExpectWithinSeconds_
@@ -937,22 +1023,22 @@ references:
   fullName.vb: Responsible.TestWaitCondition.AndThen(Of TFirst, TSecond)(Responsible.ITestWaitCondition(Of TFirst), System.Func(Of TFirst, Responsible.ITestWaitCondition(Of TSecond)), System.String, System.String, System.Int32)
   nameWithType: TestWaitCondition.AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, Func<TFirst, ITestWaitCondition<TSecond>>, String, String, Int32)
   nameWithType.vb: TestWaitCondition.AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), Func(Of TFirst, ITestWaitCondition(Of TSecond)), String, String, Int32)
-- uid: Responsible.TestWaitCondition.AsUnitCondition*
-  name: AsUnitCondition
-  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_AsUnitCondition_
-  commentId: Overload:Responsible.TestWaitCondition.AsUnitCondition
+- uid: Responsible.TestWaitCondition.BoxResult*
+  name: BoxResult
+  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_BoxResult_
+  commentId: Overload:Responsible.TestWaitCondition.BoxResult
   isSpec: "True"
-  fullName: Responsible.TestWaitCondition.AsUnitCondition
-  nameWithType: TestWaitCondition.AsUnitCondition
-- uid: Responsible.TestWaitCondition.AsUnitCondition``1(Responsible.ITestWaitCondition{``0})
-  name: AsUnitCondition<T>(ITestWaitCondition<T>)
-  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_AsUnitCondition__1_Responsible_ITestWaitCondition___0__
-  commentId: M:Responsible.TestWaitCondition.AsUnitCondition``1(Responsible.ITestWaitCondition{``0})
-  name.vb: AsUnitCondition(Of T)(ITestWaitCondition(Of T))
-  fullName: Responsible.TestWaitCondition.AsUnitCondition<T>(Responsible.ITestWaitCondition<T>)
-  fullName.vb: Responsible.TestWaitCondition.AsUnitCondition(Of T)(Responsible.ITestWaitCondition(Of T))
-  nameWithType: TestWaitCondition.AsUnitCondition<T>(ITestWaitCondition<T>)
-  nameWithType.vb: TestWaitCondition.AsUnitCondition(Of T)(ITestWaitCondition(Of T))
+  fullName: Responsible.TestWaitCondition.BoxResult
+  nameWithType: TestWaitCondition.BoxResult
+- uid: Responsible.TestWaitCondition.BoxResult``1(Responsible.ITestWaitCondition{``0})
+  name: BoxResult<T>(ITestWaitCondition<T>)
+  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_BoxResult__1_Responsible_ITestWaitCondition___0__
+  commentId: M:Responsible.TestWaitCondition.BoxResult``1(Responsible.ITestWaitCondition{``0})
+  name.vb: BoxResult(Of T)(ITestWaitCondition(Of T))
+  fullName: Responsible.TestWaitCondition.BoxResult<T>(Responsible.ITestWaitCondition<T>)
+  fullName.vb: Responsible.TestWaitCondition.BoxResult(Of T)(Responsible.ITestWaitCondition(Of T))
+  nameWithType: TestWaitCondition.BoxResult<T>(ITestWaitCondition<T>)
+  nameWithType.vb: TestWaitCondition.BoxResult(Of T)(ITestWaitCondition(Of T))
 - uid: Responsible.TestWaitCondition.ExpectWithinSeconds*
   name: ExpectWithinSeconds
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ExpectWithinSeconds_
@@ -1042,18 +1128,386 @@ references:
   fullName.vb: Responsible.TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), System.String, System.Func(Of TWait, TResult), System.String, System.String, System.Int32)
   nameWithType: TestWaitCondition.ThenRespondWithFunc<TWait, TResult>(ITestWaitCondition<TWait>, String, Func<TWait, TResult>, String, String, Int32)
   nameWithType.vb: TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, TResult), String, String, Int32)
-- uid: Responsible.UnhandledLogMessageException
+- uid: Responsible.Unity
+  name: Responsible.Unity
+  href: api/Responsible.Unity.html
+  commentId: N:Responsible.Unity
+  fullName: Responsible.Unity
+  nameWithType: Responsible.Unity
+- uid: Responsible.Unity.TestOperationYieldInstruction`1
+  name: TestOperationYieldInstruction<T>
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html
+  commentId: T:Responsible.Unity.TestOperationYieldInstruction`1
+  name.vb: TestOperationYieldInstruction(Of T)
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T)
+  nameWithType: TestOperationYieldInstruction<T>
+  nameWithType.vb: TestOperationYieldInstruction(Of T)
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully
+  name: CompletedSuccessfully
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_CompletedSuccessfully
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.CompletedSuccessfully
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).CompletedSuccessfully
+  nameWithType: TestOperationYieldInstruction<T>.CompletedSuccessfully
+  nameWithType.vb: TestOperationYieldInstruction(Of T).CompletedSuccessfully
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully*
+  name: CompletedSuccessfully
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_CompletedSuccessfully_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.CompletedSuccessfully
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).CompletedSuccessfully
+  nameWithType: TestOperationYieldInstruction<T>.CompletedSuccessfully
+  nameWithType.vb: TestOperationYieldInstruction(Of T).CompletedSuccessfully
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError
+  name: CompletedWithError
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_CompletedWithError
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.CompletedWithError
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).CompletedWithError
+  nameWithType: TestOperationYieldInstruction<T>.CompletedWithError
+  nameWithType.vb: TestOperationYieldInstruction(Of T).CompletedWithError
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError*
+  name: CompletedWithError
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_CompletedWithError_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.CompletedWithError
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).CompletedWithError
+  nameWithType: TestOperationYieldInstruction<T>.CompletedWithError
+  nameWithType.vb: TestOperationYieldInstruction(Of T).CompletedWithError
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.Error
+  name: Error
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_Error
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.Error
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.Error
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).Error
+  nameWithType: TestOperationYieldInstruction<T>.Error
+  nameWithType.vb: TestOperationYieldInstruction(Of T).Error
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.Error*
+  name: Error
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_Error_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.Error
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.Error
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).Error
+  nameWithType: TestOperationYieldInstruction<T>.Error
+  nameWithType.vb: TestOperationYieldInstruction(Of T).Error
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  name: keepWaiting
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
+  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
+  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting*
+  name: keepWaiting
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
+  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
+  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.Result
+  name: Result
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_Result
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.Result
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.Result
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).Result
+  nameWithType: TestOperationYieldInstruction<T>.Result
+  nameWithType.vb: TestOperationYieldInstruction(Of T).Result
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.Result*
+  name: Result
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_Result_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.Result
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.Result
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).Result
+  nameWithType: TestOperationYieldInstruction<T>.Result
+  nameWithType.vb: TestOperationYieldInstruction(Of T).Result
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled
+  name: WasCanceled
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_WasCanceled
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.WasCanceled
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).WasCanceled
+  nameWithType: TestOperationYieldInstruction<T>.WasCanceled
+  nameWithType.vb: TestOperationYieldInstruction(Of T).WasCanceled
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled*
+  name: WasCanceled
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_WasCanceled_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.WasCanceled
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).WasCanceled
+  nameWithType: TestOperationYieldInstruction<T>.WasCanceled
+  nameWithType.vb: TestOperationYieldInstruction(Of T).WasCanceled
+- uid: Responsible.Unity.UnhandledLogMessageException
   name: UnhandledLogMessageException
-  href: api/Responsible.UnhandledLogMessageException.html
-  commentId: T:Responsible.UnhandledLogMessageException
-  fullName: Responsible.UnhandledLogMessageException
+  href: api/Responsible.Unity.UnhandledLogMessageException.html
+  commentId: T:Responsible.Unity.UnhandledLogMessageException
+  fullName: Responsible.Unity.UnhandledLogMessageException
   nameWithType: UnhandledLogMessageException
+- uid: Responsible.Unity.UnityErrorLogInterceptor
+  name: UnityErrorLogInterceptor
+  href: api/Responsible.Unity.UnityErrorLogInterceptor.html
+  commentId: T:Responsible.Unity.UnityErrorLogInterceptor
+  fullName: Responsible.Unity.UnityErrorLogInterceptor
+  nameWithType: UnityErrorLogInterceptor
+- uid: Responsible.Unity.UnityErrorLogInterceptor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
+  name: ExpectLog(LogType, Regex)
+  href: api/Responsible.Unity.UnityErrorLogInterceptor.html#Responsible_Unity_UnityErrorLogInterceptor_ExpectLog_UnityEngine_LogType_System_Text_RegularExpressions_Regex_
+  commentId: M:Responsible.Unity.UnityErrorLogInterceptor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
+  fullName: Responsible.Unity.UnityErrorLogInterceptor.ExpectLog(UnityEngine.LogType, System.Text.RegularExpressions.Regex)
+  nameWithType: UnityErrorLogInterceptor.ExpectLog(LogType, Regex)
+- uid: Responsible.Unity.UnityErrorLogInterceptor.ExpectLog*
+  name: ExpectLog
+  href: api/Responsible.Unity.UnityErrorLogInterceptor.html#Responsible_Unity_UnityErrorLogInterceptor_ExpectLog_
+  commentId: Overload:Responsible.Unity.UnityErrorLogInterceptor.ExpectLog
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityErrorLogInterceptor.ExpectLog
+  nameWithType: UnityErrorLogInterceptor.ExpectLog
+- uid: Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult*
+  name: GetExternalResult
+  href: api/Responsible.Unity.UnityErrorLogInterceptor.html#Responsible_Unity_UnityErrorLogInterceptor_GetExternalResult_
+  commentId: Overload:Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult
+  nameWithType: UnityErrorLogInterceptor.GetExternalResult
+- uid: Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult``1(System.Threading.CancellationToken)
+  name: GetExternalResult<T>(CancellationToken)
+  href: api/Responsible.Unity.UnityErrorLogInterceptor.html#Responsible_Unity_UnityErrorLogInterceptor_GetExternalResult__1_System_Threading_CancellationToken_
+  commentId: M:Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult``1(System.Threading.CancellationToken)
+  name.vb: GetExternalResult(Of T)(CancellationToken)
+  fullName: Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult<T>(System.Threading.CancellationToken)
+  fullName.vb: Responsible.Unity.UnityErrorLogInterceptor.GetExternalResult(Of T)(System.Threading.CancellationToken)
+  nameWithType: UnityErrorLogInterceptor.GetExternalResult<T>(CancellationToken)
+  nameWithType.vb: UnityErrorLogInterceptor.GetExternalResult(Of T)(CancellationToken)
+- uid: Responsible.Unity.UnityFailureListener
+  name: UnityFailureListener
+  href: api/Responsible.Unity.UnityFailureListener.html
+  commentId: T:Responsible.Unity.UnityFailureListener
+  fullName: Responsible.Unity.UnityFailureListener
+  nameWithType: UnityFailureListener
+- uid: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception,System.String)
+  name: OperationFailed(Exception, String)
+  href: api/Responsible.Unity.UnityFailureListener.html#Responsible_Unity_UnityFailureListener_OperationFailed_System_Exception_System_String_
+  commentId: M:Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception,System.String)
+  fullName: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception, System.String)
+  nameWithType: UnityFailureListener.OperationFailed(Exception, String)
+- uid: Responsible.Unity.UnityFailureListener.OperationFailed*
+  name: OperationFailed
+  href: api/Responsible.Unity.UnityFailureListener.html#Responsible_Unity_UnityFailureListener_OperationFailed_
+  commentId: Overload:Responsible.Unity.UnityFailureListener.OperationFailed
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityFailureListener.OperationFailed
+  nameWithType: UnityFailureListener.OperationFailed
+- uid: Responsible.Unity.UnityTestInstructionExecutor
+  name: UnityTestInstructionExecutor
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html
+  commentId: T:Responsible.Unity.UnityTestInstructionExecutor
+  fullName: Responsible.Unity.UnityTestInstructionExecutor
+  nameWithType: UnityTestInstructionExecutor
+- uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean)
+  name: UnityTestInstructionExecutor(Boolean)
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_
+  commentId: M:Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean)
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor(System.Boolean)
+  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor(Boolean)
+- uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor*
+  name: UnityTestInstructionExecutor
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_
+  commentId: Overload:Responsible.Unity.UnityTestInstructionExecutor.#ctor
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor
+  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor
+- uid: Responsible.Unity.UnityTestInstructionExecutor.Dispose
+  name: Dispose()
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_Dispose
+  commentId: M:Responsible.Unity.UnityTestInstructionExecutor.Dispose
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.Dispose()
+  nameWithType: UnityTestInstructionExecutor.Dispose()
+- uid: Responsible.Unity.UnityTestInstructionExecutor.Dispose*
+  name: Dispose
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_Dispose_
+  commentId: Overload:Responsible.Unity.UnityTestInstructionExecutor.Dispose
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.Dispose
+  nameWithType: UnityTestInstructionExecutor.Dispose
+- uid: Responsible.Unity.UnityTestInstructionExecutor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
+  name: ExpectLog(LogType, Regex)
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_ExpectLog_UnityEngine_LogType_System_Text_RegularExpressions_Regex_
+  commentId: M:Responsible.Unity.UnityTestInstructionExecutor.ExpectLog(UnityEngine.LogType,System.Text.RegularExpressions.Regex)
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.ExpectLog(UnityEngine.LogType, System.Text.RegularExpressions.Regex)
+  nameWithType: UnityTestInstructionExecutor.ExpectLog(LogType, Regex)
+- uid: Responsible.Unity.UnityTestInstructionExecutor.ExpectLog*
+  name: ExpectLog
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_ExpectLog_
+  commentId: Overload:Responsible.Unity.UnityTestInstructionExecutor.ExpectLog
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.ExpectLog
+  nameWithType: UnityTestInstructionExecutor.ExpectLog
+- uid: Responsible.Unity.UnityTestScheduler
+  name: UnityTestScheduler
+  href: api/Responsible.Unity.UnityTestScheduler.html
+  commentId: T:Responsible.Unity.UnityTestScheduler
+  fullName: Responsible.Unity.UnityTestScheduler
+  nameWithType: UnityTestScheduler
+- uid: Responsible.Unity.UnityTestScheduler.Create
+  name: Create()
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Create
+  commentId: M:Responsible.Unity.UnityTestScheduler.Create
+  fullName: Responsible.Unity.UnityTestScheduler.Create()
+  nameWithType: UnityTestScheduler.Create()
+- uid: Responsible.Unity.UnityTestScheduler.Create*
+  name: Create
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Create_
+  commentId: Overload:Responsible.Unity.UnityTestScheduler.Create
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityTestScheduler.Create
+  nameWithType: UnityTestScheduler.Create
+- uid: Responsible.Unity.UnityTestScheduler.Dispose
+  name: Dispose()
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Dispose
+  commentId: M:Responsible.Unity.UnityTestScheduler.Dispose
+  fullName: Responsible.Unity.UnityTestScheduler.Dispose()
+  nameWithType: UnityTestScheduler.Dispose()
+- uid: Responsible.Unity.UnityTestScheduler.Dispose*
+  name: Dispose
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Dispose_
+  commentId: Overload:Responsible.Unity.UnityTestScheduler.Dispose
+  isSpec: "True"
+  fullName: Responsible.Unity.UnityTestScheduler.Dispose
+  nameWithType: UnityTestScheduler.Dispose
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
+  name: ITestScheduler.FrameNow
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_FrameNow
+  commentId: P:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
+  name.vb: Responsible.ITestScheduler.FrameNow
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.FrameNow
+  nameWithType: UnityTestScheduler.ITestScheduler.FrameNow
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.FrameNow
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow*
+  name: ITestScheduler.FrameNow
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_FrameNow_
+  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
+  isSpec: "True"
+  name.vb: Responsible.ITestScheduler.FrameNow
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.FrameNow
+  nameWithType: UnityTestScheduler.ITestScheduler.FrameNow
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.FrameNow
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback(System.Action)
+  name: ITestScheduler.RegisterPollCallback(Action)
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_RegisterPollCallback_System_Action_
+  commentId: M:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback(System.Action)
+  name.vb: Responsible.ITestScheduler.RegisterPollCallback(Action)
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback(System.Action)
+  nameWithType: UnityTestScheduler.ITestScheduler.RegisterPollCallback(Action)
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback(Action)
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback*
+  name: ITestScheduler.RegisterPollCallback
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_RegisterPollCallback_
+  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback
+  isSpec: "True"
+  name.vb: Responsible.ITestScheduler.RegisterPollCallback
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback
+  nameWithType: UnityTestScheduler.ITestScheduler.RegisterPollCallback
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
+  name: ITestScheduler.TimeNow
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_TimeNow
+  commentId: P:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
+  name.vb: Responsible.ITestScheduler.TimeNow
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.TimeNow
+  nameWithType: UnityTestScheduler.ITestScheduler.TimeNow
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.TimeNow
+- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow*
+  name: ITestScheduler.TimeNow
+  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_TimeNow_
+  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
+  isSpec: "True"
+  name.vb: Responsible.ITestScheduler.TimeNow
+  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.TimeNow
+  nameWithType: UnityTestScheduler.ITestScheduler.TimeNow
+  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.TimeNow
 - uid: Responsible.Utilities
   name: Responsible.Utilities
   href: api/Responsible.Utilities.html
   commentId: N:Responsible.Utilities
   fullName: Responsible.Utilities
   nameWithType: Responsible.Utilities
+- uid: Responsible.Utilities.IMultipleTaskAwaiter`1
+  name: IMultipleTaskAwaiter<T>
+  href: api/Responsible.Utilities.IMultipleTaskAwaiter-1.html
+  commentId: T:Responsible.Utilities.IMultipleTaskAwaiter`1
+  name.vb: IMultipleTaskAwaiter(Of T)
+  fullName: Responsible.Utilities.IMultipleTaskAwaiter<T>
+  fullName.vb: Responsible.Utilities.IMultipleTaskAwaiter(Of T)
+  nameWithType: IMultipleTaskAwaiter<T>
+  nameWithType.vb: IMultipleTaskAwaiter(Of T)
+- uid: Responsible.Utilities.IMultipleTaskAwaiter`1.AwaitNext
+  name: AwaitNext()
+  href: api/Responsible.Utilities.IMultipleTaskAwaiter-1.html#Responsible_Utilities_IMultipleTaskAwaiter_1_AwaitNext
+  commentId: M:Responsible.Utilities.IMultipleTaskAwaiter`1.AwaitNext
+  fullName: Responsible.Utilities.IMultipleTaskAwaiter<T>.AwaitNext()
+  fullName.vb: Responsible.Utilities.IMultipleTaskAwaiter(Of T).AwaitNext()
+  nameWithType: IMultipleTaskAwaiter<T>.AwaitNext()
+  nameWithType.vb: IMultipleTaskAwaiter(Of T).AwaitNext()
+- uid: Responsible.Utilities.IMultipleTaskAwaiter`1.AwaitNext*
+  name: AwaitNext
+  href: api/Responsible.Utilities.IMultipleTaskAwaiter-1.html#Responsible_Utilities_IMultipleTaskAwaiter_1_AwaitNext_
+  commentId: Overload:Responsible.Utilities.IMultipleTaskAwaiter`1.AwaitNext
+  isSpec: "True"
+  fullName: Responsible.Utilities.IMultipleTaskAwaiter<T>.AwaitNext
+  fullName.vb: Responsible.Utilities.IMultipleTaskAwaiter(Of T).AwaitNext
+  nameWithType: IMultipleTaskAwaiter<T>.AwaitNext
+  nameWithType.vb: IMultipleTaskAwaiter(Of T).AwaitNext
+- uid: Responsible.Utilities.IMultipleTaskAwaiter`1.HasNext
+  name: HasNext
+  href: api/Responsible.Utilities.IMultipleTaskAwaiter-1.html#Responsible_Utilities_IMultipleTaskAwaiter_1_HasNext
+  commentId: P:Responsible.Utilities.IMultipleTaskAwaiter`1.HasNext
+  fullName: Responsible.Utilities.IMultipleTaskAwaiter<T>.HasNext
+  fullName.vb: Responsible.Utilities.IMultipleTaskAwaiter(Of T).HasNext
+  nameWithType: IMultipleTaskAwaiter<T>.HasNext
+  nameWithType.vb: IMultipleTaskAwaiter(Of T).HasNext
+- uid: Responsible.Utilities.IMultipleTaskAwaiter`1.HasNext*
+  name: HasNext
+  href: api/Responsible.Utilities.IMultipleTaskAwaiter-1.html#Responsible_Utilities_IMultipleTaskAwaiter_1_HasNext_
+  commentId: Overload:Responsible.Utilities.IMultipleTaskAwaiter`1.HasNext
+  isSpec: "True"
+  fullName: Responsible.Utilities.IMultipleTaskAwaiter<T>.HasNext
+  fullName.vb: Responsible.Utilities.IMultipleTaskAwaiter(Of T).HasNext
+  nameWithType: IMultipleTaskAwaiter<T>.HasNext
+  nameWithType.vb: IMultipleTaskAwaiter(Of T).HasNext
+- uid: Responsible.Utilities.IMultipleTaskSource`1
+  name: IMultipleTaskSource<T>
+  href: api/Responsible.Utilities.IMultipleTaskSource-1.html
+  commentId: T:Responsible.Utilities.IMultipleTaskSource`1
+  name.vb: IMultipleTaskSource(Of T)
+  fullName: Responsible.Utilities.IMultipleTaskSource<T>
+  fullName.vb: Responsible.Utilities.IMultipleTaskSource(Of T)
+  nameWithType: IMultipleTaskSource<T>
+  nameWithType.vb: IMultipleTaskSource(Of T)
+- uid: Responsible.Utilities.IMultipleTaskSource`1.Start(System.Threading.CancellationToken)
+  name: Start(CancellationToken)
+  href: api/Responsible.Utilities.IMultipleTaskSource-1.html#Responsible_Utilities_IMultipleTaskSource_1_Start_System_Threading_CancellationToken_
+  commentId: M:Responsible.Utilities.IMultipleTaskSource`1.Start(System.Threading.CancellationToken)
+  fullName: Responsible.Utilities.IMultipleTaskSource<T>.Start(System.Threading.CancellationToken)
+  fullName.vb: Responsible.Utilities.IMultipleTaskSource(Of T).Start(System.Threading.CancellationToken)
+  nameWithType: IMultipleTaskSource<T>.Start(CancellationToken)
+  nameWithType.vb: IMultipleTaskSource(Of T).Start(CancellationToken)
+- uid: Responsible.Utilities.IMultipleTaskSource`1.Start*
+  name: Start
+  href: api/Responsible.Utilities.IMultipleTaskSource-1.html#Responsible_Utilities_IMultipleTaskSource_1_Start_
+  commentId: Overload:Responsible.Utilities.IMultipleTaskSource`1.Start
+  isSpec: "True"
+  fullName: Responsible.Utilities.IMultipleTaskSource<T>.Start
+  fullName.vb: Responsible.Utilities.IMultipleTaskSource(Of T).Start
+  nameWithType: IMultipleTaskSource<T>.Start
+  nameWithType.vb: IMultipleTaskSource(Of T).Start
 - uid: Responsible.Utilities.IndentedStringBuilder`1
   name: IndentedStringBuilder<T>
   href: api/Responsible.Utilities.IndentedStringBuilder-1.html
@@ -1080,3 +1534,35 @@ references:
   fullName.vb: Responsible.Utilities.IndentedStringBuilder(Of T).ToString
   nameWithType: IndentedStringBuilder<T>.ToString
   nameWithType.vb: IndentedStringBuilder(Of T).ToString
+- uid: Responsible.Utilities.RetryingPoller
+  name: RetryingPoller
+  href: api/Responsible.Utilities.RetryingPoller.html
+  commentId: T:Responsible.Utilities.RetryingPoller
+  fullName: Responsible.Utilities.RetryingPoller
+  nameWithType: RetryingPoller
+- uid: Responsible.Utilities.RetryingPoller.Poll
+  name: Poll()
+  href: api/Responsible.Utilities.RetryingPoller.html#Responsible_Utilities_RetryingPoller_Poll
+  commentId: M:Responsible.Utilities.RetryingPoller.Poll
+  fullName: Responsible.Utilities.RetryingPoller.Poll()
+  nameWithType: RetryingPoller.Poll()
+- uid: Responsible.Utilities.RetryingPoller.Poll*
+  name: Poll
+  href: api/Responsible.Utilities.RetryingPoller.html#Responsible_Utilities_RetryingPoller_Poll_
+  commentId: Overload:Responsible.Utilities.RetryingPoller.Poll
+  isSpec: "True"
+  fullName: Responsible.Utilities.RetryingPoller.Poll
+  nameWithType: RetryingPoller.Poll
+- uid: Responsible.Utilities.RetryingPoller.RegisterPollCallback(System.Action)
+  name: RegisterPollCallback(Action)
+  href: api/Responsible.Utilities.RetryingPoller.html#Responsible_Utilities_RetryingPoller_RegisterPollCallback_System_Action_
+  commentId: M:Responsible.Utilities.RetryingPoller.RegisterPollCallback(System.Action)
+  fullName: Responsible.Utilities.RetryingPoller.RegisterPollCallback(System.Action)
+  nameWithType: RetryingPoller.RegisterPollCallback(Action)
+- uid: Responsible.Utilities.RetryingPoller.RegisterPollCallback*
+  name: RegisterPollCallback
+  href: api/Responsible.Utilities.RetryingPoller.html#Responsible_Utilities_RetryingPoller_RegisterPollCallback_
+  commentId: Overload:Responsible.Utilities.RetryingPoller.RegisterPollCallback
+  isSpec: "True"
+  fullName: Responsible.Utilities.RetryingPoller.RegisterPollCallback
+  nameWithType: RetryingPoller.RegisterPollCallback

@@ -50,6 +50,12 @@
                           <a href="index.html" title="Home">Home</a>
                       </li>
                       <li>
+                          <a href="dotnet.html" title=".NET">.NET</a>
+                      </li>
+                      <li>
+                          <a href="unity.html" title="Unity">Unity</a>
+                      </li>
+                      <li>
                           <a href="design.html" title="Design Overview">Design Overview</a>
                       </li>
                       <li>
@@ -59,7 +65,7 @@
                           <a href="CHANGELOG.html" title="Changelog">Changelog</a>
                       </li>
                       <li>
-                          <a href="https://github.com/sbergen/Responsible" title="Responsible on GitHub">Responsible on GitHub</a>
+                          <a href="https://github.com/sbergen/Responsible" title="GitHub">GitHub</a>
                       </li>
                 </ul>    </div>
           </div>
@@ -105,60 +111,77 @@ When an operation is executed, a separate object representing its state is creat
 <li>Responsible is an <strong>extendable execution engine</strong>:
 Responsible provides the mechanism for declaring operations,
 and operators to combine operations.
-Responsible does <em>not</em> contain a collection of useful operations,
-but instead provides mechanisms to build your own.</li>
+Responsible does <em>not</em> contain a large collection of high-level operations,
+but focuses on useful low-level operations,
+which can be composed to build your own high-level operations.</li>
 </ul>
 <h2 id="types-of-operations">Types of Operations</h2>
 <p>Responsible is built on four different operation types,
 which can be combined in multiple ways, using operators.</p>
-<p><strong>About <code>Unit</code> and not returning values:</strong> If you are not familiar with Rx,
-you might find the concept of using <code>Unit</code> as a return value confusing at first.
-<code>Unit</code> represents an <em>empty</em> value (defined as the empty tuple in many languages).
-Using <code>Unit</code> vastly simplifies building generic operations which may or may not return a useful value,
-as you don't need overrides for functions returning void (e.g. <code>Action</code> vs <code>Func</code>).
-You can treat <code>Unit</code> very similarly to <code>void</code> except that it <em>is</em> a value.</p>
+<p><strong>About the use of <code>object</code> and covariance:</strong>
+Some operations in Responsible return an undefined non-null <code>object</code> instance.
+Using this approach vastly simplifies the implementation,
+as you don't need separate overloads for operations returning values and operations not returning values
+(similar to <code>Func</code> vs <code>Action</code> or <code>Task&lt;T&gt;</code> vs <code>Task</code>).
+Because all the operation interfaces are covariant,
+you can easily use a more derived operation where a less derived type is required.
+However, if you are working with value types,
+you may need to use the <code>BoxResult</code> operator, to convert the type to <code>object</code>.</p>
 <h3 id="instructions">Instructions</h3>
-<p>Instructions are represented by the <code>ITestInstruction&lt;T&gt;</code> interface.
+<p>Instructions are represented by the
+<a class="xref" href="api/Responsible.ITestInstruction-1.html"><code>ITestInstruction&lt;T&gt;</code></a> interface.
 They represent a synchronous or asynchronous operation producing a single result.
-Instructions can be executed by a <code>TestInstructionExecutor</code>,
-either as a yield instruction, or as an observable,
-using the <code>ToYieldInstruction</code> and <code>ToObservable</code> extension methods.
+Instructions can be executed by a
+<a class="xref" href="api/Responsible.TestInstructionExecutor.html"><code>TestInstructionExecutor</code></a>
+as an asynchronous task using the <code>ToTask</code> extension method.
+On Unity you cal also use the <code>ToYieldInstruction</code> extension method,
+to get a yield instruction for a <code>[UnityTest]</code> play mode test.
 All instructions should have an internal timeout.
-The basic operations for chaining instructions are <code>ContinueWith</code> and <code>Sequence</code>.</p>
+The basic operations for chaining instructions are <code>ContinueWith</code> and <code>Sequence</code>.
+See <a class="xref" href="api/Responsible.TestInstruction.html"><code>TestInstruction</code></a> for all extension methods.</p>
 <h3 id="wait-conditions">Wait Conditions</h3>
-<p>Wait conditions are represented by the <code>ITestWaitCondition&lt;T&gt;</code> interface.
+<p>Wait conditions are represented by the
+<a class="xref" href="api/Responsible.ITestWaitCondition-1.html"><code>ITestWaitCondition&lt;T&gt;</code></a> interface.
 A wait condition produces a single result,
 which can be extremely useful when chaining wait conditions and building responders.
 The basic operations on conditions are chaining them using <code>AndThen</code>,
 converting to a responder using <code>ThenRespondWith</code>,
-or into an instruction with <code>ExpectWithinSeconds</code>.</p>
+or into an instruction with <code>ExpectWithinSeconds</code>
+See <a class="xref" href="api/Responsible.TestWaitCondition.html"><code>TestWaitCondition</code></a> for all extension methods.</p>
 <h3 id="responders">Responders</h3>
-<p>A responder is represented by the <code>ITestResponder&lt;T&gt;</code> interface.
+<p>A responder is represented by the
+<a class="xref" href="api/Responsible.ITestResponder-1.html"><code>ITestResponder&lt;T&gt;</code></a> interface.
 A responder produces a single result,
 and is usually built from a wait condition and an instruction,
 using the <code>ThenRespondWith</code> operator.
 This forms an if-then relationship between the wait condition and instruction.
-Responders are guaranteed to either not be triggered at all, or be fully executed.</p>
+Responders are guaranteed to either not be triggered at all, or be fully executed.
+See <a class="xref" href="api/Responsible.TestResponder.html"><code>TestResponder</code></a> for all extension methods.</p>
 <h3 id="optional-responders">Optional Responders</h3>
-<p>Optional responders are represented by the <code>IOptionalTestResponder</code> interface.
+<p>Optional responders are represented by the
+<a class="xref" href="api/Responsible.IOptionalTestResponder.html"><code>IOptionalTestResponder</code></a> interface.
 Unlike the other operation types, optional responders do not produce a result,
 as handling these results would get complicated due to their optional nature
 (this is something that may be implemented later).
 One or more responders can be optionally executed using the <code>RespondToAnyOf</code> operator,
-or the <code>Optionally</code> extension method, which which can be applied to a single responder.
+or the <code>Optionally</code> extension method, which can be applied to a single responder.
 Optional responders can be executed until a wait conditions becomes fulfilled,
 using the <code>Until</code> operator, or until some other responder becomes ready to execute,
-using the <code>UntilReadyTo</code> operator.</p>
+using the <code>UntilReadyTo</code> operator.
+See <a class="xref" href="api/Responsible.OptionalTestResponder.html"><code>OptionalTestResponder</code></a> for all extension methods.</p>
 <h2 id="operators">Operators</h2>
-<p>The class <code>Responsibly</code> contains the basic operators for creating operations,
+<p>The class <a class="xref" href="api/Responsible.Responsibly.html"><code>Responsibly</code></a>
+contains the basic operators for creating operations,
 and a bunch of operators for combining operations,
 which are not idiomatic extension methods.
 Following the pattern used by e.g. <code>IEnumerable&lt;T&gt;</code> and <code>IObservable&lt;T&gt;</code>,
-all extension methods on operators can be found in a similarly named class.
+all extension methods on operations can be found in a similarly named class.
 E.g. <code>TestInstruction</code> for extension methods on <code>ITestInstruction&lt;T&gt;</code>.</p>
-<p>Some operators worth mentioning are the <code>AsUnit...</code> and <code>Select</code> operators,
+<p>Some operators worth mentioning separately, are the <code>BoxResult</code> and <code>Select</code> operators,
 which are very useful in conjunction with operators requiring operators of the same type,
-such as <code>RespondToAllOf</code> and <code>WaitForAllOf</code>.</p>
+such as <code>RespondToAllOf</code> and <code>WaitForAllOf</code>.
+However, note that due to covariance,
+more derived types can be used where a less derived type is expected.</p>
 <h1 id="extending-responsible">Extending Responsible</h1>
 <p>While Responsible is already useful on it's own, it is built to be extensible,
 and becomes even more powerful when you write your own operators on top of it.
@@ -176,55 +199,26 @@ The provided function will be called on failures
 to create extra details that might help figuring out why a wait timed out.
 An example use would be to e.g. list all open menus in your menu system,
 when waiting for a specific menu to be open.</p>
-<h1 id="about-testinstructionexecutor">About TestInstructionExecutor</h1>
-<p>Passing in a <code>TestInstructionExecutor</code> instance for running instructions is mandatory.
-There are a few reasons for this:</p>
+<h1 id="about-itestscheduler">About ITestScheduler</h1>
+<p>Most wait conditions in Responsible are built using polling.
+Implementing polling requires the possibility to register poll callbacks, and the
+<a class="xref" href="api/Responsible.ITestScheduler.html"><code>ITestScheduler</code></a> interface is used to achieve this.</p>
 <ul>
-<li>You may want to customize your executor for different tests (see below).</li>
-<li>The UniRx <code>EveryUpdate</code> method has some internal delays when invoked for the first time.
-For this reason, an internal proxy is used in the executor to speed up execution.</li>
-<li>If your code tears down everything, including <code>DontDestroyOnLoad</code> objects,
-the executor may stop functioning after such tear down (again due to UniRx internals).</li>
+<li>When working in Unity, the main thread <code>Update</code> event is used by default.</li>
+<li>If you are working in a non-Unity environment,
+some kind of main event loop is expected to exist,
+and you should implement you scheduler to poll from that event loop.</li>
 </ul>
-<p>The <code>TestInstructionExecutor</code> constructor takes three optional arguments:</p>
-<ul>
-<li><code>IScheduler scheduler</code>, which is <code>UniRx.Scheduler.MainThread</code> by default.
-The scheduler is used for timeouts, keeping time for output purposes,
-and in the <code>WaitFor</code> operator.
-If for any reason you wish to keep track of time in a differently,
-you may override this default.</li>
-<li><code>IObservable&lt;Unit&gt; pollObservable</code>,
-which is <code>UniRx.Observable.EveryUpdate().AsUnitObservable()</code> by default.
-If for any reason you don't want to poll for conditions on every frame,
-you may override this default.</li>
-<li><code>ILogger logger</code>, which is <code>UnityEngine.Debug.unityLogger</code> by default.
-The logger is used to log an error in addition to throwing an exception on failures.
-This is due to the way Unity does not handle errors in nested coroutines very well.
-If you are using Responsible at every level of your tests,
-you may wish to not log these errors,
-which can be accomplished by implementing a no-op logger.</li>
-</ul>
-<h2 id="unity-error-log-handling">Unity Error Log Handling</h2>
-<p>The Unity Tests Runner will fail tests on logged errors.
-While running a test instruction, Responsible will intercept this process,
-by listening to logged errors, and overriding the default behavior.
-The following points are worth noting:</p>
-<ul>
-<li>If you are expecting an error, you must call <code>TestInstructionExecutor.ExpectLog</code>
-instead of only calling <code>LogAssert.Expect</code>.</li>
-<li>Logging errors from any other thread but the main thread is <strong>not</strong> handled.
-As test instructions are executed on the main thread,
-it would be impossible to attribute a logged error to the correct test instruction.</li>
-<li><code>LogAssert.ignoreFailingMessages</code> is respected at the time of logging.</li>
-</ul>
+<h1 id="thread-safety">Thread safety</h1>
+<p>Responsible was designed for single-threaded use.
+As all operations and operators are pure, they should be thread-safe,
+but once you start executing instructions,
+everything is expected to happen in a single thread.</p>
 <h1 id="tips-and-tricks">Tips and Tricks</h1>
-<p>If the method names in the <code>Responsibly</code> class do not conflict with anything else,
+<p>If the method names in the <a class="xref" href="api/Responsible.Responsibly.html"><code>Responsibly</code></a>
+class do not conflict with anything else,
 using <code>using static Responsible.Responsibly;</code> can make your code more concise.
 The method names were designed to work well like this.</p>
-<p>By using the Editor window available under <code>Window -&gt; Responsible -&gt; Operation State</code>,
-you can observe the progress of your tests executing.
-The contents of the window updates in real time and matches the output produced on failures,
-except for the operation stack and stack trace.</p>
 <p>All the basic operations (excluding optional responders) implement the
 <code>ITestOperation&lt;T&gt;</code> interface, which contains the <code>CreateState</code> method,
 producing a <code>ITestOperationState&lt;T&gt;</code> instance.
@@ -290,19 +284,6 @@ select result;
 </code></pre>
 <p>While the example uses simple <code>Return</code> calls for brevity,
 this syntax will work for sequencing asynchronous instructions also.</p>
-<h1 id="portability">Portability</h1>
-<p>The core functionality of Responsible does't really depend on anything Unity-specific.
-Only the following details should need changing to port Responsible to some other .NET environment:</p>
-<ul>
-<li><code>using UniRx</code> directives would need replacing with standard Rx directives.</li>
-<li><code>TestInstructionExecutor</code> uses the Unity <code>ILogger</code> interface, which would need replacing.</li>
-<li><code>ToYieldInstruction</code>: not needed outside of Unity</li>
-<li><code>WaitForCoroutine</code>: not needed outside of Unity</li>
-<li>Tests are written using the <code>UnityTest</code> attribute and <code>yield return null</code>,
-to best mimic the environment the library would actually be used in.</li>
-<li>The <code>IScheduler</code> interface is slightly different in UniRx than in standard Rx,
-and the tests use a custom <code>TestScheduler</code>.</li>
-</ul>
 </article>
           </div>
           

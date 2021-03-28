@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestInstruction&lt;T&gt;
+    <title>Namespace Responsible.Unity
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestInstruction&lt;T&gt;
+    <meta name="title" content="Namespace Responsible.Unity
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -113,8 +113,8 @@
                           <li class="">
                             <a href="Responsible.IOptionalTestResponder.html" title="IOptionalTestResponder" class="">IOptionalTestResponder</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="active">ITestInstruction&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
@@ -198,9 +198,9 @@
                             <a href="Responsible.State.TestOperationStatus.html" title="TestOperationStatus" class="">TestOperationStatus</a>
                           </li>
                         </ul>  </li>
-                    <li class="">
+                    <li class="active">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.Unity.html" title="Responsible.Unity" class="">Responsible.Unity</a>
+                      <a href="Responsible.Unity.html" title="Responsible.Unity" class="active">Responsible.Unity</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -247,64 +247,50 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestInstruction`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Unity">
   
-  
-  <h1 id="Responsible_ITestInstruction_1" data-uid="Responsible.ITestInstruction`1" class="text-break">Interface ITestInstruction&lt;T&gt;
+  <h1 id="Responsible_Unity" data-uid="Responsible.Unity" class="text-break">Namespace Responsible.Unity
   </h1>
-  <div class="markdown level0 summary"><p>Represents a test instruction - a synchronous or asynchronous operation producing a single result when executed.
-All standard test instructions in Responsible have an enforced timeout.</p>
-<p>See <a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a> for extension methods for working with test instructions,
-and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for creating basic test instructions.</p>
+  <div class="markdown level0 summary">
+<p>Contains classes which are Unity specific, and only available on Unity builds.
+The main classes to use are
+<a class="xref" href="Responsible.Unity.UnityTestInstructionExecutor.html">UnityTestInstructionExecutor</a>,
+which sets up a default test instruction executor for Unity,
+and <a class="xref" href="Responsible.Unity.TestOperationYieldInstruction-1.html">TestOperationYieldInstruction&lt;T&gt;</a>,
+which can be yielded from <code>[UnityTest]</code> methods.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">ITestOperation&lt;T&gt;.CreateState()</a>
-    </div>
-  </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
-  <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestInstruction_1_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestInstruction&lt;out T&gt; : ITestOperation&lt;T&gt;</code></pre>
-  </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the test instruction.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="Responsible.LinqSupport.html#Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__">LinqSupport.SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToYieldInstruction&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToTask&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, ITestInstruction&lt;T2&gt;&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_">TestInstruction.Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a>
-  </div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Responsible.Unity.TestOperationYieldInstruction-1.html">TestOperationYieldInstruction&lt;T&gt;</a></h4>
+      <section><p>A <span class="xref">UnityEngine.CustomYieldInstruction</span> that can be yielded from a
+<code>[UnityTest]</code> playmode test.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Unity.UnhandledLogMessageException.html">UnhandledLogMessageException</a></h4>
+      <section><p>Exception type which is used when an unhandled log message is detected during test operation execution.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Unity.UnityErrorLogInterceptor.html">UnityErrorLogInterceptor</a></h4>
+      <section><p>Class used to replicate the Unity test runner behaviour of failing tests when either
+<span class="xref">UnityEngine.Debug.LogError(System.Object)</span> or <span class="xref">UnityEngine.Debug.LogException(System.Exception)</span> is called.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Unity.UnityFailureListener.html">UnityFailureListener</a></h4>
+      <section><p>Provides default <a class="xref" href="Responsible.IFailureListener.html">IFailureListener</a> functionality for Unity, by logging failures.
+Unity doesn't handle exceptions in coroutines very well in tests
+(one of the motivations to write Responsible), so we also log failures to ensure they are visible.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Unity.UnityTestInstructionExecutor.html">UnityTestInstructionExecutor</a></h4>
+      <section><p>A <a class="xref" href="Responsible.TestInstructionExecutor.html">TestInstructionExecutor</a> implementation that should work well in Unity:</p>
+<ul>
+<li>Polls on every frame</li>
+<li>Causes test operations to fail on logged errors</li>
+<li>Can also log failures, as Unity will swallow exceptions in nested coroutines</li>
+</ul>
+</section>
+      <h4><a class="xref" href="Responsible.Unity.UnityTestScheduler.html">UnityTestScheduler</a></h4>
+      <section><p>Default <a class="xref" href="Responsible.ITestScheduler.html">ITestScheduler</a> implementation for Unity.
+Will call polling methods in <code>Update</code>.</p>
+</section>
 </article>
           </div>
           

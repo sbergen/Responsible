@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestInstruction&lt;T&gt;
+    <title>Class TestOperationYieldInstruction&lt;T&gt;
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestInstruction&lt;T&gt;
+    <meta name="title" content="Class TestOperationYieldInstruction&lt;T&gt;
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -113,8 +113,8 @@
                           <li class="">
                             <a href="Responsible.IOptionalTestResponder.html" title="IOptionalTestResponder" class="">IOptionalTestResponder</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="active">ITestInstruction&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
@@ -203,8 +203,8 @@
                       <a href="Responsible.Unity.html" title="Responsible.Unity" class="">Responsible.Unity</a>
                         
                         <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.Unity.TestOperationYieldInstruction-1.html" title="TestOperationYieldInstruction&lt;T&gt;" class="">TestOperationYieldInstruction&lt;T&gt;</a>
+                          <li class="active">
+                            <a href="Responsible.Unity.TestOperationYieldInstruction-1.html" title="TestOperationYieldInstruction&lt;T&gt;" class="active">TestOperationYieldInstruction&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.Unity.UnhandledLogMessageException.html" title="UnhandledLogMessageException" class="">UnhandledLogMessageException</a>
@@ -247,28 +247,42 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestInstruction`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Unity.TestOperationYieldInstruction`1">
   
   
-  <h1 id="Responsible_ITestInstruction_1" data-uid="Responsible.ITestInstruction`1" class="text-break">Interface ITestInstruction&lt;T&gt;
+  <h1 id="Responsible_Unity_TestOperationYieldInstruction_1" data-uid="Responsible.Unity.TestOperationYieldInstruction`1" class="text-break">Class TestOperationYieldInstruction&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents a test instruction - a synchronous or asynchronous operation producing a single result when executed.
-All standard test instructions in Responsible have an enforced timeout.</p>
-<p>See <a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a> for extension methods for working with test instructions,
-and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for creating basic test instructions.</p>
+  <div class="markdown level0 summary"><p>A <span class="xref">UnityEngine.CustomYieldInstruction</span> that can be yielded from a
+<code>[UnityTest]</code> playmode test.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">UnityEngine.CustomYieldInstruction</span></div>
+    <div class="level2"><span class="xref">TestOperationYieldInstruction&lt;T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">ITestOperation&lt;T&gt;.CreateState()</a>
+      <span class="xref">UnityEngine.CustomYieldInstruction.MoveNext()</span>
+    </div>
+    <div>
+      <span class="xref">UnityEngine.CustomYieldInstruction.Reset()</span>
+    </div>
+    <div>
+      <span class="xref">UnityEngine.CustomYieldInstruction.Current</span>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.Unity.html">Responsible.Unity</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestInstruction_1_syntax">Syntax</h5>
+  <h5 id="Responsible_Unity_TestOperationYieldInstruction_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestInstruction&lt;out T&gt; : ITestOperation&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class TestOperationYieldInstruction&lt;T&gt; : CustomYieldInstruction, IEnumerator</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -281,29 +295,184 @@ and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for meth
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Result type of the test instruction.</p>
+        <td><p>Result type of the test operation being run.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="Responsible.LinqSupport.html#Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__">LinqSupport.SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</a>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_CompletedSuccessfully_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_CompletedSuccessfully" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.CompletedSuccessfully">CompletedSuccessfully</h4>
+  <div class="markdown level1 summary"><p>Indicates if the test operation has completed successfully.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CompletedSuccessfully { get; }</code></pre>
   </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToYieldInstruction&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)</a>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the test operation completed successfully, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_CompletedWithError_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_CompletedWithError" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.CompletedWithError">CompletedWithError</h4>
+  <div class="markdown level1 summary"><p>Indicates if the test operation has completed with an error.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CompletedWithError { get; }</code></pre>
   </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToTask&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, CancellationToken, String, String, Int32)</a>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the test operation completed with an error, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_Error_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.Error*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_Error" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.Error">Error</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="Responsible.TestFailureException.html">TestFailureException</a> that caused the test operation to fail.
+Will throw an error if the task has not failed or was not canceled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TestFailureException Error { get; }</code></pre>
   </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, ITestInstruction&lt;T2&gt;&gt;, String, String, Int32)</a>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Responsible.TestFailureException.html">TestFailureException</a></td>
+        <td><p>The exception that caused the test operation to fail.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting">keepWaiting</h4>
+  <div class="markdown level1 summary"><p>Implementation of <span class="xref">UnityEngine.CustomYieldInstruction</span>, not to be used for other purposes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool keepWaiting { get; }</code></pre>
   </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">UnityEngine.CustomYieldInstruction.keepWaiting</span></div>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_Result_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.Result*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_Result" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.Result">Result</h4>
+  <div class="markdown level1 summary"><p>Indicates if the test operation completed with an error.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Result { get; }</code></pre>
   </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>True if the test operation completed with an error, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>The test operation was not completed successfully.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Unity_TestOperationYieldInstruction_1_WasCanceled_" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled*"></a>
+  <h4 id="Responsible_Unity_TestOperationYieldInstruction_1_WasCanceled" data-uid="Responsible.Unity.TestOperationYieldInstruction`1.WasCanceled">WasCanceled</h4>
+  <div class="markdown level1 summary"><p>Indicates if the test operation was canceled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool WasCanceled { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the test operation was canceled, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_">TestInstruction.Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">System.Collections.IEnumerator</a>
   </div>
 </article>
           </div>

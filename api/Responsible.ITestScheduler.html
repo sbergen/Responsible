@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestInstruction&lt;T&gt;
+    <title>Interface ITestScheduler
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestInstruction&lt;T&gt;
+    <meta name="title" content="Interface ITestScheduler
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -113,8 +113,8 @@
                           <li class="">
                             <a href="Responsible.IOptionalTestResponder.html" title="IOptionalTestResponder" class="">IOptionalTestResponder</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="active">ITestInstruction&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
@@ -122,8 +122,8 @@
                           <li class="">
                             <a href="Responsible.ITestResponder-1.html" title="ITestResponder&lt;T&gt;" class="">ITestResponder&lt;T&gt;</a>
                           </li>
-                          <li class="">
-                            <a href="Responsible.ITestScheduler.html" title="ITestScheduler" class="">ITestScheduler</a>
+                          <li class="active">
+                            <a href="Responsible.ITestScheduler.html" title="ITestScheduler" class="active">ITestScheduler</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestWaitCondition-1.html" title="ITestWaitCondition&lt;T&gt;" class="">ITestWaitCondition&lt;T&gt;</a>
@@ -247,64 +247,128 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestInstruction`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.ITestScheduler">
   
   
-  <h1 id="Responsible_ITestInstruction_1" data-uid="Responsible.ITestInstruction`1" class="text-break">Interface ITestInstruction&lt;T&gt;
+  <h1 id="Responsible_ITestScheduler" data-uid="Responsible.ITestScheduler" class="text-break">Interface ITestScheduler
   </h1>
-  <div class="markdown level0 summary"><p>Represents a test instruction - a synchronous or asynchronous operation producing a single result when executed.
-All standard test instructions in Responsible have an enforced timeout.</p>
-<p>See <a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a> for extension methods for working with test instructions,
-and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for creating basic test instructions.</p>
+  <div class="markdown level0 summary"><p>Abstraction for polling and time-based operations.
+All of such operations function based on registering callbacks to an instance of this interface.
+See also <a class="xref" href="Responsible.Utilities.RetryingPoller.html">RetryingPoller</a> for an implementation you may use for poll callbacks.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">ITestOperation&lt;T&gt;.CreateState()</a>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestInstruction_1_syntax">Syntax</h5>
+  <h5 id="Responsible_ITestScheduler_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestInstruction&lt;out T&gt; : ITestOperation&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ITestScheduler</code></pre>
   </div>
-  <h5 class="typeParameters">Type Parameters</h5>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Responsible_ITestScheduler_FrameNow_" data-uid="Responsible.ITestScheduler.FrameNow*"></a>
+  <h4 id="Responsible_ITestScheduler_FrameNow" data-uid="Responsible.ITestScheduler.FrameNow">FrameNow</h4>
+  <div class="markdown level1 summary"><p>Gets the frame count at this moment.
+The absolute value does not matter, as long as it is incremented periodically.
+Used for waiting for frames, and for providing state details for operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int FrameNow { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Current frame value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_ITestScheduler_TimeNow_" data-uid="Responsible.ITestScheduler.TimeNow*"></a>
+  <h4 id="Responsible_ITestScheduler_TimeNow" data-uid="Responsible.ITestScheduler.TimeNow">TimeNow</h4>
+  <div class="markdown level1 summary"><p>Returns the current time.
+The absolute value does not matter, as long as time progresses monotonically.
+Used for timeouts, and for providing state details for operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">DateTimeOffset TimeNow { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></td>
+        <td><p>The current time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Responsible_ITestScheduler_TimeNow_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This exists mostly so that it can be mocked in internal Responsible tests.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Responsible_ITestScheduler_RegisterPollCallback_" data-uid="Responsible.ITestScheduler.RegisterPollCallback*"></a>
+  <h4 id="Responsible_ITestScheduler_RegisterPollCallback_System_Action_" data-uid="Responsible.ITestScheduler.RegisterPollCallback(System.Action)">RegisterPollCallback(Action)</h4>
+  <div class="markdown level1 summary"><p>Registers a poll callback to be called at least once per frame.
+See <a class="xref" href="Responsible.Utilities.RetryingPoller.html">RetryingPoller</a> for the suggested default strategy.
+All time and frame based operations run from these callbacks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IDisposable RegisterPollCallback(Action action)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
         <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the test instruction.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
+        <td><span class="parametername">action</span></td>
+        <td><p>Action to call at least once on every frame.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h3 id="extensionmethods">Extension Methods</h3>
-  <div>
-      <a class="xref" href="Responsible.LinqSupport.html#Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__">LinqSupport.SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToYieldInstruction&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToTask&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, ITestInstruction&lt;T2&gt;&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_">TestInstruction.Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a>
-  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></td>
+        <td><p>A disposable instance, which must unregister the callback when disposed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Using Responsible With .NET Standard | Responsible </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Using Responsible With .NET Standard | Responsible ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc">
+    <meta property="docfx:tocrel" content="toc">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                
+                <ul class="nav level1 navbar-nav">
+                      <li>
+                          <a href="index.html" title="Home">Home</a>
+                      </li>
+                      <li>
+                          <a href="dotnet.html" title=".NET">.NET</a>
+                      </li>
+                      <li>
+                          <a href="unity.html" title="Unity">Unity</a>
+                      </li>
+                      <li>
+                          <a href="design.html" title="Design Overview">Design Overview</a>
+                      </li>
+                      <li>
+                          <a href="api/Responsible.html" title="API Documentation">API Documentation</a>
+                      </li>
+                      <li>
+                          <a href="CHANGELOG.html" title="Changelog">Changelog</a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/sbergen/Responsible" title="GitHub">GitHub</a>
+                      </li>
+                </ul>    </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="using-responsible-with-net-standard">Using Responsible With .NET Standard</h1>
+
+<p>Responsible was originally written for Unity,
+and only later ported to .NET standard,
+so there are some things you'll need to set up manually,
+depending on the environment you are using Responsible in.</p>
+<p>To start using Responsible, you'll need to</p>
+<ul>
+<li>install the package,</li>
+<li>implement a <a class="xref" href="api/Responsible.ITestScheduler.html"><code>ITestScheduler</code></a>, and</li>
+<li>set up your tests using <a class="xref" href="api/Responsible.TestInstructionExecutor.html"><code>TestInstructionExecutor</code></a>.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Install the <a href="https://www.nuget.org/packages/Beatwaves.Responsible/"><code>Beatwaves.Responsible</code></a>
+package via NuGet, either from your IDE or the command line, using</p>
+<pre><code>dotnet add &lt;YouProject.csproj&gt; package Beatwaves.Responsible
+</code></pre>
+<h2 id="examples">Examples</h2>
+<p>There are currently no vanilla .NET examples,
+but you may want to take a look at the simple
+<a href="https://github.com/sbergen/responsible/tree/main/com.beatwaves.responsible/Samples%7E/ResponsibleGame">example Unity project</a>
+with some <a href="https://github.com/sbergen/responsible/tree/main/com.beatwaves.responsible/Samples%7E/ResponsibleGame/PlayModeTests">basic tests</a> included.</p>
+<p>The library itself also has extensive test coverage,
+which may be used as more extensive examples of usage,
+but does not represent typical usage of Responsible.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
