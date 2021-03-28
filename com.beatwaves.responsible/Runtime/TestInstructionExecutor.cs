@@ -22,13 +22,17 @@ namespace Responsible
 		// Add spaces to lines so that the Unity console doesn't strip them
 		private const string UnityEmptyLine = "\n \n";
 
-		private static readonly SafeIterationList<Action<TestOperationStateNotification>> NotificationCallbacks =
-			new SafeIterationList<Action<TestOperationStateNotification>>();
+		private static readonly SafeIterationList<StateNotificationCallback> NotificationCallbacks =
+			new SafeIterationList<StateNotificationCallback>();
 
 		private readonly CancellationTokenSource mainCancellationTokenSource = new CancellationTokenSource();
 		private readonly ITimeProvider timeProvider;
 		private readonly IExternalResultSource externalResultSource;
 		private readonly IFailureListener failureListener;
+
+		public delegate void StateNotificationCallback(
+			TestOperationStateTransition transitionType,
+			ITestOperationState state);
 
 		/// <summary>
 		/// Will call <paramref name="callback"/> when operations start or finish.
@@ -39,7 +43,7 @@ namespace Responsible
 		/// Static, so that Unity EditorWindows can access it.
 		/// Used by the test operation window available at "Window/Responsible/Operation State".
 		/// </remarks>
-		public static IDisposable SubscribeToStates(Action<TestOperationStateNotification> callback)
+		public static IDisposable SubscribeToStates(StateNotificationCallback callback)
 			=> NotificationCallbacks.Add(callback);
 
 		/// <summary>
@@ -85,8 +89,8 @@ namespace Responsible
 			{
 				try
 				{
-					NotificationCallbacks.ForEach(cb =>
-						cb(new TestOperationStateNotification.Started(rootState)));
+					NotificationCallbacks.ForEach(callback =>
+						callback(TestOperationStateTransition.Started, rootState));
 
 					if (this.externalResultSource != null)
 					{
@@ -109,8 +113,8 @@ namespace Responsible
 				}
 				finally
 				{
-					NotificationCallbacks.ForEach(cb =>
-						cb(new TestOperationStateNotification.Finished(rootState)));
+					NotificationCallbacks.ForEach(callback =>
+						callback(TestOperationStateTransition.Finished, rootState));
 				}
 			}
 		}
