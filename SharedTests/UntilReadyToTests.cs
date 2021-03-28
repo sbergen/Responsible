@@ -89,7 +89,7 @@ namespace Responsible.Tests
 		[Test]
 		public void UntilReadyToRespond_TimesOut_AsExpected()
 		{
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(this.task));
 		}
 	}

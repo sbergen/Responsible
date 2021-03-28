@@ -18,7 +18,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			Assert.IsFalse(task.IsFaulted);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			var error = GetFailureException(task);
 			Assert.IsInstanceOf<TimeoutException>(error.InnerException);
 		}
@@ -99,7 +99,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			Assert.IsFalse(task.IsFaulted);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 
@@ -113,11 +113,11 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsFalse(task.IsFaulted);
 			Assert.IsFalse(task.IsCompleted);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsFalse(task.IsFaulted);
 			Assert.IsTrue(task.IsCompleted);
 		}
@@ -166,7 +166,7 @@ Test operation stack");
 		{
 			var task = instruction.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var exception = GetFailureException(task);
 			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));

@@ -29,7 +29,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var exception = GetFailureException(task);
 			StateAssert.StringContainsInOrder(exception.Message)

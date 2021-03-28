@@ -74,7 +74,7 @@ namespace Responsible.UnityTests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var error = GetFailureException(task);
 			Assert.That(error.Message, Does.Contain("Expected").And.Contain("But was"));

@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Responsible.Utilities
 {
-	internal static class TimeProviderExtensions
+	internal static class SchedulerExtensions
 	{
 		public static async Task<T> PollForCondition<T>(
-			this ITimeProvider timeProvider,
+			this ITestScheduler scheduler,
 			Func<T> getState,
 			Func<T, bool> condition,
 			CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ namespace Responsible.Utilities
 				}
 			}
 
-			using (timeProvider.RegisterPollCallback(CheckCondition))
+			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
 				CheckCondition(); // Complete immediately if already met
@@ -44,31 +44,31 @@ namespace Responsible.Utilities
 		}
 
 		public static Task<T> TimeoutAfter<T>(
-			this ITimeProvider timeProvider,
+			this ITestScheduler testScheduler,
 			TimeSpan timeout,
 			CancellationToken cancellationToken,
 			DeferredTask<T> deferredTask)
 			=> cancellationToken.Amb(
 				deferredTask,
-				ct => timeProvider.Timeout(timeout, ct).ThrowResult<T>());
+				ct => testScheduler.Timeout(timeout, ct).ThrowResult<T>());
 
 		private static async Task<Exception> Timeout(
-			this ITimeProvider timeProvider,
+			this ITestScheduler scheduler,
 			TimeSpan timeout,
 			CancellationToken cancellationToken)
 		{
-			var deadline = timeProvider.TimeNow + timeout;
+			var deadline = scheduler.TimeNow + timeout;
 			var completionSource = new TaskCompletionSource<object>();
 
 			void CheckTimeout()
 			{
-				if (timeProvider.TimeNow >= deadline)
+				if (scheduler.TimeNow >= deadline)
 				{
 					completionSource.SetException(new TimeoutException());
 				}
 			}
 
-			using (timeProvider.RegisterPollCallback(CheckTimeout))
+			using (scheduler.RegisterPollCallback(CheckTimeout))
 			using (cancellationToken.Register(completionSource.SetCanceled))
 			{
 				return await completionSource.Task.ExpectException();

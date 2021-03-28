@@ -18,7 +18,7 @@ namespace Responsible.Tests
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);
 
 		protected IFailureListener FailureListener { get; private set; }
-		protected TestTimeProvider TimeProvider { get; private set; }
+		protected MockTestScheduler Scheduler { get; private set; }
 
 		protected TestInstructionExecutor Executor { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Responsible.Tests
 		{
 		}
 
-		protected void AdvanceDefaultFrame() => this.TimeProvider.AdvanceFrame(OneFrame);
+		protected void AdvanceDefaultFrame() => this.Scheduler.AdvanceFrame(OneFrame);
 
 		protected static TestFailureException GetFailureException(Task task)
 		{
@@ -40,9 +40,9 @@ namespace Responsible.Tests
 		public void BaseSetUp()
 		{
 			this.FailureListener = this.MakeFailureListener();
-			this.TimeProvider = new TestTimeProvider();
+			this.Scheduler = new MockTestScheduler();
 			this.Executor = new TestInstructionExecutor(
-				this.TimeProvider,
+				this.Scheduler,
 				this.ExternalResultSource(),
 				this.FailureListener);
 		}

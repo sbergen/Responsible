@@ -25,11 +25,11 @@ namespace Responsible.TestInstructions
 
 			protected override Task<object> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 			{
-				var timeProvider = runContext.TimeProvider;
-				var deadline = timeProvider.FrameNow + this.wholeFramesToWaitFor;
-				return runContext.TimeProvider.PollForCondition(
+				var scheduler = runContext.Scheduler;
+				var deadline = scheduler.FrameNow + this.wholeFramesToWaitFor;
+				return runContext.Scheduler.PollForCondition(
 					() => Unit.Instance,
-					_ => timeProvider.FrameNow > deadline,
+					_ => scheduler.FrameNow > deadline,
 					cancellationToken);
 			}
 

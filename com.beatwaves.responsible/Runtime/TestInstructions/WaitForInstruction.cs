@@ -28,10 +28,10 @@ namespace Responsible.TestInstructions
 				RunContext runContext,
 				CancellationToken cancellationToken)
 			{
-				var deadline = runContext.TimeProvider.TimeNow + this.waitTime;
-				return runContext.TimeProvider.PollForCondition(
+				var deadline = runContext.Scheduler.TimeNow + this.waitTime;
+				return runContext.Scheduler.PollForCondition(
 					() => Unit.Instance,
-					_ => runContext.TimeProvider.TimeNow >= deadline,
+					_ => runContext.Scheduler.TimeNow >= deadline,
 					cancellationToken);
 			}
 

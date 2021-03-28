@@ -7,7 +7,7 @@ namespace Responsible
 	/// All of such operations function based on registering callbacks to an instance of this interface.
 	/// See also <see cref="Utilities.RetryingPoller"/> for an implementation you may use for poll callbacks.
 	/// </summary>
-	public interface ITimeProvider
+	public interface ITestScheduler
 	{
 		/// <summary>
 		/// Gets the frame count at this moment.

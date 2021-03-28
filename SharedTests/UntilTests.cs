@@ -96,7 +96,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsFalse(completed);
 			Assert.IsNotNull(GetFailureException(task));

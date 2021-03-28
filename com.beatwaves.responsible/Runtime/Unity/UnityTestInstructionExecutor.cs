@@ -15,19 +15,19 @@ namespace Responsible.Unity
 	/// </remarks>
 	public class UnityTestInstructionExecutor : TestInstructionExecutor
 	{
-		private readonly UnityTimeProvider timeProvider;
+		private readonly UnityTestScheduler scheduler;
 		private readonly UnityErrorLogInterceptor errorLogInterceptor;
 
 		private UnityTestInstructionExecutor(
-			UnityTimeProvider timeProvider,
+			UnityTestScheduler scheduler,
 			UnityErrorLogInterceptor errorLogInterceptor,
 			bool logErrors)
 			: base(
-				timeProvider,
+				scheduler,
 				errorLogInterceptor,
 				logErrors ? new UnityFailureListener() : null)
 		{
-			this.timeProvider = timeProvider;
+			this.scheduler = scheduler;
 			this.errorLogInterceptor = errorLogInterceptor;
 		}
 
@@ -49,7 +49,7 @@ namespace Responsible.Unity
 		/// </summary>
 		/// <param name="logErrors">Whether or not errors should be logged in addition to propagated.</param>
 		public UnityTestInstructionExecutor(bool logErrors = true)
-			: this(UnityTimeProvider.Create(), new UnityErrorLogInterceptor(), logErrors)
+			: this(UnityTestScheduler.Create(), new UnityErrorLogInterceptor(), logErrors)
 		{
 		}
 
@@ -58,7 +58,7 @@ namespace Responsible.Unity
 		/// </summary>
 		public override void Dispose()
 		{
-			this.timeProvider.Dispose();
+			this.scheduler.Dispose();
 			base.Dispose();
 		}
 	}

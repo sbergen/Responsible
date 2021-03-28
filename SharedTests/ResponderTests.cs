@@ -61,15 +61,15 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			// Timeout for condition is 3 seconds
-			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 			this.readyToReact = true;
-			this.TimeProvider.AdvanceFrame(TimeSpan.Zero);
+			this.Scheduler.AdvanceFrame(TimeSpan.Zero);
 			Assert.IsFalse(task.IsCompleted);
 
 			// After this we have waited 4 seconds, which is more than either of the individual timeouts
-			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 			this.readyToComplete = true;
-			this.TimeProvider.AdvanceFrame(TimeSpan.Zero);
+			this.Scheduler.AdvanceFrame(TimeSpan.Zero);
 
 			Assert.IsTrue(task.IsCompleted);
 		}

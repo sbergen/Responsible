@@ -64,7 +64,7 @@ namespace Responsible.Tests
 		public void AndThen_TimesOutOnFirst_WithReadySecondCondition()
 		{
 			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 
@@ -72,7 +72,7 @@ namespace Responsible.Tests
 		public void AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
 		{
 			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 
@@ -80,7 +80,7 @@ namespace Responsible.Tests
 		public void AndThen_TimesOutOnSecond_WithReadySecondCondition()
 		{
 			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 
@@ -88,7 +88,7 @@ namespace Responsible.Tests
 		public void AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
 		{
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 	}

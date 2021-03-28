@@ -31,7 +31,7 @@ namespace Responsible.TestInstructions
 
 			protected override async Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 			{
-				var instruction = await runContext.TimeProvider.TimeoutAfter(
+				var instruction = await runContext.Scheduler.TimeoutAfter(
 					this.timeout,
 					cancellationToken,
 					ct => this.responder.Execute(runContext, ct));

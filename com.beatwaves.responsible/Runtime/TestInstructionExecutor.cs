@@ -26,7 +26,7 @@ namespace Responsible
 			new SafeIterationList<StateNotificationCallback>();
 
 		private readonly CancellationTokenSource mainCancellationTokenSource = new CancellationTokenSource();
-		private readonly ITimeProvider timeProvider;
+		private readonly ITestScheduler scheduler;
 		private readonly IExternalResultSource externalResultSource;
 		private readonly IFailureListener failureListener;
 
@@ -54,7 +54,7 @@ namespace Responsible
 		/// <summary>
 		/// Constructs a new test instruction executor.
 		/// </summary>
-		/// <param name="timeProvider">Implementation for time and frame based operations.</param>
+		/// <param name="scheduler">Implementation for time and frame based operations.</param>
 		/// <param name="externalResultSource">
 		/// Optional source for premature completion of test operations.
 		/// </param>
@@ -62,11 +62,11 @@ namespace Responsible
 		/// Optional failure listener, to get notifications on test operation failures.
 		/// </param>
 		public TestInstructionExecutor(
-			ITimeProvider timeProvider,
+			ITestScheduler scheduler,
 			IExternalResultSource externalResultSource = null,
 			IFailureListener failureListener = null)
 		{
-			this.timeProvider = timeProvider;
+			this.scheduler = scheduler;
 			this.externalResultSource = externalResultSource;
 			this.failureListener = failureListener;
 		}
@@ -90,7 +90,7 @@ namespace Responsible
 			SourceContext sourceContext,
 			CancellationToken cancellationToken)
 		{
-			var runContext = new RunContext(sourceContext, this.timeProvider);
+			var runContext = new RunContext(sourceContext, this.scheduler);
 			using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
 				cancellationToken, this.mainCancellationTokenSource.Token))
 			{

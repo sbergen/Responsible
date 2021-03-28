@@ -30,7 +30,7 @@ namespace Responsible.TestInstructions
 			}
 
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
-				runContext.TimeProvider.TimeoutAfter(
+				runContext.Scheduler.TimeoutAfter(
 					this.timeout,
 					cancellationToken,
 					ct => this.condition.Execute(runContext, ct));

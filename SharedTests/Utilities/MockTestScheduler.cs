@@ -3,7 +3,7 @@ using Responsible.Utilities;
 
 namespace Responsible.Tests.Utilities
 {
-	public class TestTimeProvider : ITimeProvider
+	public class MockTestScheduler : ITestScheduler
 	{
 		private RetryingPoller poller = new RetryingPoller();
 

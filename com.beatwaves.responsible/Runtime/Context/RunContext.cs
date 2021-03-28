@@ -6,18 +6,18 @@ namespace Responsible.Context
 	/// </summary>
 	public readonly struct RunContext
 	{
-		internal readonly ITimeProvider TimeProvider;
+		internal readonly ITestScheduler Scheduler;
 		internal readonly SourceContext SourceContext;
 
-		internal WaitContext MakeWaitContext() => new WaitContext(this.TimeProvider);
+		internal WaitContext MakeWaitContext() => new WaitContext(this.Scheduler);
 
 		internal RunContext MakeNested(SourceContext sourceContext)
-			=> new RunContext(this.SourceContext.Append(sourceContext), this.TimeProvider);
+			=> new RunContext(this.SourceContext.Append(sourceContext), this.Scheduler);
 
-		internal RunContext(SourceContext sourceContext, ITimeProvider timeProvider)
+		internal RunContext(SourceContext sourceContext, ITestScheduler scheduler)
 		{
 			this.SourceContext = sourceContext;
-			this.TimeProvider = timeProvider;
+			this.Scheduler = scheduler;
 		}
 	}
 }

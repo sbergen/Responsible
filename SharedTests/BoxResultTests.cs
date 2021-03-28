@@ -69,7 +69,7 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 			Assert.IsFalse(task.IsFaulted);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 
@@ -119,7 +119,7 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 			Assert.IsFalse(task.IsFaulted);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
 		}
 	}
