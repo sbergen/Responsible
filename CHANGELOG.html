@@ -90,19 +90,19 @@
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased"><a href="https://github.com/sbergen/Responsible/compare/v4.0.0...HEAD">Unreleased</a></h2>
 <h2 id="400---2021-03-28"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.0.0">4.0.0</a> - 2021-03-28</h2>
-<h2 id="changed">Changed</h2>
+<h3 id="changed">Changed</h3>
 <ul>
 <li>Removed the UniRx dependency, now uses <code>async/await</code> internally instead.</li>
 <li>Unity-specific functionality was moved to work through abstractions.</li>
 <li><code>Unit</code>-typed operators now use <code>object</code> instead. This works better most of the time, due to covariance!</li>
 <li>Operation state notifications use a callback instead of an observable.</li>
 </ul>
-<h2 id="removed">Removed</h2>
+<h3 id="removed">Removed</h3>
 <ul>
 <li>All observable-related functions (<code>ToObservable</code>, <code>WaitForLast</code>).</li>
 <li><code>AsUnit...</code> operators: you can use <code>BoxResult</code> or just implicit covariance instead.</li>
 </ul>
-<h2 id="added">Added</h2>
+<h3 id="added">Added</h3>
 <ul>
 <li>Support for .NET standard 2.0 (and NuGet publishing)</li>
 <li><code>ToTask</code> methods, which replace <code>ToObservable</code>. Note: If you were using these, you can use the UniRx <code>ToObservable</code> method to convert a task to an observable.</li>
