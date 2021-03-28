@@ -7,17 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [4.0.0] - 2021-03-28
-## Changed
+### Changed
 - Removed the UniRx dependency, now uses `async/await` internally instead.
 - Unity-specific functionality was moved to work through abstractions.
 - `Unit`-typed operators now use `object` instead. This works better most of the time, due to covariance!
 - Operation state notifications use a callback instead of an observable.
 
-## Removed
+### Removed
 - All observable-related functions (`ToObservable`, `WaitForLast`).
 - `AsUnit...` operators: you can use `BoxResult` or just implicit covariance instead.
 
-## Added
+### Added
 - Support for .NET standard 2.0 (and NuGet publishing)
 - `ToTask` methods, which replace `ToObservable`. Note: If you were using these, you can use the UniRx `ToObservable` method to convert a task to an observable.
 - `UnityTestInstructionExecutor`, which should provide the same functionality as `TestInstructionExecutor` did before.
