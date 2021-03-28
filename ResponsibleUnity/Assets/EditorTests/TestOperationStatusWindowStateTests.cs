@@ -13,7 +13,7 @@ namespace Responsible.EditorTests
 {
 	public class TestOperationStatusWindowStateTests
 	{
-		private Action<TestOperationStateNotification> notificationsCallback;
+		private TestInstructionExecutor.StateNotificationCallback notificationsCallback;
 		private TestOperationStatusWindowState state;
 		private ScrollView scrollView;
 
@@ -116,9 +116,9 @@ namespace Responsible.EditorTests
 		public void StartedNotification_AddsStateLabel()
 		{
 			var operationState1 = new FakeOperationState("Fake State 1");
-			this.notificationsCallback(new TestOperationStateNotification.Started(operationState1));
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState1);
 			var operationState2 = new FakeOperationState("Fake State 2");
-			this.notificationsCallback(new TestOperationStateNotification.Started(operationState2));
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState2);
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);
@@ -132,9 +132,9 @@ namespace Responsible.EditorTests
 		public void FinishedNotification_MovesStateLabelToPrevious()
 		{
 			var operationState = new FakeOperationState("Fake State");
-			this.notificationsCallback(new TestOperationStateNotification.Started(operationState));
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState);
 			this.state.Update();
-			this.notificationsCallback(new TestOperationStateNotification.Finished(operationState));
+			this.notificationsCallback(TestOperationStateTransition.Finished, operationState);
 
 			var visualState = new VisualState(this.scrollView);
 			Assert.IsEmpty(visualState.CurrentOperations);
@@ -145,7 +145,7 @@ namespace Responsible.EditorTests
 		public void FinishedNotification_OnlyLogsWarning_WhenNotFound()
 		{
 			var operationState = new FakeOperationState("Fake State");
-			this.notificationsCallback(new TestOperationStateNotification.Finished(operationState));
+			this.notificationsCallback(TestOperationStateTransition.Finished, operationState);
 
 			LogAssert.Expect(LogType.Warning, new Regex("Could not find"));
 			new VisualState(this.scrollView).AssertEmpty();
@@ -163,11 +163,11 @@ namespace Responsible.EditorTests
 		{
 			var state1 = new FakeOperationState("Fake State 1");
 			var state2 = new FakeOperationState("Fake State 2");
-			this.notificationsCallback(new TestOperationStateNotification.Started(state1));
+			this.notificationsCallback(TestOperationStateTransition.Started, state1);
 			this.state.Update();
-			this.notificationsCallback(new TestOperationStateNotification.Started(state2));
+			this.notificationsCallback(TestOperationStateTransition.Started, state2);
 			this.state.Update();
-			this.notificationsCallback(new TestOperationStateNotification.Finished(state1));
+			this.notificationsCallback(TestOperationStateTransition.Finished, state1);
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);
@@ -180,8 +180,9 @@ namespace Responsible.EditorTests
 		[Test]
 		public void ErrorInState_ContainsErrorInUI()
 		{
-			this.notificationsCallback(new TestOperationStateNotification.Started(
-				new FakeOperationState(new Exception("Fake Exception"))));
+			this.notificationsCallback(
+				TestOperationStateTransition.Started,
+				new FakeOperationState(new Exception("Fake Exception")));
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);

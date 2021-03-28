@@ -15,7 +15,7 @@ namespace Responsible.Editor
 
 		public TestOperationStatusWindowState(
 			VisualElement rootElement,
-			Func<Action<TestOperationStateNotification>, IDisposable> subscribeFunction)
+			Func<TestInstructionExecutor.StateNotificationCallback, IDisposable> subscribeFunction)
 		{
 			var currentOperations = new VisualElement();
 			var currentOperationsTitle = new Label("Currently executing operations:");
@@ -59,15 +59,15 @@ namespace Responsible.Editor
 				}
 			}
 
-			this.subscription = subscribeFunction(notification =>
+			this.subscription = subscribeFunction((type, state) =>
 			{
-				switch (notification)
+				switch (type)
 				{
-					case TestOperationStateNotification.Started started:
-						AddLabel(started.State);
+					case TestOperationStateTransition.Started:
+						AddLabel(state);
 						break;
-					case TestOperationStateNotification.Finished finished:
-						RemoveLabel(finished.State);
+					case TestOperationStateTransition.Finished:
+						RemoveLabel(state);
 						break;
 				}
 			});
