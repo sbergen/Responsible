@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed the UniRx dependency, now uses `async/await` internally instead.
 - Unity-specific functionality was moved to work through abstractions.
 - `Unit`-typed operators now use `object` instead. This works better most of the time, due to covariance!
+- Operation state notifications use a callback instead of an observable.
 
 ## Removed
 - All observable-related functions (`ToObservable`, `WaitForLast`).
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `UnityTestInstructionExecutor`, which should provide the same functionality as `TestInstructionExecutor` did before.
 - `BoxResult` operators: replace `AsUnit...` operators when working with value types.
 - `WaitForTask` operator.
+- Support for adding extra global context into failure messages.
 
 ## [3.0.1] - 2021-03-14
 ### Fixed
