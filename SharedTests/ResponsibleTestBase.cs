@@ -18,6 +18,7 @@ namespace Responsible.Tests
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);
 
 		protected IFailureListener FailureListener { get; private set; }
+		protected IGlobalContextProvider GlobalContextProvider { get; private set; }
 		protected MockTestScheduler Scheduler { get; private set; }
 
 		protected TestInstructionExecutor Executor { get; private set; }
@@ -40,11 +41,13 @@ namespace Responsible.Tests
 		public void BaseSetUp()
 		{
 			this.FailureListener = this.MakeFailureListener();
+			this.GlobalContextProvider = this.MakeGlobalContextProvider();
 			this.Scheduler = new MockTestScheduler();
 			this.Executor = new TestInstructionExecutor(
 				this.Scheduler,
 				this.ExternalResultSource(),
-				this.FailureListener);
+				this.FailureListener,
+				this.GlobalContextProvider);
 		}
 
 		[TearDown]
@@ -55,5 +58,6 @@ namespace Responsible.Tests
 
 		protected virtual IExternalResultSource ExternalResultSource() => null;
 		protected virtual IFailureListener MakeFailureListener() => null;
+		protected virtual IGlobalContextProvider MakeGlobalContextProvider() => null;
 	}
 }

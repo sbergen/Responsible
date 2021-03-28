@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using NSubstitute;
 using NUnit.Framework;
+using Responsible.State;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -12,6 +13,9 @@ namespace Responsible.Tests
 
 		protected override IFailureListener MakeFailureListener()
 			=> Substitute.For<IFailureListener>();
+
+		protected override IGlobalContextProvider MakeGlobalContextProvider()
+			=> Substitute.For<IGlobalContextProvider>();
 
 		[Test]
 		public void Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
@@ -67,6 +71,25 @@ namespace Responsible.Tests
 				Arg.Is<string>(str =>
 					str.Contains("Should be in logs") &&
 					str.Contains("Nested details")));
+		}
+
+		[Test]
+		public void Executor_RequestsGlobalContext_OnFailure()
+		{
+			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+				b => b.AddDetails("Global details")));
+
+				WaitForCondition("Never", () => false)
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
+
+			this.FailureListener.Received(1).OperationFailed(
+				Arg.Any<TimeoutException>(),
+				Arg.Is<string>(str =>
+					str.Contains("Global context:") &&
+					str.Contains("  Global details")));
 		}
 	}
 }

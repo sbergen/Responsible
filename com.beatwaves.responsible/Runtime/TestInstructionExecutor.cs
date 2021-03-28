@@ -29,6 +29,7 @@ namespace Responsible
 		private readonly ITestScheduler scheduler;
 		private readonly IExternalResultSource externalResultSource;
 		private readonly IFailureListener failureListener;
+		private readonly IGlobalContextProvider globalContextProvider;
 
 		/// <summary>
 		/// Callback delegate type for test operation state notifications.
@@ -61,14 +62,19 @@ namespace Responsible
 		/// <param name="failureListener">
 		/// Optional failure listener, to get notifications on test operation failures.
 		/// </param>
+		/// <param name="globalContextProvider">
+		/// Optional provider for global context, which gets included in failure messages.
+		/// </param>
 		public TestInstructionExecutor(
 			ITestScheduler scheduler,
 			IExternalResultSource externalResultSource = null,
-			IFailureListener failureListener = null)
+			IFailureListener failureListener = null,
+			IGlobalContextProvider globalContextProvider = null)
 		{
 			this.scheduler = scheduler;
 			this.externalResultSource = externalResultSource;
 			this.failureListener = failureListener;
+			this.globalContextProvider = globalContextProvider;
 		}
 
 		/// <summary>
@@ -113,8 +119,8 @@ namespace Responsible
 				catch (Exception e)
 				{
 					var message = e is TimeoutException
-						? MakeTimeoutMessage(rootState)
-						: MakeErrorMessage(rootState, e);
+						? this.MakeTimeoutMessage(rootState)
+						: this.MakeErrorMessage(rootState, e);
 					this.failureListener?.OperationFailed(e, message);
 					throw new TestFailureException(message, e);
 				}
@@ -127,16 +133,31 @@ namespace Responsible
 		}
 
 		[Pure]
-		private static string MakeTimeoutMessage<T>(ITestOperationState<T> rootOperation)
-			=> string.Join(UnityEmptyLine, FailureLines(rootOperation, "timed out"));
+		private string MakeTimeoutMessage(ITestOperationState rootOperation)
+			=> string.Join(
+				UnityEmptyLine,
+				FailureLines(rootOperation, "timed out")
+					.Concat(this.MakeGlobalContext()));
 
 		[Pure]
-		private static string MakeErrorMessage<T>(
-			ITestOperationState<T> rootOperation,
+		private string MakeErrorMessage(
+			ITestOperationState rootOperation,
 			Exception exception)
 			=> string.Join(
 				UnityEmptyLine,
-				FailureLines(rootOperation,"failed").Append($"Error: {exception}"));
+				FailureLines(rootOperation,"failed")
+					.Concat(this.MakeGlobalContext())
+					.Append($"Error: {exception}"));
+
+		private IEnumerable<string> MakeGlobalContext()
+		{
+			if (this.globalContextProvider != null)
+			{
+				var builder = new StateStringBuilder();
+				builder.AddNestedDetails("Global context:", this.globalContextProvider.BuildGlobalContext);
+				yield return builder.ToString();
+			}
+		}
 
 		[Pure]
 		private static IEnumerable<string> FailureLines(
