@@ -9,7 +9,7 @@ namespace Responsible
 	/// </summary>
 	public class TestFailureException : Exception
 	{
-		public TestFailureException(string message, Exception innerException)
+		internal TestFailureException(string message, Exception innerException)
 			: base(message, innerException)
 		{
 		}

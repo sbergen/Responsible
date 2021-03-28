@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Responsible.Unity
 {
 	/// <summary>
-	/// Provider default <see cref="IFailureListener"/> functionality for Unity, by logging failures.
+	/// Provides default <see cref="IFailureListener"/> functionality for Unity, by logging failures.
 	/// Unity doesn't handle exceptions in coroutines very well in tests
 	/// (one of the motivations to write Responsible), so we also log failures to ensure they are visible.
 	/// </summary>

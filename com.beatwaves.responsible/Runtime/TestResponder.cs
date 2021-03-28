@@ -81,7 +81,8 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test responder returning value type, to one returning the same value boxed into object.
+		/// Converts a test responder returning a value type,
+		/// to one returning the same value boxed into <see cref="object"/>.
 		/// Can be useful for example in conjunction with <see cref="Responsibly.RespondToAllOf{T}"/>
 		/// </summary>
 		/// <returns>

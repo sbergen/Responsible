@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Responsible.Utilities
 {
@@ -23,9 +26,20 @@ namespace Responsible.Utilities
 
 		public async Task<T> AwaitNext()
 		{
+			this.AssertTasksAvailable();
 			var completedTask = await Task.WhenAny(this.tasks);
 			this.tasks.Remove(completedTask);
 			return await completedTask;
+		}
+
+		[AssertionMethod]
+		[ExcludeFromCodeCoverage] // Should never trigger an exception
+		private void AssertTasksAvailable()
+		{
+			if (this.tasks.Count == 0)
+			{
+				throw new InvalidOperationException("No more tasks to await!");
+			}
 		}
 	}
 }

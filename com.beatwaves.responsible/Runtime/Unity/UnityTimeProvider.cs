@@ -38,9 +38,19 @@ namespace Responsible.Unity
 			DestroyImmediate(this.gameObject);
 		}
 
+		/// <summary>
+		/// Returns the current Unity frame number.
+		/// </summary>
+		/// <value>The current Unity frame number.</value>
 		int ITimeProvider.FrameNow => Time.frameCount;
+
+		/// <summary>
+		/// Returns the system time using <see cref="DateTimeOffset"/>.<see cref="DateTimeOffset.Now"/>.
+		/// </summary>
+		/// <value><see cref="DateTimeOffset"/>.<see cref="DateTimeOffset.Now"/></value>
 		DateTimeOffset ITimeProvider.TimeNow => DateTimeOffset.Now;
 
+		/// <inheritdoc cref="ITimeProvider.RegisterPollCallback"/>
 		IDisposable ITimeProvider.RegisterPollCallback(Action action) =>
 			this.poller.RegisterPollCallback(action);
 

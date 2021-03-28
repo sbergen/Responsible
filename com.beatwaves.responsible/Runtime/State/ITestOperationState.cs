@@ -49,7 +49,7 @@ namespace Responsible.State
 		/// An task, which will complete with the result of the operation, or an error on failure.
 		/// </returns>
 		/// <remarks>
-		/// Due to lack of support for covariant generic classes, or covariant generic constraints in C#,
+		/// Due to lack of support for covariant generic classes and constraints in C#,
 		/// we have to use this unsafe method. However, it is used only from an extension method,
 		/// which does the correct type inference for us, so overall, things are safe.
 		/// </remarks>

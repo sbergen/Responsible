@@ -34,7 +34,7 @@ namespace Responsible.Unity
 		}
 
 		/// <summary>
-		/// Intercept errors respecting, and not toggling the globally mutable
+		/// Intercept errors, respecting and not toggling the globally mutable
 		/// <see cref="LogAssert.ignoreFailingMessages"/>.
 		/// Will complete with an error if either an error or exception is logged,
 		/// and will never complete if neither of those happens.

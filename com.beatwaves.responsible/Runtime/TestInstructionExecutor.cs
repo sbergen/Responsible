@@ -11,7 +11,7 @@ using Responsible.Utilities;
 namespace Responsible
 {
 	/// <summary>
-	/// Handles execution of test instruction and intercepting logged errors during test execution.
+	/// Handles execution of test instructions, external result sources, and failure notifications.
 	/// </summary>
 	/// <remarks>
 	/// It is recommended to use a base class for your tests using Responsible,
@@ -41,7 +41,7 @@ namespace Responsible
 		/// <returns>A disposable, which will remove the callback when disposed.</returns>
 		/// <remarks>
 		/// Static, so that Unity EditorWindows can access it.
-		/// Used by the test operation window available at "Window/Responsible/Operation State".
+		/// Used by the test operation window available in Unity at Window/Responsible/Operation State.
 		/// </remarks>
 		public static IDisposable SubscribeToStates(StateNotificationCallback callback)
 			=> NotificationCallbacks.Add(callback);
@@ -49,7 +49,7 @@ namespace Responsible
 		/// <summary>
 		/// Constructs a new test instruction executor.
 		/// </summary>
-		/// <param name="timeProvider">Implementation for counting time and frames.</param>
+		/// <param name="timeProvider">Implementation for time and frame based operations.</param>
 		/// <param name="externalResultSource">
 		/// Optional source for premature completion of test operations.
 		/// </param>
@@ -67,7 +67,9 @@ namespace Responsible
 		}
 
 		/// <summary>
-		/// Disposes the executor. Should be called after finishing with tests.
+		/// Disposes the executor.
+		/// For extra safety, it is recommended to construct a new executor for each test,
+		/// and dispose it after the test has finished.
 		/// </summary>
 		public virtual void Dispose()
 		{

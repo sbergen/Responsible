@@ -23,7 +23,7 @@ namespace Responsible
 		/// <returns>A task which will complete with the instructions status.</returns>
 		/// <param name="instruction">The instruction to execute.</param>
 		/// <typeparam name="T">Return type of the test instruction.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithExecutor{T}"/>
 		public static Task<T> ToTask<T>(
 			this ITestInstruction<T> instruction,
 			TestInstructionExecutor executor,
@@ -145,8 +145,9 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test instruction returning value type, to one returning the same value boxed into object.
-		/// Can be useful for example in conjunction with <see cref="Sequence"/>, if used with value types.
+		/// Converts a test instruction returning a value type,
+		/// into one returning the same value boxed into <see cref="object"/>.
+		/// Can be useful for example in conjunction with <see cref="Sequence"/> together with value types.
 		/// </summary>
 		/// <returns>
 		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
