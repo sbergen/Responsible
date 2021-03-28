@@ -254,13 +254,16 @@ jobs:
         id: changelog
         uses: mindsers/changelog-reader-action@v2
 
-      - name: Output status
+      - name: Output version status
+        env:
+          CHANGELOG: ${{ steps.changelog.outputs.changes }}
         run: |
           echo "Previous version from tags: ${{ steps.parse-tag-version.outputs.version }}"
           echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
           echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
           echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
-          echo "Changes in changelog:\n${{ steps.changelog.outputs.changes }}"
+          echo "Changes in changelog:"
+          echo $CHANGELOG
 
       - name: Check that Unity version is up to date with changelog
         run: test ${{ steps.unity-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
