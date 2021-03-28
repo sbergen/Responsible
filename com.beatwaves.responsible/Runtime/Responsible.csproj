@@ -9,6 +9,7 @@
         <PackageProjectUrl>https://www.beatwaves.net/Responsible/</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Description>Responsible is a testing utility that helps you write maintainable asynchronous tests. It allows you to write declarative and composable test code, which produces informative output on test failures.</Description>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
