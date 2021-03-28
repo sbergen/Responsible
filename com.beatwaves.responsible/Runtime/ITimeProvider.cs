@@ -2,12 +2,15 @@ using System;
 
 namespace Responsible
 {
+	// Docs are generated for the Unity build, so UnityTimeProvider is only missing in .NET builds
+	#pragma warning disable CS1574
 	/// <summary>
 	/// Abstraction for polling and time-based operations.
 	/// All of such operations function based on registering callbacks to an instance of this interface.
 	/// See also <see cref="Utilities.RetryingPoller"/> for an implementation you may use for poll callbacks,
 	/// and <see cref="Unity.UnityTimeProvider"/> for a default Unity implementation.
 	/// </summary>
+	#pragma warning restore CS1574
 	public interface ITimeProvider
 	{
 		/// <summary>

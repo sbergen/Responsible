@@ -15,6 +15,11 @@
 
         <!-- For the same reasons as above, exclude these Unity files from standard projects -->
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.meta;package.json;*.asmdef</DefaultItemExcludes>
+
+        <!--
+            CS1573: The build doesn't understand inheritdoc, so suppress warnings for missing parameter docs
+        -->
+        <NoWarn>$(NoWarn);CS1573</NoWarn>
     </PropertyGroup>
 
 </Project>
