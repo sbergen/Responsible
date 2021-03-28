@@ -79,7 +79,7 @@ namespace Responsible.Tests
 			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
-				WaitForCondition("Never", () => false)
+			WaitForCondition("Never", () => false)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
