@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [4.0.0] - 2021-03-28
 ## Changed
 - Removed the UniRx dependency, now uses `async/await` internally instead.
 - Unity-specific functionality was moved to work through abstractions.
@@ -15,10 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `AsUnit...` operators: you can use `BoxResult` or just implicit covariance instead.
 
 ## Added
-- Support for .NET standard 2.0.
+- Support for .NET standard 2.0 (and NuGet publishing)
 - `ToTask` methods, which replace `ToObservable`. Note: If you were using these, you can use the UniRx `ToObservable` method to convert a task to an observable.
 - `UnityTestInstructionExecutor`, which should provide the same functionality as `TestInstructionExecutor` did before.
 - `BoxResult` operators: replace `AsUnit...` operators when working with value types.
+- `WaitForTask` operator.
 
 ## [3.0.1] - 2021-03-14
 ### Fixed
@@ -70,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v3.0.1...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/sbergen/Responsible/releases/tag/v4.0.0
 [3.0.1]: https://github.com/sbergen/Responsible/releases/tag/v3.0.1
 [3.0.0]: https://github.com/sbergen/Responsible/releases/tag/v3.0.0
 [2.0.0]: https://github.com/sbergen/Responsible/releases/tag/v2.0.0
