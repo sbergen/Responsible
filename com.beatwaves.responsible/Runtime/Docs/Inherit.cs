@@ -128,8 +128,8 @@ namespace Responsible.Docs
 		{
 		}
 
-		/// <inheritdoc cref="CallerMember{T1, T2}"/>
-		/// <param name="executor">Test operation executor to use.</param>
+		/// <inheritdoc cref="CallerMember{T1, T2, T3}"/>
+		/// <param name="executor">Test test instruction executor to use.</param>
 		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
 		public void CallerMemberWithExecutor<T>(
 			T arg1,
@@ -142,7 +142,7 @@ namespace Responsible.Docs
 		}
 
 		/// <inheritdoc cref="CallerMember{T1, T2, T3, T4}"/>
-		/// <param name="executor">Test operation executor to use.</param>
+		/// <param name="executor">Test test instruction executor to use.</param>
 		/// <param name="throwOnError">Whether or not to throw on cancellation or errors.</param>
 		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
 		public void YieldInstruction<T>(

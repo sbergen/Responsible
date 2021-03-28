@@ -20,7 +20,7 @@ namespace Responsible
 		/// <summary>
 		/// Creates the state object for a single run of this test operation.
 		///
-		/// You should normally prefer the <c>To...</c> extension methods over
+		/// You should normally prefer using the <c>To...</c> extension methods over
 		/// creating a state instance manually.
 		/// </summary>
 		/// <returns>A state object for this run of the test operation.</returns>

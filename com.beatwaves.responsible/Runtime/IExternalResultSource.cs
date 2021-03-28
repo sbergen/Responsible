@@ -18,7 +18,7 @@ namespace Responsible
 		/// and the root operation will complete with the returned result or failure.
 		/// </summary>
 		/// <param name="cancellationToken">
-		/// Cancellation token which should cancel the external result operation.
+		/// Cancellation token which must cancel the external result operation.
 		/// </param>
 		/// <typeparam name="T">Type of the test instruction being executed.</typeparam>
 		/// <returns>A task which will cause early failure or completion of the executed test instruction.</returns>

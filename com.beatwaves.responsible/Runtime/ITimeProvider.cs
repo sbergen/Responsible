@@ -18,16 +18,22 @@ namespace Responsible
 		int FrameNow { get; }
 
 		/// <summary>
-		/// Returns the current time. Is used in internal tests to mock time.
+		/// Returns the current time.
+		/// The absolute value does not matter, as long as time progresses monotonically.
+		/// Used for timeouts, and for providing state details for operations.
 		/// </summary>
 		/// <value>The current time.</value>
+		/// <remarks>
+		/// This exists mostly so that it can be mocked in internal Responsible tests.
+		/// </remarks>
 		DateTimeOffset TimeNow { get; }
 
 		/// <summary>
-		/// When called, will register a callback to be called on every frame.
+		/// Registers a poll callback to be called at least once per frame.
+		/// See <see cref="Utilities.RetryingPoller"/> for the suggested default strategy.
 		/// All time and frame based operations run from these callbacks.
 		/// </summary>
-		/// <param name="action">Action to call on every frame.</param>
+		/// <param name="action">Action to call at least once on every frame.</param>
 		/// <returns>A disposable instance, which must unregister the callback when disposed.</returns>
 		IDisposable RegisterPollCallback(Action action);
 	}

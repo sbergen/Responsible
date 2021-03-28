@@ -120,7 +120,7 @@ namespace Responsible
 		/// once they have all completed.
 		/// </returns>
 		/// <param name="conditions">Conditions to wait on.</param>
-		/// <typeparam name="T">Result type of the conditions to wait on</typeparam>
+		/// <typeparam name="T">Result type of the conditions to wait on.</typeparam>
 		[Pure]
 		public static ITestWaitCondition<T[]> WaitForAllOf<T>(params ITestWaitCondition<T>[] conditions)
 			=> new AllOfWaitCondition<T>(conditions);
@@ -132,6 +132,7 @@ namespace Responsible
 		/// <returns>
 		/// Wait condition which completes together with the task constructed with <paramref name="taskRunner"/>.
 		/// </returns>
+		/// <typeparam name="T">Result type of the task to wait on.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForTask<T>(
