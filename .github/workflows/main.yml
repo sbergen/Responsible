@@ -260,6 +260,7 @@ jobs:
           echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
           echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
           echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
+          echo "Changes in changelog:\n${{ steps.changelog.outputs.changes }}"
 
       - name: Check that Unity version is up to date with changelog
         run: test ${{ steps.unity-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
@@ -296,16 +297,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: nupkg
-
-      - name: Publish NuGet package
-        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
       
       - name: Zip source code and docs
         run: |
-          zip -r ../com.beatwaves.responsible.zip com.beatwaves.responsible
+          zip -r com.beatwaves.responsible.zip com.beatwaves.responsible
           zip -r ResponsibleDocs.zip ResponsibleDocs
 
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@91409e712cf565ce9eff10c87a8d1b11b81757ae
         with:
           fail_on_unmatched_files: true
           body: ${{ needs.version-info.outputs.changelog-body }}
@@ -316,3 +314,6 @@ jobs:
             Beatwaves.Responsible.*.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish NuGet package
+        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
