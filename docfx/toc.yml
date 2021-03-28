@@ -1,10 +1,14 @@
 - name: Home
   href: index.md
+- name: .NET
+  href: dotnet.md
+- name: Unity
+  href: unity.md
 - name: Design Overview
   href: design.md
 - name: API Documentation
   href: obj/api/
 - name: Changelog
   href: ../CHANGELOG.md
-- name: Responsible on GitHub
+- name: GitHub
   href: https://github.com/sbergen/Responsible

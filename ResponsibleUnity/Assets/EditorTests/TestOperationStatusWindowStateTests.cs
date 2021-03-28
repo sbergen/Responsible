@@ -1,0 +1,192 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using NUnit.Framework;
+using Responsible.Editor;
+using Responsible.State;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace Responsible.EditorTests
+{
+	public class TestOperationStatusWindowStateTests
+	{
+		private TestInstructionExecutor.StateNotificationCallback notificationsCallback;
+		private TestOperationStatusWindowState state;
+		private ScrollView scrollView;
+
+		// Resolves the elements into a representation of what things look like
+		private class VisualState
+		{
+			public readonly List<string> CurrentOperations = new List<string>();
+			public readonly string PreviousOperation;
+
+			public void AssertEmpty()
+			{
+				Assert.IsEmpty(this.CurrentOperations);
+				Assert.IsNull(this.PreviousOperation);
+			}
+
+			public VisualState(VisualElement parent)
+			{
+				var foundCurrentTitle = false;
+				var foundPreviousTitle = false;
+				foreach (var label in parent.Query<Label>().Build().ToList()
+					.Where(label => !string.IsNullOrEmpty(label.text)))
+				{
+					if (label.text == "Currently executing operations:")
+					{
+						Assert.IsFalse(foundCurrentTitle, "Should have only one title for current operations");
+						foundCurrentTitle = true;
+					}
+					else if (label.text == "Last finished operation:")
+					{
+						Assert.IsFalse(foundPreviousTitle, "Should have only one title for previous operations");
+						Assert.IsTrue(
+							foundCurrentTitle, "Current operations title should precede previous operation title");
+						foundPreviousTitle = true;
+					}
+					else if (foundPreviousTitle)
+					{
+						Assert.IsNull(this.PreviousOperation, "Should have only one previous operation");
+						this.PreviousOperation = label.text;
+					}
+					else if (foundCurrentTitle)
+					{
+						this.CurrentOperations.Add(label.text);
+					}
+					else
+					{
+						Assert.Fail($"Found label before any titles: {label.text}");
+					}
+				}
+
+				Assert.IsTrue(foundCurrentTitle, "Should have title for current instructions");
+				Assert.IsTrue(foundPreviousTitle, "Should have title for previous instruction");
+			}
+		}
+
+		private class ResetNotifications : IDisposable
+		{
+			private readonly TestOperationStatusWindowStateTests parent;
+
+			public ResetNotifications(TestOperationStatusWindowStateTests parent)
+			{
+				this.parent = parent;
+			}
+
+			public void Dispose()
+			{
+				this.parent.notificationsCallback = null;
+			}
+		}
+
+		[SetUp]
+		public void SetUp()
+		{
+			var root = new VisualElement();
+			this.state = new TestOperationStatusWindowState(
+				root,
+				callback =>
+				{
+					this.notificationsCallback = callback;
+					return new ResetNotifications(this);
+				});
+			this.scrollView = root.Q<ScrollView>();
+
+			// Precondition
+			Assert.NotNull(this.scrollView);
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			this.state.Dispose();
+		}
+
+		[Test]
+		public void Construction_AddsOnlyTitleLabels()
+		{
+			new VisualState(this.scrollView).AssertEmpty();
+		}
+
+		[Test]
+		public void StartedNotification_AddsStateLabel()
+		{
+			var operationState1 = new FakeOperationState("Fake State 1");
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState1);
+			var operationState2 = new FakeOperationState("Fake State 2");
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState2);
+			this.state.Update();
+
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { operationState1.StringRepresentation, operationState2.StringRepresentation },
+				visualState.CurrentOperations);
+			Assert.IsNull(visualState.PreviousOperation);
+		}
+
+		[Test]
+		public void FinishedNotification_MovesStateLabelToPrevious()
+		{
+			var operationState = new FakeOperationState("Fake State");
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState);
+			this.state.Update();
+			this.notificationsCallback(TestOperationStateTransition.Finished, operationState);
+
+			var visualState = new VisualState(this.scrollView);
+			Assert.IsEmpty(visualState.CurrentOperations);
+			Assert.AreEqual(operationState.StringRepresentation, visualState.PreviousOperation);
+		}
+
+		[Test]
+		public void FinishedNotification_OnlyLogsWarning_WhenNotFound()
+		{
+			var operationState = new FakeOperationState("Fake State");
+			this.notificationsCallback(TestOperationStateTransition.Finished, operationState);
+
+			LogAssert.Expect(LogType.Warning, new Regex("Could not find"));
+			new VisualState(this.scrollView).AssertEmpty();
+		}
+
+		[Test]
+		public void Dispose_StopsListeningToNotifications()
+		{
+			this.state.Dispose();
+			Assert.IsNull(this.notificationsCallback);
+		}
+
+		[Test]
+		public void MultipleOperations_OperateCorrectly()
+		{
+			var state1 = new FakeOperationState("Fake State 1");
+			var state2 = new FakeOperationState("Fake State 2");
+			this.notificationsCallback(TestOperationStateTransition.Started, state1);
+			this.state.Update();
+			this.notificationsCallback(TestOperationStateTransition.Started, state2);
+			this.state.Update();
+			this.notificationsCallback(TestOperationStateTransition.Finished, state1);
+			this.state.Update();
+
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { state2.StringRepresentation },
+				visualState.CurrentOperations);
+			Assert.AreEqual(state1.StringRepresentation, visualState.PreviousOperation);
+		}
+
+		[Test]
+		public void ErrorInState_ContainsErrorInUI()
+		{
+			this.notificationsCallback(
+				TestOperationStateTransition.Started,
+				new FakeOperationState(new Exception("Fake Exception")));
+			this.state.Update();
+
+			var visualState = new VisualState(this.scrollView);
+			Assert.IsTrue(visualState.CurrentOperations.Any(t => t.Contains("Fake Exception")));
+		}
+	}
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Project>
+
+    <PropertyGroup>
+        <!-- override namespace from assembly name -->
+        <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+
+        <!--
+            As we need to put .csproj next to the source for Rider and ReSharper namespaces to work,
+            put output into directories which won't get picked up by Unity.
+        -->
+        <BaseOutputPath>.bin</BaseOutputPath>
+        <BaseIntermediateOutputPath>.obj</BaseIntermediateOutputPath>
+        <MSBuildProjectExtensionsPath>.obj</MSBuildProjectExtensionsPath>
+
+        <!-- For the same reasons as above, exclude these Unity files from standard projects -->
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.meta;package.json;*.asmdef</DefaultItemExcludes>
+
+        <!--
+            CS1573: The build doesn't understand inheritdoc, so suppress warnings for missing parameter docs
+        -->
+        <NoWarn>$(NoWarn);CS1573</NoWarn>
+    </PropertyGroup>
+
+</Project>

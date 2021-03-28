@@ -1,0 +1,13 @@
+Temp
+Library
+Logs
+CodeCoverage
+UserSettings
+obj
+obj.meta
+
+*.sln
+*.csproj
+
+# Ignore coverage settings, as they are changed often
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json

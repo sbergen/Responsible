@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2021-03-28
+## Changed
+- Removed the UniRx dependency, now uses `async/await` internally instead.
+- Unity-specific functionality was moved to work through abstractions.
+- `Unit`-typed operators now use `object` instead. This works better most of the time, due to covariance!
+- Operation state notifications use a callback instead of an observable.
+
+## Removed
+- All observable-related functions (`ToObservable`, `WaitForLast`).
+- `AsUnit...` operators: you can use `BoxResult` or just implicit covariance instead.
+
+## Added
+- Support for .NET standard 2.0 (and NuGet publishing)
+- `ToTask` methods, which replace `ToObservable`. Note: If you were using these, you can use the UniRx `ToObservable` method to convert a task to an observable.
+- `UnityTestInstructionExecutor`, which should provide the same functionality as `TestInstructionExecutor` did before.
+- `BoxResult` operators: replace `AsUnit...` operators when working with value types.
+- `WaitForTask` operator.
+- Support for adding extra global context into failure messages.
+
 ## [3.0.1] - 2021-03-14
 ### Fixed
 - Fix inclusion of documentation in releases, no changes in the library itself.
@@ -19,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Some parameters renamed for better documentation.
 
 ### Removed
-- Classes and functionality which was intended to be internal, was marked as internal.
+- Classes and functionality which was intended to be internal were marked as internal.
 
 ## [2.0.0] - 2021-02-26
 ### Changed
@@ -56,7 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/sbergen/Responsible/releases/tag/v4.0.0
+[3.0.1]: https://github.com/sbergen/Responsible/releases/tag/v3.0.1
+[3.0.0]: https://github.com/sbergen/Responsible/releases/tag/v3.0.0
 [2.0.0]: https://github.com/sbergen/Responsible/releases/tag/v2.0.0
 [1.2.0]: https://github.com/sbergen/Responsible/releases/tag/v1.2.0
 [1.1.0]: https://github.com/sbergen/Responsible/releases/tag/v1.1.0

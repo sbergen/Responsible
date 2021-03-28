@@ -1,15 +1,4 @@
-Temp
-Library
-Logs
-CodeCoverage
-obj
-obj.meta
-
+*.user
 .idea
-
-*.sln
-*.csproj
-*.DotSettings.user
-
-# Ignore coverage settings, as they are changed often
-ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+.bin
+.obj
