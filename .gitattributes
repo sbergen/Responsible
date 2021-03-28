@@ -1,0 +1,7 @@
+* text=auto
+*.cs diff=csharp
+
+*.asset linguist-generated=true
+*.meta linguist-generated=true
+*.prefab linguist-generated=true
+*.unity linguist-generated=true
