@@ -248,7 +248,7 @@ jobs:
         id: nuget-version
         run: |
           version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' com.beatwaves.responsible/Runtime/Responsible.csproj)
-          echo "::set-output name=version::v${version}""
+          echo "::set-output name=version::v${version}"
 
       - name: Get latest changelog entry
         id: changelog
