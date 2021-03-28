@@ -119,7 +119,7 @@ namespace Responsible.UnityTests
 		[Test]
 		public void WaitForCoroutine_ThrowsWithInvalidExecutor()
 		{
-			var nonUnityExecutor = new TestInstructionExecutor(new TestTimeProvider());
+			var nonUnityExecutor = new TestInstructionExecutor(new MockTestScheduler());
 			var instruction = Responsibly
 				.WaitForCoroutineMethod(this.Forever)
 				.ExpectWithinSeconds(1)

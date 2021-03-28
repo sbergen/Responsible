@@ -43,7 +43,7 @@ namespace Responsible.TestWaitConditions
 			}
 
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
-				=> runContext.TimeProvider.PollForCondition(
+				=> runContext.Scheduler.PollForCondition(
 					this.getConditionState,
 					this.condition,
 					cancellationToken);

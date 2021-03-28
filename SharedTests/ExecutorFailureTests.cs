@@ -22,7 +22,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsNotNull(GetFailureException(task));
 			this.FailureListener.Received(1).OperationFailed(
@@ -60,7 +60,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),

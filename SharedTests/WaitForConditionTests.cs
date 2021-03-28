@@ -72,7 +72,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var exception = GetFailureException(task);
 			StringAssert.Contains("Should be in output", exception.Message);
@@ -143,7 +143,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			this.TimeProvider.AdvanceFrame(TimeSpan.FromSeconds(2));
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
 
 			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");

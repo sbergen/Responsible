@@ -93,7 +93,7 @@ namespace Responsible.Tests
 				this.responder2.AllowFullCompletion();
 			}
 
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsNotNull(GetFailureException(this.task));
 		}

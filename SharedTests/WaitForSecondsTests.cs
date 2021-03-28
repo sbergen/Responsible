@@ -11,9 +11,9 @@ namespace Responsible.Tests
 		{
 			var task = WaitForSeconds(2).ToTask(this.Executor);
 			Assert.IsFalse(task.IsCompleted);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsFalse(task.IsCompleted);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsTrue(task.IsCompleted);
 		}
 
@@ -25,7 +25,7 @@ namespace Responsible.Tests
 			StateAssert.StringContainsInOrder(state.ToString()).NotStarted(description);
 			state.ToTask(this.Executor);
 			StateAssert.StringContainsInOrder(state.ToString()).Waiting(description);
-			this.TimeProvider.AdvanceFrame(OneSecond);
+			this.Scheduler.AdvanceFrame(OneSecond);
 			StateAssert.StringContainsInOrder(state.ToString()).Completed(description);
 		}
 	}

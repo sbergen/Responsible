@@ -43,18 +43,18 @@ namespace Responsible.Unity
 			{
 				var completionSource = new TaskCompletionSource<object>();
 
-				var unityTimeProvider = runContext.TimeProvider as MonoBehaviour;
-				if (unityTimeProvider == null)
+				var unityScheduler = runContext.Scheduler as MonoBehaviour;
+				if (unityScheduler == null)
 				{
 					throw new Exception(
-						"TimeProvider is not compatible with coroutines: " +
-						$"Expected a {nameof(MonoBehaviour)}, got {runContext.TimeProvider.GetType()}!");
+						"Scheduler is not compatible with coroutines: " +
+						$"Expected a {nameof(MonoBehaviour)}, got {runContext.Scheduler.GetType()}!");
 				}
 
 				cancellationToken.ThrowIfCancellationRequested();
-				var coroutine = unityTimeProvider.StartCoroutine(
+				var coroutine = unityScheduler.StartCoroutine(
 					this.RunCoroutine(completionSource, cancellationToken));
-				using (cancellationToken.Register(() => unityTimeProvider.StopCoroutine(coroutine)))
+				using (cancellationToken.Register(() => unityScheduler.StopCoroutine(coroutine)))
 				{
 					return await completionSource.Task;
 				}
