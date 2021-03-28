@@ -218,7 +218,7 @@ jobs:
 
     outputs:
       old-version: ${{ steps.parse-tag-version.outputs.version }}
-      new-version: ${{ steps.package-version.outputs.prop }}
+      new-version: ${{ steps.unity-version.outputs.prop }}
       changelog-body: ${{ steps.changelog.outputs.changes }}
       tag-name: ${{ steps.create-tag-name.outputs.tag }}
 
@@ -237,12 +237,18 @@ jobs:
           tag=$(echo ${{ steps.latest-release.outputs.tag_name }})
           echo "::set-output name=version::${tag:1}"
 
-      - name: Read current package version
-        id: package-version
+      - name: Read current Unity package version
+        id: unity-version
         uses: notiz-dev/github-action-json-property@release
         with: 
           path: com.beatwaves.responsible/package.json
           prop_path: 'version'
+
+      - name: Read current NuGet package version
+        id: nuget-version
+        run: |
+          version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' com.beatwaves.responsible/Runtime/Responsible.csproj)
+          echo "::set-output name=version::v${version}""
 
       - name: Get latest changelog entry
         id: changelog
@@ -251,20 +257,24 @@ jobs:
       - name: Output status
         run: |
           echo "Previous version from tags: ${{ steps.parse-tag-version.outputs.version }}"
-          echo "Current version from package.json: ${{ steps.package-version.outputs.prop }}"
+          echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
+          echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
           echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
 
-      - name: Check that changelog is up to date with package.json
-        run: test ${{ steps.package-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
+      - name: Check that Unity version is up to date with changelog
+        run: test ${{ steps.unity-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
+
+      - name: Check that NuGet version is up to date with changelog
+        run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.changelog.outputs.version }}
 
       - name: Create tag name
         id: create-tag-name
-        run: echo "::set-output name=tag::v${{ steps.package-version.outputs.prop }}"
+        run: echo "::set-output name=tag::v${{ steps.nuget-version.outputs.version }}"
 
   release:
     runs-on: ubuntu-latest
     name: Create Release
-    needs: [ version-info, docs ]
+    needs: [ version-info, docs, pack-netstandard ]
     if: |
       github.ref == 'refs/heads/main' &&
       needs.version-info.outputs.new-version != needs.version-info.outputs.old-version
@@ -272,14 +282,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/download-artifact@v2
-        name: Download Docs
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Download Docs
+        uses: actions/download-artifact@v2
         with:
           name: Docs
+
+      - name: Download NuGet package
+        uses: actions/download-artifact@v2
+        with:
+          name: nupkg
+
+      - name: Publish NuGet package
+        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
       
-      - name: Zip files
+      - name: Zip source code and docs
         run: |
-          pushd Packages && zip -r ../Responsible.zip Responsible && popd
+          zip -r ../com.beatwaves.responsible.zip com.beatwaves.responsible
           zip -r ResponsibleDocs.zip ResponsibleDocs
 
       - uses: softprops/action-gh-release@v1
@@ -289,6 +312,7 @@ jobs:
           tag_name: ${{ needs.version-info.outputs.tag-name }}
           files: |
             ResponsibleDocs.zip
-            Responsible.zip
+            com.beatwaves.responsible.zip
+            Beatwaves.Responsible.*.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
