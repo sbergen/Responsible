@@ -2,11 +2,14 @@
 
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/sbergen/Responsible/branch/main/graph/badge.svg)](https://codecov.io/gh/sbergen/Responsible)
+[![Nuget](https://img.shields.io/nuget/v/Beatwaves.Responsible)](http://nuget.org/packages/Beatwaves.Responsible)
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 
-*Responsible* helps you write maintainable high level asynchronous tests in [Unity](https://unity.com/):
+*Responsible* helps you write maintainable high level asynchronous tests in C#:
 * Get highly readable and informative output on test failures and timeouts
 * Write declarative, composable, and reusable test code
+
+Additionally, in [Unity](https://unity.com/):
 * Observe test execution progress while they are running in the Editor
 * Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
@@ -51,7 +54,7 @@ Error: System.Exception: Something failed
   at <normal exception stack trace comes here>
 ```
 
-By using the Editor window available under `Window -> Responsible -> Operation State`,
+In Unity, by using the Editor window available under `Window -> Responsible -> Operation State`,
 you can observe the progress of your tests executing.
 The contents of the window updates in real time and matches the output produced on failures,
 except for the operation stack and stack trace.
@@ -70,72 +73,12 @@ see the [Design Documentation](design.md).
 ## Reactive Programming? 
 
 While the design of Responsible was inspired by [ReactiveX](http://reactivex.io/),
-and it is being used under the hood,
 it's debatable if Responsible really fits the reactive programming paradigm.
 While knowing Rx is not *necessary* for using Responsible,
 being familiar with reactive and/or functional programming in C# (e.g. LINQ)
 should ease the learning curve.
 
-## Dependencies
-
-Responsible is built on top of [UniRx](https://github.com/neuecc/UniRx)
-and uses a bit of [NUnit](https://nunit.org/).
-Responsible currently runs only in [Unity](https://unity.com/),
-but could easily be [ported](design.md#portability) to work in other .NET environments also.
-
-## Examples
-
-For a simple example of a basic test setup, 
-there's an [example project](https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Samples~/ResponsibleGame)
-with some [basic tests](https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Samples~/ResponsibleGame/PlayModeTests) included.
-This sample game can be installed from the Unity Package Manager,
-and is also symlinked into the main Unity project in this repository, for convenience.
-
-The library itself also has [extensive test coverage](https://github.com/sbergen/responsible/tree/main/Assets/Responsible/Tests/Runtime),
-which may be used as more extensive examples of usage.
-Note that these tests live outside of the package,
-so that they do not get included into projects referencing Responsible.
-(This has to do with undocumented reasons related to using `"type": "tests"` in `package.json`).
-
 ## Getting Started
 
-To start using Responsible, you'll need to install the package and
-reference the `Responsible` assembly from your test assemblies.
-Since `Unit` is quite commonly used in Responsible,
-no effort has been made to avoid having to reference UniRx also.
-
-### Installation Using the Unity Package Manager
-
-Add the following to `Packages/manifest.json`:
-```json
-"com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/Packages/Responsible"
-``` 
-if you are not already using UniRx, you may install that via the package manager also,
-by adding also the following line:
-```json
-"com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
-```
-
-### Installation Using OpenUPM
-
-After [setting up OpenUMP](https://openupm.com/docs/),
-you can add Responsible to your project by running
-```
-openupm add com.beatwaves.responsible
-``` 
-
-### Installation Without a Package Manager
-
-If you can't or don't want to use the package manager, you can also directly incorporate
-the [Packages/Responsible/Runtime](https://github.com/sbergen/responsible/tree/main/Packages/Responsible/Runtime) directory into your project.
-This could be done manually, or e.g. with a symlink and git submodule.
-
-If you are not already using UniRx, you'll need to install it from the Asset Store,
-or in a similar fashion to what is outlined above.
-
-### Referencing the Assembly
-
-With either installation option, you'll end up with an assembly called `Responsible`,
-with the `UNITY_INCLUDE_TESTS` define constraint.
-To use Responsible, simply reference this from your test assemblies.
-You'll also need to reference UniRx to use many features of Responsible.
+* If you are working with Unity, see the [Unity documentation](unity.md).
+* If you are working on .NET standard, see the [.NET documentation](dotnet.md).
