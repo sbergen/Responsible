@@ -30,6 +30,11 @@ namespace Responsible
 		private readonly IExternalResultSource externalResultSource;
 		private readonly IFailureListener failureListener;
 
+		/// <summary>
+		/// Callback delegate type for test operation state notifications.
+		/// </summary>
+		/// <param name="transitionType">The type of the operation state transition.</param>
+		/// <param name="state">The state of the operation.</param>
 		public delegate void StateNotificationCallback(
 			TestOperationStateTransition transitionType,
 			ITestOperationState state);
