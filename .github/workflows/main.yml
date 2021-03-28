@@ -135,12 +135,6 @@ jobs:
           name: nupkg
           path: nupkg/*
 
-  check-markdown-links:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-
   inspectcode:
     runs-on: ubuntu-latest
 
