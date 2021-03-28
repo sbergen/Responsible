@@ -3,7 +3,6 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.TestWaitConditions;
@@ -30,7 +29,7 @@ namespace Responsible.Unity
 			public Action<StateStringBuilder> ExtraContext => null;
 
 			public State(
-				[CanBeNull] string description,
+				string description,
 				Func<IEnumerator> startCoroutine,
 				SourceContext sourceContext)
 				: base(sourceContext)

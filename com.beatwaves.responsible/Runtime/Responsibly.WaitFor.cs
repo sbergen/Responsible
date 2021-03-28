@@ -1,5 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
@@ -122,5 +124,25 @@ namespace Responsible
 		[Pure]
 		public static ITestWaitCondition<T[]> WaitForAllOf<T>(params ITestWaitCondition<T>[] conditions)
 			=> new AllOfWaitCondition<T>(conditions);
+
+		/// <summary>
+		/// Constructs a wait condition, which will start a task, and complete with its result when it completes.
+		/// </summary>
+		/// <param name="taskRunner">Function used to start the task to be waited for.</param>
+		/// <returns>
+		/// Wait condition which completes together with the task constructed with <paramref name="taskRunner"/>.
+		/// </returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T}"/>
+		[Pure]
+		public static ITestWaitCondition<T> WaitForTask<T>(
+			string description,
+			Func<CancellationToken, Task<T>> taskRunner,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new TaskWaitCondition<T>(
+				description,
+				taskRunner,
+				new SourceContext(nameof(WaitForTask), memberName, sourceFilePath, sourceLineNumber));
 	}
 }
