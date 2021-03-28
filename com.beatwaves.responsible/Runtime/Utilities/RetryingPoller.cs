@@ -2,14 +2,11 @@ using System;
 
 namespace Responsible.Utilities
 {
-	// Docs are generated for the Unity build, so UnityTimeProvider is only missing in .NET builds
-	#pragma warning disable CS1574
 	/// <summary>
 	/// Keeps a list of callbacks, and calls them repeatedly, until the list doesn't change during the calls.
 	/// </summary>
 	/// <remarks>
-	/// May be used to build your own <see cref="TestInstructionExecutor"/>,
-	/// and is used by default in <see cref="Responsible.Unity.UnityTestInstructionExecutor"/>.
+	/// May be used to build your own <see cref="TestInstructionExecutor"/>.
 	/// The behavior provided by this class is intended for running tests as fast as possible,
 	/// assuming polling is a relatively cheap operation to execute,
 	/// and that executing some operations may complete other wait conditions.
@@ -18,7 +15,6 @@ namespace Responsible.Utilities
 	/// It's unlikely to become a performance bottleneck, but if this does happen for you,
 	/// please consider opening an issue or contributing code for a more performant poller.
 	/// </remarks>
-	#pragma warning restore CS1574
 	public class RetryingPoller
 	{
 		private readonly SafeIterationList<Action> callbacks = new SafeIterationList<Action>();

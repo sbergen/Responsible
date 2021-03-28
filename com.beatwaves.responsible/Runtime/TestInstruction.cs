@@ -145,7 +145,7 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a test instruction returning a value type,
+		/// Converts a test instruction returning a value type
 		/// into one returning the same value boxed into <see cref="object"/>.
 		/// Can be useful for example in conjunction with <see cref="Sequence"/> together with value types.
 		/// </summary>

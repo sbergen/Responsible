@@ -245,8 +245,8 @@ namespace Responsible
 				new SourceContext(nameof(Select), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
-		/// Converts a wait condition returning a value type,
-		/// to one returning the same value boxed into <see cref="object"/>.
+		/// Converts a wait condition returning a value type
+		/// into one returning the same value boxed into <see cref="object"/>.
 		/// </summary>
 		/// <returns>
 		/// A wait condition which behaves otherwise identically to <paramref name="condition"/>,
