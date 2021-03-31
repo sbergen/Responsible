@@ -217,7 +217,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      old-version: ${{ steps.parse-tag-version.outputs.version }}
+      old-version: ${{ steps.latest-release-version.outputs.result }}
       new-version: ${{ steps.unity-version.outputs.prop }}
       changelog-body: ${{ steps.changelog.outputs.changes }}
       tag-name: ${{ steps.create-tag-name.outputs.tag }}
@@ -225,17 +225,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get latest release info
-        id: latest-release
-        uses: thebritican/fetch-latest-release@v2.0.0
+      - name: Get latest release version
+        id: latest-release-version
+        uses: actions/github-script@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-
-      - name: Parse version from tag
-        id: parse-tag-version
-        run: |
-          tag=$(echo ${{ steps.latest-release.outputs.tag_name }})
-          echo "::set-output name=version::${tag:1}"
+          result-encoding: string
+          script: |
+            const [owner, repo] = process.env['GITHUB_REPOSITORY'].split('/', 2);
+            const { data } = await github.repos.getLatestRelease({ owner, repo });
+            return data.tag_name.substr(1);
 
       - name: Read current Unity package version
         id: unity-version
@@ -258,7 +256,7 @@ jobs:
         env:
           CHANGELOG: ${{ steps.changelog.outputs.changes }}
         run: |
-          echo "Previous version from tags: ${{ steps.parse-tag-version.outputs.version }}"
+          echo "Previous release version: ${{ steps.latest-release-version.outputs.result }}"
           echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
           echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
           echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
