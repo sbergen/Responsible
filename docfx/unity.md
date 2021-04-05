@@ -27,7 +27,7 @@ Select the version you want to use from
 [releases](https://github.com/sbergen/Responsible/releases),
 and add the following to `Packages/manifest.json`
 ```json
-"com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/Packages/Responsible#vX.Y.Z"
+"com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/com.beatwaves.responsible#vX.Y.Z"
 ``` 
 replacing `X.Y.Z` with the version you want to use.
 

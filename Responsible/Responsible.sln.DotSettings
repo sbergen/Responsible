@@ -1,6 +1,13 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+	<!-- Reference Shared.DotSettings -->
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=82C9AA187BA446408DD03C2AA56742ED/RelativePath/@EntryValue">..\..\Shared.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=82C9AA187BA446408DD03C2AA56742ED/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File82C9AA187BA446408DD03C2AA56742ED/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File82C9AA187BA446408DD03C2AA56742ED/RelativePriority/@EntryValue">1</s:Double>
+
+	<!-- Exclude tests and JetBrains annotations from coverage results -->
+	<s:Boolean x:Key="/Default/Environment/Filtering/IncludeCoverageFilters/=Responsible_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Responsible_003B_002A_003BJetBrains_002EAnnotations_002E_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+
 </wpf:ResourceDictionary>
