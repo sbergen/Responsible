@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using NSubstitute;
 using NUnit.Framework;
 using Responsible.Editor;
 using Responsible.State;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
@@ -14,6 +16,7 @@ namespace Responsible.EditorTests
 	public class TestOperationStatusWindowStateTests
 	{
 		private TestInstructionExecutor.StateNotificationCallback notificationsCallback;
+		private Action<PlayModeStateChange> playModeCallback;
 		private TestOperationStatusWindowState state;
 		private ScrollView scrollView;
 
@@ -68,19 +71,11 @@ namespace Responsible.EditorTests
 			}
 		}
 
-		private class ResetNotifications : IDisposable
+		private static IDisposable MakeCallbackDisposable(Action callback)
 		{
-			private readonly TestOperationStatusWindowStateTests parent;
-
-			public ResetNotifications(TestOperationStatusWindowStateTests parent)
-			{
-				this.parent = parent;
-			}
-
-			public void Dispose()
-			{
-				this.parent.notificationsCallback = null;
-			}
+			var disposable = Substitute.For<IDisposable>();
+			disposable.When(_ => _.Dispose()).Do(_ => callback());
+			return disposable;
 		}
 
 		[SetUp]
@@ -92,9 +87,16 @@ namespace Responsible.EditorTests
 				callback =>
 				{
 					this.notificationsCallback = callback;
-					return new ResetNotifications(this);
+					return MakeCallbackDisposable(() => this.notificationsCallback = null);
+				},
+				callback =>
+				{
+					this.playModeCallback = callback;
+					return MakeCallbackDisposable(() => this.playModeCallback = null);
 				});
 			this.scrollView = root.Q<ScrollView>();
+
+			this.playModeCallback(PlayModeStateChange.EnteredPlayMode);
 
 			// Precondition
 			Assert.NotNull(this.scrollView);
@@ -142,6 +144,35 @@ namespace Responsible.EditorTests
 		}
 
 		[Test]
+		public void StateUpdates_Stop_WhenExitingPlayMode()
+		{
+			var stateMock = Substitute.For<ITestOperationState>();
+			this.notificationsCallback(TestOperationStateTransition.Started, stateMock);
+
+			// sanity check
+			this.state.Update();
+			var _ = stateMock.Received(1).ToString();
+			// end sanity check
+
+			stateMock.ClearReceivedCalls();
+			this.playModeCallback(PlayModeStateChange.ExitingPlayMode);
+			this.state.Update();
+			_ = stateMock.DidNotReceive().ToString();
+		}
+
+		[Test]
+		public void CurrentOperations_AreCleared_WhenEnteringPlayMode()
+		{
+			var operationState = new FakeOperationState("Fake State");
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState);
+			this.state.Update();
+			this.playModeCallback(PlayModeStateChange.ExitingPlayMode);
+			this.playModeCallback(PlayModeStateChange.EnteredPlayMode);
+
+			new VisualState(this.scrollView).AssertEmpty();
+		}
+
+		[Test]
 		public void FinishedNotification_OnlyLogsWarning_WhenNotFound()
 		{
 			var operationState = new FakeOperationState("Fake State");
@@ -156,6 +187,7 @@ namespace Responsible.EditorTests
 		{
 			this.state.Dispose();
 			Assert.IsNull(this.notificationsCallback);
+			Assert.IsNull(this.playModeCallback);
 		}
 
 		[Test]

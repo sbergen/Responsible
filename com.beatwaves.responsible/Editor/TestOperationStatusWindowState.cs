@@ -1,21 +1,26 @@
 using System;
 using System.Collections.Generic;
 using Responsible.State;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Responsible.Editor
 {
-	public class TestOperationStatusWindowState : IDisposable
+	internal class TestOperationStatusWindowState : IDisposable
 	{
 		private readonly List<(ITestOperationState state, Label label)> stateLabels =
 			new List<(ITestOperationState state, Label label)>();
 
-		private readonly IDisposable subscription;
+		private readonly IDisposable operationSateSubscription;
+		private readonly IDisposable playModeSateSubscription;
+
+		private bool inPlayMode;
 
 		public TestOperationStatusWindowState(
 			VisualElement rootElement,
-			Func<TestInstructionExecutor.StateNotificationCallback, IDisposable> subscribeFunction)
+			Func<TestInstructionExecutor.StateNotificationCallback, IDisposable> stateSubscribeFunction,
+			Func<Action<PlayModeStateChange>, IDisposable> playModeSubscribeFunction)
 		{
 			var currentOperations = new VisualElement();
 			var currentOperationsTitle = new Label("Currently executing operations:");
@@ -59,7 +64,7 @@ namespace Responsible.Editor
 				}
 			}
 
-			this.subscription = subscribeFunction((type, state) =>
+			this.operationSateSubscription = stateSubscribeFunction((type, state) =>
 			{
 				switch (type)
 				{
@@ -71,24 +76,47 @@ namespace Responsible.Editor
 						break;
 				}
 			});
+
+			this.playModeSateSubscription = playModeSubscribeFunction(state =>
+			{
+				if (state == PlayModeStateChange.EnteredPlayMode)
+				{
+					this.inPlayMode = true;
+
+					foreach (var (_, label) in this.stateLabels)
+					{
+						currentOperations.Remove(label);
+					}
+
+					this.stateLabels.Clear();
+				}
+				else if (state == PlayModeStateChange.ExitingPlayMode)
+				{
+					this.inPlayMode = false;
+				}
+			});
 		}
 
 		public void Dispose()
 		{
-			this.subscription.Dispose();
+			this.operationSateSubscription.Dispose();
+			this.playModeSateSubscription.Dispose();
 		}
 
 		public void Update()
 		{
-			foreach (var (state, label) in this.stateLabels)
+			if (this.inPlayMode)
 			{
-				try
+				foreach (var (state, label) in this.stateLabels)
 				{
-					label.text = state.ToString();
-				}
-				catch (Exception e)
-				{
-					label.text = $"Error getting state:\n{e}";
+					try
+					{
+						label.text = state.ToString();
+					}
+					catch (Exception e)
+					{
+						label.text = $"Error getting state:\n{e}";
+					}
 				}
 			}
 		}

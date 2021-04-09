@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Handle aborting tests better in the Unity state window.
+
 ## [4.0.0] - 2021-03-28
 ### Changed
 - Removed the UniRx dependency, now uses `async/await` internally instead.
