@@ -89,8 +89,12 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased"><a href="https://github.com/sbergen/Responsible/compare/v4.0.0...HEAD">Unreleased</a></h2>
-<h2 id="400---2021-03-28"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.0.0">4.0.0</a> - 2021-03-28</h2>
 <h3 id="changed">Changed</h3>
+<ul>
+<li>Handle aborting tests better in the Unity state window.</li>
+</ul>
+<h2 id="400---2021-03-28"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.0.0">4.0.0</a> - 2021-03-28</h2>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Removed the UniRx dependency, now uses <code>async/await</code> internally instead.</li>
 <li>Unity-specific functionality was moved to work through abstractions.</li>
@@ -122,7 +126,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>HTML documentation generated with DocFX</li>
 <li>Test operation status window in Unity Editor, under <code>Window/Responsible/Operation State</code></li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Some parameters renamed for better documentation.</li>
 </ul>
@@ -131,7 +135,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Classes and functionality which was intended to be internal were marked as internal.</li>
 </ul>
 <h2 id="200---2021-02-26"><a href="https://github.com/sbergen/Responsible/releases/tag/v2.0.0">2.0.0</a> - 2021-02-26</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Simplifies the public API by reducing the number of overloads used. This should make auto-completion and compiler errors more friendly.</li>
 <li>Removes <code>WaitForCondition</code>, <code>WaitForConditionOn</code> and <code>WaitForCoroutine</code> overrides, which make a result using a selector: <code>Select</code> can be used instead.</li>
@@ -144,7 +148,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Fix source context of <code>Responsible.Do</code> (<code>&quot;DoAndReturn&quot;</code> -&gt; <code>&quot;Do&quot;</code>)</li>
 <li>Show canceled wait conditions as canceled instead of running in output. A wait may get canceled e.g. as part of an optional test responder.</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Simplify output when <code>ExpectWithinSecond</code> is used, by showing <code>EXPECTED WITHIN ...</code> on the same line as the expected operation, instead of <code>EXPECT WITHIN ...</code> with the operation nested below it. This is only applicable to simple wait conditions and responders.</li>
 </ul>
@@ -161,7 +165,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Add context to output when <code>ExpectWithinSeconds</code> times out.</li>
 <li>Fix referential transparency of <code>WaitForConstraint</code>: <code>IResolveConstraint.Resolve()</code> can mutate the condition and produce weird results when called multiple times.</li>
 </ul>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Makes <code>...Seconds</code> operators use <code>double</code> instead of <code>int</code> (<em>practically</em> backwards compatible).</li>
 <li>Improve documentation, especially about getting started.</li>
