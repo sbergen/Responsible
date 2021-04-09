@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Responsible.Editor.Utilities;
 using UnityEditor;
 
 namespace Responsible.Editor
@@ -16,15 +17,13 @@ namespace Responsible.Editor
 			window.Show();
 		}
 
-		private void OnEnable()
-		{
-			this.state = new TestOperationStatusWindowState(
-				this.rootVisualElement,
-				TestInstructionExecutor.SubscribeToStates);
-		}
+		private void OnEnable() => this.state = new TestOperationStatusWindowState(
+			this.rootVisualElement,
+			TestInstructionExecutor.SubscribeToStates,
+			PlayModeStateChangeListener.RegisterCallback);
 
 		private void OnDestroy() => this.state.Dispose();
 
-		public void Update() => this.state.Update();
+		private void Update() => this.state.Update();
 	}
 }
