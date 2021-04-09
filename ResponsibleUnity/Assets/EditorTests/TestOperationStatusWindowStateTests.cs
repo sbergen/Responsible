@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NSubstitute;
@@ -144,6 +145,7 @@ namespace Responsible.EditorTests
 		}
 
 		[Test]
+		[SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed", Justification = "Mock checks")]
 		public void StateUpdates_Stop_WhenExitingPlayMode()
 		{
 			var stateMock = Substitute.For<ITestOperationState>();
@@ -151,13 +153,13 @@ namespace Responsible.EditorTests
 
 			// sanity check
 			this.state.Update();
-			var _ = stateMock.Received(1).ToString();
+			stateMock.Received(1).ToString();
 			// end sanity check
 
 			stateMock.ClearReceivedCalls();
 			this.playModeCallback(PlayModeStateChange.ExitingPlayMode);
 			this.state.Update();
-			_ = stateMock.DidNotReceive().ToString();
+			stateMock.DidNotReceive().ToString();
 		}
 
 		[Test]
