@@ -12,8 +12,8 @@ namespace Responsible.Editor
 		private readonly List<(ITestOperationState state, Label label)> stateLabels =
 			new List<(ITestOperationState state, Label label)>();
 
-		private readonly IDisposable operationSateSubscription;
-		private readonly IDisposable playModeSateSubscription;
+		private readonly IDisposable operationStateSubscription;
+		private readonly IDisposable playModeStateSubscription;
 
 		private bool inPlayMode;
 
@@ -64,7 +64,7 @@ namespace Responsible.Editor
 				}
 			}
 
-			this.operationSateSubscription = stateSubscribeFunction((type, state) =>
+			this.operationStateSubscription = stateSubscribeFunction((type, state) =>
 			{
 				switch (type)
 				{
@@ -77,7 +77,7 @@ namespace Responsible.Editor
 				}
 			});
 
-			this.playModeSateSubscription = playModeSubscribeFunction(state =>
+			this.playModeStateSubscription = playModeSubscribeFunction(state =>
 			{
 				if (state == PlayModeStateChange.EnteredPlayMode)
 				{
@@ -99,8 +99,8 @@ namespace Responsible.Editor
 
 		public void Dispose()
 		{
-			this.operationSateSubscription.Dispose();
-			this.playModeSateSubscription.Dispose();
+			this.operationStateSubscription.Dispose();
+			this.playModeStateSubscription.Dispose();
 		}
 
 		public void Update()
