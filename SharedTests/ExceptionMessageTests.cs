@@ -13,12 +13,19 @@ namespace Responsible.Tests
 			var task = Do("Throw", () => throw new Exception("An exception"))
 				.ToTask(this.Executor);
 			var failureException = GetFailureException(task);
+
+			Console.WriteLine(failureException.Message);
+
 			StateAssert
 				.StringContainsInOrder(failureException.Message)
-				.Details("failed")
-				.Details("Throw")
-				.Details("Error:")
-				.Details("An exception");
+				.Details("Test operation execution failed")
+				.Failed("Throw")
+				.Details("Failed with:")
+				.Details("An exception")
+				.Details("Test operation stack:")
+				.Details(@"\[Do\].*?\(at")
+				.Details(@"\[ToTask\].*?\(at")
+				.Details("Error:");
 		}
 
 		[Test]
