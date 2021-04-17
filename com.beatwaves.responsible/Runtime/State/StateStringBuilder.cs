@@ -100,9 +100,7 @@ namespace Responsible.State
 			TimeSpan timeout,
 			ITestOperationState operation)
 		{
-			var timeoutString = timeout > TimeSpan.FromMinutes(1)
-				? $"{timeout:g}"
-				: $"{timeout.TotalSeconds:0.00 s}";
+			var timeoutString = $"{timeout.TotalSeconds:0.00 s}";
 
 			if (operation is IBoxedOperationState boxedState)
 			{

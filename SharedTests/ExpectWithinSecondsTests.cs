@@ -59,35 +59,31 @@ namespace Responsible.Tests
 \s+Test operation stack");
 		}
 
-		[TestCase(1, @"1\.00 s")]
-		[TestCase(61, @"0:01:01")]
-		public void ExpectConditionDescription_ContainsSubConditions_WithCompoundCondition(
-			double withinSeconds, string expectedTimeFormat)
+		[Test]
+		public void ExpectConditionDescription_ContainsSubConditions_WithCompoundCondition()
 		{
 			var description = WaitForCondition("First", () => false)
 				.AndThen(WaitForCondition("Second", () => false))
-				.ExpectWithinSeconds(withinSeconds)
+				.ExpectWithinSeconds(1)
 				.CreateState()
 				.ToString();
 
-			Assert.That(description, Does.Match($@".*{expectedTimeFormat}.*
+			Assert.That(description, Does.Match($@".*1\.00 s.*
 \s*\[ \] First.*
 \s*\[ \] Second.*"));
 		}
 
-		[TestCase(59, @"59\.00 s")]
-		[TestCase(3670, @"1:01:10")]
-		public void ExpectConditionDescription_Inlined_WithDiscreteCondition(
-			double withinSeconds, string expectedTimeFormat)
+		[Test]
+		public void ExpectConditionDescription_Inlined_WithDiscreteCondition()
 		{
 			var description = WaitForCondition("Only", () => false)
-				.ExpectWithinSeconds(withinSeconds)
+				.ExpectWithinSeconds(1)
 				.CreateState()
 				.ToString();
 
 			Assert.That(
 				description,
-				Does.Match($@"\s*\[ \] Only.*WITHIN.*{expectedTimeFormat}"));
+				Does.Match($@"\s*\[ \] Only.*WITHIN.*1\.00 s"));
 		}
 
 		[Test]
