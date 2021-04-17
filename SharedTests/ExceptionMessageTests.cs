@@ -20,5 +20,15 @@ namespace Responsible.Tests
 				.Details("Error:")
 				.Details("An exception");
 		}
+
+		[Test]
+		public void ExceptionMessage_DoesNotIncludeEmptyLines()
+		{
+			var task = Do("Throw", () => throw new Exception())
+				.ToTask(this.Executor);
+			var lines = GetFailureException(task).Message.Split("\n");
+			CollectionAssert.Contains(lines, " ");
+			CollectionAssert.DoesNotContain(lines, "");
+		}
 	}
 }
