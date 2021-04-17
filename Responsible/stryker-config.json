@@ -12,10 +12,9 @@
         ],
         "log-level": "info",
         "log-file": true,
-        "max-concurrent-test-runners": 8,
-        "threshold-high": 80,
-        "threshold-low": 70,
-        "threshold-break": 60,
+        "threshold-high": 100,
+        "threshold-low": 100,
+        "threshold-break": 99,
         "mutation-level": "Standard"
     }
 }
