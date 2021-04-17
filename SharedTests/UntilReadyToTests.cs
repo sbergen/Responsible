@@ -92,5 +92,19 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(this.task));
 		}
+
+		[Test]
+		public void UntilReadyToRespond_Description_MatchesExpected()
+		{
+			var state = this.first.Responder.Optionally()
+				.UntilReadyTo(this.second.Responder)
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.Details("UNTIL READY TO")
+				.NotStarted("Respond")
+				.Details("RESPOND TO ANY OF")
+				.NotStarted("Respond");
+		}
 	}
 }
