@@ -16,7 +16,7 @@ namespace Responsible.UnityTests
 			var exception = GetFailureException(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("Throw")
-				.Details(@"\(at Assets/RuntimeTests/SourcePrettifyTests\.cs\:");
+				.Details(@"\(at Assets/UnityTests/SourcePrettifyTests\.cs\:");
 		}
 
 		[Test]
