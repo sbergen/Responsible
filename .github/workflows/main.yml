@@ -141,7 +141,7 @@ jobs:
       - name: Restore dotnet tools
         run: dotnet tool restore
 
-      - name: Get PR number
+      - name: Set version to PR number
         if: ${{ github.ref != 'refs/heads/main' }}
         run: echo "VERSION=${{ github.event.number }}" >> $GITHUB_ENV
 
