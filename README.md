@@ -33,3 +33,17 @@ in [releases](https://github.com/sbergen/Responsible/releases).
 
 If you have any questions or ideas, don't hesitate to head over to the
 [GitHub Discussions](https://github.com/sbergen/Responsible/discussions)!
+
+
+## Repository Structure
+
+Due to Responsible targeting both Unity and .NET,
+the repository structure is a bit unorthodox:
+* `com.beatwaves.responsible` contains the Unity Package.
+* `com.beatwaves.responsible/Runtime` contains the main runtime, shared with .NET.
+  * Unity files are excluded in the `.csproj` file.
+* `Responsible` contains the .NET solution and .NET testing/CI related files.
+* `ResponsibleUnity` contains the Unity project and Unity-specific tests.
+* `Tests` contains the tests for the pure .NET classes.
+  * `package.json` is used for including them in the Unity project as a package.
+  * `Responsible.Tests.csproj` is used for including them in the main .NET solution.
