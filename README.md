@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/github/license/sbergen/Responsible.svg)](https://github.com/sbergen/Responsible/blob/main/LICENSE)
 [![codecov](https://codecov.io/gh/sbergen/Responsible/branch/main/graph/badge.svg)](https://codecov.io/gh/sbergen/Responsible)
+[![Mutation testing](https://img.shields.io/endpoint?url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fsbergen%2FResponsible%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/sbergen/Responsible/main)
 [![Nuget](https://img.shields.io/nuget/v/Beatwaves.Responsible)](http://nuget.org/packages/Beatwaves.Responsible)
 [![openupm](https://img.shields.io/npm/v/com.beatwaves.responsible?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.beatwaves.responsible/)
 

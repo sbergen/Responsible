@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, DotNetStandard ]
+    branches: [ main ]
   pull_request:
 
 jobs:
@@ -78,11 +78,20 @@ jobs:
   test-netstandard:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Responsible
+
     strategy:
           fail-fast: false
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -90,11 +99,10 @@ jobs:
 
       - name: Run Tests
         id: run-tests
-        working-directory: Responsible
         run: |
           dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx;LogFileName=results.xml"
           echo "::set-output name=coverage::Responsible/$(ls TestResults/*/* | head -n1)"
-          echo "::set-output name=tests::Responsible/TestResults/results.xml"
+          echo "::set-output name=tests::TestResults/results.xml"
 
       - name: Push to testspace
         if: ${{ always() }}
@@ -114,6 +122,35 @@ jobs:
         with:
           name: netstandard Test Results
           path: Responsible/TestResults
+
+  test-mutation:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Responsible
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      - name: Set version to PR number
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: echo "VERSION=${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Set version to main
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: echo "VERSION=main" >> $GITHUB_ENV
+
+      - name: Run Stryker Mutation Testings
+        run: dotnet stryker --reporters "['dashboard']" --dashboard-api-key ${{ secrets.STRYKER_KEY }} --dashboard-project github.com/sbergen/Responsible --dashboard-version ${{ env.VERSION }}
 
   pack-netstandard:
     runs-on: ubuntu-latest

@@ -29,7 +29,7 @@ namespace Responsible.State
 		{
 			var result = await this.first.Execute(runContext, cancellationToken);
 			this.selectState = new SynchronousTestInstruction<T2>(
-				"Internal select operation",
+				null, // This should never be used
 				() => this.selector(result),
 				this.sourceContext).CreateState();
 			return await this.selectState.Execute(runContext, cancellationToken);

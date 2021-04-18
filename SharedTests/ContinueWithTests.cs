@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -74,6 +75,30 @@ namespace Responsible.Tests
 			this.mayCompleteSecond = true;
 			this.AdvanceDefaultFrame();
 			Assert.IsTrue(task.IsCompleted);
+		}
+
+		[Test]
+		public void Description_MatchesExpected_WithInstruction()
+		{
+			var state = Do("First", () => { })
+				.ContinueWith(Do("Second", () => { }))
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.NotStarted("First")
+				.NotStarted("Second");
+		}
+
+		[Test]
+		public void Description_MatchesExpected_WithContinuation()
+		{
+			var state = Do("First", () => { })
+				.ContinueWith(_ => Do("Second", () => { }))
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.NotStarted("First")
+				.NotStarted("...");
 		}
 
 		private ITestInstruction<object> ContinueWithNothing<T>(

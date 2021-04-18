@@ -87,5 +87,19 @@ namespace Responsible.Tests
 
 			Assert.IsNotNull(GetFailureException(task));
 		}
+
+		[Test]
+		public void WaitForAllOf_Description_MatchesExpected()
+		{
+			var state = WaitForAllOf(
+					WaitForCondition("First", () => false),
+					WaitForCondition("Second", () => false))
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.NotStarted("WAIT FOR ALL OF")
+				.NotStarted("First")
+				.NotStarted("Second");
+		}
 	}
 }

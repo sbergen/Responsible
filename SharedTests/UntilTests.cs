@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -100,6 +101,22 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(completed);
 			Assert.IsNotNull(GetFailureException(task));
+		}
+
+		[Test]
+		public void Until_Description_MatchesExpected()
+		{
+			var state = Never
+				.ThenRespondWithAction("complete", _ => { })
+				.Optionally()
+				.Until(Never)
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.Details("UNTIL")
+				.NotStarted("Never")
+				.Details("RESPOND TO ANY OF")
+				.NotStarted("complete");
 		}
 	}
 }

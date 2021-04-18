@@ -119,6 +119,19 @@ namespace Responsible.Tests
 			Assert.IsNotNull(GetFailureException(this.task));
 		}
 
+		[Test]
+		public void RespondToAllOf_Description_MatchesExpected()
+		{
+			var state = RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
+				.ExpectWithinSeconds(1)
+				.CreateState();
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.NotStarted("EXPECT WITHIN 1.00 s ALL OF")
+				.NotStarted("Respond")
+				.NotStarted("Respond");
+		}
+
 		private void AssertResult()
 		{
 			Assert.IsFalse(this.task.IsFaulted);

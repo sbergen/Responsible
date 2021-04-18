@@ -79,6 +79,22 @@ namespace Responsible.Tests
 			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
+			Do("Throw", () => throw new Exception())
+				.ToTask(this.Executor);
+
+			this.FailureListener.Received(1).OperationFailed(
+				Arg.Any<Exception>(),
+				Arg.Is<string>(str =>
+					str.Contains("Global context:") &&
+					str.Contains("  Global details")));
+		}
+
+		[Test]
+		public void Executor_RequestsGlobalContext_OnTimeout()
+		{
+			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+				b => b.AddDetails("Global details")));
+
 			WaitForCondition("Never", () => false)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);

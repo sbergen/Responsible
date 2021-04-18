@@ -20,7 +20,7 @@ namespace Responsible
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
 			=> new SynchronousTestInstruction<T>(
-				"Return '{value}'",
+				$"Return '{value}'",
 				() => value,
 				new SourceContext(nameof(Return), memberName, sourceFilePath, sourceLineNumber));
 	}

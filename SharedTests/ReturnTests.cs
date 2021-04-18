@@ -17,5 +17,13 @@ namespace Responsible.Tests
 					.ToTask(this.Executor)
 					.AssertSynchronousResult());
 		}
+
+		[Test]
+		public void ToString_RetrunsCorrectValue()
+		{
+			Assert.AreEqual(
+				"[ ] Return '42'",
+				Return(42).CreateState().ToString());
+		}
 	}
 }

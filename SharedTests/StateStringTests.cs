@@ -26,10 +26,9 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void StateString_TruncatesException_WhenLong()
+		public void StateString_TruncatesExceptionAt100Chars()
 		{
-			var notIncluded = "Not included";
-			var message = new string('x', 100) + notIncluded;
+			var message = new string('x', 99) + "^~";
 			var state = Responsibly.Do(
 					"Fail",
 					() => throw new Exception(message))
@@ -40,8 +39,8 @@ namespace Responsible.Tests
 			var stateString = state.ToString();
 			StateAssert.StringContainsInOrder(stateString)
 				.Failed("Fail")
-				.Details("xxxxxxx")
-				.Nowhere(notIncluded);
+				.Details(@"xxxxxxx\^")
+				.Nowhere("~");
 		}
 	}
 }

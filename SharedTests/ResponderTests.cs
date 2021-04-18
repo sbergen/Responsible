@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -72,6 +73,23 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(TimeSpan.Zero);
 
 			Assert.IsTrue(task.IsCompleted);
+		}
+
+		[Test]
+		public void BasicResponder_FailureDescription_IsAsExpected()
+		{
+			var task = WaitForCondition("Condition", () => false)
+				.ThenRespondWith("Response", _ => Return(0))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+			this.Scheduler.AdvanceFrame(OneSecond);
+
+			var message = GetFailureException(task).Message;
+			StateAssert.StringContainsInOrder(message)
+				.Failed("Response EXPECTED WITHIN")
+				.Details("WAIT FOR")
+				.Canceled("Condition")
+				.Details("THEN RESPOND WITH ...");
 		}
 	}
 }

@@ -1,0 +1,20 @@
+{
+    "stryker-config":
+    {
+        "solution-path": "Responsible.sln",
+        "project-file": "../com.beatwaves.responsible/Runtime/Responsible.csproj",
+        "mutate": [
+            "!**/JetBrains.Annotations.cs"
+        ],
+        "reporters": [
+            "progress",
+            "html"
+        ],
+        "log-level": "info",
+        "log-file": true,
+        "threshold-high": 100,
+        "threshold-low": 100,
+        "threshold-break": 99,
+        "mutation-level": "Standard"
+    }
+}
