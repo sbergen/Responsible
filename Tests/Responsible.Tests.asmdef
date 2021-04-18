@@ -5,9 +5,7 @@
         "UnityEditor.TestRunner",
         "Responsible"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

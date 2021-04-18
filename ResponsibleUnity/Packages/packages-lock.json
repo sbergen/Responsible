@@ -6,6 +6,12 @@
       "source": "local",
       "dependencies": {}
     },
+    "com.beatwaves.responsible.tests": {
+      "version": "file:../../Tests",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
