@@ -145,14 +145,14 @@ jobs:
 
       - name: Set version to PR number
         if: ${{ github.ref != 'refs/heads/main' }}
-        run: echo "VERSION=${{ github.event.number }}" >> $GITHUB_ENV
+        run: echo "STRYKER_VERSION=${{ github.event.number }}" >> $GITHUB_ENV
 
       - name: Set version to main
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo "VERSION=main" >> $GITHUB_ENV
+        run: echo "STRYKER_VERSION=main" >> $GITHUB_ENV
 
       - name: Run Stryker Mutation Testings
-        run: dotnet stryker --reporters "['dashboard']" --dashboard-api-key ${{ secrets.STRYKER_KEY }} --dashboard-project github.com/sbergen/Responsible --dashboard-version ${{ env.VERSION }}
+        run: dotnet stryker --reporters "['dashboard']" --dashboard-api-key ${{ secrets.STRYKER_KEY }} --dashboard-project github.com/sbergen/Responsible --dashboard-version ${{ env.STRYKER_VERSION }}
 
   pack-netstandard:
     runs-on: ubuntu-latest
