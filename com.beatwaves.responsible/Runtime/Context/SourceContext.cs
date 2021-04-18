@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -7,16 +8,20 @@ namespace Responsible.Context
 {
 	internal readonly struct SourceContext
 	{
-		private static readonly int StripFromPaths = 0;
+		private static readonly Func<string, string> FormatSourcePath;
 
 		public readonly IReadOnlyList<string> SourceLines;
 
 		static SourceContext()
 		{
-			// If this were to be run in a player, using these paths would not be reliable.
-			// Could be fixed with some build processor maybe, but is it worth it?
 #if UNITY_EDITOR
-			StripFromPaths = UnityEngine.Application.dataPath.Length - "Assets".Length;
+			var dataPath = UnityEngine.Application.dataPath;
+			var projectPath = dataPath.Substring(0, dataPath.Length - "Assets".Length);
+			FormatSourcePath = path => path.StartsWith(projectPath)
+				? path.Substring(projectPath.Length)
+				: path;
+#else
+			FormatSourcePath = path => path;
 #endif
 		}
 
@@ -37,6 +42,6 @@ namespace Responsible.Context
 		public override string ToString() => string.Join("\n", this.SourceLines);
 
 		private static string Format(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
-			=> $"[{operationName}] {memberName} (at {sourceFilePath.Substring(StripFromPaths)}:{sourceLineNumber})";
+			=> $"[{operationName}] {memberName} (at {FormatSourcePath(sourceFilePath)}:{sourceLineNumber})";
 	}
 }

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix description of `Return`
+- Handle source paths not under project gracefully when executing in Unity Editor
 
 ### Changed
 - Handle aborting tests better in the Unity state window.
