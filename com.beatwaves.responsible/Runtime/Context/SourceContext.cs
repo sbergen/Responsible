@@ -8,7 +8,7 @@ namespace Responsible.Context
 {
 	internal readonly struct SourceContext
 	{
-		private static readonly Func<string, string> SourceFilePreprocessor;
+		private static readonly Func<string, string> FormatSourcePath;
 
 		public readonly IReadOnlyList<string> SourceLines;
 
@@ -17,9 +17,11 @@ namespace Responsible.Context
 #if UNITY_EDITOR
 			var dataPath = UnityEngine.Application.dataPath;
 			var projectPath = dataPath.Substring(0, dataPath.Length - "Assets".Length);
-			SourceFilePreprocessor = path => path.StartsWith(projectPath)
+			FormatSourcePath = path => path.StartsWith(projectPath)
 				? path.Substring(projectPath.Length)
 				: path;
+#else
+			FormatSourcePath = path => path;
 #endif
 		}
 
@@ -41,7 +43,5 @@ namespace Responsible.Context
 
 		private static string Format(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
 			=> $"[{operationName}] {memberName} (at {FormatSourcePath(sourceFilePath)}:{sourceLineNumber})";
-
-		private static string FormatSourcePath(string path) => SourceFilePreprocessor?.Invoke(path) ?? path;
 	}
 }
