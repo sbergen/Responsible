@@ -1,0 +1,13 @@
+# Reference: https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/Tests"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "nuget"
+    directory: "/com.beatwaves.responsible/Runtime"
+    schedule:
+      interval: "daily"
