@@ -67,16 +67,19 @@ namespace Responsible.State
 
 		internal void AddContinuation(
 			ITestOperationState first,
-			[CanBeNull] ITestOperationState second)
+			ContinuationState continuation)
 		{
 			first.BuildDescription(this);
-			if (second != null)
+
+			switch (continuation)
 			{
-				second.BuildDescription(this);
-			}
-			else
-			{
-				this.AddStatus(TestOperationStatus.NotExecuted.Instance, "...");
+				case ContinuationState.Available available:
+					available.State.BuildDescription(this);
+					break;
+
+				case ContinuationState.NotAvailable notAvailable:
+					this.AddStatus(notAvailable.CreationStatus, "...");
+					break;
 			}
 		}
 
