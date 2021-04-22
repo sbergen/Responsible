@@ -45,6 +45,21 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void ContinueWith_PropagatesError_WhenContinuationThrows()
+		{
+			var task = Responsibly
+				.Return(new object())
+				.ContinueWith<object, object>(_ => throw new Exception("Test exception"))
+				.ToTask(this.Executor);
+
+			var exception = GetFailureException(task);
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Completed("Return")
+				.Failed("...")
+				.Details("Test exception");
+		}
+
+		[Test]
 		public void ContinueWith_PropagatesErrorFromSecond_AfterFirstCompleted(
 			[Values] Strategy strategy)
 		{

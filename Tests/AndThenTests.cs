@@ -1,4 +1,6 @@
+using System;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -90,6 +92,21 @@ namespace Responsible.Tests
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
 			Assert.IsNotNull(GetFailureException(task));
+		}
+
+		[Test]
+		public void AndThen_Fails_IfContinuationThrows()
+		{
+			var task = ImmediateTrue
+				.AndThen<bool, object>(_ => throw new Exception("Test exception"))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			var exception = GetFailureException(task);
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Completed("True")
+				.Failed("...")
+				.Details("Test exception");
 		}
 	}
 }
