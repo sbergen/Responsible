@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
-- Fix description of `Return`
-- Handle source paths not under project gracefully when executing in Unity Editor
+- Fix description of `Return`.
+- Handle source paths not under project gracefully when executing in Unity Editor.
+- Fix state string if `ContinueWith` or `AndThen` continuation function throws an exception.
 
 ### Changed
 - Handle aborting tests better in the Unity state window.
