@@ -55,6 +55,24 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void BasicResponder_Fails_WhenContinuationThrows()
+		{
+			var task = ImmediateTrue
+				.ThenRespondWith<bool, object>(
+					"Throw exception in selector",
+					_ => throw new Exception("Test exception"))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			var exception = GetFailureException(task);
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Failed("Throw exception in selector")
+				.Completed("True")
+				.Details("THEN RESPOND WITH ...")
+				.Details("Test exception");
+		}
+
+		[Test]
 		public void BasicResponder_RespectsIndividualTimeouts()
 		{
 			var task = this.respondToConditions

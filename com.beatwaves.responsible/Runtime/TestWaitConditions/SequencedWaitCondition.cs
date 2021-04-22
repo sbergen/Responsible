@@ -39,7 +39,7 @@ namespace Responsible.TestWaitConditions
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddContinuation(this.first, this.second);
+				builder.AddContinuation(this.first, new ContinuationState.Available(this.second));
 		}
 	}
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
 
@@ -20,9 +19,7 @@ namespace Responsible.TestWaitConditions
 		private class State : TestOperationState<TSecond>
 		{
 			private readonly ITestOperationState<TFirst> first;
-			private readonly Func<TFirst, ITestWaitCondition<TSecond>> continuation;
-
-			[CanBeNull] private ITestOperationState<TSecond> second;
+			private readonly Continuation<TFirst, TSecond> continuation;
 
 			public State(
 				ITestWaitCondition<TFirst> first,
@@ -31,7 +28,8 @@ namespace Responsible.TestWaitConditions
 				: base(sourceContext)
 			{
 				this.first = first.CreateState();
-				this.continuation = continuation;
+				this.continuation = new Continuation<TFirst, TSecond>(
+					firstResult => continuation(firstResult).CreateState());
 			}
 
 			protected override async Task<TSecond> ExecuteInner(
@@ -39,12 +37,11 @@ namespace Responsible.TestWaitConditions
 				CancellationToken cancellationToken)
 			{
 				var firstResult = await this.first.Execute(runContext, cancellationToken);
-				this.second = this.continuation(firstResult).CreateState();
-				return await this.second.Execute(runContext, cancellationToken);
+				return await this.continuation.Execute(firstResult, runContext, cancellationToken);
 			}
 
 			public override void BuildDescription(StateStringBuilder builder) =>
-				builder.AddContinuation(this.first, this.second);
+				builder.AddContinuation(this.first, this.continuation.State);
 		}
 	}
 }
