@@ -1,0 +1,169 @@
+name: Releasables
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  pack-netstandard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      
+      - name: Build nupkg
+        run: dotnet pack Responsible --output nupkg
+
+      - name: Archive nupkg
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: nupkg
+          path: nupkg/*
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Library
+        uses: actions/cache@v2.1.2
+        with:
+          path: ResponsibleUnity/Library
+          key: Library-docfx
+
+      - name: Generate docs
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
+        with:
+          projectPath: ResponsibleUnity
+          customImage: thesbergen/unityci-docfx
+          targetPlatform: StandaloneLinux64
+          buildMethod: Responsible.EditorSetup.ContinuousIntegration.BuildDocumentation
+          customParameters: -disable-assembly-updater
+
+      - name: Archive docs
+        uses: actions/upload-artifact@v2.2.0 
+        with:
+          name: Docs
+          path: docfx/docs_site
+
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: docfx/docs_site/ResponsibleDocs
+          dry-run: ${{ github.ref != 'refs/heads/main' }}
+
+  version-info:
+    runs-on: ubuntu-latest
+
+    outputs:
+      old-version: ${{ steps.latest-release-version.outputs.result }}
+      new-version: ${{ steps.unity-version.outputs.prop }}
+      changelog-body: ${{ steps.changelog.outputs.changes }}
+      tag-name: ${{ steps.create-tag-name.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get latest release version
+        id: latest-release-version
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+            const [owner, repo] = process.env['GITHUB_REPOSITORY'].split('/', 2);
+            const { data } = await github.repos.getLatestRelease({ owner, repo });
+            return data.tag_name.substr(1);
+
+      - name: Read current Unity package version
+        id: unity-version
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: com.beatwaves.responsible/package.json
+          prop_path: 'version'
+
+      - name: Read current NuGet package version
+        id: nuget-version
+        run: |
+          version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' com.beatwaves.responsible/Runtime/Responsible.csproj)
+          echo "::set-output name=version::${version}"
+
+      - name: Get latest changelog entry
+        id: changelog
+        uses: mindsers/changelog-reader-action@v2
+
+      - name: Output version status
+        env:
+          CHANGELOG: ${{ steps.changelog.outputs.changes }}
+        run: |
+          echo "Previous release version: ${{ steps.latest-release-version.outputs.result }}"
+          echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
+          echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
+          echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
+          echo "Changes in changelog:"
+          echo $CHANGELOG
+
+      - name: Check that Unity version is up to date with changelog
+        run: test ${{ steps.unity-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
+
+      - name: Check that NuGet version is up to date with changelog
+        run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.changelog.outputs.version }}
+
+      - name: Create tag name
+        id: create-tag-name
+        run: echo "::set-output name=tag::v${{ steps.nuget-version.outputs.version }}"
+
+  release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    needs: [ version-info, docs, pack-netstandard ]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.version-info.outputs.new-version != needs.version-info.outputs.old-version
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Download Docs
+        uses: actions/download-artifact@v2
+        with:
+          name: Docs
+
+      - name: Download NuGet package
+        uses: actions/download-artifact@v2
+        with:
+          name: nupkg
+      
+      - name: Zip source code and docs
+        run: |
+          zip -r com.beatwaves.responsible.zip com.beatwaves.responsible
+          zip -r ResponsibleDocs.zip ResponsibleDocs
+
+      - uses: softprops/action-gh-release@91409e712cf565ce9eff10c87a8d1b11b81757ae
+        with:
+          fail_on_unmatched_files: true
+          body: ${{ needs.version-info.outputs.changelog-body }}
+          tag_name: ${{ needs.version-info.outputs.tag-name }}
+          files: |
+            ResponsibleDocs.zip
+            com.beatwaves.responsible.zip
+            Beatwaves.Responsible.*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish NuGet package
+        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
