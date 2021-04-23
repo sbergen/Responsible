@@ -157,41 +157,38 @@ jobs:
   inspectcode:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Responsible
+
     strategy:
       fail-fast: false
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Cache Library
-        uses: actions/cache@v2.1.2
-        with:
-          path: ResponsibleUnity/Library
-          key: Library-resharper
 
-      - name: Run ReSharper in Unity
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
         with:
-          projectPath: ResponsibleUnity
-          customImage: thesbergen/unityci-resharper
-          targetPlatform: StandaloneLinux64
-          buildMethod: Responsible.EditorSetup.ContinuousIntegration.InspectCode
-          customParameters: -disable-assembly-updater
+          dotnet-version: '3.1.x'
+
+      - name: dotnet restore
+        run: |
+          dotnet restore
+          dotnet tool restore
+
+      - name: Run ReSharper
+        run: ./inspectcode.sh
 
       - name: Archive ReSharper run
         if: ${{ always() }}
         uses: actions/upload-artifact@v2.2.0 
         with:
           name: ReSharper
-          path: |
-            resharper/inspect.xml
-            resharper/stdout.txt
-            resharper/stderr.txt
+          path: Responsible/inspect.xml
 
       - name: ReSharper XML -> GitHub output
         if: ${{ always() }}
         uses: glassechidna/resharper-action@v1
         with:
-          report: resharper/inspect.xml
+          report: Responsible/inspect.xml

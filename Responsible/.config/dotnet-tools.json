@@ -7,6 +7,12 @@
       "commands": [
         "dotnet-stryker"
       ]
+    },
+    "jetbrains.resharper.globaltools": {
+      "version": "2020.3.4",
+      "commands": [
+        "jb"
+      ]
     }
   }
 }
