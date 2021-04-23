@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
+using NSubstitute;
 using NUnit.Framework;
+using Responsible.State;
 using Responsible.Unity;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -48,6 +50,21 @@ namespace Responsible.UnityTests
 					.ToYieldInstruction(executor, throwOnError: false);
 				Assert.IsTrue(instruction.CompletedWithError);
 				// Should not fail the test with logged errors
+			}
+		}
+
+		[Test]
+		public void GlobalContext_IsIncludedInErrors()
+		{
+			var globalContextProvider = Substitute.For<IGlobalContextProvider>();
+			globalContextProvider.BuildGlobalContext(Arg.Do(
+				(StateStringBuilder builder) => builder.AddDetails("Global details")));
+			using (var executor = new UnityTestInstructionExecutor(globalContextProvider: globalContextProvider))
+			{
+				Responsibly
+					.Do("Throw exception", () => throw new Exception())
+					.ToYieldInstruction(executor, throwOnError: false); // Should complete synchronously
+				LogAssert.Expect(LogType.Error, new Regex("Global details"));
 			}
 		}
 
