@@ -21,11 +21,13 @@ namespace Responsible.Unity
 		private UnityTestInstructionExecutor(
 			UnityTestScheduler scheduler,
 			UnityErrorLogInterceptor errorLogInterceptor,
-			bool logErrors)
+			bool logErrors,
+			IGlobalContextProvider globalContextProvider)
 			: base(
 				scheduler,
 				errorLogInterceptor,
-				logErrors ? new UnityFailureListener() : null)
+				logErrors ? new UnityFailureListener() : null,
+				globalContextProvider)
 		{
 			this.scheduler = scheduler;
 			this.errorLogInterceptor = errorLogInterceptor;
@@ -48,8 +50,11 @@ namespace Responsible.Unity
 		/// as Unity has the tendency to swallow exceptions from nested coroutines.
 		/// </summary>
 		/// <param name="logErrors">Whether or not errors should be logged in addition to propagated.</param>
-		public UnityTestInstructionExecutor(bool logErrors = true)
-			: this(UnityTestScheduler.Create(), new UnityErrorLogInterceptor(), logErrors)
+		/// <param name="globalContextProvider">
+		/// Optional provider for global context, which gets included in failure messages.
+		/// </param>
+		public UnityTestInstructionExecutor(bool logErrors = true, IGlobalContextProvider globalContextProvider = null)
+			: this(UnityTestScheduler.Create(), new UnityErrorLogInterceptor(), logErrors, globalContextProvider)
 		{
 		}
 
