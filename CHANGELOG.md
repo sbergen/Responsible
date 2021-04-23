@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Handle aborting tests better in the Unity state window.
-- Simplify unnecessarily complex timeout time formatting
+- Simplify unnecessarily complex timeout time formatting.
+- Allow passing `IGlobalContextProvider` to `UnityTestInstructionExecutor`.
 
 ## [4.0.0] - 2021-03-28
 ### Changed
