@@ -1311,12 +1311,12 @@ references:
   commentId: T:Responsible.Unity.UnityTestInstructionExecutor
   fullName: Responsible.Unity.UnityTestInstructionExecutor
   nameWithType: UnityTestInstructionExecutor
-- uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean)
-  name: UnityTestInstructionExecutor(Boolean)
-  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_
-  commentId: M:Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean)
-  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor(System.Boolean)
-  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor(Boolean)
+- uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean,Responsible.IGlobalContextProvider)
+  name: UnityTestInstructionExecutor(Boolean, IGlobalContextProvider)
+  href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_Responsible_IGlobalContextProvider_
+  commentId: M:Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean,Responsible.IGlobalContextProvider)
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor(System.Boolean, Responsible.IGlobalContextProvider)
+  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor(Boolean, IGlobalContextProvider)
 - uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor*
   name: UnityTestInstructionExecutor
   href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_

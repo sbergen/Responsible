@@ -288,7 +288,7 @@
   <h3 id="constructors">Constructors
   </h3>
   <a id="Responsible_Unity_UnityTestInstructionExecutor__ctor_" data-uid="Responsible.Unity.UnityTestInstructionExecutor.#ctor*"></a>
-  <h4 id="Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_" data-uid="Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean)">UnityTestInstructionExecutor(Boolean)</h4>
+  <h4 id="Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_Responsible_IGlobalContextProvider_" data-uid="Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean,Responsible.IGlobalContextProvider)">UnityTestInstructionExecutor(Boolean, IGlobalContextProvider)</h4>
   <div class="markdown level1 summary"><p>Constructs a new TestInstructionExecutor with a default Unity configuration.
 If you are not using Responsible all the way, but also have some bare coroutines involved,
 you will probably want to also log any errors, in addition to failing the tests the normal way,
@@ -297,7 +297,7 @@ as Unity has the tendency to swallow exceptions from nested coroutines.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UnityTestInstructionExecutor(bool logErrors = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public UnityTestInstructionExecutor(bool logErrors = true, IGlobalContextProvider globalContextProvider = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -313,6 +313,12 @@ as Unity has the tendency to swallow exceptions from nested coroutines.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">logErrors</span></td>
         <td><p>Whether or not errors should be logged in addition to propagated.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Responsible.IGlobalContextProvider.html">IGlobalContextProvider</a></td>
+        <td><span class="parametername">globalContextProvider</span></td>
+        <td><p>Optional provider for global context, which gets included in failure messages.</p>
 </td>
       </tr>
     </tbody>
