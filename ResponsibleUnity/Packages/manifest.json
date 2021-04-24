@@ -2,7 +2,7 @@
   "dependencies": {
     "com.beatwaves.responsible": "file:../../com.beatwaves.responsible",
     "com.beatwaves.responsible.tests": "file:../../Tests",
-    "com.unity.ide.rider": "3.0.5",
+    "com.unity.ide.rider": "3.0.6",
     "com.unity.test-framework": "1.1.22",
     "com.unity.testtools.codecoverage": "0.4.0-preview",
     "com.unity.ugui": "1.0.0",

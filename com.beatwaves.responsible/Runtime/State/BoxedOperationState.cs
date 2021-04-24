@@ -28,4 +28,14 @@ namespace Responsible.State
 
 		public override void BuildDescription(StateStringBuilder builder) => this.state.BuildDescription(builder);
 	}
+
+	internal class BoxedOperationState<T> : BoxedOperationState<T, object>
+	{
+		private static readonly Func<T, object> BoxingSelector = value => value;
+
+		public BoxedOperationState(ITestOperationState<T> state)
+			: base(state, BoxingSelector)
+		{
+		}
+	}
 }
