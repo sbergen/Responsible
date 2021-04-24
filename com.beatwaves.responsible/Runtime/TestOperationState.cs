@@ -52,6 +52,6 @@ namespace Responsible
 		internal static ITestOperationState<object> BoxResult<T>(this ITestOperationState<T> state) =>
 			typeof(T).IsClass
 				? (ITestOperationState<object>)state
-				: new BoxedOperationState<T, object>(state, value => (object)value);
+				: new BoxedOperationState<T>(state);
 	}
 }
