@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <PackageId>Beatwaves.Responsible</PackageId>
-        <Version>4.0.0</Version>
+        <Version>4.1.0</Version>
         <Authors>Sakari Bergen</Authors>
         <PackageTags>test;automation;testing;reactive;asynchronous</PackageTags>
         <PackageProjectUrl>https://www.beatwaves.net/Responsible/</PackageProjectUrl>
@@ -17,5 +17,5 @@
         <Compile Remove="Unity\**" />
         <Compile Include="..\..\Responsible\JetBrains.Annotations.cs" />
     </ItemGroup>
-    
+
 </Project>
