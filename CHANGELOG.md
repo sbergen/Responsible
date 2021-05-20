@@ -8,6 +8,8 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+## [4.1.1] - 2021-05-20
+
 ### Fixed
 - Fix error handling in `ContinueWith` and `AndThen` to publish the correct exception. This was previously causing an internal exception to be published instead under certain conditions.
 
@@ -95,7 +97,8 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.1.0...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.1.1...HEAD
+[4.1.1]: https://github.com/sbergen/Responsible/releases/tag/v4.1.1
 [4.1.0]: https://github.com/sbergen/Responsible/releases/tag/v4.1.0
 [4.0.0]: https://github.com/sbergen/Responsible/releases/tag/v4.0.0
 [3.0.1]: https://github.com/sbergen/Responsible/releases/tag/v3.0.1
