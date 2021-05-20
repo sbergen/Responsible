@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "8xKEJFA70ZkYK63mI92o8Q=="
+          "hash": "Hw9ygtnhPKV1lfzOYnqXyw=="
         }
       },
       "is_incremental": false,
@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestFailureException.html",
-          "hash": "alWTQwjAF1TF4WoAsqZKNg=="
+          "hash": "VPBlXO5U4m/BE3DKOTvO6A=="
         }
       },
       "is_incremental": false,
@@ -417,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnhandledLogMessageException.html",
-          "hash": "DbRFwIErFsauSz+8lnL/cQ=="
+          "hash": "zt4R3beqd6FCE6JTKgW+4A=="
         }
       },
       "is_incremental": false,
@@ -549,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.html",
-          "hash": "ZSAUcA0vSWr+ga/LlUAnuQ=="
+          "hash": "MSK1/+bgkWRaOIgLRp5+DA=="
         }
       },
       "is_incremental": false,
