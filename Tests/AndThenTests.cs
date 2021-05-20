@@ -95,14 +95,35 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void AndThen_Fails_IfContinuationThrows()
+		public void AndThen_Fails_IfContinuationConstructionThrows()
 		{
+			var expectedException = new Exception("Test exception");
 			var task = ImmediateTrue
-				.AndThen<bool, object>(_ => throw new Exception("Test exception"))
+				.AndThen<bool, object>(_ => throw expectedException)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
 			var exception = GetFailureException(task);
+			Assert.AreSame(expectedException, exception.InnerException);
+			StateAssert.StringContainsInOrder(exception.Message)
+				.Completed("True")
+				.Failed("...")
+				.Details("Test exception");
+		}
+
+		[Test]
+		public void AndThen_Fails_IfContinuationThrows()
+		{
+			var expectedException = new Exception("Test exception");
+			var task = ImmediateTrue
+				.AndThen<bool, object>(_ => WaitForCondition(
+					"throw",
+					() => throw expectedException))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			var exception = GetFailureException(task);
+			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
 				.Failed("...")
