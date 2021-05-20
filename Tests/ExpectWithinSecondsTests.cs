@@ -125,7 +125,7 @@ namespace Responsible.Tests
 			this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
 				@"timed out.*
-\[!\] Nop EXPECTED WITHIN [^!]*
+\[!\] Nop CONDITION EXPECTED WITHIN [^!]*
 Failed with.*
 Test operation stack");
 		}
@@ -137,7 +137,7 @@ Test operation stack");
 			this.AssertErrorDetailsAfterOneSecond(
 				responder.BoxResult().ExpectWithinSeconds(1),
 				@"timed out.*
-\[!\] Response EXPECTED WITHIN.*
+\[!\] Response CONDITION EXPECTED WITHIN.*
 \s+\[!\] Never EXPECTED WITHIN.*
 \s+Failed with.*
 \s+Test operation stack");
@@ -150,7 +150,7 @@ Test operation stack");
 			this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
 				@"failed.*
-\[!\] Throw error EXPECTED WITHIN.*
+\[!\] Throw error CONDITION EXPECTED WITHIN.*
 \s+\[!\] Throw error .*
 \s+Failed with.*
 \s+Test operation stack");
