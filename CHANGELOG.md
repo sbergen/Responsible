@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Changes in state strings or Unity Editor utilities are **not** considered breaking changes.
+
 ## [Unreleased]
 
 ### Fixed
-- Fix error handling in `ContinueWith` and `AndThen` to publish the correct exception.
-  This was previously causing an internal exception to be published instead under certain conditions.
+- Fix error handling in `ContinueWith` and `AndThen` to publish the correct exception. This was previously causing an internal exception to be published instead under certain conditions.
+
+### Changed
+- Change responder state string from `EXPECTED WITHIN` to `CONDITION EXPECTED WITHIN` to better reflect what it actually does.
 
 ## [4.1.0] - 2021-05-13
 

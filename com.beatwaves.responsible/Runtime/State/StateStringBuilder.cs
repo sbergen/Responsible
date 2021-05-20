@@ -120,7 +120,7 @@ namespace Responsible.State
 			else if (operation is IBasicResponderState responderState)
 			{
 				this.AddResponder(
-					$"{responderState.Description} EXPECTED WITHIN {timeoutString}",
+					$"{responderState.Description} CONDITION EXPECTED WITHIN {timeoutString}",
 					expectOperation,
 					responderState.WaitState,
 					responderState.InstructionState);

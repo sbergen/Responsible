@@ -104,7 +104,7 @@ namespace Responsible.Tests
 
 			var message = GetFailureException(task).Message;
 			StateAssert.StringContainsInOrder(message)
-				.Failed("Response EXPECTED WITHIN")
+				.Failed("Response CONDITION EXPECTED WITHIN")
 				.Details("WAIT FOR")
 				.Canceled("Condition")
 				.Details("THEN RESPOND WITH ...");
