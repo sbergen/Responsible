@@ -13,7 +13,9 @@ namespace Responsible.Tests
 		private ITestWaitCondition<object> waitForFirst;
 		private ITestWaitCondition<object> waitForSecond;
 
-		private ITestInstruction<object> errorInstruction = Do("throw", () => { throw new Exception("Test"); });
+		private static readonly Exception TestException = new Exception("Test");
+		private static readonly ITestInstruction<object> ErrorInstruction =
+			Do("throw", () => throw TestException);
 
 		public enum Strategy
 		{
@@ -38,7 +40,7 @@ namespace Responsible.Tests
 		{
 			this.mayCompleteSecond = shouldCompleteSecond;
 
-			var task = this.ContinueWithNothing(this.errorInstruction, strategy)
+			var task = this.ContinueWithNothing(ErrorInstruction, strategy)
 				.ToTask(this.Executor);
 
 			Assert.IsNotNull(GetFailureException(task));
@@ -71,7 +73,7 @@ namespace Responsible.Tests
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.AreSame(TestException, GetFailureException(task).InnerException);
 		}
 
 		[Test]
@@ -139,9 +141,9 @@ namespace Responsible.Tests
 			switch (strategy)
 			{
 				case Strategy.Continuation:
-					return first.ContinueWith(_ => this.errorInstruction);
+					return first.ContinueWith(_ => ErrorInstruction);
 				case Strategy.Instruction:
-					return first.ContinueWith(this.errorInstruction);
+					return first.ContinueWith(ErrorInstruction);
 				default:
 					throw new ArgumentOutOfRangeException(nameof(strategy), strategy, "Unhandled strategy");
 			}

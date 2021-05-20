@@ -33,8 +33,6 @@ namespace Responsible.State
 			try
 			{
 				this.executionState = this.makeContinuation(source);
-				this.creationStatus = new TestOperationStatus.Completed(this.creationStatus);
-				return await this.executionState.Execute(runContext, cancellationToken);
 			}
 			catch (Exception e)
 			{
@@ -42,6 +40,9 @@ namespace Responsible.State
 					new TestOperationStatus.Failed(this.creationStatus, e, runContext.SourceContext);
 				throw;
 			}
+
+			this.creationStatus = new TestOperationStatus.Completed(this.creationStatus);
+			return await this.executionState.Execute(runContext, cancellationToken);
 		}
 	}
 }

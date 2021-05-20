@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix error handling in `ContinueWith` and `AndThen` to publish the correct exception.
+  This was previously causing an internal exception to be published instead under certain conditions.
+
 ## [4.1.0] - 2021-05-13
 
 ### Fixed
