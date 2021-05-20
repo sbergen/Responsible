@@ -116,7 +116,7 @@ namespace Responsible.Tests
 		{
 			var expectedException = new Exception("Test exception");
 			var task = ImmediateTrue
-				.AndThen<bool, object>(_ => WaitForCondition(
+				.AndThen(_ => WaitForCondition(
 					"throw",
 					() => throw expectedException))
 				.ExpectWithinSeconds(1)
