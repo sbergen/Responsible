@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace Responsible.Tests.Utilities
@@ -27,13 +28,16 @@ namespace Responsible.Tests.Utilities
 
 		public AssertStateString FailureDetails() => this.Details("Failed with:");
 
+		// An empty line requires whitespace to work nicely with Unity
+		public AssertStateString EmptyLine() => this.Details(@"\n\s+\n");
+
 		public AssertStateString Nowhere(string details)
 		{
 			Assert.That(this.str, Does.Not.Contain(details));
 			return this;
 		}
 
-		public AssertStateString Details(string regex)
+		public AssertStateString Details([RegexPattern] string regex)
 		{
 			var match = Regex.Match(this.str.Substring(this.currentIndex), regex);
 
@@ -50,7 +54,7 @@ In:
 			}
 
 			this.assertedStrings.Add(regex);
-			this.currentIndex = match.Index + match.Value.Length;
+			this.currentIndex += match.Index + match.Value.Length;
 			return this;
 		}
 
