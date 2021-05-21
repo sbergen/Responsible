@@ -8,6 +8,10 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+### Fixed
+- `TestInstructionExecutor.Dispose` no longer throws an exception if called twice.
+- `Sequence` will no longer include duplicate entires in the test instruction stack section of error messages.
+
 ## [4.1.1] - 2021-05-20
 
 ### Fixed
