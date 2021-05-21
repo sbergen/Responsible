@@ -8,8 +8,16 @@ namespace Responsible.Context
 {
 	internal readonly struct SourceContext
 	{
+		private enum Kind
+		{
+			NonCollapsible,
+			Collapsible,
+			Aggregate,
+		}
+
 		private static readonly Func<string, string> FormatSourcePath;
 
+		private readonly Kind kind;
 		public readonly IReadOnlyList<string> SourceLines;
 
 		static SourceContext()
@@ -25,18 +33,28 @@ namespace Responsible.Context
 #endif
 		}
 
-		internal SourceContext(string operationName, string memberName, string sourceFilePath, int sourceLineNumber)
+		public SourceContext(
+			string operationName,
+			string memberName,
+			string sourceFilePath,
+			int sourceLineNumber,
+			bool isCollapsible = false)
 		{
 			this.SourceLines = new[] { Format(operationName, memberName, sourceFilePath, sourceLineNumber) };
+			this.kind = isCollapsible ? Kind.Collapsible : Kind.NonCollapsible;
 		}
 
-		private SourceContext(SourceContext parent, SourceContext child)
+		private SourceContext(SourceContext newContext, SourceContext oldContext)
 		{
-			this.SourceLines = parent.SourceLines.Concat(child.SourceLines).ToList();
+			this.SourceLines = newContext.SourceLines.Concat(oldContext.SourceLines).ToList();
+			this.kind = Kind.Aggregate;
 		}
 
 		[Pure]
-		internal SourceContext Append(SourceContext other) => new SourceContext(other, this);
+		public SourceContext Push(SourceContext newContext) =>
+			newContext.kind == Kind.Collapsible && newContext.SourceLines[0] == this.SourceLines[0]
+				? this
+				: new SourceContext(newContext, this);
 
 		[ExcludeFromCodeCoverage] // Used only for prettier debugger output
 		public override string ToString() => string.Join("\n", this.SourceLines);
