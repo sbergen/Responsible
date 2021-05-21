@@ -2,7 +2,9 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using NSubstitute;
 using NUnit.Framework;
+using Responsible.State;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
@@ -10,10 +12,20 @@ namespace Responsible.Tests
 {
 	public class ExceptionMessageTests : ResponsibleTestBase
 	{
+		protected override IGlobalContextProvider MakeGlobalContextProvider() =>
+			Substitute.For<IGlobalContextProvider>();
+
 		[Test]
 		public void ExceptionMessage_IncludesAllDetails()
 		{
-			var task = Do("Throw", () => throw new Exception("An exception"))
+			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+				b => b.AddDetails("Global details")));
+
+			var task = WaitForCondition(
+					"Throw",
+					() => throw new Exception("An exception"),
+					builder => builder.AddDetails("Local details"))
+				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 			var failureException = GetFailureException(task);
 
@@ -21,16 +33,23 @@ namespace Responsible.Tests
 				.StringContainsInOrder(failureException.Message)
 				.Details("Test operation execution failed")
 				.Failed("Throw")
+				.EmptyLine()
 				.Details("Failed with:")
 				.Details("An exception")
+				.EmptyLine()
 				.Details("Test operation stack:")
-				.Details(@"\[Do\].*?\(at")
+				.Details(@"\[ExpectWithinSeconds\].*?\(at")
 				.Details(@"\[ToTask\].*?\(at")
+				.EmptyLine()
+				.Details("Local details")
+				.EmptyLine()
+				.Details("Global details")
+				.EmptyLine()
 				.Details("Error:");
 		}
 
 		[Test]
-		public void ExceptionMessage_DoesNotIncludeEmptyLines()
+		public void ExceptionMessage_DoesNotIncludeCompletelyEmptyLines()
 		{
 			var task = Do("Throw", () => throw new Exception())
 				.ToTask(this.Executor);
