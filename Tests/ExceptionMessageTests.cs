@@ -57,7 +57,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void OperationStack_ContainsSourceTwice_WithNestedOperation()
+		public void OperationStack_ContainsSourceTwice_WithMultipleOperatorsOnSameLine()
 		{
 			var throwInstruction = Do("Throw error", () => throw new Exception());
 			var task = Return(1).ContinueWith(throwInstruction).ContinueWith(Return(3))
@@ -71,7 +71,7 @@ namespace Responsible.Tests
 		{
 			var message = GetFailureException(task).Message;
 			var sequenceCount = Regex.Matches(message, $@"\[{operatorName}\]").Count;
-			Assert.AreEqual(count, sequenceCount, $"[{operatorName}] should occur twice in the error message: {message}");
+			Assert.AreEqual(count, sequenceCount, $"[{operatorName}] should occur {count} time(s) in the error message: {message}");
 		}
 	}
 }
