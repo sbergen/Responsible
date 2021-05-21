@@ -55,7 +55,8 @@ namespace Responsible
 				new SequencedTestInstruction<object, object>(
 					sequencedInstructions,
 					nextInstruction,
-					new SourceContext(nameof(Sequence), memberName, sourceFilePath, sourceLineNumber)));
+					new SourceContext(
+						nameof(Sequence), memberName, sourceFilePath, sourceLineNumber, isCollapsible: true)));
 
 		/// <summary>
 		/// Constructs a test instruction,

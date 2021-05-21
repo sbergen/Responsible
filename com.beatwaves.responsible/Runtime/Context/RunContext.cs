@@ -12,7 +12,7 @@ namespace Responsible.Context
 		internal WaitContext MakeWaitContext() => new WaitContext(this.Scheduler);
 
 		internal RunContext MakeNested(SourceContext sourceContext)
-			=> new RunContext(this.SourceContext.Append(sourceContext), this.Scheduler);
+			=> new RunContext(this.SourceContext.Push(sourceContext), this.Scheduler);
 
 		internal RunContext(SourceContext sourceContext, ITestScheduler scheduler)
 		{
