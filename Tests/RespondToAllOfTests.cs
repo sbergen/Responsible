@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
@@ -20,7 +21,6 @@ namespace Responsible.Tests
 		{
 			this.responder1 = new ConditionResponder<TestDataBase>(1, new TestDataBase(1));
 			this.responder2 = new ConditionResponder<TestDataDerived>(1, new TestDataDerived(2));
-			this.task = null;
 
 			this.task = RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
 				.ExpectWithinSeconds(1)
@@ -130,6 +130,22 @@ namespace Responsible.Tests
 				.NotStarted("EXPECT WITHIN 1.00 s ALL OF")
 				.NotStarted("Respond")
 				.NotStarted("Respond");
+		}
+
+		[Test]
+		public void RespondToAllOf_IsCanceled_WhenCanceledBeforeExecution()
+		{
+			using (var cts = new CancellationTokenSource())
+			{
+				cts.Cancel();
+
+				var canceledTask = RespondToAllOf(this.responder1.Responder, this.responder2.Responder)
+					.ExpectWithinSeconds(1)
+					.ToTask(this.Executor, cts.Token);
+
+				var exception = GetFailureException(canceledTask);
+				Assert.IsInstanceOf<TaskCanceledException>(exception.InnerException);
+			}
 		}
 
 		private void AssertResult()

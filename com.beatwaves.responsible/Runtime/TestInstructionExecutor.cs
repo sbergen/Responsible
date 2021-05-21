@@ -17,6 +17,7 @@ namespace Responsible
 	/// It is recommended to use a base class for your tests using Responsible,
 	/// which sets up and disposes the test instruction executor.
 	/// </remarks>
+	[PublicAPI]
 	public class TestInstructionExecutor : IDisposable
 	{
 		// Add spaces to lines so that the Unity console doesn't strip them
@@ -87,8 +88,11 @@ namespace Responsible
 			// Ensure that nothing is left hanging.
 			// If the executor is used sloppily, it's possible to otherwise
 			// leave e.g. static Unity log event subscriptions hanging.
-			this.mainCancellationTokenSource.Cancel();
-			this.mainCancellationTokenSource.Dispose();
+			if (!this.mainCancellationTokenSource.IsCancellationRequested)
+			{
+				this.mainCancellationTokenSource.Cancel();
+				this.mainCancellationTokenSource.Dispose();
+			}
 		}
 
 		internal async Task<T> RunInstruction<T>(

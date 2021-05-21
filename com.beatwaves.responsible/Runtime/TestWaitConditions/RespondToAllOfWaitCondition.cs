@@ -35,7 +35,6 @@ namespace Responsible.TestWaitConditions
 				var results = new T[this.responders.Count];
 				while (instructionAwaiter.HasNext)
 				{
-					cancellationToken.ThrowIfCancellationRequested();
 					var indexedInstruction = await instructionAwaiter.AwaitNext();
 					var result = await indexedInstruction.Value
 						.Execute(runContext, cancellationToken)

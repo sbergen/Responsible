@@ -227,13 +227,13 @@ namespace Responsible.State
 						b.Add(sourceLine);
 					}
 				});
-
-				this.AddEmptyLine();
 			}
 
-			if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
+			if (extraContext != null &&
+				(status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting))
 			{
-				extraContext?.Invoke(this);
+				this.AddEmptyLine();
+				extraContext(this);
 			}
 
 			return this;
