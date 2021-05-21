@@ -62,6 +62,7 @@ namespace Responsible.Tests
 		{
 			var canThrow = false;
 
+			var expectedException = new Exception("Test exception");
 			var task = WaitForAllOf(
 					Never.BoxResult(),
 					WaitForCondition(
@@ -70,7 +71,7 @@ namespace Responsible.Tests
 						{
 							if (canThrow)
 							{
-								throw new Exception("Test exception");
+								throw expectedException;
 							}
 
 							return canThrow;
@@ -85,7 +86,8 @@ namespace Responsible.Tests
 			canThrow = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(GetFailureException(task));
+			var exception = GetFailureException(task);
+			Assert.AreSame(expectedException, exception.InnerException);
 		}
 
 		[Test]
