@@ -12,6 +12,9 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 - `TestInstructionExecutor.Dispose` no longer throws an exception if called twice.
 - `Sequence` will no longer include duplicate entires in the test instruction stack section of error messages.
 
+### Changed
+- Use `X s ≈ Y frames` instead of `X s and Y frames` in output to clarify the meaning.
+
 ## [4.1.1] - 2021-05-20
 
 ### Fixed
