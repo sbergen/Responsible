@@ -9,7 +9,7 @@ namespace Responsible.Context
 		private readonly int startFrame;
 
 		internal string ElapsedString =>
-			$"{this.ElapsedTime.TotalSeconds:0.00} s and {this.ElapsedFrames} frames";
+			$"{this.ElapsedTime.TotalSeconds:0.00} s ≈ {this.ElapsedFrames} frames";
 
 		private TimeSpan ElapsedTime => this.scheduler.TimeNow - this.startTime;
 		private int ElapsedFrames => this.scheduler.FrameNow - this.startFrame;

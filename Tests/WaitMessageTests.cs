@@ -16,12 +16,12 @@ namespace Responsible.Tests
 
 			StateAssert.StringContainsInOrder(state.ToString())
 				.Waiting("Never")
-				.Details(@"Started 0\.00 s and 0 frames ago");
+				.Details(@"Started 0\.00 s ≈ 0 frames ago");
 
 			this.AdvanceDefaultFrame();
 			StateAssert.StringContainsInOrder(state.ToString())
 				.Waiting("Never")
-				.Details($@"Started {OneFrame.TotalSeconds:0.00} s and 1 frames ago");
+				.Details($@"Started {OneFrame.TotalSeconds:0.00} s ≈ 1 frames ago");
 		}
 
 	}
