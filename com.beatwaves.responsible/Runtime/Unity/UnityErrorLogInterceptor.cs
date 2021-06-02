@@ -49,7 +49,7 @@ namespace Responsible.Unity
 		{
 			var completionSource = new TaskCompletionSource<object>();
 
-			void HandleSingleLog(string condition, LogType type)
+			void HandleSingleLog(string condition, string stackTrace, LogType type)
 			{
 				var index = this.expectedLogs.FindIndex(entry =>
 					entry.type == type &&
@@ -63,17 +63,17 @@ namespace Responsible.Unity
 				else
 				{
 					LogAssert.Expect(type, condition);
-					completionSource.SetException(new UnhandledLogMessageException(condition));
+					completionSource.SetException(new UnhandledLogMessageException(condition, stackTrace));
 				}
 			}
 
-			void LogHandler(string condition, string _, LogType type)
+			void LogHandler(string condition, string stackTrace, LogType type)
 			{
 				if (!cancellationToken.IsCancellationRequested &&
 					!LogAssert.ignoreFailingMessages &&
 					(type == LogType.Error || type == LogType.Exception))
 				{
-					HandleSingleLog(condition, type);
+					HandleSingleLog(condition, stackTrace, type);
 				}
 			}
 

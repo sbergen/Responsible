@@ -14,6 +14,7 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ### Changed
 - Use `X s ≈ Y frames` instead of `X s and Y frames` in output to clarify the meaning.
+- Add stack trace to `UnhandledLogMessageException.Message`
 
 ## [4.1.1] - 2021-05-20
 

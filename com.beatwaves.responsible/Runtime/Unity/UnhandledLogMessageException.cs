@@ -7,8 +7,8 @@ namespace Responsible.Unity
 	/// </summary>
 	public class UnhandledLogMessageException : Exception
 	{
-		internal UnhandledLogMessageException(string condition)
-			: base($"Unhandled log message: {condition}")
+		internal UnhandledLogMessageException(string condition, string stackTrace)
+			: base($"Unhandled log message: {condition}\n---\n{stackTrace}")
 		{
 		}
 	}
