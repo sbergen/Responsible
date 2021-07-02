@@ -19,7 +19,7 @@ After [setting up OpenUMP](https://openupm.com/docs/),
 you can add Responsible to your project by running
 ```
 openupm add com.beatwaves.responsible
-``` 
+```
 
 ### Direct Unity Package Manager Reference
 
@@ -28,7 +28,7 @@ Select the version you want to use from
 and add the following to `Packages/manifest.json`
 ```json
 "com.beatwaves.responsible": "https://github.com/sbergen/Responsible.git?path=/com.beatwaves.responsible#vX.Y.Z"
-``` 
+```
 replacing `X.Y.Z` with the version you want to use.
 
 ### Without the Package Manager
@@ -45,7 +45,7 @@ To use Responsible, simply reference this from your test assemblies.
 
 ## Examples
 
-For a simple example of a basic test setup, 
+For a simple example of a basic test setup,
 there's an [example project](https://github.com/sbergen/responsible/tree/main/com.beatwaves.responsible/Samples~/ResponsibleGame)
 with some [basic tests](https://github.com/sbergen/responsible/tree/main/com.beatwaves.responsible/Samples~/ResponsibleGame/PlayModeTests) included.
 This sample game can be installed from the Unity Package Manager,
@@ -66,9 +66,10 @@ The following points are worth noting:
 * If you are expecting an error, you must call
 [`UnityTestInstructionExecutor.ExpectLog`](xref:Responsible.Unity.UnityTestInstructionExecutor#Responsible_Unity_UnityTestInstructionExecutor_ExpectLog_UnityEngine_LogType_System_Text_RegularExpressions_Regex_)
 instead of only calling `UnityEngine.LogAssert.Expect`.
-* Logging errors from any other thread but the main thread is **not** handled.
+* Logging errors from any other thread but the main thread should *mostly* be handled,
+  but might be slightly unreliable depending on timing.
   As test instructions are executed on the main thread,
-  it would be impossible to attribute a logged error to the correct test instruction.
+  it's impossible to always attribute a logged error to the correct test instruction.
 * `LogAssert.ignoreFailingMessages` is respected at the time of logging.
 
 ## Test Operation State Editor Window

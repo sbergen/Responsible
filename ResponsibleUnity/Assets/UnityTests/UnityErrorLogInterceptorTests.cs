@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -40,10 +42,49 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
+		public void ExceptionMessage_ContainsStackTrace()
+		{
+			Debug.LogError(ErrorMessage);
+			var message = this.GetLogException()?.Message;
+			Assert.IsNotNull(message);
+
+			StringAssert.Contains(nameof(UnityErrorLogInterceptorTests), message);
+		}
+
+		[Test]
 		public void LoggingError_CausesFailure_WhenErrorsNotIgnored()
 		{
 			Debug.LogError(ErrorMessage);
 			Assert.IsNotNull(this.GetLogException());
+		}
+
+		[UnityTest]
+		public IEnumerator LoggingError_EventuallyCausesFailure_WhenLoggedFromBackgroundThread()
+		{
+			var thread = new Thread(() => Debug.LogError("Test error"));
+			thread.Start();
+
+			while (thread.IsAlive)
+			{
+				yield return null;
+			}
+
+			// In order to dispatch the error back to the Unity thread, we need to yield at least one frame.
+			// If this yield is not in place, cancellation will throw instead, see next test.
+			yield return null;
+
+			Assert.IsNotNull(this.GetLogException());
+		}
+
+		[Test]
+		public void CancelingSubscription_ThrowsError_WhenThreadedExceptionWasNotWaitedFor()
+		{
+			var thread = new Thread(() => Debug.LogError("Test error"));
+			thread.Start();
+			thread.Join(TimeSpan.FromSeconds(1));
+
+			var aggregateException = Assert.Throws<AggregateException>(this.cancellationSource.Cancel);
+			Assert.IsInstanceOf<UnhandledLogMessageException>(aggregateException.InnerException);
 		}
 
 		[Test]
@@ -61,7 +102,7 @@ namespace Responsible.UnityTests
 			Debug.LogError(ErrorMessage);
 			Assert.IsNull(this.task.Exception);
 		}
-		
+
 		[Test]
 		public void LogAssert_Works_WhenErrorIsNotIntercepted()
 		{

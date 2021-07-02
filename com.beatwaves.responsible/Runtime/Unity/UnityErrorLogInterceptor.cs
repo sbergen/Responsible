@@ -30,7 +30,11 @@ namespace Responsible.Unity
 		public void ExpectLog(LogType logType, Regex regex)
 		{
 			LogAssert.Expect(logType, regex);
-			this.expectedLogs.Add((logType, regex));
+
+			lock (this.expectedLogs)
+			{
+				this.expectedLogs.Add((logType, regex));
+			}
 		}
 
 		/// <summary>
@@ -51,19 +55,22 @@ namespace Responsible.Unity
 
 			void HandleSingleLog(string condition, string stackTrace, LogType type)
 			{
-				var index = this.expectedLogs.FindIndex(entry =>
-					entry.type == type &&
-					entry.regex.IsMatch(condition));
+				lock (this.expectedLogs)
+				{
+					var index = this.expectedLogs.FindIndex(entry =>
+						entry.type == type &&
+						entry.regex.IsMatch(condition));
 
-				if (index >= 0)
-				{
-					// Already expected, just remove it
-					this.expectedLogs.RemoveAt(index);
-				}
-				else
-				{
-					LogAssert.Expect(type, condition);
-					completionSource.SetException(new UnhandledLogMessageException(condition, stackTrace));
+					if (index >= 0)
+					{
+						// Already expected, just remove it
+						this.expectedLogs.RemoveAt(index);
+					}
+					else
+					{
+						LogAssert.Expect(type, condition);
+						completionSource.SetException(new UnhandledLogMessageException(condition, stackTrace));
+					}
 				}
 			}
 
@@ -77,18 +84,36 @@ namespace Responsible.Unity
 				}
 			}
 
-			using (cancellationToken.Register(() => completionSource.SetCanceled()))
+			using (cancellationToken.Register(CancelOrThrow(completionSource)))
 			{
-				Application.logMessageReceived += LogHandler;
+				Application.logMessageReceivedThreaded += LogHandler;
 				try
 				{
 					return await completionSource.Task.ExpectException();
 				}
 				finally
 				{
-					Application.logMessageReceived -= LogHandler;
+					Application.logMessageReceivedThreaded -= LogHandler;
 				}
 			}
 		}
+
+		[ExcludeFromCoverage] // Contains only defensive conditions, which can't be triggered
+		private static Action CancelOrThrow(TaskCompletionSource<object> completionSource) => () =>
+		{
+			if (!completionSource.TrySetCanceled())
+			{
+				var exceptionCandidate = completionSource.Task.Exception?.InnerException;
+				if (exceptionCandidate is UnhandledLogMessageException)
+				{
+					throw exceptionCandidate;
+				}
+				else
+				{
+					throw new InvalidOperationException(
+						"Error log interception task was completed in an unexpected way");
+				}
+			}
+		};
 	}
 }
