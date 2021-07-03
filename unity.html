@@ -136,9 +136,10 @@ The following points are worth noting:</p>
 <li>If you are expecting an error, you must call
 <a class="xref" href="api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_ExpectLog_UnityEngine_LogType_System_Text_RegularExpressions_Regex_"><code>UnityTestInstructionExecutor.ExpectLog</code></a>
 instead of only calling <code>UnityEngine.LogAssert.Expect</code>.</li>
-<li>Logging errors from any other thread but the main thread is <strong>not</strong> handled.
+<li>Logging errors from any other thread but the main thread should <em>mostly</em> be handled,
+but might be slightly unreliable depending on timing.
 As test instructions are executed on the main thread,
-it would be impossible to attribute a logged error to the correct test instruction.</li>
+it's impossible to always attribute a logged error to the correct test instruction.</li>
 <li><code>LogAssert.ignoreFailingMessages</code> is respected at the time of logging.</li>
 </ul>
 <h2 id="test-operation-state-editor-window">Test Operation State Editor Window</h2>
