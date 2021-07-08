@@ -16,6 +16,11 @@ namespace Responsible.Utilities
 
 			void CheckCondition()
 			{
+				if (cancellationToken.IsCancellationRequested)
+				{
+					return;
+				}
+
 				try
 				{
 					var state = getState();
