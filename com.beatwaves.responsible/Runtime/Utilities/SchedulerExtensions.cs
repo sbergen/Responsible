@@ -16,11 +16,6 @@ namespace Responsible.Utilities
 
 			void CheckCondition()
 			{
-				if (cancellationToken.IsCancellationRequested)
-				{
-					return;
-				}
-
 				try
 				{
 					var state = getState();
@@ -38,7 +33,11 @@ namespace Responsible.Utilities
 			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
-				CheckCondition(); // Complete immediately if already met
+				if (!cancellationToken.IsCancellationRequested)
+				{
+					CheckCondition(); // Complete immediately if already met
+				}
+
 				return await tcs.Task;
 			}
 		}
