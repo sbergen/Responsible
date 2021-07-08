@@ -106,7 +106,7 @@ namespace Responsible.Tests
 			{
 				var polled = false;
 				var unused = WaitForCondition(
-						"Complete immediately",
+						"Never complete",
 						() =>
 						{
 							polled = true;
@@ -118,7 +118,29 @@ namespace Responsible.Tests
 				polled = false; // Reset after initial check
 				tokenSource.Cancel();
 				this.AdvanceDefaultFrame();
-				Assert.IsFalse(polled, "Should not be polled after completion");
+				Assert.IsFalse(polled, "Should not be polled after cancellation");
+			}
+		}
+
+		[Test]
+		public void WaitForCondition_IsNotPolled_WhenCanceledBeforeExecution()
+		{
+			using (var tokenSource = new CancellationTokenSource())
+			{
+				var polled = false;
+				tokenSource.Cancel();
+				var unused = WaitForCondition(
+						"Never complete",
+						() =>
+						{
+							polled = true;
+							return false;
+						})
+					.ExpectWithinSeconds(1)
+					.ToTask(this.Executor, tokenSource.Token);
+
+				this.AdvanceDefaultFrame();
+				Assert.IsFalse(polled, "Should not be polled if canceled before execution");
 			}
 		}
 

@@ -33,7 +33,11 @@ namespace Responsible.Utilities
 			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
-				CheckCondition(); // Complete immediately if already met
+				if (!cancellationToken.IsCancellationRequested)
+				{
+					CheckCondition(); // Complete immediately if already met
+				}
+
 				return await tcs.Task;
 			}
 		}
