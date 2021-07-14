@@ -33,7 +33,10 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: ResponsibleUnity/Library
-          key: Library-${{ matrix.unityVersion }}
+          key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible', 'ResponsibleUnity') }}
+          restore-keys: |
+            Library-${{ matrix.unityVersion }}
+            Library-
 
       - name: Run tests
         id: tests
