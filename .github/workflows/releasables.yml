@@ -11,17 +11,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      
+
       - name: Build nupkg
         run: dotnet pack Responsible --output nupkg
 
       - name: Archive nupkg
-        uses: actions/upload-artifact@v2.2.0 
+        uses: actions/upload-artifact@v2.2.0
         with:
           name: nupkg
           path: nupkg/*
@@ -36,7 +36,10 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: ResponsibleUnity/Library
-          key: Library-docfx
+          key: Library-docfx-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
+          restore-keys: |
+            Library-docfx-
+            Library-
 
       - name: Generate docs
         uses: game-ci/unity-builder@v2
@@ -50,7 +53,7 @@ jobs:
           customParameters: -disable-assembly-updater
 
       - name: Archive docs
-        uses: actions/upload-artifact@v2.2.0 
+        uses: actions/upload-artifact@v2.2.0
         with:
           name: Docs
           path: docfx/docs_site
@@ -87,7 +90,7 @@ jobs:
       - name: Read current Unity package version
         id: unity-version
         uses: notiz-dev/github-action-json-property@release
-        with: 
+        with:
           path: com.beatwaves.responsible/package.json
           prop_path: 'version'
 
@@ -147,7 +150,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: nupkg
-      
+
       - name: Zip source code and docs
         run: |
           zip -r com.beatwaves.responsible.zip com.beatwaves.responsible
