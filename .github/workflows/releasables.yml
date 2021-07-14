@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: ResponsibleUnity/Library
-          key: Library-docfx-${{ hashFiles('com.beatwaves.responsible', 'ResponsibleUnity') }}
+          key: Library-docfx-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
           restore-keys: |
             Library-docfx-
             Library-
