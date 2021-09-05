@@ -25,12 +25,12 @@ namespace Responsible.EditorTests
 		private class VisualState
 		{
 			public readonly List<string> CurrentOperations = new List<string>();
-			public readonly string PreviousOperation;
+			public readonly List<string> PreviousOperation = new List<string>();
 
 			public void AssertEmpty()
 			{
 				Assert.IsEmpty(this.CurrentOperations);
-				Assert.IsNull(this.PreviousOperation);
+				Assert.IsEmpty(this.PreviousOperation);
 			}
 
 			public VisualState(VisualElement parent)
@@ -54,8 +54,7 @@ namespace Responsible.EditorTests
 					}
 					else if (foundPreviousTitle)
 					{
-						Assert.IsNull(this.PreviousOperation, "Should have only one previous operation");
-						this.PreviousOperation = label.text;
+						this.PreviousOperation.Add(label.text);
 					}
 					else if (foundCurrentTitle)
 					{
@@ -128,7 +127,7 @@ namespace Responsible.EditorTests
 			CollectionAssert.AreEqual(
 				new[] { operationState1.StringRepresentation, operationState2.StringRepresentation },
 				visualState.CurrentOperations);
-			Assert.IsNull(visualState.PreviousOperation);
+			Assert.IsEmpty(visualState.PreviousOperation);
 		}
 
 		[Test]
@@ -141,7 +140,9 @@ namespace Responsible.EditorTests
 
 			var visualState = new VisualState(this.scrollView);
 			Assert.IsEmpty(visualState.CurrentOperations);
-			Assert.AreEqual(operationState.StringRepresentation, visualState.PreviousOperation);
+			CollectionAssert.AreEqual(
+				new[] { operationState.StringRepresentation },
+				visualState.PreviousOperation);
 		}
 
 		[Test]
@@ -208,7 +209,9 @@ namespace Responsible.EditorTests
 			CollectionAssert.AreEqual(
 				new[] { state2.StringRepresentation },
 				visualState.CurrentOperations);
-			Assert.AreEqual(state1.StringRepresentation, visualState.PreviousOperation);
+			CollectionAssert.AreEqual(
+				new[] { state1.StringRepresentation },
+				visualState.PreviousOperation);
 		}
 
 		[Test]
@@ -221,6 +224,38 @@ namespace Responsible.EditorTests
 
 			var visualState = new VisualState(this.scrollView);
 			Assert.IsTrue(visualState.CurrentOperations.Any(t => t.Contains("Fake Exception")));
+		}
+
+		[Test]
+		public void LongStateText_GetsSplitIntoMultipleLabels_InCurrentOperation()
+		{
+			var fooAndNineteenEmptyLines = "foo" + new string('\n', 19);
+
+			this.notificationsCallback(
+				TestOperationStateTransition.Started,
+				new FakeOperationState(fooAndNineteenEmptyLines + "\nbar"));
+			this.state.Update();
+
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { fooAndNineteenEmptyLines, "bar" },
+				visualState.CurrentOperations);
+		}
+
+		[Test]
+		public void LongStateText_GetsSplitIntoMultipleLabels_InPreviousOperation()
+		{
+			var fooAndNineteenEmptyLines = "foo" + new string('\n', 19);
+			var state = new FakeOperationState(fooAndNineteenEmptyLines + "\nbar");
+
+			this.notificationsCallback(TestOperationStateTransition.Started, state);
+			this.notificationsCallback(TestOperationStateTransition.Finished, state);
+			this.state.Update();
+
+			var visualState = new VisualState(this.scrollView);
+			CollectionAssert.AreEqual(
+				new[] { fooAndNineteenEmptyLines, "bar" },
+				visualState.PreviousOperation);
 		}
 	}
 }

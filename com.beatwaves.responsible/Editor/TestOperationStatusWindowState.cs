@@ -9,8 +9,8 @@ namespace Responsible.Editor
 {
 	internal class TestOperationStatusWindowState : IDisposable
 	{
-		private readonly List<(ITestOperationState state, Label label)> stateLabels =
-			new List<(ITestOperationState state, Label label)>();
+		private readonly List<(ITestOperationState state, AggregateLabel label)> stateLabels =
+			new List<(ITestOperationState state, AggregateLabel label)>();
 
 		private readonly IDisposable operationStateSubscription;
 		private readonly IDisposable playModeStateSubscription;
@@ -31,7 +31,7 @@ namespace Responsible.Editor
 			var previousOperation = new VisualElement();
 			var previousOperationTitle = new Label("Last finished operation:");
 			previousOperationTitle.style.unityFontStyleAndWeight = FontStyle.Bold;
-			var previousOperationLabel = new Label();
+			var previousOperationLabel = new AggregateLabel();
 			previousOperation.Add(previousOperationTitle);
 			previousOperation.Add(previousOperationLabel);
 
@@ -42,7 +42,7 @@ namespace Responsible.Editor
 
 			void AddLabel(ITestOperationState state)
 			{
-				var label = new Label();
+				var label = new AggregateLabel();
 				label.style.paddingBottom = new StyleLength(20);
 				this.stateLabels.Add((state, label));
 				currentOperations.Add(label);
