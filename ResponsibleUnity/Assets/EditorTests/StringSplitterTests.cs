@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NUnit.Framework;
 using Responsible.Editor.Utilities;
@@ -31,5 +32,13 @@ namespace Responsible.EditorTests
 			Assert.AreSame(input, input.SubstringsOfMaxLines(2).Single());
 		}
 
+		[TestCase(0)]
+		[TestCase(-1)]
+		public void SubstringsOfMaxLines_Throws_WhenMaxLinesLessThanOrEqualToZero(int maxLines)
+		{
+			Assert.Throws<ArgumentOutOfRangeException>(
+				// ReSharper disable once ReturnValueOfPureMethodIsNotUsed, should throw
+				() => string.Empty.SubstringsOfMaxLines(maxLines).ToArray());
+		}
 	}
 }
