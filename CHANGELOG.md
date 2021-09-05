@@ -8,6 +8,9 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+### Fixed
+- Long descriptions in the operation state window no longer cause tests to fail because Unity spits out an error about too many vertices in a Label.
+
 ## [4.1.2] - 2021-07-17
 
 ### Fixed
