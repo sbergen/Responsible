@@ -8,8 +8,12 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+### Added
+- Allow passing a list of exceptions to be rethrown, instead of wrapped in `TestFailureException`. This allows e.g. NUnit's `IgnoreException` to function properly.
+
 ### Fixed
 - Long descriptions in the operation state window no longer cause tests to fail because Unity spits out an error about too many vertices in a Label.
+- Make NUnit's `Assert.Ignore` work properly on Unity (see Added above for .NET).
 
 ## [4.1.2] - 2021-07-17
 

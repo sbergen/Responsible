@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -27,7 +28,8 @@ namespace Responsible.Unity
 				scheduler,
 				errorLogInterceptor,
 				logErrors ? new UnityFailureListener() : null,
-				globalContextProvider)
+				globalContextProvider,
+				new[] { typeof(IgnoreException) })
 		{
 			this.scheduler = scheduler;
 			this.errorLogInterceptor = errorLogInterceptor;

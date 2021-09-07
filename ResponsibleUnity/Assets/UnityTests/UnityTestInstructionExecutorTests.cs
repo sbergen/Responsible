@@ -53,6 +53,17 @@ namespace Responsible.UnityTests
 			}
 		}
 
+		[UnityTest]
+		public IEnumerator AssertIgnore_DoesNotCauseTestFailure()
+		{
+			using (var executor = new UnityTestInstructionExecutor())
+			{
+				yield return Responsibly
+					.Do("Assert.Ignore", () => Assert.Ignore("Should not fail"))
+					.ToYieldInstruction(executor);
+			}
+		}
+
 		[Test]
 		public void GlobalContext_IsIncludedInErrors()
 		{

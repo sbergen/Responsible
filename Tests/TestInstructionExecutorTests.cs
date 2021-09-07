@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using static Responsible.Responsibly;
@@ -7,6 +8,8 @@ namespace Responsible.Tests
 {
 	public class TestInstructionExecutorTests : ResponsibleTestBase
 	{
+		protected override IReadOnlyList<Type> RethrowableExceptions => new[] { typeof(IgnoreException) };
+
 		[Test]
 		public void Dispose_CancelsInstructions()
 		{
@@ -24,5 +27,14 @@ namespace Responsible.Tests
 			Assert.IsInstanceOf<ObjectDisposedException>(task.Exception?.InnerException);
 		}
 
+		[Test]
+		public void RethrowableException_GetsRethrown()
+		{
+			var task = Do(
+					"Call Assert.Ignore",
+					() => Assert.Ignore("This test is ignored"))
+				.ToTask(this.Executor);
+			Assert.IsInstanceOf<IgnoreException>(task.Exception?.InnerException);
+		}
 	}
 }
