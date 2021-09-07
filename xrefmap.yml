@@ -839,12 +839,15 @@ references:
   commentId: T:Responsible.TestInstructionExecutor
   fullName: Responsible.TestInstructionExecutor
   nameWithType: TestInstructionExecutor
-- uid: Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider)
-  name: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider)
-  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_
-  commentId: M:Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider)
-  fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider)
-  nameWithType: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider)
+- uid: Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider,System.Collections.Generic.IReadOnlyList{System.Type})
+  name: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList<Type>)
+  href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_System_Collections_Generic_IReadOnlyList_System_Type__
+  commentId: M:Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider,System.Collections.Generic.IReadOnlyList{System.Type})
+  name.vb: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
+  fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider, System.Collections.Generic.IReadOnlyList<System.Type>)
+  fullName.vb: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider, System.Collections.Generic.IReadOnlyList(Of System.Type))
+  nameWithType: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList<Type>)
+  nameWithType.vb: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
 - uid: Responsible.TestInstructionExecutor.#ctor*
   name: TestInstructionExecutor
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_

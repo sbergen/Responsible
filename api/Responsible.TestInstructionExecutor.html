@@ -279,13 +279,13 @@ which sets up and disposes the test instruction executor.</p>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Responsible_TestInstructionExecutor__ctor_" data-uid="Responsible.TestInstructionExecutor.#ctor*"></a>
-  <h4 id="Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_" data-uid="Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider)">TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider)</h4>
+  <h4 id="Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_System_Collections_Generic_IReadOnlyList_System_Type__" data-uid="Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider,System.Collections.Generic.IReadOnlyList{System.Type})">TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList&lt;Type&gt;)</h4>
   <div class="markdown level1 summary"><p>Constructs a new test instruction executor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TestInstructionExecutor(ITestScheduler scheduler, IExternalResultSource externalResultSource = null, IFailureListener failureListener = null, IGlobalContextProvider globalContextProvider = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public TestInstructionExecutor(ITestScheduler scheduler, IExternalResultSource externalResultSource = null, IFailureListener failureListener = null, IGlobalContextProvider globalContextProvider = null, IReadOnlyList&lt;Type&gt; rethrowableExceptions = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -319,6 +319,15 @@ which sets up and disposes the test instruction executor.</p>
         <td><a class="xref" href="Responsible.IGlobalContextProvider.html">IGlobalContextProvider</a></td>
         <td><span class="parametername">globalContextProvider</span></td>
         <td><p>Optional provider for global context, which gets included in failure messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><span class="parametername">rethrowableExceptions</span></td>
+        <td><p>Optional collection of exception types to rethrow, instead of wrapping them in
+<a class="xref" href="Responsible.TestFailureException.html">TestFailureException</a>.
+Test instructions terminating with any of the given exception types will be considered
+completed, and not failed. Can be used with e.g. NUnit's <code>IgnoreException</code>.</p>
 </td>
       </tr>
     </tbody>
