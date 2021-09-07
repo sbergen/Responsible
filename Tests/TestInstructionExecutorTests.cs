@@ -24,5 +24,14 @@ namespace Responsible.Tests
 			Assert.IsInstanceOf<ObjectDisposedException>(task.Exception?.InnerException);
 		}
 
+		[Test]
+		public void RethrowableException_GetsRethrown()
+		{
+			var task = Do(
+					"Call Assert.Ignore",
+					() => Assert.Ignore("This test is ignored"))
+				.ToTask(this.Executor);
+			Assert.IsInstanceOf<IgnoreException>(task.Exception?.InnerException);
+		}
 	}
 }

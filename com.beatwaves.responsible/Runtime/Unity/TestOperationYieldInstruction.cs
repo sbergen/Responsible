@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ namespace Responsible.Unity
 		/// <value>True if the test operation was canceled, false otherwise.</value>
 		public bool WasCanceled =>
 			this.task.IsFaulted &&
-			this.GetException().InnerException is TaskCanceledException;
+			InnermostException(this.task.Exception) is TaskCanceledException;
 
 		/// <summary>Indicates if the test operation has completed with an error.</summary>
 		/// <value>True if the test operation completed with an error, false otherwise.</value>
@@ -40,7 +39,8 @@ namespace Responsible.Unity
 		/// Gets the <see cref="TestFailureException"/> that caused the test operation to fail.
 		/// Will throw an error if the task has not failed or was not canceled.</summary>
 		/// <value>The exception that caused the test operation to fail.</value>
-		public TestFailureException Error => this.GetException();
+		public TestFailureException Error => this.GetTestFailureException()
+			?? throw new InvalidOperationException("Test operation has not failed!");
 
 		internal TestOperationYieldInstruction(Task<T> task, bool throwOnError)
 		{
@@ -59,8 +59,7 @@ namespace Responsible.Unity
 			{
 				if (this.throwOnError)
 				{
-					// ReSharper disable once PossibleNullReferenceException, Condition is checked above...
-					throw this.GetException();
+					throw this.GetTestFailureException() ?? InnermostException(this.task.Exception);
 				}
 				else
 				{
@@ -73,32 +72,20 @@ namespace Responsible.Unity
 			}
 		}
 
-		private TestFailureException GetException()
+		private static Exception InnermostException(Exception e)
 		{
-			if (!this.task.IsFaulted)
+			var unwrapped = (e as AggregateException)?.InnerException ?? e;
+			if (unwrapped is TestFailureException testFailureException)
 			{
-				throw new InvalidOperationException("Test operation has not failed!");
+				return testFailureException.InnerException;
 			}
 			else
 			{
-				return this.ExpectTestFailureException(this.task.Exception);
+				return unwrapped;
 			}
 		}
 
-		// Should never fail, unless we have an issue in our code, which means it should be caught by other tests.
-		[ExcludeFromCodeCoverage]
-		private TestFailureException ExpectTestFailureException(Exception e)
-		{
-			if (e is AggregateException aggregateException &&
-				aggregateException.InnerExceptions.Count == 1 &&
-				aggregateException.InnerExceptions[0] is TestFailureException failureException)
-			{
-				return failureException;
-			}
-			else
-			{
-				throw e;
-			}
-		}
+		private TestFailureException GetTestFailureException() =>
+			this.task.Exception?.InnerException as TestFailureException;
 	}
 }

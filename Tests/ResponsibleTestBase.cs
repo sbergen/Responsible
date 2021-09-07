@@ -47,7 +47,8 @@ namespace Responsible.Tests
 				this.Scheduler,
 				this.ExternalResultSource(),
 				this.FailureListener,
-				this.GlobalContextProvider);
+				this.GlobalContextProvider,
+				new[] { typeof(IgnoreException) });
 		}
 
 		[TearDown]

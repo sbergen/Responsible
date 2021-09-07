@@ -31,6 +31,7 @@ namespace Responsible
 		private readonly IExternalResultSource externalResultSource;
 		private readonly IFailureListener failureListener;
 		private readonly IGlobalContextProvider globalContextProvider;
+		private readonly IReadOnlyList<Type> rethrowableExceptions;
 
 		/// <summary>
 		/// Callback delegate type for test operation state notifications.
@@ -66,16 +67,24 @@ namespace Responsible
 		/// <param name="globalContextProvider">
 		/// Optional provider for global context, which gets included in failure messages.
 		/// </param>
+		/// <param name="rethrowableExceptions">
+		/// Optional collection of exception types to rethrow, instead of wrapping them in
+		/// <see cref="TestFailureException"/>.
+		/// Test instructions terminating with any of the given exception types will be considered
+		/// completed, and not failed. Can be used with e.g. NUnit's <c>IgnoreException</c>.
+		/// </param>
 		public TestInstructionExecutor(
 			ITestScheduler scheduler,
 			IExternalResultSource externalResultSource = null,
 			IFailureListener failureListener = null,
-			IGlobalContextProvider globalContextProvider = null)
+			IGlobalContextProvider globalContextProvider = null,
+			IReadOnlyList<Type> rethrowableExceptions = null)
 		{
 			this.scheduler = scheduler;
 			this.externalResultSource = externalResultSource;
 			this.failureListener = failureListener;
 			this.globalContextProvider = globalContextProvider;
+			this.rethrowableExceptions = rethrowableExceptions;
 		}
 
 		/// <summary>
@@ -122,6 +131,11 @@ namespace Responsible
 				}
 				catch (Exception e)
 				{
+					if (this.ShouldRethrow(e))
+					{
+						throw;
+					}
+
 					var message = e is TimeoutException
 						? this.MakeTimeoutMessage(rootState)
 						: this.MakeErrorMessage(rootState, e);
@@ -134,6 +148,12 @@ namespace Responsible
 						callback(TestOperationStateTransition.Finished, rootState));
 				}
 			}
+		}
+
+		internal bool ShouldRethrow(Exception e)
+		{
+			var exceptionType = e.GetType();
+			return this.rethrowableExceptions?.Any(type => type == exceptionType) == true;
 		}
 
 		[Pure]
