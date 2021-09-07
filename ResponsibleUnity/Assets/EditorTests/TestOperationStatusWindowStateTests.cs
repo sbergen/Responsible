@@ -246,10 +246,10 @@ namespace Responsible.EditorTests
 		public void LongStateText_GetsSplitIntoMultipleLabels_InPreviousOperation()
 		{
 			var fooAndNineteenEmptyLines = "foo" + new string('\n', 19);
-			var state = new FakeOperationState(fooAndNineteenEmptyLines + "\nbar");
+			var operationState = new FakeOperationState(fooAndNineteenEmptyLines + "\nbar");
 
-			this.notificationsCallback(TestOperationStateTransition.Started, state);
-			this.notificationsCallback(TestOperationStateTransition.Finished, state);
+			this.notificationsCallback(TestOperationStateTransition.Started, operationState);
+			this.notificationsCallback(TestOperationStateTransition.Finished, operationState);
 			this.state.Update();
 
 			var visualState = new VisualState(this.scrollView);

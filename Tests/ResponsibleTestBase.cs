@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
@@ -48,7 +49,7 @@ namespace Responsible.Tests
 				this.ExternalResultSource(),
 				this.FailureListener,
 				this.GlobalContextProvider,
-				new[] { typeof(IgnoreException) });
+				this.RethrowableExceptions);
 		}
 
 		[TearDown]
@@ -60,5 +61,6 @@ namespace Responsible.Tests
 		protected virtual IExternalResultSource ExternalResultSource() => null;
 		protected virtual IFailureListener MakeFailureListener() => null;
 		protected virtual IGlobalContextProvider MakeGlobalContextProvider() => null;
+		protected virtual IReadOnlyList<Type> RethrowableExceptions => null;
 	}
 }

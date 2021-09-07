@@ -150,7 +150,7 @@ namespace Responsible
 			}
 		}
 
-		internal bool ShouldRethrow(Exception e)
+		private bool ShouldRethrow(Exception e)
 		{
 			var exceptionType = e.GetType();
 			return this.rethrowableExceptions?.Any(type => type == exceptionType) == true;

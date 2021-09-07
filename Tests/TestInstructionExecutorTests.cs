@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using static Responsible.Responsibly;
@@ -7,6 +8,8 @@ namespace Responsible.Tests
 {
 	public class TestInstructionExecutorTests : ResponsibleTestBase
 	{
+		protected override IReadOnlyList<Type> RethrowableExceptions => new[] { typeof(IgnoreException) };
+
 		[Test]
 		public void Dispose_CancelsInstructions()
 		{
