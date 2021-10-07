@@ -29,7 +29,12 @@ namespace Responsible.Unity
 				errorLogInterceptor,
 				logErrors ? new UnityFailureListener() : null,
 				globalContextProvider,
-				new[] { typeof(IgnoreException) })
+				new[]
+				{
+					typeof(IgnoreException),
+					typeof(InconclusiveException),
+					typeof(SuccessException),
+				})
 		{
 			this.scheduler = scheduler;
 			this.errorLogInterceptor = errorLogInterceptor;

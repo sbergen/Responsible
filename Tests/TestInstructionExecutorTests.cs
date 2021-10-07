@@ -8,7 +8,12 @@ namespace Responsible.Tests
 {
 	public class TestInstructionExecutorTests : ResponsibleTestBase
 	{
-		protected override IReadOnlyList<Type> RethrowableExceptions => new[] { typeof(IgnoreException) };
+		protected override IReadOnlyList<Type> RethrowableExceptions => new[]
+		{
+			typeof(SuccessException),
+			typeof(IgnoreException),
+			typeof(InconclusiveException),
+		};
 
 		[Test]
 		public void Dispose_CancelsInstructions()
