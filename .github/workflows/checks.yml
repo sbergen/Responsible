@@ -63,7 +63,7 @@ jobs:
         if: ${{ always() }}
         uses: codecov/codecov-action@v2
         with:
-          flags: Unity ${{ matrix.unityVersion }}
+          flags: Unity${{ matrix.unityVersion }}
           files: |
             artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,
             artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
