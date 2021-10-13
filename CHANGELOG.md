@@ -8,6 +8,8 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+## [4.2.0] - 2021-10-13
+
 ### Added
 - Allow passing a list of exceptions to be rethrown, instead of wrapped in `TestFailureException`. This allows e.g. NUnit's `IgnoreException` to function properly.
 
@@ -115,7 +117,8 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.1.2...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/sbergen/Responsible/releases/tag/v4.2.0
 [4.1.2]: https://github.com/sbergen/Responsible/releases/tag/v4.1.2
 [4.1.1]: https://github.com/sbergen/Responsible/releases/tag/v4.1.1
 [4.1.0]: https://github.com/sbergen/Responsible/releases/tag/v4.1.0
