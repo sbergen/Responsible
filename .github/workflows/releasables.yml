@@ -59,7 +59,7 @@ jobs:
           path: docfx/docs_site
 
       - name: Deploy docs
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docfx/docs_site/ResponsibleDocs
@@ -84,7 +84,7 @@ jobs:
           result-encoding: string
           script: |
             const [owner, repo] = process.env['GITHUB_REPOSITORY'].split('/', 2);
-            const { data } = await github.repos.getLatestRelease({ owner, repo });
+            const { data } = await github.rest.repos.getLatestRelease({ owner, repo });
             return data.tag_name.substr(1);
 
       - name: Read current Unity package version
