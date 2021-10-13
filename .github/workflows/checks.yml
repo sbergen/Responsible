@@ -64,8 +64,8 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
-            artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml
+          files: "artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
+            artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
 
       - name: Archive test results
