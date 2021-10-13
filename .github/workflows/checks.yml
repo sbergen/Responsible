@@ -61,7 +61,7 @@ jobs:
 
       - name: Push to codecov.io
         if: ${{ always() }}
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           flags: Unity ${{ matrix.unityVersion }}
           files: |
@@ -110,7 +110,7 @@ jobs:
         run: testspace ${{ steps.run-tests.outputs.tests }}
 
       - name: Push to codecov.io
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         if: ${{ always() }}
         with:
           flags: netstandard
@@ -119,7 +119,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@v2
         with:
           name: netstandard Test Results
           path: Responsible/TestResults
@@ -183,7 +183,7 @@ jobs:
 
       - name: Archive ReSharper run
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@v2
         with:
           name: ReSharper
           path: Responsible/inspect.xml
