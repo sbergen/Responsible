@@ -152,7 +152,7 @@ jobs:
         run: echo "STRYKER_VERSION=main" >> $GITHUB_ENV
 
       - name: Run Stryker Mutation Testings
-        run: dotnet stryker --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --dashboard-project github.com/sbergen/Responsible --dashboard-version ${{ env.STRYKER_VERSION }}
+        run: dotnet stryker --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --version ${{ env.STRYKER_VERSION }}
 
   inspectcode:
     runs-on: ubuntu-latest
