@@ -34,6 +34,8 @@ namespace Responsible.Utilities
 					ctsSource.Cancel();
 				}
 
+				// Couldn't find a way to test this :(
+				// Stryker disable once statement
 				ctsSource.Dispose();
 			}
 
