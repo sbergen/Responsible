@@ -37,6 +37,8 @@ namespace Responsible.State
 
 			public Waiting(TestOperationStatus previous, WaitContext waitContext)
 			{
+				// Defensive programming, impossible to trigger from the outside
+				// Stryker disable once statement
 				AssertNotStarted(previous);
 				this.WaitContext = waitContext;
 			}
