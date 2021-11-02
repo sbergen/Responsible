@@ -35,17 +35,17 @@ namespace Responsible.State
 				var responsesSource = await this.respondTo.Execute(runContext, respondTokenSource.Token);
 				var responses = responsesSource.Start(respondTokenSource.Token);
 
-				while (responses.HasNext)
+				try
 				{
-					try
+					while (responses.HasNext)
 					{
 						var responseInstruction = await responses.AwaitNext();
 						await responseInstruction.Execute(runContext, cancellationToken);
 					}
-					catch (OperationCanceledException)
-					{
-						break;
-					}
+				}
+				catch (OperationCanceledException)
+				{
+					// Don't throw for cancellation of waiting for responses
 				}
 
 				return await untilTask;

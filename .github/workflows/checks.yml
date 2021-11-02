@@ -91,7 +91,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: '5.0.x'
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -136,7 +136,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: '5.0.x'
 
       - name: dotnet restore
         run: |
@@ -152,7 +152,7 @@ jobs:
         run: echo "STRYKER_VERSION=main" >> $GITHUB_ENV
 
       - name: Run Stryker Mutation Testings
-        run: dotnet stryker --reporters "['dashboard']" --dashboard-api-key ${{ secrets.STRYKER_KEY }} --dashboard-project github.com/sbergen/Responsible --dashboard-version ${{ env.STRYKER_VERSION }}
+        run: dotnet stryker --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --version ${{ env.STRYKER_VERSION }}
 
   inspectcode:
     runs-on: ubuntu-latest
@@ -170,7 +170,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: '5.0.x'
 
       - name: dotnet restore
         run: |

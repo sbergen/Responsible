@@ -18,8 +18,6 @@ namespace Responsible.State
 
 		public async Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken)
 		{
-			TestOperationStatus.AssertNotStarted(this.Status);
-
 			var nestedRunContext = this.sourceContext != null
 				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;
