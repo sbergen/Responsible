@@ -18,10 +18,6 @@ namespace Responsible.State
 
 		public async Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken)
 		{
-			// Defensive programming, should be impossible to trigger from the outside.
-			// Stryker disable once statement
-			TestOperationStatus.AssertNotStarted(this.Status);
-
 			var nestedRunContext = this.sourceContext != null
 				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;

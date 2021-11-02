@@ -33,6 +33,18 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void StartingInstructionTwice_Throws()
+		{
+			var state = Return(0).CreateState();
+			var task1 = state.ToTask(this.Executor);
+			var task2 = state.ToTask(this.Executor);
+
+			Assert.IsFalse(task1.IsFaulted);
+			var exception = GetFailureException(task2);
+			Assert.IsInstanceOf<InvalidOperationException>(exception.InnerException);
+		}
+
+		[Test]
 		public void RethrowableException_GetsRethrown()
 		{
 			var task = Do(
