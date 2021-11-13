@@ -58,6 +58,7 @@ jobs:
           name: Docs
           path: docfx/docs_site
 
+      # There's no tag for major versions in this repo at the time of writing
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:

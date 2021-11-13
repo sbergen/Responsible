@@ -30,7 +30,7 @@ jobs:
           domain: ${{github.repository_owner}}
 
       - name: Cache
-        uses: actions/cache@v2.1.2
+        uses: actions/cache@v2
         with:
           path: ResponsibleUnity/Library
           key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
@@ -70,7 +70,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@v2
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
           path: artifacts
