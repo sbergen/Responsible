@@ -2,12 +2,16 @@
 
 version: 2
 updates:
+
+  # Dependent projects are checked, so checking Tests is enough.
   - package-ecosystem: "nuget"
     directory: "/Tests"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "friday"
 
-  - package-ecosystem: "nuget"
-    directory: "/com.beatwaves.responsible/Runtime"
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "friday"
