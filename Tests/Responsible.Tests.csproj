@@ -15,7 +15,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+      <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
       <PackageReference Include="NSubstitute" Version="4.2.2" />
       <PackageReference Include="NUnit" Version="3.13.2" />
