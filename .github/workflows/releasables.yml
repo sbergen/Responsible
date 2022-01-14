@@ -60,7 +60,7 @@ jobs:
 
       # There's no tag for major versions in this repo at the time of writing
       - name: Deploy docs
-        uses: JamesIves/github-pages-deploy-action@4.1.6
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: gh-pages
           folder: docfx/docs_site/ResponsibleDocs
