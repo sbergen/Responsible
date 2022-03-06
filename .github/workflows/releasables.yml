@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '5.0.x'
 
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache Library
         uses: actions/cache@v2
@@ -75,11 +75,11 @@ jobs:
       tag-name: ${{ steps.create-tag-name.outputs.tag }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Get latest release version
         id: latest-release-version
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
@@ -134,10 +134,10 @@ jobs:
       needs.version-info.outputs.new-version != needs.version-info.outputs.old-version
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '5.0.x'
 
