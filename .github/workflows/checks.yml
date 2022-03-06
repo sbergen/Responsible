@@ -23,7 +23,7 @@ jobs:
             licenseSecret: UNITY_LICENSE_2020
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -86,7 +86,7 @@ jobs:
           fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
@@ -131,7 +131,7 @@ jobs:
         working-directory: Responsible
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
@@ -165,7 +165,7 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
