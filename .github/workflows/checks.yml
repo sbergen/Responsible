@@ -30,7 +30,7 @@ jobs:
           domain: ${{github.repository_owner}}
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ResponsibleUnity/Library
           key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
