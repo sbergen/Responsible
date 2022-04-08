@@ -61,7 +61,7 @@ jobs:
 
       - name: Push to codecov.io
         if: ${{ always() }}
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
           files: "artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
@@ -109,7 +109,7 @@ jobs:
         run: testspace ${{ steps.run-tests.outputs.tests }}
 
       - name: Push to codecov.io
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         if: ${{ always() }}
         with:
           flags: netstandard
