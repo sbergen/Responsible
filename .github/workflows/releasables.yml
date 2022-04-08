@@ -21,7 +21,7 @@ jobs:
         run: dotnet pack Responsible --output nupkg
 
       - name: Archive nupkg
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: nupkg
           path: nupkg/*
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache Library
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ResponsibleUnity/Library
           key: Library-docfx-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
@@ -53,7 +53,7 @@ jobs:
           customParameters: -disable-assembly-updater
 
       - name: Archive docs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Docs
           path: docfx/docs_site
@@ -142,12 +142,12 @@ jobs:
           dotnet-version: '5.0.x'
 
       - name: Download Docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: Docs
 
       - name: Download NuGet package
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: nupkg
 

@@ -30,7 +30,7 @@ jobs:
           domain: ${{github.repository_owner}}
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ResponsibleUnity/Library
           key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Push to codecov.io
         if: ${{ always() }}
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
           files: "artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
@@ -70,7 +70,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
           path: artifacts
@@ -109,7 +109,7 @@ jobs:
         run: testspace ${{ steps.run-tests.outputs.tests }}
 
       - name: Push to codecov.io
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         if: ${{ always() }}
         with:
           flags: netstandard
@@ -118,7 +118,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: netstandard Test Results
           path: Responsible/TestResults
@@ -182,7 +182,7 @@ jobs:
 
       - name: Archive ReSharper run
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ReSharper
           path: Responsible/inspect.xml
