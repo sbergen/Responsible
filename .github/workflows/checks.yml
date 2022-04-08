@@ -70,7 +70,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
           path: artifacts
@@ -118,7 +118,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: netstandard Test Results
           path: Responsible/TestResults
@@ -182,7 +182,7 @@ jobs:
 
       - name: Archive ReSharper run
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ReSharper
           path: Responsible/inspect.xml
