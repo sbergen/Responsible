@@ -142,12 +142,12 @@ jobs:
           dotnet-version: '5.0.x'
 
       - name: Download Docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: Docs
 
       - name: Download NuGet package
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: nupkg
 
