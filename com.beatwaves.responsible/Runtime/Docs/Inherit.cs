@@ -155,5 +155,13 @@ namespace Responsible.Docs
 			int sourceLineNumber = 0)
 		{
 		}
+
+		/// <param name="description">Description of the step.</param>
+		/// <param name="instruction">Instruction to execute in this step.</param>
+		/// <typeparam name="T">Return type of the instruction in this step.</typeparam>
+		/// <returns>The given instruction as a BDD test step.</returns>
+		public abstract Bdd.IBddStep<T> BddKeyword<T>(
+			string description,
+			ITestInstruction<T> instruction);
 	}
 }

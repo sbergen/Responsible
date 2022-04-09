@@ -22,9 +22,14 @@ namespace Responsible.Bdd
 		}
 
 
+		/// <summary>
+		/// Builds a test instruction for the scenario from the given steps.
+		/// </summary>
+		/// <param name="steps">Steps to execute as part of the scenario.</param>
+		/// <returns>A test instruction which will execute the scenario.</returns>
 		[Pure]
 		[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-		public ITestInstruction<object> WithSteps(params ITestInstruction<object>[] steps) => steps
+		public ITestInstruction<object> WithSteps(params IBddStep<object>[] steps) => steps
 			.Sequence(this.memberName, this.sourceFilePath, this.sourceLineNumber, nameof(Keywords.Scenario))
 			.GroupedAs($"Scenario: {this.description}");
 	}

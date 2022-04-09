@@ -96,8 +96,8 @@ namespace Responsible.Tests
 		public void InstructionStack_DoesContainScenarioKeywordAndLocation()
 		{
 			var failingScenario = Scenario("Failing scenario").WithSteps(
-				Do("NOP", () => { }),
-				Do("Throw", () => throw new Exception("Test exception")));
+				Given("nothing", Do("NOP", () => { })),
+				Then("throw", Do("Throw", () => throw new Exception("Test exception"))));
 			var state = failingScenario.CreateState();
 
 			state.ToTask(this.Executor);

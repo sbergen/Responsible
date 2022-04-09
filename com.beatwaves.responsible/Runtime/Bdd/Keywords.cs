@@ -2,8 +2,18 @@ using System.Runtime.CompilerServices;
 
 namespace Responsible.Bdd
 {
+	/// <summary>
+	/// Keywords for building BDD-style tests for clearer source code and state strings.
+	/// Helps in building tests with consistent style.
+	/// </summary>
 	public static class Keywords
 	{
+		/// <summary>
+		/// Starts building a new BDD-style scenario.
+		/// </summary>
+		/// <param name="description">Description of the scenario</param>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T}"/>
+		/// <returns>A scenario builder with the given description.</returns>
 		public static ScenarioBuilder Scenario(
 			string description,
 			[CallerMemberName] string memberName = "",
@@ -11,24 +21,40 @@ namespace Responsible.Bdd
 			[CallerLineNumber] int sourceLineNumber = 0) =>
 			new ScenarioBuilder(description, memberName, sourceFilePath, sourceLineNumber);
 
-		public static ITestInstruction<T> Given<T>(
+		/// <summary>
+		/// Creates a step that describes the initial context of a test.
+		/// </summary>
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
+		public static IBddStep<T> Given<T>(
 			string description,
 			ITestInstruction<T> instruction) =>
-			instruction.GroupedAs($"Given {description}");
+			new BddStep<T>(instruction.GroupedAs($"Given {description}"));
 
-		public static ITestInstruction<T> And<T>(
+		/// <summary>
+		/// Creates a step that describes additional initial context of a test.
+		/// </summary>
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
+		public static IBddStep<T> And<T>(
 			string description,
 			ITestInstruction<T> instruction) =>
-			instruction.GroupedAs($"And {description}");
+			new BddStep<T>(instruction.GroupedAs($"And {description}"));
 
-		public static ITestInstruction<T> When<T>(
+		/// <summary>
+		/// Creates a step that describes an event or action in a test.
+		/// </summary>
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
+		public static IBddStep<T> When<T>(
 			string description,
 			ITestInstruction<T> instruction) =>
-			instruction.GroupedAs($"When {description}");
+			new BddStep<T>(instruction.GroupedAs($"When {description}"));
 
-		public static ITestInstruction<T> Then<T>(
+		/// <summary>
+		/// Creates a step that describes an expected outcome of a test.
+		/// </summary>
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
+		public static IBddStep<T> Then<T>(
 			string description,
 			ITestInstruction<T> instruction) =>
-			instruction.GroupedAs($"Then {description}");
+			new BddStep<T>(instruction.GroupedAs($"Then {description}"));
 	}
 }
