@@ -160,5 +160,37 @@ namespace Responsible
 		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)
 			where T : struct
 			=> new BoxedTestInstruction<T>(instruction);
+
+		/// <summary>
+		/// Wraps a test instruction to produce a state string where the state string of the original instruction
+		/// is nested and indented under the given description.
+		/// Most useful for sequenced instructions.
+		/// </summary>
+		/// <example>
+		/// <code>
+		/// EnterUsername()
+		///     .ContinueWith(EnterPassword())
+		///     .GroupAs("Log in")
+		/// </code>
+		///
+		/// Would have a string representation similar to
+		/// <code>
+		/// [ ] Log in
+		///   [ ] Enter username
+		///   [ ] Enter password
+		/// </code>
+		/// </example>
+		/// <param name="instruction">Instruction to wrap.</param>
+		/// <param name="description">Description to use in output</param>
+		/// <typeparam name="T">Return type of the instruction to wrap.</typeparam>
+		/// <returns>
+		/// A test instruction which behaves otherwise identically to <paramref name="instruction"/>,
+		/// but produces nested.
+		/// </returns>
+		[Pure]
+		public static ITestInstruction<T> GroupedAs<T>(
+			this ITestInstruction<T> instruction,
+			string description)
+			=> new GroupedAsInstruction<T>(description, instruction);
 	}
 }

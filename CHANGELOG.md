@@ -8,6 +8,9 @@ Changes in state strings or Unity Editor utilities are **not** considered breaki
 
 ## [Unreleased]
 
+### Added
+- New `GroupedAs` operator to allow more control over the state strings of compound operations.
+
 ## [4.2.0] - 2021-10-13
 
 ### Added
