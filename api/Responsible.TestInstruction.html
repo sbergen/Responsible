@@ -525,6 +525,84 @@ Thus it is better to prefer
 <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
 when possible, which will always also include the description of the second instruction.</p>
 </div>
+  <a id="Responsible_TestInstruction_GroupedAs_" data-uid="Responsible.TestInstruction.GroupedAs*"></a>
+  <h4 id="Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String_" data-uid="Responsible.TestInstruction.GroupedAs``1(Responsible.ITestInstruction{``0},System.String)">GroupedAs&lt;T&gt;(ITestInstruction&lt;T&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Wraps a test instruction to produce a state string where the state string of the original instruction
+is nested and indented under the given description.
+Most useful for sequenced instructions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public static ITestInstruction&lt;T&gt; GroupedAs&lt;T&gt;(this ITestInstruction&lt;T&gt; instruction, string description)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;T&gt;</td>
+        <td><span class="parametername">instruction</span></td>
+        <td><p>Instruction to wrap.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>Description to use in output</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;T&gt;</td>
+        <td><p>A test instruction which behaves otherwise identically to <code data-dev-comment-type="paramref" class="paramref">instruction</code>,
+but produces nested.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Return type of the instruction to wrap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String__examples">Examples</h5>
+  <pre><code>EnterUsername()
+    .ContinueWith(EnterPassword())
+    .GroupAs(&quot;Log in&quot;)</code></pre>
+<p>Would have a string representation similar to</p>
+<pre><code>[ ] Log in
+  [ ] Enter username
+  [ ] Enter password</code></pre>
+
   <a id="Responsible_TestInstruction_Select_" data-uid="Responsible.TestInstruction.Select*"></a>
   <h4 id="Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_" data-uid="Responsible.TestInstruction.Select``2(Responsible.ITestInstruction{``0},System.Func{``0,``1},System.String,System.String,System.Int32)">Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</h4>
   <div class="markdown level1 summary"><p>Applies a selector to the result of a test instruction when the instruction completes,

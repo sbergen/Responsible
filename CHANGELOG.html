@@ -90,8 +90,12 @@
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <p>Changes in state strings or Unity Editor utilities are <strong>not</strong> considered breaking changes.</p>
 <h2 id="unreleased"><a href="https://github.com/sbergen/Responsible/compare/v4.2.0...HEAD">Unreleased</a></h2>
-<h2 id="420---2021-10-13"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.2.0">4.2.0</a> - 2021-10-13</h2>
 <h3 id="added">Added</h3>
+<ul>
+<li>New <code>GroupedAs</code> operator to allow more control over the state strings of compound operations.</li>
+</ul>
+<h2 id="420---2021-10-13"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.2.0">4.2.0</a> - 2021-10-13</h2>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Allow passing a list of exceptions to be rethrown, instead of wrapped in <code>TestFailureException</code>. This allows e.g. NUnit's <code>IgnoreException</code> to function properly.</li>
 </ul>
@@ -147,7 +151,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>All observable-related functions (<code>ToObservable</code>, <code>WaitForLast</code>).</li>
 <li><code>AsUnit...</code> operators: you can use <code>BoxResult</code> or just implicit covariance instead.</li>
 </ul>
-<h3 id="added-1">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li>Support for .NET standard 2.0 (and NuGet publishing)</li>
 <li><code>ToTask</code> methods, which replace <code>ToObservable</code>. Note: If you were using these, you can use the UniRx <code>ToObservable</code> method to convert a task to an observable.</li>
@@ -162,7 +166,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Fix inclusion of documentation in releases, no changes in the library itself.</li>
 </ul>
 <h2 id="300---2021-03-14"><a href="https://github.com/sbergen/Responsible/releases/tag/v3.0.0">3.0.0</a> - 2021-03-14</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li>HTML documentation generated with DocFX</li>
 <li>Test operation status window in Unity Editor, under <code>Window/Responsible/Operation State</code></li>
@@ -194,7 +198,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Simplify output when <code>ExpectWithinSecond</code> is used, by showing <code>EXPECTED WITHIN ...</code> on the same line as the expected operation, instead of <code>EXPECT WITHIN ...</code> with the operation nested below it. This is only applicable to simple wait conditions and responders.</li>
 </ul>
 <h2 id="110---2020-11-11"><a href="https://github.com/sbergen/Responsible/releases/tag/v1.1.0">1.1.0</a> - 2020-11-11</h2>
-<h3 id="added-3">Added</h3>
+<h3 id="added-4">Added</h3>
 <ul>
 <li><code>WaitForConditionOn</code> for a more streamlined syntax for waiting for a condition on some object, and then returning that object (or something derived from that object).</li>
 <li><code>WaitForFrames</code>, for those cases when you actually really need it</li>
@@ -213,7 +217,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Move tests out of package, so that they don't get included in projects that use Responsible.</li>
 </ul>
 <h2 id="100---2020-09-23"><a href="https://github.com/sbergen/Responsible/releases/tag/v1.0.0">1.0.0</a> - 2020-09-23</h2>
-<h3 id="added-4">Added</h3>
+<h3 id="added-5">Added</h3>
 <ul>
 <li>Initial public release with basic functionality.</li>
 </ul>

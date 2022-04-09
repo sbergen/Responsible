@@ -769,6 +769,22 @@ references:
   fullName.vb: Responsible.TestInstruction.ContinueWith(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, Responsible.ITestInstruction(Of T2)), System.String, System.String, System.Int32)
   nameWithType: TestInstruction.ContinueWith<T1, T2>(ITestInstruction<T1>, Func<T1, ITestInstruction<T2>>, String, String, Int32)
   nameWithType.vb: TestInstruction.ContinueWith(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, ITestInstruction(Of T2)), String, String, Int32)
+- uid: Responsible.TestInstruction.GroupedAs*
+  name: GroupedAs
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs_
+  commentId: Overload:Responsible.TestInstruction.GroupedAs
+  isSpec: "True"
+  fullName: Responsible.TestInstruction.GroupedAs
+  nameWithType: TestInstruction.GroupedAs
+- uid: Responsible.TestInstruction.GroupedAs``1(Responsible.ITestInstruction{``0},System.String)
+  name: GroupedAs<T>(ITestInstruction<T>, String)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String_
+  commentId: M:Responsible.TestInstruction.GroupedAs``1(Responsible.ITestInstruction{``0},System.String)
+  name.vb: GroupedAs(Of T)(ITestInstruction(Of T), String)
+  fullName: Responsible.TestInstruction.GroupedAs<T>(Responsible.ITestInstruction<T>, System.String)
+  fullName.vb: Responsible.TestInstruction.GroupedAs(Of T)(Responsible.ITestInstruction(Of T), System.String)
+  nameWithType: TestInstruction.GroupedAs<T>(ITestInstruction<T>, String)
+  nameWithType.vb: TestInstruction.GroupedAs(Of T)(ITestInstruction(Of T), String)
 - uid: Responsible.TestInstruction.Select*
   name: Select
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Select_
