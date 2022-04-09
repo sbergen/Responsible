@@ -1,13 +1,15 @@
+using System.Runtime.CompilerServices;
+
 namespace Responsible.Bdd
 {
 	public static class Keywords
 	{
-		// TODO: Source context?
-
-		public static ITestInstruction<object> Scenario(
+		public static ScenarioBuilder Scenario(
 			string description,
-			params ITestInstruction<object>[] steps) =>
-			steps.Sequence().GroupedAs($"Scenario: {description}");
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0) =>
+			new ScenarioBuilder(description, memberName, sourceFilePath, sourceLineNumber);
 
 		public static ITestInstruction<T> Given<T>(
 			string description,
