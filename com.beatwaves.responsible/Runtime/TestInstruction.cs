@@ -160,5 +160,11 @@ namespace Responsible
 		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)
 			where T : struct
 			=> new BoxedTestInstruction<T>(instruction);
+
+		[Pure]
+		public static ITestInstruction<T> GroupedAs<T>(
+			this ITestInstruction<T> instruction,
+			string description)
+			=> new GroupedAsInstruction<T>(description, instruction);
 	}
 }

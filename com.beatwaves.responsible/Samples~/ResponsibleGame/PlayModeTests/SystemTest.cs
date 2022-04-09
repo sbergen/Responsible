@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
@@ -55,6 +56,17 @@ namespace ResponsibleGame.PlayModeTests
 		public IEnumerator AsyncTearDown()
 		{
 			yield return SceneManager.UnloadSceneAsync(this.scenePath);
+		}
+
+		protected IEnumerator BDD(
+			Func<ITestInstruction<object>> given,
+			Func<ITestInstruction<object>> when,
+			Action then)
+		{
+			return given().GroupedAs($"Given {given.Method.Name}")
+				.ContinueWith(when().GroupedAs($"When {when.Method.Name}"))
+				.ContinueWith(Do("Assert state", then).GroupedAs($"Then {then.Method.Name}"))
+				.ToYieldInstruction(this.TestInstructionExecutor);
 		}
 
 		// These operations are written in a way that allows the components to
