@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes in state strings or Unity Editor utilities are **not** considered breaking changes.
 
+Everything in the `Responsible.Bdd` namespace is currently considered experimental,
+and thus not under semantic versioning.
+
 ## [Unreleased]
 
 ### Added
 - New `GroupedAs` operator to allow more control over the state strings of compound operations.
+- Experimental: New BDD-style keywords to build scenarios.
 
 ## [4.2.0] - 2021-10-13
 

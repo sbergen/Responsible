@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 namespace Responsible.Bdd
 {
 	/// <summary>
+	/// EXPERIMENTAL:
 	/// Keywords for building BDD-style tests for clearer source code and state strings.
 	/// Helps in building tests with consistent style.
 	/// </summary>
