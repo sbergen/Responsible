@@ -13,10 +13,11 @@ namespace Responsible.Bdd
 		public readonly string Description;
 
 		/// <summary>
-		/// Annotates a method as a BDD-style scenario, which will be run as a test case.
+		/// Annotates a method as a BDD-style scenario, which will be run as a test case,
+		/// if the containing class is annotated with <see cref="FeatureAttribute"/>.
 		/// </summary>
 		/// <remarks>
-		/// The class this method is in must use <see cref="FeatureAttribute"/>.
+		/// The class this method is in <b>must</b> use <see cref="FeatureAttribute"/>.
 		/// </remarks>
 		/// <param name="description">The description for the test scenario.</param>
 		public ScenarioAttribute(string description)

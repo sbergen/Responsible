@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -17,8 +18,17 @@ namespace Responsible.Bdd
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public class FeatureAttribute : NUnitAttribute, IFixtureBuilder
 	{
-		private static readonly NUnitTestCaseBuilder TestCaseBuilder = new NUnitTestCaseBuilder();
-		private static readonly NUnitTestFixtureBuilder DefaultFixtureBuilder = new NUnitTestFixtureBuilder();
+		private static readonly NUnitTestCaseBuilder TestCaseBuilder;
+		private static readonly NUnitTestFixtureBuilder DefaultFixtureBuilder;
+
+		// A bit of a hack, but if initialized inline, they'll not be in coverage
+		// (because NUnit initializes them before coverage is collected).
+		[ExcludeFromCodeCoverage]
+		static FeatureAttribute()
+		{
+			TestCaseBuilder = new NUnitTestCaseBuilder();
+			DefaultFixtureBuilder = new NUnitTestFixtureBuilder();
+		}
 
 		private readonly string description;
 
