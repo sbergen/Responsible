@@ -15,8 +15,8 @@ namespace ResponsibleGame.PlayModeTests
 		public IBddStep[] Restart() => new[]
 		{
 			Given("the player has failed", this.FailTheGame()),
-			When("the user presses the trigger key", this.MockTriggerInput()),
-			Then("the game should be restarted", this.AssertTheGameHasBeenRestarted())
+			When("the player presses the trigger key", this.SimulateTriggerInput()),
+			Then("the game should be restarted", AssertTheGameHasBeenRestarted())
 		};
 
 		private ITestInstruction<object> FailTheGame()
@@ -29,8 +29,8 @@ namespace ResponsibleGame.PlayModeTests
 			return Enumerable.Repeat(miss, Status.StartingLives).Sequence();
 		}
 
-		private ITestInstruction<object> AssertTheGameHasBeenRestarted() => Do(
-			"Assert restarted",
+		private static ITestInstruction<object> AssertTheGameHasBeenRestarted() => Do(
+			"Assert the game has been restarted",
 			() => Assert.IsTrue(ExpectStatusInstance().IsAlive));
 	}
 }

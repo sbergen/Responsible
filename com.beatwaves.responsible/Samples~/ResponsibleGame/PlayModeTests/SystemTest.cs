@@ -62,10 +62,10 @@ namespace ResponsibleGame.PlayModeTests
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit))
-			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
+			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.SimulateTriggerInput());
 
-		protected ITestInstruction<object> MockTriggerInput() =>
-			Do("Mock trigger input", () => this.mockInput.Trigger());
+		protected ITestInstruction<object> SimulateTriggerInput() =>
+			Do("Simulate trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();
 
