@@ -4,7 +4,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 using Responsible.Unity;
+using UnityEngine.TestTools;
 using static Responsible.Bdd.Keywords;
 
 namespace Responsible.Bdd
@@ -21,6 +23,14 @@ namespace Responsible.Bdd
 	/// <seealso cref="ScenarioAttribute"/>
 	public abstract class BddTest
 	{
+		internal static readonly IMethodInfo ExecuteScenarioMethod;
+
+		[ExcludeFromCoverage]
+		static BddTest()
+		{
+			ExecuteScenarioMethod = new MethodWrapper(typeof(BddTest), nameof(ExecuteScenario));
+		}
+
 		/// <summary>
 		/// A test instruction executor that is automatically set up and torn down between tests.
 		/// See <see cref="MakeExecutor"/> for customization options.

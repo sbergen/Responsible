@@ -53,39 +53,14 @@ namespace Responsible.Bdd
 			if (!typeof(BddTest).IsAssignableFrom(typeInfo.Type))
 			{
 				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
-				yield return suite;
-				yield break;
 			}
 
-			var executeMethod = typeInfo
-				.GetMethods(BindingFlags.Instance | BindingFlags.Public)
-				.Single(m => m.Name == nameof(BddTest.ExecuteScenario));
-
-			foreach (var method in typeInfo.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+			foreach (var method in typeInfo
+				.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+				.Where(method => method.GetCustomAttributes<ScenarioAttribute>(true).Any()))
 			{
-				var scenarioAttributes = method.GetCustomAttributes<ScenarioAttribute>(true);
-
-				if (scenarioAttributes.Any())
-				{
-					var scenarioDescription = scenarioAttributes.Single().Description;
-					var parameters = new TestCaseParameters(new object[] { scenarioDescription, method })
-					{
-						ExpectedResult = null,
-						HasExpectedResult = true,
-					};
-
-					var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
-					test.Name = $"Scenario: {scenarioDescription}";
-
-					if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(method.ReturnType.Type))
-					{
-						SetNotRunnable(
-							test,
-							$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {method.ReturnType}");
-					}
-
-					suite.Add(test);
-				}
+				var test = MakeTestFromScenario(suite, method);
+				suite.Add(test);
 			}
 
 			yield return suite;
@@ -101,6 +76,32 @@ namespace Responsible.Bdd
 		{
 			test.RunState = RunState.NotRunnable;
 			test.Properties.Set(PropertyNames.SkipReason, reason);
+		}
+
+		private static Test MakeTestFromScenario(TestSuite suite, IMethodInfo scenarioMethod)
+		{
+			var scenarioDescription = scenarioMethod
+				.GetCustomAttributes<ScenarioAttribute>(true)
+				.Single()
+				.Description;
+
+			var parameters = new TestCaseParameters(new object[] { scenarioDescription, scenarioMethod })
+			{
+				ExpectedResult = null,
+				HasExpectedResult = true,
+			};
+
+			var test = TestCaseBuilder.BuildTestMethod(BddTest.ExecuteScenarioMethod, suite, parameters);
+			test.Name = $"Scenario: {scenarioDescription}";
+
+			if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(scenarioMethod.ReturnType.Type))
+			{
+				SetNotRunnable(
+					test,
+					$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}");
+			}
+
+			return test;
 		}
 	}
 }
