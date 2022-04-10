@@ -2,10 +2,8 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Responsible;
 using Responsible.Bdd;
-using Responsible.Unity;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,9 +19,6 @@ namespace ResponsibleGame.PlayModeTests
 		private string scenePath;
 		private MockInput mockInput;
 
-		protected UnityTestInstructionExecutor TestInstructionExecutor { get; private set; }
-		protected override TestInstructionExecutor Executor => this.TestInstructionExecutor;
-
 		[OneTimeSetUp]
 		public void ResolveScenePath()
 		{
@@ -38,7 +33,6 @@ namespace ResponsibleGame.PlayModeTests
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
-			this.TestInstructionExecutor = new UnityTestInstructionExecutor();
 			this.mockInput = new MockInput();
 			PlayerInput.Instance = this.mockInput;
 
@@ -50,7 +44,6 @@ namespace ResponsibleGame.PlayModeTests
 		[TearDown]
 		public void TearDown()
 		{
-			this.TestInstructionExecutor.Dispose();
 			PlayerInput.Instance = null;
 		}
 

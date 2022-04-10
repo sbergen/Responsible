@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,22 +6,15 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Builders;
-using static Responsible.Bdd.Keywords;
 
 namespace Responsible.Bdd
 {
-	public abstract class BddTest
-	{
-		protected abstract TestInstructionExecutor Executor { get; }
-
-		// Has to be public for NUnit
-		public IEnumerator ExecuteScenario(string scenario, IMethodInfo testMethod)
-		{
-			var steps = (IEnumerable<IBddStep>)testMethod.Invoke(this);
-			return Scenario(scenario).WithSteps(steps.ToArray()).ToYieldInstruction(this.Executor);
-		}
-	}
-
+	/// <summary>
+	/// Attribute for annotating a class as BDD-style tests for a feature.
+	/// The class must derive from <see cref="BddTest"/>.
+	/// </summary>
+	/// <seealso cref="ScenarioAttribute"/>
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public class FeatureAttribute : NUnitAttribute, IFixtureBuilder
 	{
 		private static readonly NUnitTestCaseBuilder TestCaseBuilder = new NUnitTestCaseBuilder();
@@ -30,12 +22,18 @@ namespace Responsible.Bdd
 
 		private readonly string description;
 
+		/// <summary>
+		/// Annotates a class as a feature test suite with the given description.
+		/// All methods in the class that have the <see cref="ScenarioAttribute"/>
+		/// will be included as test cases in this test suite.
+		/// </summary>
+		/// <param name="description">Description of the feature</param>
 		public FeatureAttribute(string description)
 		{
 			this.description = $"Feature: {description}";
 		}
 
-		public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
+		IEnumerable<TestSuite> IFixtureBuilder.BuildFrom(ITypeInfo typeInfo)
 		{
 			var suite = new TestSuite(typeInfo)
 			{
@@ -81,18 +79,6 @@ namespace Responsible.Bdd
 			{
 				yield return defaultFixture;
 			}
-		}
-	}
-
-	[JetBrains.Annotations.MeansImplicitUse]
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-	public class ScenarioAttribute : Attribute
-	{
-		public readonly string Description;
-
-		public ScenarioAttribute(string description)
-		{
-			this.Description = description;
 		}
 	}
 }

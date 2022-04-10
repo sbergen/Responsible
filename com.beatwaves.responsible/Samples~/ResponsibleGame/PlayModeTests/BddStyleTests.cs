@@ -7,17 +7,17 @@ using static Responsible.Responsibly;
 
 namespace ResponsibleGame.PlayModeTests
 {
-	// Example of BDD-style tests
-	[Feature("Restarting the game")]
-	public class BddStyleTests : SystemTest
+// Example of BDD-style tests
+[Feature("Restarting the game")]
+public class BddStyleTests : SystemTest
+{
+	[Scenario("The game should be restartable easily after failure")]
+	public IBddStep[] Restart() => new[]
 	{
-		[Scenario("The game should be restartable by pressing the trigger key")]
-		public IBddStep[] Restart() => new[]
-		{
-			Given("the player has failed", this.FailTheGame()),
-			When("the user presses the trigger key", this.MockTriggerInput()),
-			Then("the game should be restarted", this.AssertTheGameHasBeenRestarted())
-		};
+		Given("the player has failed", this.FailTheGame()),
+		When("the user presses the trigger key", this.MockTriggerInput()),
+		Then("the game should be restarted", this.AssertTheGameHasBeenRestarted())
+	};
 
 		private ITestInstruction<object> FailTheGame()
 		{

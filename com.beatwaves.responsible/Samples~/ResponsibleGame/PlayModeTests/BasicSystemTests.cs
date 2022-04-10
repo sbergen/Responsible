@@ -20,7 +20,7 @@ namespace ResponsibleGame.PlayModeTests
 					Assert.AreEqual(1, markers.Length);
 					Assert.IsInstanceOf<Hit>(markers[0]);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -34,7 +34,7 @@ namespace ResponsibleGame.PlayModeTests
 					Assert.AreEqual(1, markers.Length);
 					Assert.IsInstanceOf<Miss>(markers[0]);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -57,7 +57,7 @@ namespace ResponsibleGame.PlayModeTests
 				{
 					Assert.IsTrue(ExpectStatusInstance().IsAlive);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -99,7 +99,7 @@ namespace ResponsibleGame.PlayModeTests
 					Assert.IsFalse(status.IsAlive);
 					Assert.AreEqual(10, status.Score);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 	}
 }
