@@ -23,14 +23,6 @@ namespace Responsible.Bdd
 	/// <seealso cref="ScenarioAttribute"/>
 	public abstract class BddTest
 	{
-		internal static readonly IMethodInfo ExecuteScenarioMethod;
-
-		[ExcludeFromCoverage]
-		static BddTest()
-		{
-			ExecuteScenarioMethod = new MethodWrapper(typeof(BddTest), nameof(ExecuteScenario));
-		}
-
 		/// <summary>
 		/// A test instruction executor that is automatically set up and torn down between tests.
 		/// See <see cref="MakeExecutor"/> for customization options.
@@ -68,5 +60,12 @@ namespace Responsible.Bdd
 		/// <returns>A new test instruction executor to be used for the next test.</returns>
 		[PublicAPI]
 		protected virtual TestInstructionExecutor MakeExecutor() => new UnityTestInstructionExecutor();
+
+		/// <summary>
+		/// Gets the scenario execution method for a deriving type.
+		/// The exact type matters, because NUnit will use it to resolve set-up and tear-down methods.
+		/// </summary>
+		internal static IMethodInfo GetExecuteScenarioMethod(ITypeInfo derivingType) =>
+			new MethodWrapper(derivingType.Type, nameof(ExecuteScenario));
 	}
 }

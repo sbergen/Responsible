@@ -8,18 +8,15 @@ namespace Responsible.UnityTests
 	[Feature("BDD-style test")]
 	public class BddTests : BddTest
 	{
+		private bool setUpCalled;
 		private bool givenExecuted;
 		private bool whenExecuted;
-
-		// It's really hard to know for sure if SetUp and TearDown get run with custom attributes,
-		// so log to the console from these.
-		// If anyone happens to look at this code and has ideas, please hit me up!
+		private bool tearDownCalled;
 
 		[SetUp]
 		public void SetUp()
 		{
-			UnityEngine.Debug.Log("Running SetUp");
-
+			this.setUpCalled = true;
 			this.givenExecuted = false;
 			this.whenExecuted = false;
 		}
@@ -27,7 +24,17 @@ namespace Responsible.UnityTests
 		[TearDown]
 		public void TearDown()
 		{
-			UnityEngine.Debug.Log("Running TearDown");
+			this.tearDownCalled = true;
+		}
+
+		// It's really hard to know for sure if TearDown gets run with custom attributes,
+		// However, if SetUp is called, we can be pretty sure TearDown is also called.
+		// But lets do this just for the heck of it anyway.
+		// If anyone happens to look at this code and has ideas, please hit me up!
+		[OneTimeTearDown]
+		public void OneTimeTearDown()
+		{
+			Assert.IsTrue(this.tearDownCalled, "Tear down should have been called at least once");
 		}
 
 		[Scenario("A basic BDD-style test runs without error")]
@@ -43,7 +50,9 @@ namespace Responsible.UnityTests
 				"the state of the test class should be in the final expected state",
 				Do(
 					"Assert state",
-					() => Assert.AreEqual((true, true), (this.givenExecuted, this.whenExecuted)))),
+					() => Assert.AreEqual(
+						(true, true, true),
+						(this.setUpCalled, this.givenExecuted, this.whenExecuted)))),
 		};
 	}
 }

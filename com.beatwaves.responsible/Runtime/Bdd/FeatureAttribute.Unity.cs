@@ -91,7 +91,8 @@ namespace Responsible.Bdd
 				HasExpectedResult = true,
 			};
 
-			var test = TestCaseBuilder.BuildTestMethod(BddTest.ExecuteScenarioMethod, suite, parameters);
+			var executeMethod = BddTest.GetExecuteScenarioMethod(scenarioMethod.TypeInfo);
+			var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
 			test.Name = $"Scenario: {scenarioDescription}";
 
 			if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(scenarioMethod.ReturnType.Type))
