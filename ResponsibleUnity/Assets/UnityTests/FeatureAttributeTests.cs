@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -12,6 +13,14 @@ namespace Responsible.UnityTests
 	{
 		private class NonBddTest
 		{
+		}
+
+		private class InvalidReturnTypeBddTest : BddTest
+		{
+			[Scenario("Invalid scenario")]
+			public void InvalidScenario()
+			{
+			}
 		}
 
 		private class ValidBddTest : BddTest
@@ -36,14 +45,22 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
-		public void BuildingTest_ShouldMarkItAsNotRunnable_WhenClassDoesNotInheritBddTest()
+		public void BuildingTest_ShouldMarkSuiteAsNotRunnable_WhenClassDoesNotInheritBddTest()
 		{
 			var suite = BuildSuites<NonBddTest>().Single();
+			AssertTestNotRunnableWithReasonContaining(suite, "must inherit from BddTest");
+		}
 
-			Assert.AreEqual(RunState.NotRunnable, suite.RunState);
-			StringAssert.Contains(
-				"must inherit from BddTest",
-				(string)suite.Properties.Get(PropertyNames.SkipReason));
+		[Test]
+		public void BuildingTest_ShouldMarkScenarioAsNotRunnable_WhenReturnTypeIsIncorrect()
+		{
+			var test = BuildSuites<InvalidReturnTypeBddTest>()
+				.Single()
+				.Tests
+				.Single();
+			AssertTestNotRunnableWithReasonContaining(
+				test,
+				"Scenario return type must be convertible to IEnumerable<IBddStep>, got System.Void");
 		}
 
 		[Test]
@@ -104,6 +121,15 @@ namespace Responsible.UnityTests
 			var fakeAttribute = new FeatureAttribute("Test feature");
 			var fixtureBuilder = (IFixtureBuilder)fakeAttribute;
 			return fixtureBuilder.BuildFrom(new TypeWrapper(typeof(T)));
+		}
+
+		[AssertionMethod]
+		private static void AssertTestNotRunnableWithReasonContaining(ITest test, string reason)
+		{
+			Assert.AreEqual(RunState.NotRunnable, test.RunState);
+			StringAssert.Contains(
+				reason,
+				(string)test.Properties.Get(PropertyNames.SkipReason));
 		}
 	}
 }

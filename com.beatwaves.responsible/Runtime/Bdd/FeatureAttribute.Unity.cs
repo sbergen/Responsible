@@ -52,8 +52,7 @@ namespace Responsible.Bdd
 
 			if (!typeof(BddTest).IsAssignableFrom(typeInfo.Type))
 			{
-				suite.RunState = RunState.NotRunnable;
-				suite.Properties.Set(PropertyNames.SkipReason, $"Feature class must inherit from {nameof(BddTest)}");
+				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
 				yield return suite;
 				yield break;
 			}
@@ -78,6 +77,13 @@ namespace Responsible.Bdd
 					var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
 					test.Name = $"Scenario: {scenarioDescription}";
 
+					if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(method.ReturnType.Type))
+					{
+						SetNotRunnable(
+							test,
+							$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {method.ReturnType}");
+					}
+
 					suite.Add(test);
 				}
 			}
@@ -89,6 +95,12 @@ namespace Responsible.Bdd
 			{
 				yield return defaultFixture;
 			}
+		}
+
+		private static void SetNotRunnable(Test test, string reason)
+		{
+			test.RunState = RunState.NotRunnable;
+			test.Properties.Set(PropertyNames.SkipReason, reason);
 		}
 	}
 }
