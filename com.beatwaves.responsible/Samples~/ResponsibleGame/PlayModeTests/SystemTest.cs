@@ -2,7 +2,9 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Responsible;
+using Responsible.Bdd;
 using Responsible.Unity;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -14,12 +16,13 @@ using Object = UnityEngine.Object;
 namespace ResponsibleGame.PlayModeTests
 {
 	[TestFixture]
-	public abstract class SystemTest
+	public abstract class SystemTest : BddTest
 	{
 		private string scenePath;
 		private MockInput mockInput;
 
 		protected UnityTestInstructionExecutor TestInstructionExecutor { get; private set; }
+		protected override TestInstructionExecutor Executor => this.TestInstructionExecutor;
 
 		[OneTimeSetUp]
 		public void ResolveScenePath()
