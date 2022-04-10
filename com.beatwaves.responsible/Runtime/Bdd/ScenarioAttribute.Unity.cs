@@ -13,9 +13,21 @@ namespace Responsible.Bdd
 		public readonly string Description;
 
 		/// <summary>
-		/// Annotates a method as a BDD-style scenario, which will be run as a test case,
+		/// Annotates a method as a BDD-style scenario returning steps, which will be run as a test case,
 		/// if the containing class is annotated with <see cref="FeatureAttribute"/>.
+		/// The return type of the method must be convertible to <c>IEnumerable&lt;IBddStep&gt;</c>.
 		/// </summary>
+		/// <example>
+		/// <code>
+		/// [Scenario("Example scenario")]
+		/// public IBddStep[] Example() => new[]
+		/// {
+		///     Given("the setup is correct", ...),
+		///     When("the user does something", ...),
+		///     Then("the state should be updated correctly", ...),
+		/// };
+		/// </code>
+		/// </example>
 		/// <remarks>
 		/// The class this method is in <b>must</b> use <see cref="FeatureAttribute"/>.
 		/// </remarks>
