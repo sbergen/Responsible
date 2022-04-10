@@ -29,7 +29,7 @@ namespace Responsible.Bdd
 		/// <returns>A test instruction which will execute the scenario.</returns>
 		[Pure]
 		[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-		public ITestInstruction<object> WithSteps(params IBddStep<object>[] steps) => steps
+		public ITestInstruction<object> WithSteps(params IBddStep[] steps) => steps
 			.Sequence(this.memberName, this.sourceFilePath, this.sourceLineNumber, nameof(Keywords.Scenario))
 			.GroupedAs($"Scenario: {this.description}");
 	}

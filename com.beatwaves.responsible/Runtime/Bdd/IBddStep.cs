@@ -6,8 +6,7 @@ namespace Responsible.Bdd
 	/// are properly wrapped in other BDD-keywords.
 	/// Functionally no different from <see cref="ITestInstruction{T}"/>.
 	/// </summary>
-	/// <typeparam name="T">Result type of the test instruction.</typeparam>
-	public interface IBddStep<out T> : ITestInstruction<T>
+	public interface IBddStep : ITestInstruction<object>
 	{
 	}
 }

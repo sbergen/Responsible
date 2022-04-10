@@ -2,15 +2,15 @@ using Responsible.State;
 
 namespace Responsible.Bdd
 {
-	internal class BddStep<T> : IBddStep<T>
+	internal class BddStep : IBddStep
 	{
-		private readonly ITestInstruction<T> instruction;
+		private readonly ITestInstruction<object> instruction;
 
-		public BddStep(ITestInstruction<T> instruction)
+		public BddStep(ITestInstruction<object> instruction)
 		{
 			this.instruction = instruction;
 		}
 
-		public ITestOperationState<T> CreateState() => this.instruction.CreateState();
+		public ITestOperationState<object> CreateState() => this.instruction.CreateState();
 	}
 }

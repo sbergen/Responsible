@@ -78,8 +78,7 @@ namespace Responsible.Tests
 		{
 			var throwInstruction = Do("Throw", () => throw new Exception());
 			var method = typeof(Keywords)
-				.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static)
-				.MakeGenericMethod(typeof(object));
+				.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
 			var instruction = (ITestInstruction<object>)method.Invoke(
 				null,
 				new object[] { methodName, throwInstruction });

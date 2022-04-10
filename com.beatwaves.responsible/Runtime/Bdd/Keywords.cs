@@ -25,37 +25,37 @@ namespace Responsible.Bdd
 		/// <summary>
 		/// Creates a step that describes the initial context of a test.
 		/// </summary>
-		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
-		public static IBddStep<T> Given<T>(
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
+		public static IBddStep Given(
 			string description,
-			ITestInstruction<T> instruction) =>
-			new BddStep<T>(instruction.GroupedAs($"Given {description}"));
+			ITestInstruction<object> instruction) =>
+			new BddStep(instruction.GroupedAs($"Given {description}"));
 
 		/// <summary>
 		/// Creates a step that describes additional initial context of a test.
 		/// </summary>
-		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
-		public static IBddStep<T> And<T>(
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
+		public static IBddStep And(
 			string description,
-			ITestInstruction<T> instruction) =>
-			new BddStep<T>(instruction.GroupedAs($"And {description}"));
+			ITestInstruction<object> instruction) =>
+			new BddStep(instruction.GroupedAs($"And {description}"));
 
 		/// <summary>
 		/// Creates a step that describes an event or action in a test.
 		/// </summary>
-		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
-		public static IBddStep<T> When<T>(
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
+		public static IBddStep When(
 			string description,
-			ITestInstruction<T> instruction) =>
-			new BddStep<T>(instruction.GroupedAs($"When {description}"));
+			ITestInstruction<object> instruction) =>
+			new BddStep(instruction.GroupedAs($"When {description}"));
 
 		/// <summary>
 		/// Creates a step that describes an expected outcome of a test.
 		/// </summary>
-		/// <inheritdoc cref="Docs.Inherit.BddKeyword{T}"/>
-		public static IBddStep<T> Then<T>(
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
+		public static IBddStep Then(
 			string description,
-			ITestInstruction<T> instruction) =>
-			new BddStep<T>(instruction.GroupedAs($"Then {description}"));
+			ITestInstruction<object> instruction) =>
+			new BddStep(instruction.GroupedAs($"Then {description}"));
 	}
 }
