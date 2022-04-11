@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Responsible.Bdd;
 using static Responsible.Bdd.Keywords;
@@ -5,7 +6,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.UnityTests
 {
-	[Feature("BDD-style test")]
+	[Feature("BDD-style tests")]
 	public class BddTests : BddTest
 	{
 		private bool setUpCalled;
@@ -53,6 +54,15 @@ namespace Responsible.UnityTests
 					() => Assert.AreEqual(
 						(true, true, true),
 						(this.setUpCalled, this.givenExecuted, this.whenExecuted)))),
+		};
+
+		[Scenario("A test with pending steps should be inconclusive")]
+		public IBddStep[] PendingStepsTest() => new[]
+		{
+			Given("The test has a pending step in the beginning", Pending),
+			Then(
+				"An error at later steps will not fail the test",
+				Do("Throw exception", () => throw new Exception())),
 		};
 	}
 }

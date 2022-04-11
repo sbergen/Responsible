@@ -14,7 +14,7 @@ and thus not under semantic versioning.
 ### Added
 - New `GroupedAs` operator to allow more control over the state strings of compound operations.
 - Experimental: New BDD-style keywords to build scenarios.
-- Experimental, Unity: `Feature` and `Scenario` attributes for leaner BDD-style tests
+- Experimental, Unity: `Feature` and `Scenario` attributes and `Pending` keyword for leaner BDD-style tests.
 
 ## [4.2.0] - 2021-10-13
 
