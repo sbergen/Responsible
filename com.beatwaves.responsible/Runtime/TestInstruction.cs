@@ -50,13 +50,14 @@ namespace Responsible
 			this IEnumerable<ITestInstruction<object>> instructions,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0) =>
+			[CallerLineNumber] int sourceLineNumber = 0,
+			string operationName = nameof(Sequence)) =>
 			instructions.Aggregate((sequencedInstructions, nextInstruction) =>
 				new SequencedTestInstruction<object, object>(
 					sequencedInstructions,
 					nextInstruction,
 					new SourceContext(
-						nameof(Sequence), memberName, sourceFilePath, sourceLineNumber, isCollapsible: true)));
+						operationName, memberName, sourceFilePath, sourceLineNumber, isCollapsible: true)));
 
 		/// <summary>
 		/// Constructs a test instruction,

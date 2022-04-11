@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -46,6 +47,23 @@ namespace Responsible.Tests
 				.Completed("Wrapper")
 				.Details("  ")
 				.Completed("Execute");
+		}
+
+		[Test]
+		public void OperationStack_DoesNotContainGroupedAs()
+		{
+			var state = Responsibly
+				.Do(
+					"Throw",
+					() => throw new Exception("Test exception"))
+				.GroupedAs("Test group")
+				.CreateState();
+
+			state.ToTask(this.Executor);
+
+			StringAssert.DoesNotContain(
+				$"[{nameof(TestInstruction.GroupedAs)}]",
+				state.ToString());
 		}
 	}
 }
