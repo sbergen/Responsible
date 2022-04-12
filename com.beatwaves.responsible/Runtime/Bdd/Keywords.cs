@@ -7,6 +7,7 @@ namespace Responsible.Bdd
 	/// Keywords for building BDD-style tests for clearer source code and state strings.
 	/// Helps in building tests with consistent style.
 	/// </summary>
+	// ReSharper disable once PartialTypeWithSinglePart, a Unity part exists
 	public static partial class Keywords
 	{
 		/// <summary>
