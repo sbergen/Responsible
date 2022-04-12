@@ -25,10 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: testspace-com/setup-testspace@v1
-        with:
-          domain: ${{github.repository_owner}}
-
       - name: Cache
         uses: actions/cache@v3.0.1
         with:
@@ -52,12 +48,6 @@ jobs:
             -debugCodeOptimization
             -nographics
             -disable-assembly-updater
-
-      - name: Push to testspace
-        if: ${{ always() }}
-        run: testspace
-          [${{ matrix.unityVersion }}]artifacts/editmode-results.xml
-          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
@@ -93,20 +83,12 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - uses: testspace-com/setup-testspace@v1
-        with:
-          domain: ${{github.repository_owner}}
-
       - name: Run Tests
         id: run-tests
         run: |
           dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx;LogFileName=results.xml"
           echo "::set-output name=coverage::Responsible/$(ls TestResults/*/* | head -n1)"
           echo "::set-output name=tests::TestResults/results.xml"
-
-      - name: Push to testspace
-        if: ${{ always() }}
-        run: testspace ${{ steps.run-tests.outputs.tests }}
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v3
