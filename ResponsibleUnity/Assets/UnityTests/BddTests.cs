@@ -56,7 +56,7 @@ namespace Responsible.UnityTests
 						(this.setUpCalled, this.givenExecuted, this.whenExecuted)))),
 		};
 
-		[Scenario("A test with pending steps should be inconclusive")]
+		[Scenario("A test with pending steps should be skipped")]
 		public IBddStep[] PendingStepsTest() => new[]
 		{
 			Given("The test has a pending step in the beginning", Pending),
