@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
-using Responsible.Unity;
+using Responsible.Bdd;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,12 +14,10 @@ using Object = UnityEngine.Object;
 namespace ResponsibleGame.PlayModeTests
 {
 	[TestFixture]
-	public abstract class SystemTest
+	public abstract class SystemTest : BddTest
 	{
 		private string scenePath;
 		private MockInput mockInput;
-
-		protected UnityTestInstructionExecutor TestInstructionExecutor { get; private set; }
 
 		[OneTimeSetUp]
 		public void ResolveScenePath()
@@ -35,7 +33,6 @@ namespace ResponsibleGame.PlayModeTests
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
-			this.TestInstructionExecutor = new UnityTestInstructionExecutor();
 			this.mockInput = new MockInput();
 			PlayerInput.Instance = this.mockInput;
 
@@ -47,7 +44,6 @@ namespace ResponsibleGame.PlayModeTests
 		[TearDown]
 		public void TearDown()
 		{
-			this.TestInstructionExecutor.Dispose();
 			PlayerInput.Instance = null;
 		}
 
@@ -66,10 +62,10 @@ namespace ResponsibleGame.PlayModeTests
 			.AndThen(components => WaitForCondition(
 				$"Player object is within target area: {shouldHit}",
 				() => PlayerIsOnTarget(components) == shouldHit))
-			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.MockTriggerInput());
+			.ThenRespondWith($"Trigger {(shouldHit ? "hit" : "miss")}", this.SimulateTriggerInput());
 
-		protected ITestInstruction<object> MockTriggerInput() =>
-			Do("Mock trigger input", () => this.mockInput.Trigger());
+		protected ITestInstruction<object> SimulateTriggerInput() =>
+			Do("Simulate trigger input", () => this.mockInput.Trigger());
 
 		protected static Marker[] GetAllMarkers() => Object.FindObjectsOfType<Marker>();
 

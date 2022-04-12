@@ -14,13 +14,13 @@ namespace ResponsibleGame.PlayModeTests
 		{
 			yield return this.TriggerHit(true)
 				.ExpectWithinSeconds(2)
-				.ContinueWith(Do("Assert state", () =>
+				.ContinueWith(Do("Assert that there should be one hit marker", () =>
 				{
 					var markers = GetAllMarkers();
 					Assert.AreEqual(1, markers.Length);
 					Assert.IsInstanceOf<Hit>(markers[0]);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -28,13 +28,13 @@ namespace ResponsibleGame.PlayModeTests
 		{
 			yield return this.TriggerHit(false)
 				.ExpectWithinSeconds(2)
-				.ContinueWith(Do("Assert state", () =>
+				.ContinueWith(Do("Assert that there should be one miss marker", () =>
 				{
 					var markers = GetAllMarkers();
 					Assert.AreEqual(1, markers.Length);
 					Assert.IsInstanceOf<Miss>(markers[0]);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -48,16 +48,16 @@ namespace ResponsibleGame.PlayModeTests
 			var fail = Enumerable.Repeat(miss, Status.StartingLives).Sequence();
 
 			yield return fail
-				.ContinueWith(Do("Assert failed", () =>
+				.ContinueWith(Do("Assert that that the player is dead", () =>
 				{
 					Assert.IsFalse(ExpectStatusInstance().IsAlive);
 				}))
-				.ContinueWith(this.MockTriggerInput())
-				.ContinueWith(Do("Assert restarted", () =>
+				.ContinueWith(this.SimulateTriggerInput())
+				.ContinueWith(Do("Assert that the player is alive again", () =>
 				{
 					Assert.IsTrue(ExpectStatusInstance().IsAlive);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 
 		[UnityTest]
@@ -86,20 +86,20 @@ namespace ResponsibleGame.PlayModeTests
 					threeHitsAndAMiss,
 				}
 				.Sequence()
-				.ContinueWith(Do("Assert marker state", () =>
+				.ContinueWith(Do("Assert that there are 10 miss and 3 hit markers", () =>
 				{
 					var markers = GetAllMarkers();
 					Assert.AreEqual(13, markers.Length);
 					Assert.AreEqual(3, markers.Count(item => item is Miss));
 					Assert.AreEqual(10, markers.Count(item => item is Hit));
 				}))
-				.ContinueWith(Do("Assert status", () =>
+				.ContinueWith(Do("Assert that the player is dead and has scored 10 points", () =>
 				{
 					var status = ExpectStatusInstance();
 					Assert.IsFalse(status.IsAlive);
 					Assert.AreEqual(10, status.Score);
 				}))
-				.ToYieldInstruction(this.TestInstructionExecutor);
+				.ToYieldInstruction(this.Executor);
 		}
 	}
 }
