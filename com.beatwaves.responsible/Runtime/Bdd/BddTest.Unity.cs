@@ -6,7 +6,6 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using Responsible.Unity;
-using UnityEngine.TestTools;
 using static Responsible.Bdd.Keywords;
 
 namespace Responsible.Bdd
