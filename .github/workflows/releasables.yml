@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache Library
-        uses: actions/cache@v3.0.1
+        uses: actions/cache@v3.0.2
         with:
           path: ResponsibleUnity/Library
           key: Library-docfx-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
