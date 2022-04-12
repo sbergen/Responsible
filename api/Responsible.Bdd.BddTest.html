@@ -345,14 +345,13 @@ public void BddTestSetUp()</code></pre>
 public void BddTestTearDown()</code></pre>
   </div>
   <a id="Responsible_Bdd_BddTest_ExecuteScenario_" data-uid="Responsible.Bdd.BddTest.ExecuteScenario*"></a>
-  <h4 id="Responsible_Bdd_BddTest_ExecuteScenario_System_String_NUnit_Framework_Interfaces_IMethodInfo_" data-uid="Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)">ExecuteScenario(String, IMethodInfo)</h4>
-  <div class="markdown level1 summary"><p>Helper method for executing BDD steps, should not be used manually,
-but must be public to make NUnit happy.</p>
+  <h4 id="Responsible_Bdd_BddTest_ExecuteScenario_Responsible_Bdd_ScenarioAttribute_NUnit_Framework_Interfaces_IMethodInfo_" data-uid="Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute,NUnit.Framework.Interfaces.IMethodInfo)">ExecuteScenario(ScenarioAttribute, IMethodInfo)</h4>
+  <div class="markdown level1 summary"><p>Helper method for executing BDD steps, should not be directly used.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerator ExecuteScenario(string scenario, IMethodInfo testMethod)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerator ExecuteScenario(ScenarioAttribute scenarioAttribute, IMethodInfo testMethod)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -365,9 +364,9 @@ but must be public to make NUnit happy.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">scenario</span></td>
-        <td><p>Name of the test scenario.</p>
+        <td><a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a></td>
+        <td><span class="parametername">scenarioAttribute</span></td>
+        <td><p>The attribute this scenario is built from.</p>
 </td>
       </tr>
       <tr>
@@ -389,10 +388,14 @@ but must be public to make NUnit happy.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
-        <td></td>
+        <td><p>An IEnumerator for Unity to run</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Responsible_Bdd_BddTest_ExecuteScenario_Responsible_Bdd_ScenarioAttribute_NUnit_Framework_Interfaces_IMethodInfo__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is public only because NUnit requires it to be!</p>
+</div>
   <a id="Responsible_Bdd_BddTest_MakeExecutor_" data-uid="Responsible.Bdd.BddTest.MakeExecutor*"></a>
   <h4 id="Responsible_Bdd_BddTest_MakeExecutor" data-uid="Responsible.Bdd.BddTest.MakeExecutor">MakeExecutor()</h4>
   <div class="markdown level1 summary"><p>Creates a test instruction executor for a test run. May be customized in deriving classes.</p>

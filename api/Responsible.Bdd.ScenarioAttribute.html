@@ -276,7 +276,9 @@
   
   <h1 id="Responsible_Bdd_ScenarioAttribute" data-uid="Responsible.Bdd.ScenarioAttribute" class="text-break">Class ScenarioAttribute
   </h1>
-  <div class="markdown level0 summary"><p>Attribute for annotating a method as a BDD-style scenario.</p>
+  <div class="markdown level0 summary"><p>Annotates a method as a BDD-style scenario returning steps, which will be run as a test case,
+if the containing class is annotated with <a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a>.
+The return type of the method must be convertible to <code>IEnumerable&lt;IBddStep&gt;</code>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -404,13 +406,25 @@
   <h5 id="Responsible_Bdd_ScenarioAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[MeansImplicitUse]
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class ScenarioAttribute : Attribute</code></pre>
   </div>
+  <h5 id="Responsible_Bdd_ScenarioAttribute_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The class this method is in <strong>must</strong> use <a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a>.</p>
+</div>
+  <h5 id="Responsible_Bdd_ScenarioAttribute_examples"><strong>Examples</strong></h5>
+  <pre><code>[Scenario(&quot;Example scenario&quot;)]
+public IBddStep[] Example() => new[]
+{
+    Given(&quot;the setup is correct&quot;, ...),
+    When(&quot;the user does something&quot;, ...),
+    Then(&quot;the state should be updated correctly&quot;, ...),
+};</code></pre>
+
   <h3 id="constructors">Constructors
   </h3>
   <a id="Responsible_Bdd_ScenarioAttribute__ctor_" data-uid="Responsible.Bdd.ScenarioAttribute.#ctor*"></a>
-  <h4 id="Responsible_Bdd_ScenarioAttribute__ctor_System_String_" data-uid="Responsible.Bdd.ScenarioAttribute.#ctor(System.String)">ScenarioAttribute(String)</h4>
+  <h4 id="Responsible_Bdd_ScenarioAttribute__ctor_System_String_System_Object___" data-uid="Responsible.Bdd.ScenarioAttribute.#ctor(System.String,System.Object[])">ScenarioAttribute(String, Object[])</h4>
   <div class="markdown level1 summary"><p>Annotates a method as a BDD-style scenario returning steps, which will be run as a test case,
 if the containing class is annotated with <a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a>.
 The return type of the method must be convertible to <code>IEnumerable&lt;IBddStep&gt;</code>.</p>
@@ -418,7 +432,7 @@ The return type of the method must be convertible to <code>IEnumerable&lt;IBddSt
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ScenarioAttribute(string description)</code></pre>
+    <pre><code class="lang-csharp hljs">public ScenarioAttribute(string description, params object[] parameters)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -436,41 +450,11 @@ The return type of the method must be convertible to <code>IEnumerable&lt;IBddSt
         <td><p>The description for the test scenario.</p>
 </td>
       </tr>
-    </tbody>
-  </table>
-  <h5 id="Responsible_Bdd_ScenarioAttribute__ctor_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The class this method is in <strong>must</strong> use <a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a>.</p>
-</div>
-  <h5 id="Responsible_Bdd_ScenarioAttribute__ctor_System_String__examples">Examples</h5>
-  <pre><code>[Scenario(&quot;Example scenario&quot;)]
-public IBddStep[] Example() => new[]
-{
-    Given(&quot;the setup is correct&quot;, ...),
-    When(&quot;the user does something&quot;, ...),
-    Then(&quot;the state should be updated correctly&quot;, ...),
-};</code></pre>
-
-  <h3 id="fields">Fields
-  </h3>
-  <h4 id="Responsible_Bdd_ScenarioAttribute_Description" data-uid="Responsible.Bdd.ScenarioAttribute.Description">Description</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly string Description</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
       <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">parameters</span></td>
+        <td><p>The parameters to pass to the test method.</p>
+</td>
       </tr>
     </tbody>
   </table>

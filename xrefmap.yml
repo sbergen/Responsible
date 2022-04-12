@@ -45,12 +45,12 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.BddTest.BddTestTearDown
   nameWithType: BddTest.BddTestTearDown
-- uid: Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)
-  name: ExecuteScenario(String, IMethodInfo)
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_System_String_NUnit_Framework_Interfaces_IMethodInfo_
-  commentId: M:Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)
-  fullName: Responsible.Bdd.BddTest.ExecuteScenario(System.String, NUnit.Framework.Interfaces.IMethodInfo)
-  nameWithType: BddTest.ExecuteScenario(String, IMethodInfo)
+- uid: Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute,NUnit.Framework.Interfaces.IMethodInfo)
+  name: ExecuteScenario(ScenarioAttribute, IMethodInfo)
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_Responsible_Bdd_ScenarioAttribute_NUnit_Framework_Interfaces_IMethodInfo_
+  commentId: M:Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute,NUnit.Framework.Interfaces.IMethodInfo)
+  fullName: Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute, NUnit.Framework.Interfaces.IMethodInfo)
+  nameWithType: BddTest.ExecuteScenario(ScenarioAttribute, IMethodInfo)
 - uid: Responsible.Bdd.BddTest.ExecuteScenario*
   name: ExecuteScenario
   href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_
@@ -221,12 +221,15 @@ references:
   commentId: T:Responsible.Bdd.ScenarioAttribute
   fullName: Responsible.Bdd.ScenarioAttribute
   nameWithType: ScenarioAttribute
-- uid: Responsible.Bdd.ScenarioAttribute.#ctor(System.String)
-  name: ScenarioAttribute(String)
-  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_System_String_
-  commentId: M:Responsible.Bdd.ScenarioAttribute.#ctor(System.String)
-  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String)
-  nameWithType: ScenarioAttribute.ScenarioAttribute(String)
+- uid: Responsible.Bdd.ScenarioAttribute.#ctor(System.String,System.Object[])
+  name: ScenarioAttribute(String, Object[])
+  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_System_String_System_Object___
+  commentId: M:Responsible.Bdd.ScenarioAttribute.#ctor(System.String,System.Object[])
+  name.vb: ScenarioAttribute(String, Object())
+  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String, System.Object[])
+  fullName.vb: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String, System.Object())
+  nameWithType: ScenarioAttribute.ScenarioAttribute(String, Object[])
+  nameWithType.vb: ScenarioAttribute.ScenarioAttribute(String, Object())
 - uid: Responsible.Bdd.ScenarioAttribute.#ctor*
   name: ScenarioAttribute
   href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_
@@ -234,12 +237,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute
   nameWithType: ScenarioAttribute.ScenarioAttribute
-- uid: Responsible.Bdd.ScenarioAttribute.Description
-  name: Description
-  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute_Description
-  commentId: F:Responsible.Bdd.ScenarioAttribute.Description
-  fullName: Responsible.Bdd.ScenarioAttribute.Description
-  nameWithType: ScenarioAttribute.Description
 - uid: Responsible.Bdd.ScenarioBuilder
   name: ScenarioBuilder
   href: api/Responsible.Bdd.ScenarioBuilder.html

@@ -293,7 +293,9 @@ Keywords for building BDD-style tests for clearer source code and state strings.
 Helps in building tests with consistent style.</p>
 </section>
       <h4><a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a></h4>
-      <section><p>Attribute for annotating a method as a BDD-style scenario.</p>
+      <section><p>Annotates a method as a BDD-style scenario returning steps, which will be run as a test case,
+if the containing class is annotated with <a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a>.
+The return type of the method must be convertible to <code>IEnumerable&lt;IBddStep&gt;</code>.</p>
 </section>
       <h4><a class="xref" href="Responsible.Bdd.ScenarioBuilder.html">ScenarioBuilder</a></h4>
       <section><p>Helper class to build scenarios with proper source context.</p>
