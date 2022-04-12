@@ -6,6 +6,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.UnityTests
 {
+	[Category("BDD")]
 	[Feature("BDD-style tests")]
 	public class BddTests : BddTest
 	{
@@ -106,6 +107,19 @@ namespace Responsible.UnityTests
 			Then(
 				"the correct thing should be logged (take a look for yourself)",
 				Do("Log a message", () => UnityEngine.Debug.Log(thingToLog))),
+		};
+
+		[Scenario("Attributes in feature classes should be taken into account")]
+		public IBddStep[] AttributesShouldBeInheritable() => new[]
+		{
+			Given("a scenario within a feature-class with the category BDD", NothingToDo),
+			Then(
+				"the parent of the test should have the BDD category",
+				Do(
+					"Assert test category",
+					() => CollectionAssert.Contains(
+						TestContext.CurrentTestExecutionContext.CurrentTest.Parent.Properties["Category"],
+						"BDD"))),
 		};
 	}
 }

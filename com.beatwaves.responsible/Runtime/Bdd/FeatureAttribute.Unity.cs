@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using NUnit.Compatibility;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -50,6 +51,8 @@ namespace Responsible.Bdd
 				Name = this.description
 			};
 
+			suite.ApplyAttributesToTest(TypeExtensions.GetTypeInfo(typeInfo.Type));
+
 			if (!typeof(BddTest).IsAssignableFrom(typeInfo.Type))
 			{
 				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
@@ -94,6 +97,7 @@ namespace Responsible.Bdd
 
 			var executeMethod = BddTest.GetExecuteScenarioMethod(scenarioMethod.TypeInfo);
 			var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
+			test.ApplyAttributesToTest(scenarioMethod.MethodInfo);
 			test.Name = $"Scenario: {scenarioAttribute.Description}";
 
 			var methodParameterCount = scenarioMethod.GetParameters().Length;
@@ -113,11 +117,6 @@ namespace Responsible.Bdd
 					"Scenario method must take the the same amount of parameters as provided in the attribute, " +
 					"expected {methodParameterCount}, got {givenParameterCount}";
 				SetNotRunnable(test, reason);
-			}
-
-			foreach (var attribute in scenarioMethod.GetCustomAttributes<IApplyToTest>(inherit: true))
-			{
-				attribute.ApplyToTest(test);
 			}
 
 			return test;
