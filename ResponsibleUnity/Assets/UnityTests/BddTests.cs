@@ -64,5 +64,14 @@ namespace Responsible.UnityTests
 				"An error at later steps will not fail the test",
 				Do("Throw exception", () => throw new Exception())),
 		};
+
+		[Ignore("Should be skipped!")]
+		[Scenario("A test with an IgnoreAttribute should be ignored")]
+		public IBddStep[] IgnoreAttributeShouldBeApplied() => new[]
+		{
+			Given("The test has an IgnoreAttribute and throws and exception",
+				Do("Throw exception", () => throw new Exception())),
+			Then("The test should not be executed", Pending),
+		};
 	}
 }

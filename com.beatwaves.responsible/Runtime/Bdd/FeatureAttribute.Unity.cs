@@ -102,6 +102,11 @@ namespace Responsible.Bdd
 					$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}");
 			}
 
+			foreach (var attribute in scenarioMethod.GetCustomAttributes<IApplyToTest>(inherit: true))
+			{
+				attribute.ApplyToTest(test);
+			}
+
 			return test;
 		}
 	}
