@@ -61,13 +61,6 @@ namespace Responsible.UnityTests
 			public IBddStep[] TwoArguments(object arg1, object arg2) => Array.Empty<IBddStep>();
 		}
 
-		private static readonly IDictionary<string, ITest> InvalidArgumentCountTests =
-			BuildSuites<BddTestWithInvalidArgumentCounts>()
-				.SelectMany(suite => suite.Tests)
-				.ToDictionary(test => test.Name, test => test);
-
-		public static IEnumerable<string> InvalidArgumentCountTestKeys() => InvalidArgumentCountTests.Keys;
-
 		[Test]
 		public void BuildingTest_ShouldMarkSuiteAsNotRunnable_WhenClassDoesNotInheritBddTest()
 		{
@@ -141,12 +134,14 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
-		public void Scenario_ShouldNotBeRunnable_WhenArgumentCountsMismatch(
-			[ValueSource(nameof(InvalidArgumentCountTestKeys))] string testName)
+		public void Scenario_ShouldNotBeRunnable_WhenArgumentCountsMismatch()
 		{
-			AssertTestNotRunnableWithReasonContaining(
-				InvalidArgumentCountTests[testName],
-				"same amount of parameters");
+			// Getting coverage numbers using something like ValueSource is very hacky for this,
+			// so just do this in a loop instead...
+			foreach (var test in BuildSuites<BddTestWithInvalidArgumentCounts>().SelectMany(suite => suite.Tests))
+			{
+				AssertTestNotRunnableWithReasonContaining(test, "same amount of parameters");
+			}
 		}
 
 		private static IEnumerable<TestSuite> BuildSuites<T>()
@@ -159,7 +154,11 @@ namespace Responsible.UnityTests
 		[AssertionMethod]
 		private static void AssertTestNotRunnableWithReasonContaining(ITest test, string reason)
 		{
-			Assert.AreEqual(RunState.NotRunnable, test.RunState);
+			Assert.AreEqual(
+				RunState.NotRunnable,
+				test.RunState,
+				$"Test {test.Name} should not be runnable");
+
 			StringAssert.Contains(
 				reason,
 				(string)test.Properties.Get(PropertyNames.SkipReason));
