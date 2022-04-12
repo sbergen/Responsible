@@ -164,6 +164,12 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.Keywords.Given
   nameWithType: Keywords.Given
+- uid: Responsible.Bdd.Keywords.Pending
+  name: Pending
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Pending
+  commentId: F:Responsible.Bdd.Keywords.Pending
+  fullName: Responsible.Bdd.Keywords.Pending
+  nameWithType: Keywords.Pending
 - uid: Responsible.Bdd.Keywords.Scenario(System.String,System.String,System.String,System.Int32)
   name: Scenario(String, String, String, Int32)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Scenario_System_String_System_String_System_String_System_Int32_
