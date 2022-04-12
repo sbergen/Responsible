@@ -54,14 +54,16 @@ namespace Responsible.Bdd
 			{
 				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
 			}
-
-			foreach (var (method, attribute) in typeInfo
-				.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-				.SelectMany(method => method.GetCustomAttributes<ScenarioAttribute>(true)
-					.Select(attribute => (method, attribute))))
+			else
 			{
-				var test = MakeTestFromScenario(suite, method, attribute);
-				suite.Add(test);
+				foreach (var (method, attribute) in typeInfo
+					.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+					.SelectMany(method => method.GetCustomAttributes<ScenarioAttribute>(true)
+						.Select(attribute => (method, attribute))))
+				{
+					var test = MakeTestFromScenario(suite, method, attribute);
+					suite.Add(test);
+				}
 			}
 
 			yield return suite;
@@ -94,11 +96,23 @@ namespace Responsible.Bdd
 			var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
 			test.Name = $"Scenario: {scenarioAttribute.Description}";
 
+			var methodParameterCount = scenarioMethod.GetParameters().Length;
+			var givenParameterCount = scenarioAttribute.Parameters.Length;
+
 			if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(scenarioMethod.ReturnType.Type))
 			{
-				SetNotRunnable(
-					test,
-					$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}");
+				var reason =
+					"Scenario return type must be convertible to " +
+					$"IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}";
+
+				SetNotRunnable(test, reason);
+			}
+			else if (methodParameterCount != givenParameterCount)
+			{
+				var reason =
+					"Scenario method must take the the same amount of parameters as provided in the attribute, " +
+					"expected {methodParameterCount}, got {givenParameterCount}";
+				SetNotRunnable(test, reason);
 			}
 
 			foreach (var attribute in scenarioMethod.GetCustomAttributes<IApplyToTest>(inherit: true))

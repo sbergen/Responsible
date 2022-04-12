@@ -13,6 +13,8 @@ namespace Responsible.UnityTests
 	{
 		private class NonBddTest
 		{
+			[Scenario("Valid scenario in invalid class")]
+			public IBddStep[] TestScenario1() => Array.Empty<IBddStep>();
 		}
 
 		private class InvalidReturnTypeBddTest : BddTest
@@ -43,6 +45,28 @@ namespace Responsible.UnityTests
 			{
 			}
 		}
+
+		private class BddTestWithInvalidArgumentCounts : BddTest
+		{
+			[Scenario("1 != 0", 1)]
+			[Scenario("2 != 0", 1, 2)]
+			public IBddStep[] ZeroArguments() => Array.Empty<IBddStep>();
+
+			[Scenario("0 != 1")]
+			[Scenario("2 != 1", 1, 2)]
+			public IBddStep[] OneArgument(object arg1) => Array.Empty<IBddStep>();
+
+			[Scenario("0 != 2")]
+			[Scenario("1 != 2", 1)]
+			public IBddStep[] TwoArguments(object arg1, object arg2) => Array.Empty<IBddStep>();
+		}
+
+		private static readonly IDictionary<string, ITest> InvalidArgumentCountTests =
+			BuildSuites<BddTestWithInvalidArgumentCounts>()
+				.SelectMany(suite => suite.Tests)
+				.ToDictionary(test => test.Name, test => test);
+
+		public static IEnumerable<string> InvalidArgumentCountTestKeys() => InvalidArgumentCountTests.Keys;
 
 		[Test]
 		public void BuildingTest_ShouldMarkSuiteAsNotRunnable_WhenClassDoesNotInheritBddTest()
@@ -114,6 +138,15 @@ namespace Responsible.UnityTests
 					"NormalTest",
 				},
 				testNames);
+		}
+
+		[Test]
+		public void Scenario_ShouldNotBeRunnable_WhenArgumentCountsMismatch(
+			[ValueSource(nameof(InvalidArgumentCountTestKeys))] string testName)
+		{
+			AssertTestNotRunnableWithReasonContaining(
+				InvalidArgumentCountTests[testName],
+				"same amount of parameters");
 		}
 
 		private static IEnumerable<TestSuite> BuildSuites<T>()
