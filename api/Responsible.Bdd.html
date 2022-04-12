@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestOperation&lt;T&gt;
+    <title>Namespace Responsible.Bdd
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestOperation&lt;T&gt;
+    <meta name="title" content="Namespace Responsible.Bdd
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -116,8 +116,8 @@
                           <li class="">
                             <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="active">ITestOperation&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestResponder-1.html" title="ITestResponder&lt;T&gt;" class="">ITestResponder&lt;T&gt;</a>
@@ -159,9 +159,9 @@
                             <a href="Responsible.TestWaitCondition.html" title="TestWaitCondition" class="">TestWaitCondition</a>
                           </li>
                         </ul>  </li>
-                    <li class="">
+                    <li class="active">
                       <span class="expand-stub"></span>
-                      <a href="Responsible.Bdd.html" title="Responsible.Bdd" class="">Responsible.Bdd</a>
+                      <a href="Responsible.Bdd.html" title="Responsible.Bdd" class="active">Responsible.Bdd</a>
                         
                         <ul class="nav level2">
                           <li class="">
@@ -271,83 +271,41 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestOperation`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Bdd">
   
-  
-  <h1 id="Responsible_ITestOperation_1" data-uid="Responsible.ITestOperation`1" class="text-break">Interface ITestOperation&lt;T&gt;
+  <h1 id="Responsible_Bdd" data-uid="Responsible.Bdd" class="text-break">Namespace Responsible.Bdd
   </h1>
-  <div class="markdown level0 summary"><p>Base interface for the test operation types in Responsible:</p>
-<ul>
-<li><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></li>
-</ul>
-<p>Test operations should be considered a set of instructions,
-which may be executed one or more times.
-This makes them reusable.</p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
-  <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestOperation_1_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestOperation&lt;out T&gt;</code></pre>
-  </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="methods">Methods
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
   </h3>
-  <a id="Responsible_ITestOperation_1_CreateState_" data-uid="Responsible.ITestOperation`1.CreateState*"></a>
-  <h4 id="Responsible_ITestOperation_1_CreateState" data-uid="Responsible.ITestOperation`1.CreateState">CreateState()</h4>
-  <div class="markdown level1 summary"><p>Creates the state object for a single run of this test operation.</p>
-<p>You should normally prefer using the <code>To...</code> extension methods over
-creating a state instance manually.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Pure]
-[NotNull]
-ITestOperationState&lt;T&gt; CreateState()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState</a>&lt;T&gt;</td>
-        <td><p>A state object for this run of the test operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Responsible_ITestOperation_1_CreateState_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Converting an instance of <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>
-to a string will dump full information of its current execution status.</p>
-<p>Creating a state for a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and running it directly
-will bypass the timeout mechanism which is otherwise enforced by Responsible,
-and might lead to an execution that never completes.</p>
-</div>
+      <h4><a class="xref" href="Responsible.Bdd.BddTest.html">BddTest</a></h4>
+      <section><p>Base class for BDD-style tests using attributes.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a></h4>
+      <section><p>Attribute for annotating a class as BDD-style tests for a feature.
+The class must derive from <a class="xref" href="Responsible.Bdd.BddTest.html">BddTest</a>.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Bdd.Keywords.html">Keywords</a></h4>
+      <section><p>EXPERIMENTAL:
+Keywords for building BDD-style tests for clearer source code and state strings.
+Helps in building tests with consistent style.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a></h4>
+      <section><p>Attribute for annotating a method as a BDD-style scenario.</p>
+</section>
+      <h4><a class="xref" href="Responsible.Bdd.ScenarioBuilder.html">ScenarioBuilder</a></h4>
+      <section><p>Helper class to build scenarios with proper source context.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Responsible.Bdd.IBddStep.html">IBddStep</a></h4>
+      <section><p>Tag interface for BDD-style test instructions.
+This exists only to be able to enforce that all instructions used in a scenario
+are properly wrapped in other BDD-keywords.
+Functionally no different from <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>.</p>
+</section>
 </article>
           </div>
           

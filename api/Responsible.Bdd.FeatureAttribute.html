@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestOperation&lt;T&gt;
+    <title>Class FeatureAttribute
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestOperation&lt;T&gt;
+    <meta name="title" content="Class FeatureAttribute
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -116,8 +116,8 @@
                           <li class="">
                             <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="active">ITestOperation&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestResponder-1.html" title="ITestResponder&lt;T&gt;" class="">ITestResponder&lt;T&gt;</a>
@@ -167,8 +167,8 @@
                           <li class="">
                             <a href="Responsible.Bdd.BddTest.html" title="BddTest" class="">BddTest</a>
                           </li>
-                          <li class="">
-                            <a href="Responsible.Bdd.FeatureAttribute.html" title="FeatureAttribute" class="">FeatureAttribute</a>
+                          <li class="active">
+                            <a href="Responsible.Bdd.FeatureAttribute.html" title="FeatureAttribute" class="active">FeatureAttribute</a>
                           </li>
                           <li class="">
                             <a href="Responsible.Bdd.IBddStep.html" title="IBddStep" class="">IBddStep</a>
@@ -271,60 +271,205 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestOperation`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Bdd.FeatureAttribute">
   
   
-  <h1 id="Responsible_ITestOperation_1" data-uid="Responsible.ITestOperation`1" class="text-break">Interface ITestOperation&lt;T&gt;
+  <h1 id="Responsible_Bdd_FeatureAttribute" data-uid="Responsible.Bdd.FeatureAttribute" class="text-break">Class FeatureAttribute
   </h1>
-  <div class="markdown level0 summary"><p>Base interface for the test operation types in Responsible:</p>
-<ul>
-<li><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></li>
-</ul>
-<p>Test operations should be considered a set of instructions,
-which may be executed one or more times.
-This makes them reusable.</p>
+  <div class="markdown level0 summary"><p>Attribute for annotating a class as BDD-style tests for a feature.
+The class must derive from <a class="xref" href="Responsible.Bdd.BddTest.html">BddTest</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
-  <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestOperation_1_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestOperation&lt;out T&gt;</code></pre>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
+    <div class="level2"><a class="xref" href="https://docs.microsoft.com/dotnet/api/nunit.framework.nunitattribute">NUnitAttribute</a></div>
+    <div class="level3"><span class="xref">FeatureAttribute</span></div>
   </div>
-  <h5 class="typeParameters">Type Parameters</h5>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">NUnit.Framework.Interfaces.IFixtureBuilder</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.equals#system-attribute-equals(system-object)">Attribute.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-assembly-system-type)">Attribute.GetCustomAttribute(Assembly, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-assembly-system-type-system-boolean)">Attribute.GetCustomAttribute(Assembly, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-memberinfo-system-type)">Attribute.GetCustomAttribute(MemberInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-memberinfo-system-type-system-boolean)">Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-module-system-type)">Attribute.GetCustomAttribute(Module, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-module-system-type-system-boolean)">Attribute.GetCustomAttribute(Module, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-parameterinfo-system-type)">Attribute.GetCustomAttribute(ParameterInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattribute#system-attribute-getcustomattribute(system-reflection-parameterinfo-system-type-system-boolean)">Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-assembly)">Attribute.GetCustomAttributes(Assembly)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-assembly-system-boolean)">Attribute.GetCustomAttributes(Assembly, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-assembly-system-type)">Attribute.GetCustomAttributes(Assembly, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-assembly-system-type-system-boolean)">Attribute.GetCustomAttributes(Assembly, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-memberinfo)">Attribute.GetCustomAttributes(MemberInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-memberinfo-system-boolean)">Attribute.GetCustomAttributes(MemberInfo, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-memberinfo-system-type)">Attribute.GetCustomAttributes(MemberInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-memberinfo-system-type-system-boolean)">Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-module)">Attribute.GetCustomAttributes(Module)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-module-system-boolean)">Attribute.GetCustomAttributes(Module, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-module-system-type)">Attribute.GetCustomAttributes(Module, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-module-system-type-system-boolean)">Attribute.GetCustomAttributes(Module, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-parameterinfo)">Attribute.GetCustomAttributes(ParameterInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-parameterinfo-system-boolean)">Attribute.GetCustomAttributes(ParameterInfo, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-parameterinfo-system-type)">Attribute.GetCustomAttributes(ParameterInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.getcustomattributes#system-attribute-getcustomattributes(system-reflection-parameterinfo-system-type-system-boolean)">Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.gethashcode#system-attribute-gethashcode">Attribute.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefaultattribute#system-attribute-isdefaultattribute">Attribute.IsDefaultAttribute()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-assembly-system-type)">Attribute.IsDefined(Assembly, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-assembly-system-type-system-boolean)">Attribute.IsDefined(Assembly, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-memberinfo-system-type)">Attribute.IsDefined(MemberInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-memberinfo-system-type-system-boolean)">Attribute.IsDefined(MemberInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-module-system-type)">Attribute.IsDefined(Module, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-module-system-type-system-boolean)">Attribute.IsDefined(Module, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-parameterinfo-system-type)">Attribute.IsDefined(ParameterInfo, Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.isdefined#system-attribute-isdefined(system-reflection-parameterinfo-system-type-system-boolean)">Attribute.IsDefined(ParameterInfo, Type, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.match#system-attribute-match(system-object)">Attribute.Match(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.typeid#system-attribute-typeid">Attribute.TypeId</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.Bdd.html">Responsible.Bdd</a></h6>
+  <h6><strong>Assembly</strong>: Responsible.dll</h6>
+  <h5 id="Responsible_Bdd_FeatureAttribute_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public class FeatureAttribute : NUnitAttribute, IFixtureBuilder</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Responsible_Bdd_FeatureAttribute__ctor_" data-uid="Responsible.Bdd.FeatureAttribute.#ctor*"></a>
+  <h4 id="Responsible_Bdd_FeatureAttribute__ctor_System_String_" data-uid="Responsible.Bdd.FeatureAttribute.#ctor(System.String)">FeatureAttribute(String)</h4>
+  <div class="markdown level1 summary"><p>Annotates a class as a feature test suite with the given description.
+All methods in the class that have the <a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a>
+will be included as test cases in this test suite.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FeatureAttribute(string description)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
+        <th>Type</th>
         <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the operation.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>Description of the feature</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
+  <h3 id="eii">Explicit Interface Implementations
   </h3>
-  <a id="Responsible_ITestOperation_1_CreateState_" data-uid="Responsible.ITestOperation`1.CreateState*"></a>
-  <h4 id="Responsible_ITestOperation_1_CreateState" data-uid="Responsible.ITestOperation`1.CreateState">CreateState()</h4>
-  <div class="markdown level1 summary"><p>Creates the state object for a single run of this test operation.</p>
-<p>You should normally prefer using the <code>To...</code> extension methods over
-creating a state instance manually.</p>
-</div>
+  <a id="Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_" data-uid="Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom*"></a>
+  <h4 id="Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_NUnit_Framework_Interfaces_ITypeInfo_" data-uid="Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)">IFixtureBuilder.BuildFrom(ITypeInfo)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Pure]
-[NotNull]
-ITestOperationState&lt;T&gt; CreateState()</code></pre>
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;TestSuite&gt; IFixtureBuilder.BuildFrom(ITypeInfo typeInfo)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">NUnit.Framework.Interfaces.ITypeInfo</span></td>
+        <td><span class="parametername">typeInfo</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -335,19 +480,19 @@ ITestOperationState&lt;T&gt; CreateState()</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState</a>&lt;T&gt;</td>
-        <td><p>A state object for this run of the test operation.</p>
-</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/nunit.framework.internal.testsuite">TestSuite</a>&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Responsible_ITestOperation_1_CreateState_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Converting an instance of <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>
-to a string will dump full information of its current execution status.</p>
-<p>Creating a state for a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and running it directly
-will bypass the timeout mechanism which is otherwise enforced by Responsible,
-and might lead to an execution that never completes.</p>
-</div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">NUnit.Framework.Interfaces.IFixtureBuilder</span>
+  </div>
+  <h3 id="seealso">See Also</h3>
+  <div class="seealso">
+      <div><a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a></div>
+  </div>
 </article>
           </div>
           

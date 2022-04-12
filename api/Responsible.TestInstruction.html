@@ -161,6 +161,30 @@
                         </ul>  </li>
                     <li class="">
                       <span class="expand-stub"></span>
+                      <a href="Responsible.Bdd.html" title="Responsible.Bdd" class="">Responsible.Bdd</a>
+                        
+                        <ul class="nav level2">
+                          <li class="">
+                            <a href="Responsible.Bdd.BddTest.html" title="BddTest" class="">BddTest</a>
+                          </li>
+                          <li class="">
+                            <a href="Responsible.Bdd.FeatureAttribute.html" title="FeatureAttribute" class="">FeatureAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Responsible.Bdd.IBddStep.html" title="IBddStep" class="">IBddStep</a>
+                          </li>
+                          <li class="">
+                            <a href="Responsible.Bdd.Keywords.html" title="Keywords" class="">Keywords</a>
+                          </li>
+                          <li class="">
+                            <a href="Responsible.Bdd.ScenarioAttribute.html" title="ScenarioAttribute" class="">ScenarioAttribute</a>
+                          </li>
+                          <li class="">
+                            <a href="Responsible.Bdd.ScenarioBuilder.html" title="ScenarioBuilder" class="">ScenarioBuilder</a>
+                          </li>
+                        </ul>  </li>
+                    <li class="">
+                      <span class="expand-stub"></span>
                       <a href="Responsible.Context.html" title="Responsible.Context" class="">Responsible.Context</a>
                         
                         <ul class="nav level2">
@@ -273,7 +297,7 @@ for executing, sequencing and transforming their results.</p>
   <h4 id="Responsible_TestInstruction_BoxResult__1_Responsible_ITestInstruction___0__" data-uid="Responsible.TestInstruction.BoxResult``1(Responsible.ITestInstruction{``0})">BoxResult&lt;T&gt;(ITestInstruction&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Converts a test instruction returning a value type
 into one returning the same value boxed into <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>.
-Can be useful for example in conjunction with <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_">Sequence(IEnumerable&lt;ITestInstruction&lt;Object&gt;&gt;, String, String, Int32)</a> together with value types.</p>
+Can be useful for example in conjunction with <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_System_String_">Sequence(IEnumerable&lt;ITestInstruction&lt;Object&gt;&gt;, String, String, Int32, String)</a> together with value types.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -695,14 +719,14 @@ public static ITestInstruction&lt;T2&gt; Select&lt;T1, T2&gt;(this ITestInstruct
     </tbody>
   </table>
   <a id="Responsible_TestInstruction_Sequence_" data-uid="Responsible.TestInstruction.Sequence*"></a>
-  <h4 id="Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_" data-uid="Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32)">Sequence(IEnumerable&lt;ITestInstruction&lt;Object&gt;&gt;, String, String, Int32)</h4>
+  <h4 id="Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_System_String_" data-uid="Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32,System.String)">Sequence(IEnumerable&lt;ITestInstruction&lt;Object&gt;&gt;, String, String, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Runs all provided test instructions in order, or until one of them fails.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Pure]
-public static ITestInstruction&lt;object&gt; Sequence(this IEnumerable&lt;ITestInstruction&lt;object&gt;&gt; instructions, [CallerMemberName] string memberName = &quot;&quot;, [CallerFilePath] string sourceFilePath = &quot;&quot;, [CallerLineNumber] int sourceLineNumber = 0)</code></pre>
+public static ITestInstruction&lt;object&gt; Sequence(this IEnumerable&lt;ITestInstruction&lt;object&gt;&gt; instructions, [CallerMemberName] string memberName = &quot;&quot;, [CallerFilePath] string sourceFilePath = &quot;&quot;, [CallerLineNumber] int sourceLineNumber = 0, string operationName = &quot;Sequence&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -723,20 +747,22 @@ public static ITestInstruction&lt;object&gt; Sequence(this IEnumerable&lt;ITestI
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">memberName</span></td>
-        <td><p>Caller member name provided by compiler. May be overridden for custom operators.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sourceFilePath</span></td>
-        <td><p>Caller file path provided by compiler. May be overridden for custom operators.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">sourceLineNumber</span></td>
-        <td><p>Source line number provided by compiler. May be overridden for custom operators.</p>
-</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">operationName</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

@@ -7,6 +7,255 @@ references:
   commentId: N:Responsible
   fullName: Responsible
   nameWithType: Responsible
+- uid: Responsible.Bdd
+  name: Responsible.Bdd
+  href: api/Responsible.Bdd.html
+  commentId: N:Responsible.Bdd
+  fullName: Responsible.Bdd
+  nameWithType: Responsible.Bdd
+- uid: Responsible.Bdd.BddTest
+  name: BddTest
+  href: api/Responsible.Bdd.BddTest.html
+  commentId: T:Responsible.Bdd.BddTest
+  fullName: Responsible.Bdd.BddTest
+  nameWithType: BddTest
+- uid: Responsible.Bdd.BddTest.BddTestSetUp
+  name: BddTestSetUp()
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestSetUp
+  commentId: M:Responsible.Bdd.BddTest.BddTestSetUp
+  fullName: Responsible.Bdd.BddTest.BddTestSetUp()
+  nameWithType: BddTest.BddTestSetUp()
+- uid: Responsible.Bdd.BddTest.BddTestSetUp*
+  name: BddTestSetUp
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestSetUp_
+  commentId: Overload:Responsible.Bdd.BddTest.BddTestSetUp
+  isSpec: "True"
+  fullName: Responsible.Bdd.BddTest.BddTestSetUp
+  nameWithType: BddTest.BddTestSetUp
+- uid: Responsible.Bdd.BddTest.BddTestTearDown
+  name: BddTestTearDown()
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestTearDown
+  commentId: M:Responsible.Bdd.BddTest.BddTestTearDown
+  fullName: Responsible.Bdd.BddTest.BddTestTearDown()
+  nameWithType: BddTest.BddTestTearDown()
+- uid: Responsible.Bdd.BddTest.BddTestTearDown*
+  name: BddTestTearDown
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestTearDown_
+  commentId: Overload:Responsible.Bdd.BddTest.BddTestTearDown
+  isSpec: "True"
+  fullName: Responsible.Bdd.BddTest.BddTestTearDown
+  nameWithType: BddTest.BddTestTearDown
+- uid: Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)
+  name: ExecuteScenario(String, IMethodInfo)
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_System_String_NUnit_Framework_Interfaces_IMethodInfo_
+  commentId: M:Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)
+  fullName: Responsible.Bdd.BddTest.ExecuteScenario(System.String, NUnit.Framework.Interfaces.IMethodInfo)
+  nameWithType: BddTest.ExecuteScenario(String, IMethodInfo)
+- uid: Responsible.Bdd.BddTest.ExecuteScenario*
+  name: ExecuteScenario
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_
+  commentId: Overload:Responsible.Bdd.BddTest.ExecuteScenario
+  isSpec: "True"
+  fullName: Responsible.Bdd.BddTest.ExecuteScenario
+  nameWithType: BddTest.ExecuteScenario
+- uid: Responsible.Bdd.BddTest.Executor
+  name: Executor
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_Executor
+  commentId: P:Responsible.Bdd.BddTest.Executor
+  fullName: Responsible.Bdd.BddTest.Executor
+  nameWithType: BddTest.Executor
+- uid: Responsible.Bdd.BddTest.Executor*
+  name: Executor
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_Executor_
+  commentId: Overload:Responsible.Bdd.BddTest.Executor
+  isSpec: "True"
+  fullName: Responsible.Bdd.BddTest.Executor
+  nameWithType: BddTest.Executor
+- uid: Responsible.Bdd.BddTest.MakeExecutor
+  name: MakeExecutor()
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_MakeExecutor
+  commentId: M:Responsible.Bdd.BddTest.MakeExecutor
+  fullName: Responsible.Bdd.BddTest.MakeExecutor()
+  nameWithType: BddTest.MakeExecutor()
+- uid: Responsible.Bdd.BddTest.MakeExecutor*
+  name: MakeExecutor
+  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_MakeExecutor_
+  commentId: Overload:Responsible.Bdd.BddTest.MakeExecutor
+  isSpec: "True"
+  fullName: Responsible.Bdd.BddTest.MakeExecutor
+  nameWithType: BddTest.MakeExecutor
+- uid: Responsible.Bdd.FeatureAttribute
+  name: FeatureAttribute
+  href: api/Responsible.Bdd.FeatureAttribute.html
+  commentId: T:Responsible.Bdd.FeatureAttribute
+  fullName: Responsible.Bdd.FeatureAttribute
+  nameWithType: FeatureAttribute
+- uid: Responsible.Bdd.FeatureAttribute.#ctor(System.String)
+  name: FeatureAttribute(String)
+  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute__ctor_System_String_
+  commentId: M:Responsible.Bdd.FeatureAttribute.#ctor(System.String)
+  fullName: Responsible.Bdd.FeatureAttribute.FeatureAttribute(System.String)
+  nameWithType: FeatureAttribute.FeatureAttribute(String)
+- uid: Responsible.Bdd.FeatureAttribute.#ctor*
+  name: FeatureAttribute
+  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute__ctor_
+  commentId: Overload:Responsible.Bdd.FeatureAttribute.#ctor
+  isSpec: "True"
+  fullName: Responsible.Bdd.FeatureAttribute.FeatureAttribute
+  nameWithType: FeatureAttribute.FeatureAttribute
+- uid: Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
+  name: IFixtureBuilder.BuildFrom(ITypeInfo)
+  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_NUnit_Framework_Interfaces_ITypeInfo_
+  commentId: M:Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
+  name.vb: NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(ITypeInfo)
+  fullName: Responsible.Bdd.FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
+  nameWithType: FeatureAttribute.IFixtureBuilder.BuildFrom(ITypeInfo)
+  nameWithType.vb: FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(ITypeInfo)
+- uid: Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom*
+  name: IFixtureBuilder.BuildFrom
+  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_
+  commentId: Overload:Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom
+  isSpec: "True"
+  name.vb: NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
+  fullName: Responsible.Bdd.FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
+  nameWithType: FeatureAttribute.IFixtureBuilder.BuildFrom
+  nameWithType.vb: FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
+- uid: Responsible.Bdd.IBddStep
+  name: IBddStep
+  href: api/Responsible.Bdd.IBddStep.html
+  commentId: T:Responsible.Bdd.IBddStep
+  fullName: Responsible.Bdd.IBddStep
+  nameWithType: IBddStep
+- uid: Responsible.Bdd.Keywords
+  name: Keywords
+  href: api/Responsible.Bdd.Keywords.html
+  commentId: T:Responsible.Bdd.Keywords
+  fullName: Responsible.Bdd.Keywords
+  nameWithType: Keywords
+- uid: Responsible.Bdd.Keywords.And(System.String,Responsible.ITestInstruction{System.Object})
+  name: And(String, ITestInstruction<Object>)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_And_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Bdd.Keywords.And(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: And(String, ITestInstruction(Of Object))
+  fullName: Responsible.Bdd.Keywords.And(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Bdd.Keywords.And(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Keywords.And(String, ITestInstruction<Object>)
+  nameWithType.vb: Keywords.And(String, ITestInstruction(Of Object))
+- uid: Responsible.Bdd.Keywords.And*
+  name: And
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_And_
+  commentId: Overload:Responsible.Bdd.Keywords.And
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.And
+  nameWithType: Keywords.And
+- uid: Responsible.Bdd.Keywords.Given(System.String,Responsible.ITestInstruction{System.Object})
+  name: Given(String, ITestInstruction<Object>)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Given_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Bdd.Keywords.Given(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: Given(String, ITestInstruction(Of Object))
+  fullName: Responsible.Bdd.Keywords.Given(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Bdd.Keywords.Given(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Keywords.Given(String, ITestInstruction<Object>)
+  nameWithType.vb: Keywords.Given(String, ITestInstruction(Of Object))
+- uid: Responsible.Bdd.Keywords.Given*
+  name: Given
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Given_
+  commentId: Overload:Responsible.Bdd.Keywords.Given
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.Given
+  nameWithType: Keywords.Given
+- uid: Responsible.Bdd.Keywords.Scenario(System.String,System.String,System.String,System.Int32)
+  name: Scenario(String, String, String, Int32)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Scenario_System_String_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Bdd.Keywords.Scenario(System.String,System.String,System.String,System.Int32)
+  fullName: Responsible.Bdd.Keywords.Scenario(System.String, System.String, System.String, System.Int32)
+  nameWithType: Keywords.Scenario(String, String, String, Int32)
+- uid: Responsible.Bdd.Keywords.Scenario*
+  name: Scenario
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Scenario_
+  commentId: Overload:Responsible.Bdd.Keywords.Scenario
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.Scenario
+  nameWithType: Keywords.Scenario
+- uid: Responsible.Bdd.Keywords.Then(System.String,Responsible.ITestInstruction{System.Object})
+  name: Then(String, ITestInstruction<Object>)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Then_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Bdd.Keywords.Then(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: Then(String, ITestInstruction(Of Object))
+  fullName: Responsible.Bdd.Keywords.Then(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Bdd.Keywords.Then(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Keywords.Then(String, ITestInstruction<Object>)
+  nameWithType.vb: Keywords.Then(String, ITestInstruction(Of Object))
+- uid: Responsible.Bdd.Keywords.Then*
+  name: Then
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Then_
+  commentId: Overload:Responsible.Bdd.Keywords.Then
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.Then
+  nameWithType: Keywords.Then
+- uid: Responsible.Bdd.Keywords.When(System.String,Responsible.ITestInstruction{System.Object})
+  name: When(String, ITestInstruction<Object>)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_When_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Bdd.Keywords.When(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: When(String, ITestInstruction(Of Object))
+  fullName: Responsible.Bdd.Keywords.When(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Bdd.Keywords.When(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Keywords.When(String, ITestInstruction<Object>)
+  nameWithType.vb: Keywords.When(String, ITestInstruction(Of Object))
+- uid: Responsible.Bdd.Keywords.When*
+  name: When
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_When_
+  commentId: Overload:Responsible.Bdd.Keywords.When
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.When
+  nameWithType: Keywords.When
+- uid: Responsible.Bdd.ScenarioAttribute
+  name: ScenarioAttribute
+  href: api/Responsible.Bdd.ScenarioAttribute.html
+  commentId: T:Responsible.Bdd.ScenarioAttribute
+  fullName: Responsible.Bdd.ScenarioAttribute
+  nameWithType: ScenarioAttribute
+- uid: Responsible.Bdd.ScenarioAttribute.#ctor(System.String)
+  name: ScenarioAttribute(String)
+  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_System_String_
+  commentId: M:Responsible.Bdd.ScenarioAttribute.#ctor(System.String)
+  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String)
+  nameWithType: ScenarioAttribute.ScenarioAttribute(String)
+- uid: Responsible.Bdd.ScenarioAttribute.#ctor*
+  name: ScenarioAttribute
+  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_
+  commentId: Overload:Responsible.Bdd.ScenarioAttribute.#ctor
+  isSpec: "True"
+  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute
+  nameWithType: ScenarioAttribute.ScenarioAttribute
+- uid: Responsible.Bdd.ScenarioAttribute.Description
+  name: Description
+  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute_Description
+  commentId: F:Responsible.Bdd.ScenarioAttribute.Description
+  fullName: Responsible.Bdd.ScenarioAttribute.Description
+  nameWithType: ScenarioAttribute.Description
+- uid: Responsible.Bdd.ScenarioBuilder
+  name: ScenarioBuilder
+  href: api/Responsible.Bdd.ScenarioBuilder.html
+  commentId: T:Responsible.Bdd.ScenarioBuilder
+  fullName: Responsible.Bdd.ScenarioBuilder
+  nameWithType: ScenarioBuilder
+- uid: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
+  name: WithSteps(IBddStep[])
+  href: api/Responsible.Bdd.ScenarioBuilder.html#Responsible_Bdd_ScenarioBuilder_WithSteps_Responsible_Bdd_IBddStep___
+  commentId: M:Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
+  name.vb: WithSteps(IBddStep())
+  fullName: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
+  fullName.vb: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep())
+  nameWithType: ScenarioBuilder.WithSteps(IBddStep[])
+  nameWithType.vb: ScenarioBuilder.WithSteps(IBddStep())
+- uid: Responsible.Bdd.ScenarioBuilder.WithSteps*
+  name: WithSteps
+  href: api/Responsible.Bdd.ScenarioBuilder.html#Responsible_Bdd_ScenarioBuilder_WithSteps_
+  commentId: Overload:Responsible.Bdd.ScenarioBuilder.WithSteps
+  isSpec: "True"
+  fullName: Responsible.Bdd.ScenarioBuilder.WithSteps
+  nameWithType: ScenarioBuilder.WithSteps
 - uid: Responsible.Context
   name: Responsible.Context
   href: api/Responsible.Context.html
@@ -31,6 +280,22 @@ references:
   commentId: T:Responsible.Docs.Inherit
   fullName: Responsible.Docs.Inherit
   nameWithType: Inherit
+- uid: Responsible.Docs.Inherit.BddKeyword(System.String,Responsible.ITestInstruction{System.Object})
+  name: BddKeyword(String, ITestInstruction<Object>)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_BddKeyword_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Docs.Inherit.BddKeyword(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: BddKeyword(String, ITestInstruction(Of Object))
+  fullName: Responsible.Docs.Inherit.BddKeyword(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Docs.Inherit.BddKeyword(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Inherit.BddKeyword(String, ITestInstruction<Object>)
+  nameWithType.vb: Inherit.BddKeyword(String, ITestInstruction(Of Object))
+- uid: Responsible.Docs.Inherit.BddKeyword*
+  name: BddKeyword
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_BddKeyword_
+  commentId: Overload:Responsible.Docs.Inherit.BddKeyword
+  isSpec: "True"
+  fullName: Responsible.Docs.Inherit.BddKeyword
+  nameWithType: Inherit.BddKeyword
 - uid: Responsible.Docs.Inherit.CallerMember*
   name: CallerMember
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember_
@@ -801,15 +1066,15 @@ references:
   fullName.vb: Responsible.TestInstruction.Select(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
   nameWithType: TestInstruction.Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, String, String, Int32)
   nameWithType.vb: TestInstruction.Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Int32)
-- uid: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32)
-  name: Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32)
-  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32)
-  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32)
-  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<System.Object>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of System.Object)), System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32)
-  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32)
+- uid: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32,System.String)
+  name: Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32, String)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_System_String_
+  commentId: M:Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32,System.String)
+  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32, String)
+  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<System.Object>>, System.String, System.String, System.Int32, System.String)
+  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of System.Object)), System.String, System.String, System.Int32, System.String)
+  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32, String)
+  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32, String)
 - uid: Responsible.TestInstruction.Sequence*
   name: Sequence
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_

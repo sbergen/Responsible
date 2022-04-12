@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestOperation&lt;T&gt;
+    <title>Interface IBddStep
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestOperation&lt;T&gt;
+    <meta name="title" content="Interface IBddStep
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -116,8 +116,8 @@
                           <li class="">
                             <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="active">ITestOperation&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestResponder-1.html" title="ITestResponder&lt;T&gt;" class="">ITestResponder&lt;T&gt;</a>
@@ -170,8 +170,8 @@
                           <li class="">
                             <a href="Responsible.Bdd.FeatureAttribute.html" title="FeatureAttribute" class="">FeatureAttribute</a>
                           </li>
-                          <li class="">
-                            <a href="Responsible.Bdd.IBddStep.html" title="IBddStep" class="">IBddStep</a>
+                          <li class="active">
+                            <a href="Responsible.Bdd.IBddStep.html" title="IBddStep" class="active">IBddStep</a>
                           </li>
                           <li class="">
                             <a href="Responsible.Bdd.Keywords.html" title="Keywords" class="">Keywords</a>
@@ -271,83 +271,51 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestOperation`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Bdd.IBddStep">
   
   
-  <h1 id="Responsible_ITestOperation_1" data-uid="Responsible.ITestOperation`1" class="text-break">Interface ITestOperation&lt;T&gt;
+  <h1 id="Responsible_Bdd_IBddStep" data-uid="Responsible.Bdd.IBddStep" class="text-break">Interface IBddStep
   </h1>
-  <div class="markdown level0 summary"><p>Base interface for the test operation types in Responsible:</p>
-<ul>
-<li><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></li>
-</ul>
-<p>Test operations should be considered a set of instructions,
-which may be executed one or more times.
-This makes them reusable.</p>
+  <div class="markdown level0 summary"><p>Tag interface for BDD-style test instructions.
+This exists only to be able to enforce that all instructions used in a scenario
+are properly wrapped in other BDD-keywords.
+Functionally no different from <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">ITestOperation&lt;Object&gt;.CreateState()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.Bdd.html">Responsible.Bdd</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestOperation_1_syntax">Syntax</h5>
+  <h5 id="Responsible_Bdd_IBddStep_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestOperation&lt;out T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IBddStep : ITestInstruction&lt;object&gt;, ITestOperation&lt;object&gt;</code></pre>
   </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="methods">Methods
-  </h3>
-  <a id="Responsible_ITestOperation_1_CreateState_" data-uid="Responsible.ITestOperation`1.CreateState*"></a>
-  <h4 id="Responsible_ITestOperation_1_CreateState" data-uid="Responsible.ITestOperation`1.CreateState">CreateState()</h4>
-  <div class="markdown level1 summary"><p>Creates the state object for a single run of this test operation.</p>
-<p>You should normally prefer using the <code>To...</code> extension methods over
-creating a state instance manually.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Pure]
-[NotNull]
-ITestOperationState&lt;T&gt; CreateState()</code></pre>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Responsible.LinqSupport.html#Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__">LinqSupport.SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</a>
   </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState</a>&lt;T&gt;</td>
-        <td><p>A state object for this run of the test operation.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Responsible_ITestOperation_1_CreateState_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Converting an instance of <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>
-to a string will dump full information of its current execution status.</p>
-<p>Creating a state for a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and running it directly
-will bypass the timeout mechanism which is otherwise enforced by Responsible,
-and might lead to an execution that never completes.</p>
-</div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToYieldInstruction&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToTask&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, CancellationToken, String, String, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, ITestInstruction&lt;T2&gt;&gt;, String, String, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_">TestInstruction.Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String_">TestInstruction.GroupedAs&lt;T&gt;(ITestInstruction&lt;T&gt;, String)</a>
+  </div>
 </article>
           </div>
           

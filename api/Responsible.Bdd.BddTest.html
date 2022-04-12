@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestOperation&lt;T&gt;
+    <title>Class BddTest
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestOperation&lt;T&gt;
+    <meta name="title" content="Class BddTest
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -116,8 +116,8 @@
                           <li class="">
                             <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="active">ITestOperation&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestResponder-1.html" title="ITestResponder&lt;T&gt;" class="">ITestResponder&lt;T&gt;</a>
@@ -164,8 +164,8 @@
                       <a href="Responsible.Bdd.html" title="Responsible.Bdd" class="">Responsible.Bdd</a>
                         
                         <ul class="nav level2">
-                          <li class="">
-                            <a href="Responsible.Bdd.BddTest.html" title="BddTest" class="">BddTest</a>
+                          <li class="active">
+                            <a href="Responsible.Bdd.BddTest.html" title="BddTest" class="active">BddTest</a>
                           </li>
                           <li class="">
                             <a href="Responsible.Bdd.FeatureAttribute.html" title="FeatureAttribute" class="">FeatureAttribute</a>
@@ -271,59 +271,137 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestOperation`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.Bdd.BddTest">
   
   
-  <h1 id="Responsible_ITestOperation_1" data-uid="Responsible.ITestOperation`1" class="text-break">Interface ITestOperation&lt;T&gt;
+  <h1 id="Responsible_Bdd_BddTest" data-uid="Responsible.Bdd.BddTest" class="text-break">Class BddTest
   </h1>
-  <div class="markdown level0 summary"><p>Base interface for the test operation types in Responsible:</p>
-<ul>
-<li><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.ITestResponder-1.html">ITestResponder&lt;T&gt;</a></li>
-<li><a class="xref" href="Responsible.IOptionalTestResponder.html">IOptionalTestResponder</a></li>
-</ul>
-<p>Test operations should be considered a set of instructions,
-which may be executed one or more times.
-This makes them reusable.</p>
+  <div class="markdown level0 summary"><p>Base class for BDD-style tests using attributes.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
-  <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestOperation_1_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestOperation&lt;out T&gt;</code></pre>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">BddTest</span></div>
   </div>
-  <h5 class="typeParameters">Type Parameters</h5>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.Bdd.html">Responsible.Bdd</a></h6>
+  <h6><strong>Assembly</strong>: Responsible.dll</h6>
+  <h5 id="Responsible_Bdd_BddTest_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class BddTest</code></pre>
+  </div>
+  <h5 id="Responsible_Bdd_BddTest_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This is Unity-only, because we depend on NUnit in the attributes,
+and don't depend on NUnit for the vanilla C# version of Responsible.
+A non-Unity version might be implemented later.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Responsible_Bdd_BddTest_Executor_" data-uid="Responsible.Bdd.BddTest.Executor*"></a>
+  <h4 id="Responsible_Bdd_BddTest_Executor" data-uid="Responsible.Bdd.BddTest.Executor">Executor</h4>
+  <div class="markdown level1 summary"><p>A test instruction executor that is automatically set up and torn down between tests.
+See <a class="xref" href="Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_MakeExecutor">MakeExecutor()</a> for customization options.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TestInstructionExecutor Executor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Responsible.TestInstructionExecutor.html">TestInstructionExecutor</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Responsible_Bdd_BddTest_BddTestSetUp_" data-uid="Responsible.Bdd.BddTest.BddTestSetUp*"></a>
+  <h4 id="Responsible_Bdd_BddTest_BddTestSetUp" data-uid="Responsible.Bdd.BddTest.BddTestSetUp">BddTestSetUp()</h4>
+  <div class="markdown level1 summary"><p>Set-up method for NUnit, should not be used manually.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SetUp]
+public void BddTestSetUp()</code></pre>
+  </div>
+  <a id="Responsible_Bdd_BddTest_BddTestTearDown_" data-uid="Responsible.Bdd.BddTest.BddTestTearDown*"></a>
+  <h4 id="Responsible_Bdd_BddTest_BddTestTearDown" data-uid="Responsible.Bdd.BddTest.BddTestTearDown">BddTestTearDown()</h4>
+  <div class="markdown level1 summary"><p>Tear-down method for NUnit, should not be used manually.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[TearDown]
+public void BddTestTearDown()</code></pre>
+  </div>
+  <a id="Responsible_Bdd_BddTest_ExecuteScenario_" data-uid="Responsible.Bdd.BddTest.ExecuteScenario*"></a>
+  <h4 id="Responsible_Bdd_BddTest_ExecuteScenario_System_String_NUnit_Framework_Interfaces_IMethodInfo_" data-uid="Responsible.Bdd.BddTest.ExecuteScenario(System.String,NUnit.Framework.Interfaces.IMethodInfo)">ExecuteScenario(String, IMethodInfo)</h4>
+  <div class="markdown level1 summary"><p>Helper method for executing BDD steps, should not be used manually,
+but must be public to make NUnit happy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator ExecuteScenario(string scenario, IMethodInfo testMethod)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
         <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the operation.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">scenario</span></td>
+        <td><p>Name of the test scenario.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">NUnit.Framework.Interfaces.IMethodInfo</span></td>
+        <td><span class="parametername">testMethod</span></td>
+        <td><p>Test method that returns the test steps.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-  </h3>
-  <a id="Responsible_ITestOperation_1_CreateState_" data-uid="Responsible.ITestOperation`1.CreateState*"></a>
-  <h4 id="Responsible_ITestOperation_1_CreateState" data-uid="Responsible.ITestOperation`1.CreateState">CreateState()</h4>
-  <div class="markdown level1 summary"><p>Creates the state object for a single run of this test operation.</p>
-<p>You should normally prefer using the <code>To...</code> extension methods over
-creating a state instance manually.</p>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Bdd_BddTest_MakeExecutor_" data-uid="Responsible.Bdd.BddTest.MakeExecutor*"></a>
+  <h4 id="Responsible_Bdd_BddTest_MakeExecutor" data-uid="Responsible.Bdd.BddTest.MakeExecutor">MakeExecutor()</h4>
+  <div class="markdown level1 summary"><p>Creates a test instruction executor for a test run. May be customized in deriving classes.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Pure]
-[NotNull]
-ITestOperationState&lt;T&gt; CreateState()</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+protected virtual TestInstructionExecutor MakeExecutor()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -335,19 +413,17 @@ ITestOperationState&lt;T&gt; CreateState()</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState</a>&lt;T&gt;</td>
-        <td><p>A state object for this run of the test operation.</p>
+        <td><a class="xref" href="Responsible.TestInstructionExecutor.html">TestInstructionExecutor</a></td>
+        <td><p>A new test instruction executor to be used for the next test.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Responsible_ITestOperation_1_CreateState_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Converting an instance of <a class="xref" href="Responsible.State.ITestOperationState-1.html">ITestOperationState&lt;T&gt;</a>
-to a string will dump full information of its current execution status.</p>
-<p>Creating a state for a <a class="xref" href="Responsible.ITestWaitCondition-1.html">ITestWaitCondition&lt;T&gt;</a> and running it directly
-will bypass the timeout mechanism which is otherwise enforced by Responsible,
-and might lead to an execution that never completes.</p>
-</div>
+  <h3 id="seealso">See Also</h3>
+  <div class="seealso">
+      <div><a class="xref" href="Responsible.Bdd.FeatureAttribute.html">FeatureAttribute</a></div>
+      <div><a class="xref" href="Responsible.Bdd.ScenarioAttribute.html">ScenarioAttribute</a></div>
+  </div>
 </article>
           </div>
           
