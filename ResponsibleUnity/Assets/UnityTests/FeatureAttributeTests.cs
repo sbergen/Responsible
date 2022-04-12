@@ -13,6 +13,8 @@ namespace Responsible.UnityTests
 	{
 		private class NonBddTest
 		{
+			[Scenario("Valid scenario in invalid class")]
+			public IBddStep[] TestScenario1() => Array.Empty<IBddStep>();
 		}
 
 		private class InvalidReturnTypeBddTest : BddTest
@@ -42,6 +44,21 @@ namespace Responsible.UnityTests
 			public void NormalTest()
 			{
 			}
+		}
+
+		private class BddTestWithInvalidArgumentCounts : BddTest
+		{
+			[Scenario("1 != 0", 1)]
+			[Scenario("2 != 0", 1, 2)]
+			public IBddStep[] ZeroArguments() => Array.Empty<IBddStep>();
+
+			[Scenario("0 != 1")]
+			[Scenario("2 != 1", 1, 2)]
+			public IBddStep[] OneArgument(object arg1) => Array.Empty<IBddStep>();
+
+			[Scenario("0 != 2")]
+			[Scenario("1 != 2", 1)]
+			public IBddStep[] TwoArguments(object arg1, object arg2) => Array.Empty<IBddStep>();
 		}
 
 		[Test]
@@ -116,6 +133,17 @@ namespace Responsible.UnityTests
 				testNames);
 		}
 
+		[Test]
+		public void Scenario_ShouldNotBeRunnable_WhenArgumentCountsMismatch()
+		{
+			// Getting coverage numbers using something like ValueSource is very hacky for this,
+			// so just do this in a loop instead...
+			foreach (var test in BuildSuites<BddTestWithInvalidArgumentCounts>().SelectMany(suite => suite.Tests))
+			{
+				AssertTestNotRunnableWithReasonContaining(test, "same amount of parameters");
+			}
+		}
+
 		private static IEnumerable<TestSuite> BuildSuites<T>()
 		{
 			var fakeAttribute = new FeatureAttribute("Test feature");
@@ -126,7 +154,11 @@ namespace Responsible.UnityTests
 		[AssertionMethod]
 		private static void AssertTestNotRunnableWithReasonContaining(ITest test, string reason)
 		{
-			Assert.AreEqual(RunState.NotRunnable, test.RunState);
+			Assert.AreEqual(
+				RunState.NotRunnable,
+				test.RunState,
+				$"Test {test.Name} should not be runnable");
+
 			StringAssert.Contains(
 				reason,
 				(string)test.Properties.Get(PropertyNames.SkipReason));

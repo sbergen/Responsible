@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using NUnit.Compatibility;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -50,17 +51,22 @@ namespace Responsible.Bdd
 				Name = this.description
 			};
 
+			suite.ApplyAttributesToTest(TypeExtensions.GetTypeInfo(typeInfo.Type));
+
 			if (!typeof(BddTest).IsAssignableFrom(typeInfo.Type))
 			{
 				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
 			}
-
-			foreach (var method in typeInfo
-				.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-				.Where(method => method.GetCustomAttributes<ScenarioAttribute>(true).Any()))
+			else
 			{
-				var test = MakeTestFromScenario(suite, method);
-				suite.Add(test);
+				foreach (var (method, attribute) in typeInfo
+					.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+					.SelectMany(method => method.GetCustomAttributes<ScenarioAttribute>(true)
+						.Select(attribute => (method, attribute))))
+				{
+					var test = MakeTestFromScenario(suite, method, attribute);
+					suite.Add(test);
+				}
 			}
 
 			yield return suite;
@@ -78,14 +84,12 @@ namespace Responsible.Bdd
 			test.Properties.Set(PropertyNames.SkipReason, reason);
 		}
 
-		private static Test MakeTestFromScenario(TestSuite suite, IMethodInfo scenarioMethod)
+		private static Test MakeTestFromScenario(
+			TestSuite suite,
+			IMethodInfo scenarioMethod,
+			ScenarioAttribute scenarioAttribute)
 		{
-			var scenarioDescription = scenarioMethod
-				.GetCustomAttributes<ScenarioAttribute>(true)
-				.Single()
-				.Description;
-
-			var parameters = new TestCaseParameters(new object[] { scenarioDescription, scenarioMethod })
+			var parameters = new TestCaseParameters(new object[] { scenarioAttribute, scenarioMethod })
 			{
 				ExpectedResult = null,
 				HasExpectedResult = true,
@@ -93,13 +97,26 @@ namespace Responsible.Bdd
 
 			var executeMethod = BddTest.GetExecuteScenarioMethod(scenarioMethod.TypeInfo);
 			var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
-			test.Name = $"Scenario: {scenarioDescription}";
+			test.ApplyAttributesToTest(scenarioMethod.MethodInfo);
+			test.Name = $"Scenario: {scenarioAttribute.Description}";
+
+			var methodParameterCount = scenarioMethod.GetParameters().Length;
+			var givenParameterCount = scenarioAttribute.Parameters.Length;
 
 			if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(scenarioMethod.ReturnType.Type))
 			{
-				SetNotRunnable(
-					test,
-					$"Scenario return type must be convertible to IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}");
+				var reason =
+					"Scenario return type must be convertible to " +
+					$"IEnumerable<{nameof(IBddStep)}>, got {scenarioMethod.ReturnType}";
+
+				SetNotRunnable(test, reason);
+			}
+			else if (methodParameterCount != givenParameterCount)
+			{
+				var reason =
+					"Scenario method must take the the same amount of parameters as provided in the attribute, " +
+					"expected {methodParameterCount}, got {givenParameterCount}";
+				SetNotRunnable(test, reason);
 			}
 
 			return test;

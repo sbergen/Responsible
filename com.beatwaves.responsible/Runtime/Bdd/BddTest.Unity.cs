@@ -41,16 +41,17 @@ namespace Responsible.Bdd
 		public void BddTestTearDown() => this.Executor.Dispose();
 
 		/// <summary>
-		/// Helper method for executing BDD steps, should not be used manually,
-		/// but must be public to make NUnit happy.
+		/// Helper method for executing BDD steps, should not be directly used.
 		/// </summary>
-		/// <param name="scenario">Name of the test scenario.</param>
+		/// <param name="scenarioAttribute">The attribute this scenario is built from.</param>
 		/// <param name="testMethod">Test method that returns the test steps.</param>
-		/// <returns></returns>
-		public IEnumerator ExecuteScenario(string scenario, IMethodInfo testMethod)
+		/// <returns>An IEnumerator for Unity to run</returns>
+		/// <remarks>This is public only because NUnit requires it to be!</remarks>
+		public IEnumerator ExecuteScenario(ScenarioAttribute scenarioAttribute, IMethodInfo testMethod)
 		{
-			var steps = (IEnumerable<IBddStep>)testMethod.Invoke(this);
-			return Scenario(scenario).WithSteps(steps.ToArray()).ToYieldInstruction(this.Executor);
+			var steps = (IEnumerable<IBddStep>)testMethod.Invoke(this, scenarioAttribute.Parameters);
+			return Scenario(scenarioAttribute.Description)
+				.WithSteps(steps.ToArray()).ToYieldInstruction(this.Executor);
 		}
 
 		/// <summary>
