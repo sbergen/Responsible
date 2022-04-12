@@ -55,11 +55,12 @@ namespace Responsible.Bdd
 				SetNotRunnable(suite, $"Feature class must inherit from {nameof(BddTest)}");
 			}
 
-			foreach (var method in typeInfo
+			foreach (var (method, attribute) in typeInfo
 				.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-				.Where(method => method.GetCustomAttributes<ScenarioAttribute>(true).Any()))
+				.SelectMany(method => method.GetCustomAttributes<ScenarioAttribute>(true)
+					.Select(attribute => (method, attribute))))
 			{
-				var test = MakeTestFromScenario(suite, method);
+				var test = MakeTestFromScenario(suite, method, attribute);
 				suite.Add(test);
 			}
 
@@ -78,14 +79,12 @@ namespace Responsible.Bdd
 			test.Properties.Set(PropertyNames.SkipReason, reason);
 		}
 
-		private static Test MakeTestFromScenario(TestSuite suite, IMethodInfo scenarioMethod)
+		private static Test MakeTestFromScenario(
+			TestSuite suite,
+			IMethodInfo scenarioMethod,
+			ScenarioAttribute scenarioAttribute)
 		{
-			var scenarioDescription = scenarioMethod
-				.GetCustomAttributes<ScenarioAttribute>(true)
-				.Single()
-				.Description;
-
-			var parameters = new TestCaseParameters(new object[] { scenarioDescription, scenarioMethod })
+			var parameters = new TestCaseParameters(new object[] { scenarioAttribute, scenarioMethod })
 			{
 				ExpectedResult = null,
 				HasExpectedResult = true,
@@ -93,7 +92,7 @@ namespace Responsible.Bdd
 
 			var executeMethod = BddTest.GetExecuteScenarioMethod(scenarioMethod.TypeInfo);
 			var test = TestCaseBuilder.BuildTestMethod(executeMethod, suite, parameters);
-			test.Name = $"Scenario: {scenarioDescription}";
+			test.Name = $"Scenario: {scenarioAttribute.Description}";
 
 			if (!typeof(IEnumerable<IBddStep>).IsAssignableFrom(scenarioMethod.ReturnType.Type))
 			{
