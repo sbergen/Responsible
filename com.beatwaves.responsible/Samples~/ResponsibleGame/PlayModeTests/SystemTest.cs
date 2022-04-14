@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using Responsible;
-using Responsible.Bdd;
+using Responsible.Unity;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,10 +14,12 @@ using Object = UnityEngine.Object;
 namespace ResponsibleGame.PlayModeTests
 {
 	[TestFixture]
-	public abstract class SystemTest : BddTest
+	public abstract class SystemTest
 	{
 		private string scenePath;
 		private MockInput mockInput;
+
+		protected TestInstructionExecutor Executor { get; private set; }
 
 		[OneTimeSetUp]
 		public void ResolveScenePath()
@@ -33,6 +35,7 @@ namespace ResponsibleGame.PlayModeTests
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
+			this.Executor = new UnityTestInstructionExecutor();
 			this.mockInput = new MockInput();
 			PlayerInput.Instance = this.mockInput;
 
@@ -44,6 +47,7 @@ namespace ResponsibleGame.PlayModeTests
 		[TearDown]
 		public void TearDown()
 		{
+			this.Executor.Dispose();
 			PlayerInput.Instance = null;
 		}
 
