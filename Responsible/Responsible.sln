@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible.Tests", "..\Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin", "..\ResponsibleGherkin\ResponsibleGherkin.csproj", "{50D89374-46AC-483D-9883-4A69D7992577}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin.Tests", "..\ResponsibleGherkin.Tests\ResponsibleGherkin.Tests.csproj", "{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{50D89374-46AC-483D-9883-4A69D7992577}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D89374-46AC-483D-9883-4A69D7992577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D89374-46AC-483D-9883-4A69D7992577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

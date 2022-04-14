@@ -1,5 +1,6 @@
 using System.Text;
 using Gherkin.Ast;
+using Microsoft.CodeAnalysis.CSharp;
 using static ResponsibleGherkin.PascalCaseConverter;
 
 namespace ResponsibleGherkin;
@@ -109,10 +110,12 @@ public static class CodeGenerator
 		yield return "{";
 
 		var scenarios = feature.Children.OfType<Scenario>().ToList();
+
+		// TODO support background
+
 		foreach (var (scenario, isLast) in scenarios
 			.Select((s, i) => (s, i == scenarios.Count - 1)))
 		{
-			// TODO isLast
 			foreach (var scenarioLine in GenerateScenarioLines(scenario, flavor, context))
 			{
 				yield return scenarioLine.IndentBy(1);
@@ -134,36 +137,31 @@ public static class CodeGenerator
 	{
 		yield return $"[{flavor.TestAttribute}]";
 
-		var methodName = ConvertToPascalCase(scenario.Name);
+		var methodName = $"{scenario.Keyword.Trim()}_{ConvertToPascalCase(scenario.Name)}";
 		yield return $"public {flavor.ReturnType} {methodName}() => this.{context.ExecutorName}.{flavor.RunMethod}(";
 
-		var steps = scenario.Steps.ToList();
-		foreach (var line in steps
-			.Select((s, i) => GenerateStep(s, i == (steps.Count - 1))))
+		foreach (var line in GenerateSteps(scenario))
 		{
-			if (line.HasValue)
-			{
-				yield return line.Value.IndentBy(1);
-			}
+			yield return line.IndentBy(1);
 		}
 
 		yield return "";
 	}
 
-	private static Line? GenerateStep(Step step, bool isLast)
+	private static IEnumerable<Line> GenerateSteps(StepsContainer stepsContainer)
+	{
+		var steps = stepsContainer.Steps.ToList();
+		return steps.Select((s, i) => GenerateStep(s, i == (steps.Count - 1)));
+	}
+
+	private static Line GenerateStep(Step step, bool isLast)
 	{
 		var keyword = step.Keyword.TrimEnd();
-		if (SupportedKeywords.Contains(keyword))
-		{
-			// TODO escape quotes
-			return $"{keyword}(\"{step.Text}\", Pending){(isLast ? ");" : ",")}";
-		}
-		else
-		{
-			// TODO, use logger abstraction
-			Console.WriteLine($"Unsupported keyword '{keyword}', skipping step '{step.Text}'");
-			return null;
-		}
+		var quotedText = SymbolDisplay.FormatLiteral(step.Text, true);
+
+		return SupportedKeywords.Contains(keyword)
+			? $"{keyword}({quotedText}, Pending){(isLast ? ");" : ",")}"
+			: throw new Exception($"Unknown step keyword {keyword}");
 	}
 
 	private static FlavorData GetFlavorData(FlavorType type) => type switch
