@@ -129,6 +129,10 @@ namespace Responsible
 						return await rootState.Execute(runContext, linkedTokenSource.Token);
 					}
 				}
+				catch (Bdd.PendingStepException)
+				{
+					throw;
+				}
 				catch (Exception e)
 				{
 					if (this.ShouldRethrow(e))

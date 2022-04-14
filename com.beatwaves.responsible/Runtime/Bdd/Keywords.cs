@@ -58,5 +58,14 @@ namespace Responsible.Bdd
 			string description,
 			ITestInstruction<object> instruction) =>
 			new BddStep(instruction.GroupedAs($"Then {description}"));
+
+		/// <summary>
+		/// A test instruction representing a BDD test step pending implementation.
+		/// Will terminate the test as ignored, so that steps after it are skipped.
+		/// Allows you to quickly write scenarios, and leave the implementation for later.
+		/// </summary>
+		public static readonly ITestInstruction<object> Pending = Responsibly.Do(
+			PendingStepException.PendingMessage,
+			() => throw new PendingStepException());
 	}
 }
