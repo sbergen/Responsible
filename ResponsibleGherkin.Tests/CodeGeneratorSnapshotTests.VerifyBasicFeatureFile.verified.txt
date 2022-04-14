@@ -1,0 +1,17 @@
+﻿using NUnit.Framework;
+using Responsible;
+using System.Threading.Tasks;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class ExampleFeature : MyTestBase
+	{
+		[Test]
+		public Task Scenario_ExampleScenario() => this.Executor.RunScenario(
+			Given("the setup is \"correct\"", Pending),
+			When("the user does something", Pending),
+			Then("the state should be updated correctly", Pending));
+
+	}
+}
