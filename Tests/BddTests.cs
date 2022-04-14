@@ -70,8 +70,13 @@ namespace Responsible.Tests
 		[Test]
 		public void Pending_CancelsTask()
 		{
-			var task = Pending.ToTask(this.Executor);
-			Assert.IsTrue(task.IsCanceled);
+			var didContinue = false;
+			var task = Pending
+				.ContinueWith(Do("Continue", () => didContinue = true))
+				.ToTask(this.Executor);
+
+			Assert.IsFalse(didContinue, "Pending should terminate test early");
+			Assert.IsTrue(task.IsCanceled, "Task should be canceled after Pending is executed");
 		}
 
 		[Test]

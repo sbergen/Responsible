@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 namespace Responsible.Bdd
 {
 	/// <summary>
-	/// EXPERIMENTAL:
+	/// Experimental:
 	/// Keywords for building BDD-style tests for clearer source code and state strings.
 	/// Helps in building tests with consistent style.
 	/// </summary>
@@ -61,7 +61,7 @@ namespace Responsible.Bdd
 
 		/// <summary>
 		/// A test instruction representing a BDD test step pending implementation.
-		/// Will terminate the test as ignored, so that steps after it are skipped.
+		/// Will terminate the test as successful early, so that steps after it are skipped.
 		/// Allows you to quickly write scenarios, and leave the implementation for later.
 		/// </summary>
 		public static readonly ITestInstruction<object> Pending = Responsibly.Do(
