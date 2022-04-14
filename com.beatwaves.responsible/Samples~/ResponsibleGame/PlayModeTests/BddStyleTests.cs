@@ -2,7 +2,6 @@ using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using Responsible;
-using Responsible.Bdd;
 using UnityEngine.TestTools;
 using static Responsible.Bdd.Keywords;
 using static Responsible.Responsibly;
@@ -13,8 +12,8 @@ namespace ResponsibleGame.PlayModeTests
 	public class BddStyleTests : SystemTest
 	{
 		[UnityTest]
-		public IEnumerator ShouldBeEasilyRestartableAfter_Failure() => this.Executor.RunScenario(
-			"The game should be restartable easily after failure",
+		public IEnumerator ShouldBeEasilyRestartableAfter_Failure() => this.Executor.YieldScenario(
+			Scenario("The game should be restartable easily after failure"),
 			Given("the player has failed", this.FailTheGame()),
 			When("the player presses the trigger key", this.SimulateTriggerInput()),
 			Then("the game should be restarted", AssertTheGameHasBeenRestarted()));

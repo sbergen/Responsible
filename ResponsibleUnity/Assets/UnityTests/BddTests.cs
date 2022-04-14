@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using NUnit.Framework;
-using Responsible.Bdd;
 using Responsible.Unity;
 using UnityEngine.TestTools;
 using static Responsible.Bdd.Keywords;
@@ -31,8 +29,8 @@ namespace Responsible.UnityTests
 		}
 
 		[UnityTest]
-		public IEnumerator BasicTest() => this.executor.RunScenario(
-			"A basic BDD-style test runs without error",
+		public IEnumerator YieldScenario_RunsFullScenario() => this.executor.YieldScenario(
+			Scenario("A basic BDD-style test runs without error"),
 			Given(
 				"the test is set up properly",
 				Do("Execute Given", () => this.givenExecuted = true)),
@@ -46,13 +44,5 @@ namespace Responsible.UnityTests
 					() => Assert.AreEqual(
 						(true, true),
 						(this.givenExecuted, this.whenExecuted)))));
-
-		[UnityTest]
-		public IEnumerator PendingStepsTest() => this.executor.RunScenario(
-			"A test with pending steps should be terminated early without error",
-			Given("the test has a pending step in the beginning", Pending),
-			Then(
-				"an error at later steps will not fail the test",
-				Do("Throw exception", () => throw new Exception())));
 	}
 }
