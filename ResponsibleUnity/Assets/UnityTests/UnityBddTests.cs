@@ -7,7 +7,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.UnityTests
 {
-	public class BddTests
+	public class UnityBddTests
 	{
 		private TestInstructionExecutor executor;
 

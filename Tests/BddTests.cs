@@ -74,6 +74,24 @@ namespace Responsible.Tests
 			Assert.IsTrue(task.IsCanceled);
 		}
 
+		[Test]
+		public void RunScenario_ThrowsInvalidOperationException_IfEmpty()
+		{
+			Assert.Throws<InvalidOperationException>(() =>
+				this.Executor.RunScenario(Scenario("Test scenario")));
+		}
+
+		[Test]
+		public void RunScenario_ExecutesAllSteps()
+		{
+			this.Executor.RunScenario(
+				Scenario("Test scenario"),
+				Given("G", Do("G", () => this.givenExecuted = true)),
+				When("W", Do("W", () => this.whenExecuted = true)));
+
+			Assert.AreEqual((true, true), (this.givenExecuted, this.whenExecuted));
+		}
+
 		// The keywords below are considered omissible from the instruction stacks, they only show up in the
 		// operation states.
 		[TestCase("Given")]
