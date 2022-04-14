@@ -67,6 +67,13 @@ namespace Responsible.Tests
 				.Details("    ").NotStarted("then inner");
 		}
 
+		[Test]
+		public void Pending_CancelsTask()
+		{
+			var task = Pending.ToTask(this.Executor);
+			Assert.IsTrue(task.IsCanceled);
+		}
+
 		// The keywords below are considered omissible from the instruction stacks, they only show up in the
 		// operation states.
 		[TestCase("Given")]
