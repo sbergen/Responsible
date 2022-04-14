@@ -13,113 +13,6 @@ references:
   commentId: N:Responsible.Bdd
   fullName: Responsible.Bdd
   nameWithType: Responsible.Bdd
-- uid: Responsible.Bdd.BddTest
-  name: BddTest
-  href: api/Responsible.Bdd.BddTest.html
-  commentId: T:Responsible.Bdd.BddTest
-  fullName: Responsible.Bdd.BddTest
-  nameWithType: BddTest
-- uid: Responsible.Bdd.BddTest.BddTestSetUp
-  name: BddTestSetUp()
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestSetUp
-  commentId: M:Responsible.Bdd.BddTest.BddTestSetUp
-  fullName: Responsible.Bdd.BddTest.BddTestSetUp()
-  nameWithType: BddTest.BddTestSetUp()
-- uid: Responsible.Bdd.BddTest.BddTestSetUp*
-  name: BddTestSetUp
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestSetUp_
-  commentId: Overload:Responsible.Bdd.BddTest.BddTestSetUp
-  isSpec: "True"
-  fullName: Responsible.Bdd.BddTest.BddTestSetUp
-  nameWithType: BddTest.BddTestSetUp
-- uid: Responsible.Bdd.BddTest.BddTestTearDown
-  name: BddTestTearDown()
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestTearDown
-  commentId: M:Responsible.Bdd.BddTest.BddTestTearDown
-  fullName: Responsible.Bdd.BddTest.BddTestTearDown()
-  nameWithType: BddTest.BddTestTearDown()
-- uid: Responsible.Bdd.BddTest.BddTestTearDown*
-  name: BddTestTearDown
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_BddTestTearDown_
-  commentId: Overload:Responsible.Bdd.BddTest.BddTestTearDown
-  isSpec: "True"
-  fullName: Responsible.Bdd.BddTest.BddTestTearDown
-  nameWithType: BddTest.BddTestTearDown
-- uid: Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute,NUnit.Framework.Interfaces.IMethodInfo)
-  name: ExecuteScenario(ScenarioAttribute, IMethodInfo)
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_Responsible_Bdd_ScenarioAttribute_NUnit_Framework_Interfaces_IMethodInfo_
-  commentId: M:Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute,NUnit.Framework.Interfaces.IMethodInfo)
-  fullName: Responsible.Bdd.BddTest.ExecuteScenario(Responsible.Bdd.ScenarioAttribute, NUnit.Framework.Interfaces.IMethodInfo)
-  nameWithType: BddTest.ExecuteScenario(ScenarioAttribute, IMethodInfo)
-- uid: Responsible.Bdd.BddTest.ExecuteScenario*
-  name: ExecuteScenario
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_ExecuteScenario_
-  commentId: Overload:Responsible.Bdd.BddTest.ExecuteScenario
-  isSpec: "True"
-  fullName: Responsible.Bdd.BddTest.ExecuteScenario
-  nameWithType: BddTest.ExecuteScenario
-- uid: Responsible.Bdd.BddTest.Executor
-  name: Executor
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_Executor
-  commentId: P:Responsible.Bdd.BddTest.Executor
-  fullName: Responsible.Bdd.BddTest.Executor
-  nameWithType: BddTest.Executor
-- uid: Responsible.Bdd.BddTest.Executor*
-  name: Executor
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_Executor_
-  commentId: Overload:Responsible.Bdd.BddTest.Executor
-  isSpec: "True"
-  fullName: Responsible.Bdd.BddTest.Executor
-  nameWithType: BddTest.Executor
-- uid: Responsible.Bdd.BddTest.MakeExecutor
-  name: MakeExecutor()
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_MakeExecutor
-  commentId: M:Responsible.Bdd.BddTest.MakeExecutor
-  fullName: Responsible.Bdd.BddTest.MakeExecutor()
-  nameWithType: BddTest.MakeExecutor()
-- uid: Responsible.Bdd.BddTest.MakeExecutor*
-  name: MakeExecutor
-  href: api/Responsible.Bdd.BddTest.html#Responsible_Bdd_BddTest_MakeExecutor_
-  commentId: Overload:Responsible.Bdd.BddTest.MakeExecutor
-  isSpec: "True"
-  fullName: Responsible.Bdd.BddTest.MakeExecutor
-  nameWithType: BddTest.MakeExecutor
-- uid: Responsible.Bdd.FeatureAttribute
-  name: FeatureAttribute
-  href: api/Responsible.Bdd.FeatureAttribute.html
-  commentId: T:Responsible.Bdd.FeatureAttribute
-  fullName: Responsible.Bdd.FeatureAttribute
-  nameWithType: FeatureAttribute
-- uid: Responsible.Bdd.FeatureAttribute.#ctor(System.String)
-  name: FeatureAttribute(String)
-  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute__ctor_System_String_
-  commentId: M:Responsible.Bdd.FeatureAttribute.#ctor(System.String)
-  fullName: Responsible.Bdd.FeatureAttribute.FeatureAttribute(System.String)
-  nameWithType: FeatureAttribute.FeatureAttribute(String)
-- uid: Responsible.Bdd.FeatureAttribute.#ctor*
-  name: FeatureAttribute
-  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute__ctor_
-  commentId: Overload:Responsible.Bdd.FeatureAttribute.#ctor
-  isSpec: "True"
-  fullName: Responsible.Bdd.FeatureAttribute.FeatureAttribute
-  nameWithType: FeatureAttribute.FeatureAttribute
-- uid: Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
-  name: IFixtureBuilder.BuildFrom(ITypeInfo)
-  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_NUnit_Framework_Interfaces_ITypeInfo_
-  commentId: M:Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
-  name.vb: NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(ITypeInfo)
-  fullName: Responsible.Bdd.FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(NUnit.Framework.Interfaces.ITypeInfo)
-  nameWithType: FeatureAttribute.IFixtureBuilder.BuildFrom(ITypeInfo)
-  nameWithType.vb: FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom(ITypeInfo)
-- uid: Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom*
-  name: IFixtureBuilder.BuildFrom
-  href: api/Responsible.Bdd.FeatureAttribute.html#Responsible_Bdd_FeatureAttribute_NUnit_Framework_Interfaces_IFixtureBuilder_BuildFrom_
-  commentId: Overload:Responsible.Bdd.FeatureAttribute.NUnit#Framework#Interfaces#IFixtureBuilder#BuildFrom
-  isSpec: "True"
-  name.vb: NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
-  fullName: Responsible.Bdd.FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
-  nameWithType: FeatureAttribute.IFixtureBuilder.BuildFrom
-  nameWithType.vb: FeatureAttribute.NUnit.Framework.Interfaces.IFixtureBuilder.BuildFrom
 - uid: Responsible.Bdd.IBddStep
   name: IBddStep
   href: api/Responsible.Bdd.IBddStep.html
@@ -215,28 +108,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.Keywords.When
   nameWithType: Keywords.When
-- uid: Responsible.Bdd.ScenarioAttribute
-  name: ScenarioAttribute
-  href: api/Responsible.Bdd.ScenarioAttribute.html
-  commentId: T:Responsible.Bdd.ScenarioAttribute
-  fullName: Responsible.Bdd.ScenarioAttribute
-  nameWithType: ScenarioAttribute
-- uid: Responsible.Bdd.ScenarioAttribute.#ctor(System.String,System.Object[])
-  name: ScenarioAttribute(String, Object[])
-  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_System_String_System_Object___
-  commentId: M:Responsible.Bdd.ScenarioAttribute.#ctor(System.String,System.Object[])
-  name.vb: ScenarioAttribute(String, Object())
-  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String, System.Object[])
-  fullName.vb: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute(System.String, System.Object())
-  nameWithType: ScenarioAttribute.ScenarioAttribute(String, Object[])
-  nameWithType.vb: ScenarioAttribute.ScenarioAttribute(String, Object())
-- uid: Responsible.Bdd.ScenarioAttribute.#ctor*
-  name: ScenarioAttribute
-  href: api/Responsible.Bdd.ScenarioAttribute.html#Responsible_Bdd_ScenarioAttribute__ctor_
-  commentId: Overload:Responsible.Bdd.ScenarioAttribute.#ctor
-  isSpec: "True"
-  fullName: Responsible.Bdd.ScenarioAttribute.ScenarioAttribute
-  nameWithType: ScenarioAttribute.ScenarioAttribute
 - uid: Responsible.Bdd.ScenarioBuilder
   name: ScenarioBuilder
   href: api/Responsible.Bdd.ScenarioBuilder.html
@@ -259,6 +130,28 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.ScenarioBuilder.WithSteps
   nameWithType: ScenarioBuilder.WithSteps
+- uid: Responsible.BddExtensions
+  name: BddExtensions
+  href: api/Responsible.BddExtensions.html
+  commentId: T:Responsible.BddExtensions
+  fullName: Responsible.BddExtensions
+  nameWithType: BddExtensions
+- uid: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor,Responsible.Bdd.ScenarioBuilder,Responsible.Bdd.IBddStep[])
+  name: RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep[])
+  href: api/Responsible.BddExtensions.html#Responsible_BddExtensions_RunScenario_Responsible_TestInstructionExecutor_Responsible_Bdd_ScenarioBuilder_Responsible_Bdd_IBddStep___
+  commentId: M:Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor,Responsible.Bdd.ScenarioBuilder,Responsible.Bdd.IBddStep[])
+  name.vb: RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep())
+  fullName: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, Responsible.Bdd.IBddStep[])
+  fullName.vb: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, Responsible.Bdd.IBddStep())
+  nameWithType: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep[])
+  nameWithType.vb: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep())
+- uid: Responsible.BddExtensions.RunScenario*
+  name: RunScenario
+  href: api/Responsible.BddExtensions.html#Responsible_BddExtensions_RunScenario_
+  commentId: Overload:Responsible.BddExtensions.RunScenario
+  isSpec: "True"
+  fullName: Responsible.BddExtensions.RunScenario
+  nameWithType: BddExtensions.RunScenario
 - uid: Responsible.Context
   name: Responsible.Context
   href: api/Responsible.Context.html

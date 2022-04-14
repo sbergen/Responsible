@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "/FZ5kcqCDtlwC2tlYE1jew=="
+          "hash": "3zowMolkqYx83C6VGpXzxQ=="
         }
       },
       "is_incremental": false,
@@ -53,35 +53,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "obj/api/Responsible.Bdd.BddTest.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Responsible.Bdd.BddTest.html",
-          "hash": "Dr1Ud+6lsYG3OAok9mpoig=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/Responsible.Bdd.FeatureAttribute.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Responsible.Bdd.FeatureAttribute.html",
-          "hash": "EB4H1pD5X1LRCHA6a0rxWQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "obj/api/Responsible.Bdd.IBddStep.yml",
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Bdd.IBddStep.html",
-          "hash": "U/8qEYV3Ya54s7VaQE9gZg=="
+          "hash": "/DtkH0e/AU4jyPuVBKObnw=="
         }
       },
       "is_incremental": false,
@@ -93,19 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Bdd.Keywords.html",
-          "hash": "DUVMm+U7KwwnofZfElNGvQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "obj/api/Responsible.Bdd.ScenarioAttribute.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Responsible.Bdd.ScenarioAttribute.html",
-          "hash": "IYqNjrFqAl9DE36qyxeqhA=="
+          "hash": "4icVS1wn4ws7vKqGKxqBTQ=="
         }
       },
       "is_incremental": false,
@@ -117,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Bdd.ScenarioBuilder.html",
-          "hash": "l+Cr4+AcsCZspCZHT3uC4A=="
+          "hash": "X4DPgFyzcCLxfM9Tj5PDmw=="
         }
       },
       "is_incremental": false,
@@ -129,7 +93,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Bdd.html",
-          "hash": "f3E4LICyKSmzJrsBl0YD6A=="
+          "hash": "U7eV2J2u2VfxMwZQadv0ig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Responsible.BddExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Responsible.BddExtensions.html",
+          "hash": "gpg4iPFzZxAmmO6AAwjNIg=="
         }
       },
       "is_incremental": false,
@@ -141,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Context.RunContext.html",
-          "hash": "/Y26hyur3mG8U/GuEu0gJw=="
+          "hash": "uwTRzy0S4anbKBVZSYtSFw=="
         }
       },
       "is_incremental": false,
@@ -153,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Context.html",
-          "hash": "4asgdgx/SqZAPpQkozFvHA=="
+          "hash": "FsgWIzCF4DgxZow05eqq+g=="
         }
       },
       "is_incremental": false,
@@ -165,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Docs.Inherit.html",
-          "hash": "1xI7l8CMWifD7RKym0GiNg=="
+          "hash": "f/vwGmuJcwODkV10tLqZeQ=="
         }
       },
       "is_incremental": false,
@@ -177,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Docs.html",
-          "hash": "dxwBcn/rTXIsixlfFyVOsg=="
+          "hash": "8Mzc8iD3te5zQ80U9MGtOQ=="
         }
       },
       "is_incremental": false,
@@ -189,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.IExternalResultSource.html",
-          "hash": "pK/ixjlhTlxVnIprvSwnkg=="
+          "hash": "OnWQ1lmm9Kqyh9+8GuGJ/A=="
         }
       },
       "is_incremental": false,
@@ -201,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.IFailureListener.html",
-          "hash": "HXTqpWxyFgb1o+QEbnjWPA=="
+          "hash": "VCK8adKt3WzDucM8mil1og=="
         }
       },
       "is_incremental": false,
@@ -213,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.IGlobalContextProvider.html",
-          "hash": "a2dCWuSgIV10aBtJVbJnYA=="
+          "hash": "ScBSDQBuHpDQjP1Np/Pmcg=="
         }
       },
       "is_incremental": false,
@@ -225,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.IOptionalTestResponder.html",
-          "hash": "T749AYM64dPEgZZPHYIFDg=="
+          "hash": "JdaNuwE2EyMWGQ33psc4Cw=="
         }
       },
       "is_incremental": false,
@@ -237,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestInstruction-1.html",
-          "hash": "aw/uBXMIGAw8kl2TF3CD/g=="
+          "hash": "pIZg6YEI6Kzk2sWE/E1lXQ=="
         }
       },
       "is_incremental": false,
@@ -249,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestOperation-1.html",
-          "hash": "QPdgjYMOsMEVO/Uyu+9VyA=="
+          "hash": "6IDXXmXBuXjxE+xc1yCqfg=="
         }
       },
       "is_incremental": false,
@@ -261,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestResponder-1.html",
-          "hash": "K9viNCqmQxRoFsoMm9c4eA=="
+          "hash": "byOiA66ObiJ2kUIB+TP7Tw=="
         }
       },
       "is_incremental": false,
@@ -273,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestScheduler.html",
-          "hash": "6fdSLTXn2YSdfRCysZL3rw=="
+          "hash": "XnHQACtR6wLrZA2HbcT5+A=="
         }
       },
       "is_incremental": false,
@@ -285,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestWaitCondition-1.html",
-          "hash": "bSCsqDu3EG463M9klmqKEQ=="
+          "hash": "k4KSinqyPQ6TmyDBt7wsqA=="
         }
       },
       "is_incremental": false,
@@ -297,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.LinqSupport.html",
-          "hash": "kvOG8Ed4sfh5GTmU1nccLg=="
+          "hash": "uAAKeY2jwuGCOd+QBmRCqw=="
         }
       },
       "is_incremental": false,
@@ -309,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.OptionalTestResponder.html",
-          "hash": "D4iz3PQ8f338jWKiZqChrQ=="
+          "hash": "8tYJHdb1Tw7AohSW+D2xTQ=="
         }
       },
       "is_incremental": false,
@@ -321,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Responsibly.html",
-          "hash": "OBrz2lpbk/gsw1sMlvjp0Q=="
+          "hash": "CaBEfip9Rf3jaKgEn+Kv9w=="
         }
       },
       "is_incremental": false,
@@ -333,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.ITestOperationState-1.html",
-          "hash": "X+3+JTK0dAs3sUqXx60tDw=="
+          "hash": "MK6cCfHVJ6gFUWn5AWjU1A=="
         }
       },
       "is_incremental": false,
@@ -345,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.ITestOperationState.html",
-          "hash": "Z0U1DDzcIF5Z+04IwPoPkg=="
+          "hash": "Q5A352bbw0lErTEzO/8Qvw=="
         }
       },
       "is_incremental": false,
@@ -357,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.StateStringBuilder.html",
-          "hash": "luZxH+S4UEg/ihBmwKFwWQ=="
+          "hash": "Cp/fSd7TvAdJ+QUwKlnaTg=="
         }
       },
       "is_incremental": false,
@@ -369,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.TestOperationStateTransition.html",
-          "hash": "wgr3t2q9YEujTRKSJjGVMA=="
+          "hash": "O3r25EvdmDVhWdWydD/98A=="
         }
       },
       "is_incremental": false,
@@ -381,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.TestOperationStatus.html",
-          "hash": "Nu0hCnS007a6pYVab+qL5w=="
+          "hash": "cQvUMugrgcAOnbym6N+U2w=="
         }
       },
       "is_incremental": false,
@@ -393,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.State.html",
-          "hash": "L5dNOaSP9Wrd2yYzJH8PQg=="
+          "hash": "bUhMZr8Oj6lQCC0OwDBHAw=="
         }
       },
       "is_incremental": false,
@@ -405,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestFailureException.html",
-          "hash": "eVJ9IV0Jvd+FmSWHv0Mf8g=="
+          "hash": "xrP6+Hrars8XlZm87R0v8A=="
         }
       },
       "is_incremental": false,
@@ -417,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestInstruction.html",
-          "hash": "MnD+Y/4+2JiOH01FwAenSQ=="
+          "hash": "DYJziRJJTNaoTEdfMo7IXA=="
         }
       },
       "is_incremental": false,
@@ -429,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestInstructionExecutor.StateNotificationCallback.html",
-          "hash": "2kCe8T/FQhD1RGED0TCHrQ=="
+          "hash": "ZVQAx+2Ow4pTtMNOOsuueA=="
         }
       },
       "is_incremental": false,
@@ -441,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestInstructionExecutor.html",
-          "hash": "VPGPt7oXfn8ta1Igm1augg=="
+          "hash": "P1e09ByQUJ5vlhiiLKE02A=="
         }
       },
       "is_incremental": false,
@@ -453,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestOperationState.html",
-          "hash": "lOzaaJL1PyzK4LDEpM3PCA=="
+          "hash": "i0vErsfz238GuRkfkMxqFQ=="
         }
       },
       "is_incremental": false,
@@ -465,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestResponder.html",
-          "hash": "0anryAUwiSLVOg9rHjkUJQ=="
+          "hash": "SXvA83U6OFADyV8W7YgDKg=="
         }
       },
       "is_incremental": false,
@@ -477,7 +453,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestWaitCondition.html",
-          "hash": "dunXC8iqKNBnD00XZuXOng=="
+          "hash": "2r0lBabo75pnny2qtHBdOQ=="
         }
       },
       "is_incremental": false,
@@ -489,7 +465,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.TestOperationYieldInstruction-1.html",
-          "hash": "IAuVfnYdhgMBXK5Xp/R/6A=="
+          "hash": "4FpmfRCsOz1nhJcCY3+sRQ=="
         }
       },
       "is_incremental": false,
@@ -501,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnhandledLogMessageException.html",
-          "hash": "slmiuIVgkKpzsKq0v1A2XQ=="
+          "hash": "2Mg4dALjj/Vtc+h/vVz06A=="
         }
       },
       "is_incremental": false,
@@ -513,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnityErrorLogInterceptor.html",
-          "hash": "ytEpG1OvbduOJr2oq42JEg=="
+          "hash": "/QB3zc/tMoq0BFIBthqjMQ=="
         }
       },
       "is_incremental": false,
@@ -525,7 +501,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnityFailureListener.html",
-          "hash": "Q0+Gpi8jijw3BZlP/u0GHw=="
+          "hash": "gCxucY9iYQn25HL6avbSug=="
         }
       },
       "is_incremental": false,
@@ -537,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnityTestInstructionExecutor.html",
-          "hash": "Z6NM2X0EmXcahUIAbv2c2w=="
+          "hash": "E0Vj6FeCaiWAS2DRt+glMw=="
         }
       },
       "is_incremental": false,
@@ -549,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnityTestScheduler.html",
-          "hash": "QvQE5Lfe8jIgQ5iAq/5Fog=="
+          "hash": "zRZa/y1UcrFq3M387/exEQ=="
         }
       },
       "is_incremental": false,
@@ -561,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.html",
-          "hash": "U+D+o6HbBY4CNLJteX2lQg=="
+          "hash": "zl44jNfe+TNw/pqejsmd+A=="
         }
       },
       "is_incremental": false,
@@ -573,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Utilities.IMultipleTaskAwaiter-1.html",
-          "hash": "6pvtxvxWU/56Q3BSQd4JXA=="
+          "hash": "XQYBRzo7+Wqw2kRQxKkUKw=="
         }
       },
       "is_incremental": false,
@@ -585,7 +561,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Utilities.IMultipleTaskSource-1.html",
-          "hash": "sM0dxNMIjIh98NDwGsq89Q=="
+          "hash": "TeJJmf3oJ7ThdG9ydPGCvA=="
         }
       },
       "is_incremental": false,
@@ -597,7 +573,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Utilities.IndentedStringBuilder-1.html",
-          "hash": "zubuys1DX3b+Q28ucEAWNQ=="
+          "hash": "s/vkPzSHDC0SQdUDkqCDzQ=="
         }
       },
       "is_incremental": false,
@@ -609,7 +585,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Utilities.RetryingPoller.html",
-          "hash": "VNGP3NogIEJLaAYh4IpeVQ=="
+          "hash": "q7u/D/uOzOJYkTB3dbrE1Q=="
         }
       },
       "is_incremental": false,
@@ -621,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Utilities.html",
-          "hash": "MbBwxacvFBm3GJDJG8TJEg=="
+          "hash": "BmbJOIHgzYPkJZS8DZWvZQ=="
         }
       },
       "is_incremental": false,
@@ -633,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.html",
-          "hash": "DlPgqoeEbjqLeTnUHw5fbg=="
+          "hash": "fwzfNxM/8GxJXNHoX48PcA=="
         }
       },
       "is_incremental": false,
@@ -672,7 +648,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 55,
+          "total_file_count": 53,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
