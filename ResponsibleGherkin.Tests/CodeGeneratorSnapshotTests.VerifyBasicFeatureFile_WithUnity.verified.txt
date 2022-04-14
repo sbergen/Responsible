@@ -1,0 +1,22 @@
+﻿using Responsible;
+using System.Collections;
+using UnityEngine.TestTools;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class ExampleFeature : MyTestBase
+	{
+		[UnityTest]
+		public IEnumerator Scenario_ExampleScenario() => this.Executor.YieldScenario(
+			Given("the setup is \"correct\"", Pending),
+			When("the user does something", Pending),
+			Then("the state should be updated correctly", Pending));
+
+		[UnityTest]
+		public IEnumerator Scenario_AnotherScenario() => this.Executor.YieldScenario(
+			Given("I know what I'm doing", Pending),
+			When("I code more", Pending),
+			Then("I will produce working software!", Pending));
+	}
+}
