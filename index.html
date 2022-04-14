@@ -112,7 +112,7 @@ yield return WaitForCondition(&quot;Foo to be ready&quot;, () =&gt; foo.IsReady)
 </code></pre>
 <p>If <code>foo.Consume</code> were to throw an error, the output would look like this:</p>
 <pre><code>Test operation execution failed!
- 
+
 Failure context:
 [!] Foo the bar EXPECTED WITHIN 10.00 s (Failed after 0.15 s and 7 frames)
   WAIT FOR
@@ -120,18 +120,18 @@ Failure context:
     [✓] Bar to be completed (Completed in 0.04 s and 4 frames)
   THEN RESPOND WITH
     [!] Consume bar (Failed after 0.00 s and 0 frames)
- 
+
       Failed with:
         System.Exception: 'Something failed'
- 
+
       Test operation stack:
         [Do] MethodName (at Path/To/Source.cs:41)
         [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:42)
         [ContinueWith] MethodName (at Path/To/Source.cs:43)
         [ToYieldInstruction] MethodName (at Path/To/Source.cs:44)
- 
+
 [ ] Continue operation
- 
+
 Error: System.Exception: Something failed
   at &lt;normal exception stack trace comes here&gt;
 </code></pre>
@@ -148,6 +148,10 @@ Responsible is also a lot more than just this pattern:
 the real power of Responsible comes from its composable operators.
 To read more about the design principles behind Responsible,
 see the <a href="design.html">Design Documentation</a>.</p>
+<h2 id="experimental-bdd-style-tests">Experimental: BDD-style tests</h2>
+<p>If you like to write your tests in BDD-style,
+check out the <a class="xref" href="api/Responsible.Bdd.html">experimental features</a>
+which form an embedded DSL to do this with Responsible!</p>
 <h2 id="reactive-programming">Reactive Programming?</h2>
 <p>While the design of Responsible was inspired by <a href="http://reactivex.io/">ReactiveX</a>,
 it's debatable if Responsible really fits the reactive programming paradigm.

@@ -269,23 +269,59 @@
   
   <h1 id="Responsible_Bdd" data-uid="Responsible.Bdd" class="text-break">Namespace Responsible.Bdd
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary">
+<p><strong>Experimental:</strong> Features in this namespace might still change.
+If you like what you see, please leave feedback in
+<a href="https://github.com/sbergen/Responsible/discussions">discussion on GitHub</a>!</p>
+<p>Contains utilities to build BDD-style tests,
+using Gherkin-style keywords (Given, When, Then, etc).
+Essentially forms an embedded DSL on top of the core of Responsible
+to describe the top-level of tests.</p>
+<p>The following is an example test using NUnit:</p>
+<pre><code class="lang-cs">using System.Threading.Tasks;
+using NUnit.Framework;
+using Responsible;
+using static Responsible.Bdd.Keywords;
+
+public class ExampleBddTest
+{
+	private TestInstructionExecutor executor;
+
+	// TODO: set up and tear down the executor properly
+
+	[Test]
+	public Task Example() =&gt; this.executor.RunScenario(
+		Scenario(&quot;Example scenario&quot;),
+		Given(&quot;the setup is correct&quot;, Pending),
+		When(&quot;the user does something&quot;, Pending),
+		Then(&quot;the state should be updated correctly&quot;, Pending));
+}
+</code></pre>
+<blockquote>
+<p><strong>On Unity Test Runner 1.X</strong>, you can use
+<code>UnityTest</code>, <code>IEnumerator</code> and <code>YieldScenario</code> respectively.</p>
+</blockquote>
+<p>The <code>Pending</code>-keyword will terminate the test early,
+and can be used to write scenarios before implementation.
+As the implementation of the feature progresses,
+pending steps can be replaced with actual test instructions.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="Responsible.Bdd.Keywords.html">Keywords</a></h4>
-      <section><p>EXPERIMENTAL:
+      <section><p>Experimental:
 Keywords for building BDD-style tests for clearer source code and state strings.
 Helps in building tests with consistent style.</p>
 </section>
       <h4><a class="xref" href="Responsible.Bdd.ScenarioBuilder.html">ScenarioBuilder</a></h4>
-      <section><p>Helper class to build scenarios with proper source context.</p>
+      <section><p>Experimental: Helper class to build scenarios with proper source context.</p>
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="Responsible.Bdd.IBddStep.html">IBddStep</a></h4>
-      <section><p>Tag interface for BDD-style test instructions.
+      <section><p>Experimental: Tag interface for BDD-style test instructions.
 This exists only to be able to enforce that all instructions used in a scenario
 are properly wrapped in other BDD-keywords.
 Functionally no different from <a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction&lt;T&gt;</a>.</p>
