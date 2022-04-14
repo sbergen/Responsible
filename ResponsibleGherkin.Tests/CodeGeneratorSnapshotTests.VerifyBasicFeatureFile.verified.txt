@@ -13,5 +13,10 @@ namespace MyNamespace
 			When("the user does something", Pending),
 			Then("the state should be updated correctly", Pending));
 
+		[Test]
+		public Task Scenario_AnotherScenario() => this.Executor.RunScenario(
+			Given("I know what I'm doing", Pending),
+			When("I code more", Pending),
+			Then("I will produce working software!", Pending));
 	}
 }

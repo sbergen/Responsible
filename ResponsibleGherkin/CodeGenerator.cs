@@ -144,8 +144,6 @@ public static class CodeGenerator
 		{
 			yield return line.IndentBy(1);
 		}
-
-		yield return "";
 	}
 
 	private static IEnumerable<Line> GenerateSteps(StepsContainer stepsContainer)
