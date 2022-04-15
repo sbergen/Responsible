@@ -22,11 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="TestFeatures" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="TestFeatures\BasicFeature.feature">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="TestFeatures\UnsupportedKeyword.feature">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
