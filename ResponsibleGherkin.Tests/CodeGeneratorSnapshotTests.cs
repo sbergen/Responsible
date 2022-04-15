@@ -15,11 +15,6 @@ public class CodeGeneratorSnapshotTests
 	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(
 		"BasicFeature", CodeGenerator.FlavorType.Unity));
 
-	[Test]
-	public Task VerifyBasicFeatureFile_WithAlternateIndent() => Verify(GenerateCode(
-		"BasicFeature",
-		context: DefaultContext with { IndentAmount = 2, IndentChar = ' ' }));
-
 	private static string GenerateCode(
 		string name,
 		CodeGenerator.FlavorType flavor = CodeGenerator.FlavorType.NUnit,

@@ -77,7 +77,7 @@ public static class CodeGenerator
 
 		foreach (var line in GenerateClassLines(feature, GetFlavorData(flavor), context))
 		{
-			line.IndentBy(1).AppendToBuilder(builder, context);
+			line.IndentBy(1).AppendToBuilder(builder, context.IndentInfo);
 		}
 
 		builder.AppendLine("}");

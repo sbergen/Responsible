@@ -2,18 +2,19 @@ using System.Text;
 
 namespace ResponsibleGherkin;
 
-internal readonly record struct Line(string Content, int Indent = 0)
+public readonly record struct Line(string Content, int Indent = 0)
 {
-	public Line IndentBy(int amount) => new(this.Content, this.Indent + amount);
+	public Line IndentBy(int amount) => this with { Indent = this.Indent + amount };
 
-	public void AppendToBuilder(StringBuilder stringBuilder, GenerationContext context)
+	public void AppendToBuilder(StringBuilder stringBuilder, IndentInfo indentInfo)
 	{
-		if (this.Content != "")
+		var endTrimmed = this.Content.TrimEnd();
+		if (endTrimmed != "")
 		{
-			stringBuilder.Append(context.IndentChar, this.Indent * context.IndentAmount);
+			stringBuilder.Append(indentInfo.Character, this.Indent * indentInfo.Amount);
 		}
 
-		stringBuilder.AppendLine(this.Content);
+		stringBuilder.AppendLine(endTrimmed);
 	}
 
 	public static implicit operator Line(string content) => new(content);
