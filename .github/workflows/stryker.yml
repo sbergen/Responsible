@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      config-file:
+      working-directory:
         required: true
         type: string
     secrets:
@@ -14,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Responsible
+        working-directory: ${{ inputs.working-directory }}
 
     steps:
       - uses: actions/checkout@v3
@@ -38,4 +38,4 @@ jobs:
         run: echo "STRYKER_VERSION=main" >> $GITHUB_ENV
 
       - name: Run Stryker Mutation Testings
-        run: dotnet stryker -f ${{ inputs.config-file }} --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --version ${{ env.STRYKER_VERSION }}
+        run: dotnet stryker --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --version ${{ env.STRYKER_VERSION }}

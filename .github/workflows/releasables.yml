@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Build nupkg
-        run: dotnet pack Responsible --output nupkg
+        run: dotnet pack src --output nupkg
 
       - name: Archive nupkg
         uses: actions/upload-artifact@v3
