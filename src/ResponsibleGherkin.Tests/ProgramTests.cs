@@ -15,15 +15,26 @@ public class ProgramTests
 	private readonly TestConsole console = new();
 
 	[Fact]
-	public Task Verify_OutputWithNoArguments()
+	public Task Verify_Output_WhenNoArguments()
 	{
 		this.Run();
-		return Verify(this.Output());
+		return Verify(this.ConsoleOutput());
+	}
+
+	[Fact]
+	public Task Verify_Output_WhenInputFileDoesNotExist()
+	{
+		this.Run("fake-file");
+		return Verify(this.ConsoleOutput());
 	}
 
 	private void Run(params string[] args) => Program
 		.BuildRootCommand(this.fileSystem)
 		.Invoke(args, this.console);
 
-	private string Output() => this.console.Out.ToString()!;
+	private object ConsoleOutput() => new
+	{
+		Out = this.console.Out.ToString(),
+		Error = this.console.Error.ToString(),
+	};
 }

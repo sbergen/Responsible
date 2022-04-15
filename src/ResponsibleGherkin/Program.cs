@@ -1,7 +1,10 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using Gherkin;
+using Gherkin.Ast;
 
 namespace ResponsibleGherkin;
 
@@ -26,6 +29,27 @@ public static class Program
 		};
 
 		rootCommand.Name = "responsible-gherkin";
+
+		rootCommand.SetHandler(
+			(string inputFile,
+				InvocationContext ctx) =>
+			{
+				try
+				{
+					GherkinDocument document;
+					using (var fileReader = fileSystem.File.OpenText(inputFile))
+					{
+						document = new Parser { StopAtFirstError = true }.Parse(fileReader);
+					}
+
+					CodeGenerator.GenerateFile(document.Feature, default, default);
+				}
+				catch (IOException exception)
+				{
+					ctx.Console.Error.WriteLine($"Could not read input: {exception.Message}");
+				}
+			},
+			inputFileArgument);
 
 		return rootCommand;
 	}

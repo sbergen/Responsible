@@ -1,4 +1,6 @@
-﻿Description:
+﻿{
+  Out:
+Description:
   Generate Responsible test case stubs from Gherkin specifications.
 
 Usage:
@@ -13,3 +15,9 @@ Options:
 
 
 
+,
+  Error:
+Required argument missing for command: 'responsible-gherkin'.
+
+
+}
