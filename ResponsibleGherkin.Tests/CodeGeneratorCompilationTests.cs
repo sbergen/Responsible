@@ -1,11 +1,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Gherkin;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using NUnit.Framework;
-using Responsible;
 using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
@@ -15,7 +13,7 @@ public class CodeGeneratorCompilationTests
 	private static readonly Type[] MetaDataSourceTypes =
 	{
 		typeof(TestAttribute),
-		typeof(Responsibly),
+		typeof(Responsible.Responsibly),
 	};
 
 	private static readonly string[] MetaDataAssemblyNames =
@@ -52,7 +50,7 @@ namespace {DefaultContext.Namespace}
 	[TestCase("BasicFeature")]
 	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
 	{
-		var document = new Parser { StopAtFirstError = true }.Parse(FeatureFileName(featureName));
+		var document = LoadFeature(featureName);
 		var code = CodeGenerator.GenerateFile(document.Feature, CodeGenerator.FlavorType.NUnit, DefaultContext);
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code);
 	}

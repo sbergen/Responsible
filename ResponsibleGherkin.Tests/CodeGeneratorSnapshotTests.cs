@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Gherkin;
 using NUnit.Framework;
 using static VerifyNUnit.Verifier;
 using static ResponsibleGherkin.Tests.TestFeatures;
@@ -18,14 +17,9 @@ public class CodeGeneratorSnapshotTests
 	private static string GenerateCode(
 		string name,
 		CodeGenerator.FlavorType flavor = CodeGenerator.FlavorType.NUnit,
-		GenerationContext? context = null)
-	{
-		var document = new Parser { StopAtFirstError = true }
-			.Parse(FeatureFileName(name));
-
-		return CodeGenerator.GenerateFile(
-			document.Feature,
+		GenerationContext? context = null) =>
+		CodeGenerator.GenerateFile(
+			LoadFeature(name).Feature,
 			flavor,
 			context ?? DefaultContext);
-	}
 }
