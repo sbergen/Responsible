@@ -5,11 +5,24 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Beatwaves.ResponsibleGherkin</PackageId>
+        <Version>0.0.1</Version>
+        <Authors>Sakari Bergen</Authors>
+        <PackageTags>BDD;test;automation;testing</PackageTags>
+        <PackageProjectUrl>https://www.beatwaves.net/Responsible/</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>ResponsibleGherkin converts Gerkin specifications into easy-to-debug tests built with Responsible.</Description>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Gherkin" Version="23.0.1" />
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>
