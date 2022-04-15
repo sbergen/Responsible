@@ -2,11 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible", "..\com.beatwaves.responsible\Runtime\Responsible.csproj", "{79E64EF2-89D1-43C8-8A70-B13A27555713}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible.Tests", "..\Tests\Responsible.Tests.csproj", "{BB896039-701A-4D45-B6DA-F3E5FB5FCB6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Responsible.Tests", "Responsible.Tests\Responsible.Tests.csproj", "{BB896039-701A-4D45-B6DA-F3E5FB5FCB6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin", "..\ResponsibleGherkin\ResponsibleGherkin.csproj", "{50D89374-46AC-483D-9883-4A69D7992577}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin", "ResponsibleGherkin\ResponsibleGherkin.csproj", "{50D89374-46AC-483D-9883-4A69D7992577}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin.Tests", "..\ResponsibleGherkin.Tests\ResponsibleGherkin.Tests.csproj", "{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResponsibleGherkin.Tests", "ResponsibleGherkin.Tests\ResponsibleGherkin.Tests.csproj", "{93F2CD5E-AE78-41CB-8BC8-59FD52EFAA1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

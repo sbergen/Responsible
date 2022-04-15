@@ -7,7 +7,7 @@
       "dependencies": {}
     },
     "com.beatwaves.responsible.tests": {
-      "version": "file:../../Tests",
+      "version": "file:../../src/Responsible.Tests",
       "depth": 0,
       "source": "local",
       "dependencies": {}

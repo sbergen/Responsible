@@ -70,7 +70,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Responsible
+        working-directory: src
 
     strategy:
           fail-fast: false
@@ -104,14 +104,14 @@ jobs:
   test-mutation-core:
     uses: ./.github/workflows/stryker.yml
     with:
-      config-file: stryker-config.json
+      working-directory : src/Responsible.Tests
     secrets:
       STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
   test-mutation-gherkin:
     uses: ./.github/workflows/stryker.yml
     with:
-      config-file: ../ResponsibleGherkin/stryker-config.json
+      working-directory: src/ResponsibleGherkin.Tests
     secrets:
       STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
@@ -120,7 +120,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Responsible
+        working-directory: src
 
     strategy:
       fail-fast: false
@@ -146,10 +146,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ReSharper
-          path: Responsible/inspect.xml
+          path: src/inspect.xml
 
       - name: ReSharper XML -> GitHub output
         if: ${{ always() }}
         uses: glassechidna/resharper-action@v1
         with:
-          report: Responsible/inspect.xml
+          report: src/inspect.xml

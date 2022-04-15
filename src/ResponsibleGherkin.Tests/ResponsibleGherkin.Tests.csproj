@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\com.beatwaves.responsible\Runtime\Responsible.csproj" />
+      <ProjectReference Include="..\..\com.beatwaves.responsible\Runtime\Responsible.csproj" />
       <ProjectReference Include="..\ResponsibleGherkin\ResponsibleGherkin.csproj" />
     </ItemGroup>
 
