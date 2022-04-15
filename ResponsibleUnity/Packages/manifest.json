@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.beatwaves.responsible": "file:../../com.beatwaves.responsible",
-    "com.beatwaves.responsible.tests": "file:../../Tests",
+    "com.beatwaves.responsible.tests": "file:../../src/Responsible.Tests",
     "com.unity.ide.rider": "3.0.6",
     "com.unity.test-framework": "1.1.24",
     "com.unity.testtools.codecoverage": "1.1.0",

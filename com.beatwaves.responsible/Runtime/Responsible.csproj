@@ -17,7 +17,7 @@
     <ItemGroup>
         <Compile Remove="**\*.Unity.cs" />
         <Compile Remove="Unity\**" />
-        <Compile Include="..\..\Responsible\JetBrains.Annotations.cs" />
+        <Compile Include="..\..\src\JetBrains.Annotations.cs" />
     </ItemGroup>
 
     <ItemGroup>
