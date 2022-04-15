@@ -15,51 +15,20 @@ public static class CodeGenerator
 		"And",
 	};
 
-	private static readonly FlavorData UnityFlavorData = new(
-		new[]
-		{
-			"System.Collections",
-			"UnityEngine.TestTools",
-		},
-		"UnityTest",
-		"IEnumerator",
-		"YieldScenario");
-
-	private static readonly FlavorData NUnitFlavorData = new(
-		new[]
-		{
-			"System.Threading.Tasks",
-			"NUnit.Framework",
-		},
-		"Test",
-		"Task",
-		"RunScenario");
-
 	private static readonly string[] StandardNamespaces =
 	{
 		"Responsible",
 	};
 
-	private record FlavorData(
-		string[] RequiredNamespaces,
-		string TestAttribute,
-		string ReturnType,
-		string RunMethod);
-
-	public enum FlavorType
-	{
-		Unity,
-		NUnit,
-	}
-
 	public static string GenerateFile(
 		Feature feature,
-		FlavorType flavor,
+		FlavorType flavorType,
 		GenerationContext context)
 	{
 		var builder = new StringBuilder();
+		var flavor = Flavor.FromType(flavorType);
 
-		foreach (var usingDirective in GetFlavorData(flavor).RequiredNamespaces
+		foreach (var usingDirective in flavor.RequiredNamespaces
 			.Concat(StandardNamespaces)
 			.OrderBy(ns => ns)
 			.Select(ns => $"using {ns};")
@@ -75,7 +44,7 @@ public static class CodeGenerator
 		builder.AppendLine($"namespace {context.Namespace}");
 		builder.AppendLine("{");
 
-		foreach (var line in GenerateClassLines(feature, GetFlavorData(flavor), context))
+		foreach (var line in GenerateClassLines(feature, flavor, context))
 		{
 			line.IndentBy(1).AppendToBuilder(builder, context.IndentInfo);
 		}
@@ -86,7 +55,7 @@ public static class CodeGenerator
 
 	private static IEnumerable<Line> GenerateClassLines(
 		Feature feature,
-		FlavorData flavor,
+		Flavor flavor,
 		GenerationContext context)
 	{
 		yield return $"public class {ConvertToPascalCase(feature.Name)} : {context.BaseClass}";
@@ -115,7 +84,7 @@ public static class CodeGenerator
 
 	private static IEnumerable<Line> GenerateScenarioLines(
 		Scenario scenario,
-		FlavorData flavor,
+		Flavor flavor,
 		GenerationContext context)
 	{
 		yield return $"[{flavor.TestAttribute}]";
@@ -147,14 +116,6 @@ public static class CodeGenerator
 			? $"{keyword}({Quote(step.Text)}, Pending){(isLast ? ");" : ",")}"
 			: throw new Exception($"Unknown step keyword {keyword}");
 	}
-
-	private static FlavorData GetFlavorData(FlavorType type) => type switch
-	{
-		FlavorType.Unity => UnityFlavorData,
-		FlavorType.NUnit => NUnitFlavorData,
-		_ => throw new ArgumentOutOfRangeException(
-			nameof(type), type, "Invalid flavor of code generation"),
-	};
 
 	private static string Quote(string str) => SymbolDisplay.FormatLiteral(str, true);
 }

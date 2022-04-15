@@ -12,11 +12,11 @@ public class CodeGeneratorSnapshotTests
 
 	[Test]
 	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(
-		"BasicFeature", CodeGenerator.FlavorType.Unity));
+		"BasicFeature", FlavorType.Unity));
 
 	private static string GenerateCode(
 		string name,
-		CodeGenerator.FlavorType flavor = CodeGenerator.FlavorType.NUnit,
+		FlavorType flavor = FlavorType.NUnit,
 		GenerationContext? context = null) =>
 		CodeGenerator.GenerateFile(
 			LoadFeature(name).Feature,

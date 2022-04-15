@@ -51,7 +51,7 @@ namespace {DefaultContext.Namespace}
 	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
-		var code = CodeGenerator.GenerateFile(document.Feature, CodeGenerator.FlavorType.NUnit, DefaultContext);
+		var code = CodeGenerator.GenerateFile(document.Feature, FlavorType.NUnit, DefaultContext);
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code);
 	}
 
