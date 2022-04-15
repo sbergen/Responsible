@@ -11,9 +11,8 @@ public class CodeGeneratorTests
 		var exception = Assert.Throws<UnsupportedKeywordException>(() => CodeGenerator
 			.GenerateFile(document.Feature, FlavorType.NUnit, TestFeatures.DefaultContext));
 
-		// "*" is the unsupported keyword, assumed here, yeah I know, not great...
-		StringAssert.Contains("*", exception!.Message);
-		StringAssert.Contains("Unsupported", exception.Message);
-		StringAssert.Contains("keyword", exception.Message);
+		// I'm tightly coupling the test data to this assertion, yes.
+		// Without some kind of test asset tagging, I'm not sure what would be cleaner.
+		StringAssert.Contains("Unsupported step keyword: '*'", exception!.Message);
 	}
 }

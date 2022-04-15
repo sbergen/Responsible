@@ -1,13 +1,12 @@
 {
     "stryker-config":
     {
-        "project-info": { "module": "responsible-core" },
+        "project-info": { "module": "responsible-gherkin" },
         "test-projects": [
-            "../Tests/Responsible.Tests.csproj"
+            "../ResponsibleGherkin.Tests/ResponsibleGherkin.Tests.csproj"
         ],
-        "mutate": [
-            "!**/JetBrains.Annotations.cs"
-        ],
+        "project": "ResponsibleGherkin.csproj",
+        "concurrency": 1,
         "reporters": [
             "progress",
             "html"

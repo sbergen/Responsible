@@ -18,6 +18,7 @@ namespace MyNamespace
 		public Task Scenario_AnotherScenario() => this.Executor.RunScenario(
 			Scenario("Another scenario"),
 			Given("I know what I'm doing", Pending),
+			And("I'm good at doing it", Pending),
 			When("I code more", Pending),
 			Then("I will produce working software!", Pending));
 	}

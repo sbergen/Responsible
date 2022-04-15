@@ -7,5 +7,6 @@ Feature: Example feature
 
     Scenario: Another scenario
         Given I know what I'm doing
+        And I'm good at doing it
         When I code more
         Then I will produce working software!
