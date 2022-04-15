@@ -105,11 +105,15 @@ jobs:
     uses: ./.github/workflows/stryker.yml
     with:
       config-file: stryker-config.json
+    secrets:
+      STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
   test-mutation-gherkin:
     uses: ./.github/workflows/stryker.yml
     with:
       config-file: ../ResponsibleGherkin/stryker-config.json
+    secrets:
+      STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
   inspectcode:
     runs-on: ubuntu-latest

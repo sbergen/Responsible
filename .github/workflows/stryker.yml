@@ -4,6 +4,9 @@ on:
       config-file:
         required: true
         type: string
+    secrets:
+      STRYKER_KEY:
+        required: true
 
 jobs:
   stryker:
