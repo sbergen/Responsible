@@ -104,14 +104,14 @@ jobs:
   test-mutation-core:
     uses: ./.github/workflows/stryker.yml
     with:
-      config-file: stryker-config.json
+      working-directory : src/Responsible.Tests
     secrets:
       STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
   test-mutation-gherkin:
     uses: ./.github/workflows/stryker.yml
     with:
-      config-file: ../ResponsibleGherkin/stryker-config.json
+      working-directory: src/ResponsibleGherkin.Tests
     secrets:
       STRYKER_KEY: ${{ secrets.STRYKER_KEY }}
 
