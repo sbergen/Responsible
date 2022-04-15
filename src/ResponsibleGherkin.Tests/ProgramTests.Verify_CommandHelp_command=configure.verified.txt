@@ -1,13 +1,22 @@
 ﻿{
   Out:
 Description:
-  Generate configuration file
+  Generate a configuration to be used with generate
 
 Usage:
-  responsible-gherkin configure [options]
+  responsible-gherkin configure <flavor> <namespace> <base-class> <executor> <indent-type> <indent-amount> [options]
+
+Arguments:
+  <NUnit|Unity|Xunit>  Flavor of code generation
+  <namespace>          Namespace to put classes in
+  <base-class>         Base class to derive from
+  <executor>           Name of parameter that has the TestInstructionExecutor
+  <Space|Tab>          Type of indentation to use
+  <indent-amount>      Amount of indentation to use
 
 Options:
   -?, -h, --help  Show help and usage information
+
 
 
 ,

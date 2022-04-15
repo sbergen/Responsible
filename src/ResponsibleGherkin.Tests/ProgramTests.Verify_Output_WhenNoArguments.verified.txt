@@ -2,6 +2,13 @@
   Out:
 Description:
   Generate Responsible test case stubs from Gherkin specifications.
+  
+  First generate a configuration using
+      responsible-gherkin configure ...
+  
+  store it to a file, and then generate your code using
+      responsible-gherkin generate ...
+  
 
 Usage:
   responsible-gherkin [command] [options]
@@ -11,8 +18,8 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  configure                           Generate configuration file
-  generate <config> <input> <output>  Generate test case stubs
+  configure <NUnit|Unity|Xunit> <namespace> <base-class> <executor> <Space|Tab> <indent-amount>  Generate a configuration to be used with generate
+  generate <config> <input> <output>                                                             Generate test case stubs
 
 ,
   Error:
