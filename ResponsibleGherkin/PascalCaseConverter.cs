@@ -5,8 +5,12 @@ namespace ResponsibleGherkin;
 
 public static class PascalCaseConverter
 {
+	private static readonly char[] SplitChars = { ' ', '\n', '\t', '\n' };
+
+	// I couldn't find a way to kill this mutant, as it's essentially just an optimization
+	// Stryker disable once Bitwise
 	public static string ConvertToPascalCase(string str) => string.Join("", str
-		.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+		.Split(SplitChars, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
 		.Select(WordToPascalCse));
 
 
