@@ -2,7 +2,7 @@ namespace ResponsibleGherkin.Tests;
 
 internal static class TestFeatures
 {
-	public static readonly CodeGenerator.UserContext DefaultContext = new(
+	public static readonly GenerationContext DefaultContext = new(
 		"MyNamespace",
 		"MyTestBase");
 

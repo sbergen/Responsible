@@ -23,7 +23,7 @@ public class CodeGeneratorSnapshotTests
 	private static string GenerateCode(
 		string name,
 		CodeGenerator.FlavorType flavor = CodeGenerator.FlavorType.NUnit,
-		CodeGenerator.UserContext? context = null)
+		GenerationContext? context = null)
 	{
 		var document = new Parser { StopAtFirstError = true }
 			.Parse(FeatureFileName(name));

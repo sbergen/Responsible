@@ -6,7 +6,7 @@ using ResponsibleGherkin;
 var parser = new Parser();
 var gherkinDocument = parser.Parse("/Users/sbergen/source/Responsible/ResponsibleGherkin/Test.feature");
 
-var context = new CodeGenerator.UserContext("NS", "TestBase");
+var context = new GenerationContext("NS", "TestBase");
 
 Console.Write(CodeGenerator.GenerateFile(
 	gherkinDocument.Feature,

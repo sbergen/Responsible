@@ -52,17 +52,10 @@ public static class CodeGenerator
 		NUnit,
 	}
 
-	public record UserContext(
-		string Namespace,
-		string BaseClass,
-		int IndentAmount = 1,
-		char IndentChar ='\t',
-		string ExecutorName = "Executor");
-
 	public static string GenerateFile(
 		Feature feature,
 		FlavorType flavor,
-		UserContext context)
+		GenerationContext context)
 	{
 		var builder = new StringBuilder();
 
@@ -82,19 +75,9 @@ public static class CodeGenerator
 		builder.AppendLine($"namespace {context.Namespace}");
 		builder.AppendLine("{");
 
-		void AppendIndentedLine(Line line)
-		{
-			if (line.Content != "")
-			{
-				builder.Append(context.IndentChar, line.Indent * context.IndentAmount);
-			}
-
-			builder.AppendLine(line.Content);
-		}
-
 		foreach (var line in GenerateClassLines(feature, GetFlavorData(flavor), context))
 		{
-			AppendIndentedLine(line.IndentBy(1));
+			line.IndentBy(1).AppendToBuilder(builder, context);
 		}
 
 		builder.AppendLine("}");
@@ -104,7 +87,7 @@ public static class CodeGenerator
 	private static IEnumerable<Line> GenerateClassLines(
 		Feature feature,
 		FlavorData flavor,
-		UserContext context)
+		GenerationContext context)
 	{
 		yield return $"public class {ConvertToPascalCase(feature.Name)} : {context.BaseClass}";
 		yield return "{";
@@ -133,7 +116,7 @@ public static class CodeGenerator
 	private static IEnumerable<Line> GenerateScenarioLines(
 		Scenario scenario,
 		FlavorData flavor,
-		UserContext context)
+		GenerationContext context)
 	{
 		yield return $"[{flavor.TestAttribute}]";
 
