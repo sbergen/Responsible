@@ -7,10 +7,7 @@ namespace ResponsibleGherkin;
 
 public static class CodeGenerator
 {
-	private static readonly string[] StandardNamespaces =
-	{
-		"Responsible",
-	};
+
 
 	public static string GenerateFile(
 		Feature feature,
@@ -19,29 +16,22 @@ public static class CodeGenerator
 	{
 		var builder = new StringBuilder();
 		var flavor = Flavor.FromType(flavorType);
+		var indentInfo = context.IndentInfo;
 
-		foreach (var usingDirective in flavor.RequiredNamespaces
-			.Concat(StandardNamespaces)
-			.OrderBy(ns => ns)
-			.Select(ns => $"using {ns};")
-			.Append("using static Responsible.Bdd.Keywords;"))
-		{
-			builder.AppendLine(usingDirective);
-		}
+		UsingDirectivesGenerator.Generate(flavor)
+			.AppendToBuilder(builder, indentInfo);
 
-		// Separator between using directives and the rest
 		builder.AppendLine();
 
 		// TODO: support file-level namespaces?
 		builder.AppendLine($"namespace {context.Namespace}");
 		builder.AppendLine("{");
 
-		foreach (var line in GenerateClassLines(feature, flavor, context))
-		{
-			line.IndentBy(1).AppendToBuilder(builder, context.IndentInfo);
-		}
+		GenerateClassLines(feature, flavor, context)
+			.AppendToBuilder(builder, indentInfo, indentBy: 1);
 
 		builder.AppendLine("}");
+
 		return builder.ToString();
 	}
 

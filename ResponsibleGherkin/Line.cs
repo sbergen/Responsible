@@ -4,7 +4,9 @@ namespace ResponsibleGherkin;
 
 public readonly record struct Line(string Content, int Indent = 0)
 {
-	public Line IndentBy(int amount) => this with { Indent = this.Indent + amount };
+	public Line IndentBy(int amount) => amount != 0
+		? this with { Indent = this.Indent + amount }
+		: this;
 
 	public void AppendToBuilder(StringBuilder stringBuilder, IndentInfo indentInfo)
 	{
