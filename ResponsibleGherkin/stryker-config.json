@@ -1,6 +1,7 @@
 {
     "stryker-config":
     {
+        "project-info": { "module": "responsible-gherkin" },
         "test-projects": [
             "../ResponsibleGherkin.Tests/ResponsibleGherkin.Tests.csproj"
         ],

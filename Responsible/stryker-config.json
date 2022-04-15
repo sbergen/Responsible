@@ -1,6 +1,7 @@
 {
     "stryker-config":
     {
+        "project-info": { "module": "responsible-core" },
         "test-projects": [
             "../Tests/Responsible.Tests.csproj"
         ],

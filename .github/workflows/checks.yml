@@ -101,36 +101,15 @@ jobs:
           name: netstandard Test Results
           path: Responsible/TestResults
 
-  test-mutation:
-    runs-on: ubuntu-latest
+  test-mutation-core:
+    uses: ./.github/workflows/stryker.yml
+    with:
+      config-file: stryker-config.json
 
-    defaults:
-      run:
-        working-directory: Responsible
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: dotnet restore
-        run: |
-          dotnet restore
-          dotnet tool restore
-
-      - name: Set version to PR number
-        if: ${{ github.ref != 'refs/heads/main' }}
-        run: echo "STRYKER_VERSION=${{ github.event.number }}" >> $GITHUB_ENV
-
-      - name: Set version to main
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo "STRYKER_VERSION=main" >> $GITHUB_ENV
-
-      - name: Run Stryker Mutation Testings
-        run: dotnet stryker --reporter dashboard --dashboard-api-key ${{ secrets.STRYKER_KEY }} --version ${{ env.STRYKER_VERSION }}
+  test-mutation-gherkin:
+    uses: ./.github/workflows/stryker.yml
+    with:
+      config-file: ../ResponsibleGherkin/stryker-config.json
 
   inspectcode:
     runs-on: ubuntu-latest
