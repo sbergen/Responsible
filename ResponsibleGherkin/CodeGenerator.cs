@@ -140,11 +140,15 @@ public static class CodeGenerator
 		var methodName = $"{scenario.Keyword.Trim()}_{ConvertToPascalCase(scenario.Name)}";
 		yield return $"public {flavor.ReturnType} {methodName}() => this.{context.ExecutorName}.{flavor.RunMethod}(";
 
+		yield return GenerateScenario(scenario).IndentBy(1);
+
 		foreach (var line in GenerateSteps(scenario))
 		{
 			yield return line.IndentBy(1);
 		}
 	}
+
+	private static Line GenerateScenario(Scenario scenario) => $"Scenario({Quote(scenario.Name)}),";
 
 	private static IEnumerable<Line> GenerateSteps(StepsContainer stepsContainer)
 	{
@@ -155,10 +159,9 @@ public static class CodeGenerator
 	private static Line GenerateStep(Step step, bool isLast)
 	{
 		var keyword = step.Keyword.TrimEnd();
-		var quotedText = SymbolDisplay.FormatLiteral(step.Text, true);
 
 		return SupportedKeywords.Contains(keyword)
-			? $"{keyword}({quotedText}, Pending){(isLast ? ");" : ",")}"
+			? $"{keyword}({Quote(step.Text)}, Pending){(isLast ? ");" : ",")}"
 			: throw new Exception($"Unknown step keyword {keyword}");
 	}
 
@@ -169,4 +172,6 @@ public static class CodeGenerator
 		_ => throw new ArgumentOutOfRangeException(
 			nameof(type), type, "Invalid flavor of code generation"),
 	};
+
+	private static string Quote(string str) => SymbolDisplay.FormatLiteral(str, true);
 }

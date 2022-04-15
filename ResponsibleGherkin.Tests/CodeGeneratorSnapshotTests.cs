@@ -2,15 +2,12 @@ using System.Threading.Tasks;
 using Gherkin;
 using NUnit.Framework;
 using static VerifyNUnit.Verifier;
+using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
 
 public class CodeGeneratorSnapshotTests
 {
-	private static readonly CodeGenerator.UserContext DefaultContext = new(
-		"MyNamespace",
-		"MyTestBase");
-
 	[Test]
 	public Task VerifyBasicFeatureFile() => Verify(GenerateCode("BasicFeature"));
 
@@ -28,10 +25,8 @@ public class CodeGeneratorSnapshotTests
 		CodeGenerator.FlavorType flavor = CodeGenerator.FlavorType.NUnit,
 		CodeGenerator.UserContext? context = null)
 	{
-		var document = new Parser
-		{
-			StopAtFirstError = true,
-		}.Parse($"TestFeatures/{name}.feature");
+		var document = new Parser { StopAtFirstError = true }
+			.Parse(FeatureFileName(name));
 
 		return CodeGenerator.GenerateFile(
 			document.Feature,
