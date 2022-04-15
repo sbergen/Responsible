@@ -81,21 +81,17 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Run Tests
         id: run-tests
-        run: |
-          dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx;LogFileName=results.xml"
-          echo "::set-output name=coverage::Responsible/$(ls TestResults/*/* | head -n1)"
-          echo "::set-output name=tests::TestResults/results.xml"
+        run: dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx"
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v3
         if: ${{ always() }}
         with:
           flags: netstandard
-          files: ${{ steps.run-tests.outputs.coverage }}
           fail_ci_if_error: true
 
       - name: Archive test results
@@ -118,7 +114,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: dotnet restore
         run: |
@@ -152,7 +148,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: dotnet restore
         run: |

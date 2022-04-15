@@ -15,7 +15,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Build nupkg
         run: dotnet pack Responsible --output nupkg
@@ -139,7 +139,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Download Docs
         uses: actions/download-artifact@v3
