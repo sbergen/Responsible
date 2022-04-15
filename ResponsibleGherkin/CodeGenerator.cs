@@ -7,14 +7,6 @@ namespace ResponsibleGherkin;
 
 public static class CodeGenerator
 {
-	private static readonly string[] SupportedKeywords =
-	{
-		"Given",
-		"When",
-		"Then",
-		"And",
-	};
-
 	private static readonly string[] StandardNamespaces =
 	{
 		"Responsible",
@@ -112,7 +104,7 @@ public static class CodeGenerator
 	{
 		var keyword = step.Keyword.TrimEnd();
 
-		return SupportedKeywords.Contains(keyword)
+		return keyword.IsSupportedKeyword()
 			? $"{keyword}({Quote(step.Text)}, Pending){(isLast ? ");" : ",")}"
 			: throw new Exception($"Unknown step keyword {keyword}");
 	}
