@@ -29,6 +29,9 @@
       <None Update="TestFeatures\UnsupportedKeyword.feature">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="TestFeatures\MinimalFeature.feature">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

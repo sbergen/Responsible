@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text.Json;
 using Gherkin;
 using Gherkin.Ast;
 
@@ -11,6 +13,10 @@ internal static class TestFeatures
 		"MyNamespace",
 		"MyTestBase",
 		"Executor");
+
+	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
+
+	public static readonly string MinimalFeatureString = File.ReadAllText(FeatureFileName("MinimalFeature"));
 
 	public static GherkinDocument LoadFeature(string featureName) =>
 		new Parser { StopAtFirstError = true }

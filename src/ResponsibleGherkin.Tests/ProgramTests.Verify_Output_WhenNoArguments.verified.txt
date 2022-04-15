@@ -18,8 +18,8 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  configure <NUnit|Unity|Xunit> <namespace> <base-class> <executor> <Space|Tab> <indent-amount>  Generate a configuration to be used with generate
-  generate <config> <input> <output>                                                             Generate test case stubs
+  configure <NUnit|Unity|Xunit> <namespace> <base-class> <executor> <Spaces|Tabs> <indent-amount>  Generate a configuration to be used with generate
+  generate <config> <input> <output>                                                               Generate test case stubs
 
 ,
   Error:

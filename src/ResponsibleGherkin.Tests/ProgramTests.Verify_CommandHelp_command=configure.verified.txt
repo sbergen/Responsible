@@ -11,7 +11,7 @@ Arguments:
   <namespace>          Namespace to put classes in
   <base-class>         Base class to derive from
   <executor>           Name of parameter that has the TestInstructionExecutor
-  <Space|Tab>          Type of indentation to use
+  <Spaces|Tabs>        Type of indentation to use
   <indent-amount>      Amount of indentation to use
 
 Options:
