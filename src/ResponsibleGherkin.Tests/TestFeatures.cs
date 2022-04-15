@@ -5,10 +5,12 @@ namespace ResponsibleGherkin.Tests;
 
 internal static class TestFeatures
 {
-	public static readonly GenerationContext DefaultContext = new(
+	public static readonly Configuration DefaultConfiguration = new(
+		FlavorType.Xunit,
+		IndentInfo.Tabs,
 		"MyNamespace",
 		"MyTestBase",
-		IndentInfo.Tabs);
+		"Executor");
 
 	public static GherkinDocument LoadFeature(string featureName) =>
 		new Parser { StopAtFirstError = true }

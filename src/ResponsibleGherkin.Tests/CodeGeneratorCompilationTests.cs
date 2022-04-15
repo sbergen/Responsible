@@ -34,11 +34,11 @@ public class CodeGeneratorCompilationTests
 	private static readonly string TestBaseClassCode = $@"
 using Responsible;
 
-namespace {DefaultContext.Namespace}
+namespace {DefaultConfiguration.Namespace}
 {{
-	public abstract class {DefaultContext.BaseClass}
+	public abstract class {DefaultConfiguration.BaseClass}
 	{{
-		protected TestInstructionExecutor {DefaultContext.ExecutorName} {{ get; private set; }}
+		protected TestInstructionExecutor {DefaultConfiguration.ExecutorName} {{ get; private set; }}
 	}}
 }}
 ";
@@ -52,8 +52,8 @@ namespace {DefaultContext.Namespace}
 	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
-		var code = CodeGenerator.GenerateFile(document.Feature, FlavorType.Xunit, DefaultContext);
-		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code);
+		var code = CodeGenerator.GenerateClass(document.Feature, DefaultConfiguration);
+		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code.BuildFileContent());
 	}
 
 	private static void AssertCodeCompilesWithoutDiagnostics(params string[] codes)

@@ -1,4 +1,3 @@
-using System.Text;
 using Xunit;
 
 namespace ResponsibleGherkin.Tests;
@@ -18,12 +17,9 @@ public class LineTests
 	[InlineData(" \t ", "")]
 	[InlineData("foo\t", "\tfoo")]
 	[InlineData("\tfoo", "\t\tfoo")]
-	public void AppendToBuilder_IndentsCorrectly_WithTabs(string lineContent, string expected)
+	public void BuildString_IndentsCorrectly_WithTabs(string lineContent, string expected)
 	{
-		var builder = new StringBuilder();
-		new Line(lineContent, 1).AppendToBuilder(builder, IndentInfo.Tabs);
-
-		Assert.Equal(expected, builder.ToString().TrimEnd('\n', '\r'));
+		Assert.Equal(expected, new Line(lineContent, 1).BuildString(IndentInfo.Tabs));
 	}
 
 	[Theory]
@@ -31,10 +27,8 @@ public class LineTests
 	[InlineData(" \t ", "")]
 	[InlineData("foo\t", "    foo")]
 	[InlineData("\tfoo", "    \tfoo")] // we don't touch existing tabs
-	public void AppendToBuilder_IndentsCorrectly_WithSpaces(string lineContent, string expected)
+	public void BuildString_IndentsCorrectly_WithSpaces(string lineContent, string expected)
 	{
-		var builder = new StringBuilder();
-		new Line(lineContent, 1).AppendToBuilder(builder, IndentInfo.Spaces);
-		Assert.Equal(expected, builder.ToString().TrimEnd('\n', '\r'));
+		Assert.Equal(expected, new Line(lineContent, 1).BuildString(IndentInfo.Spaces));
 	}
 }

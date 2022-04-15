@@ -1,0 +1,15 @@
+﻿{
+  Out:
+Description:
+  Generate configuration file
+
+Usage:
+  responsible-gherkin configure [options]
+
+Options:
+  -?, -h, --help  Show help and usage information
+
+
+,
+  Error: 
+}

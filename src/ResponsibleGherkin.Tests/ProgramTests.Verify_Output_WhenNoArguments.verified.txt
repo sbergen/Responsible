@@ -4,20 +4,19 @@ Description:
   Generate Responsible test case stubs from Gherkin specifications.
 
 Usage:
-  responsible-gherkin <input-file> [options]
-
-Arguments:
-  <input-file>  Input feature file to generate code from.
+  responsible-gherkin [command] [options]
 
 Options:
   --version       Show version information
   -?, -h, --help  Show help and usage information
 
-
+Commands:
+  configure                           Generate configuration file
+  generate <config> <input> <output>  Generate test case stubs
 
 ,
   Error:
-Required argument missing for command: 'responsible-gherkin'.
+Required command was not provided.
 
 
 }

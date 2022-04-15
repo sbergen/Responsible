@@ -18,10 +18,10 @@ public class CodeGeneratorSnapshotTests
 
 	private static string GenerateCode(
 		string name,
-		FlavorType flavor = FlavorType.NUnit,
-		GenerationContext? context = null) =>
-		CodeGenerator.GenerateFile(
-			LoadFeature(name).Feature,
-			flavor,
-			context ?? DefaultContext);
+		FlavorType flavor = FlavorType.NUnit) =>
+		CodeGenerator
+			.GenerateClass(
+				LoadFeature(name).Feature,
+				DefaultConfiguration with { Flavor = flavor })
+			.BuildFileContent();
 }

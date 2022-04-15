@@ -21,11 +21,13 @@ public class ProgramTests
 		return Verify(this.ConsoleOutput());
 	}
 
-	[Fact]
-	public Task Verify_Output_WhenInputFileDoesNotExist()
+	[Theory]
+	[InlineData("configure")]
+	[InlineData("generate")]
+	public async Task Verify_CommandHelp(string command)
 	{
-		this.Run("fake-file");
-		return Verify(this.ConsoleOutput());
+		this.Run(command, "-h");
+		await Verify(this.ConsoleOutput()).UseParameters(command);
 	}
 
 	private void Run(params string[] args) => Program

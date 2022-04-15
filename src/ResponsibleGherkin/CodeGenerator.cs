@@ -1,33 +1,31 @@
-using System.Text;
 using Gherkin.Ast;
 
 namespace ResponsibleGherkin;
 
 public static class CodeGenerator
 {
-	public static string GenerateFile(
+	public static GeneratedClass GenerateClass(
 		Feature feature,
-		FlavorType flavorType,
-		GenerationContext context)
+		Configuration configuration)
 	{
-		var builder = new StringBuilder();
-		var flavor = Flavor.FromType(flavorType);
-		var indentInfo = context.IndentInfo;
+		List<string> lines = new();
+		var indentInfo = configuration.IndentInfo;
+		var flavor = Flavor.FromType(configuration.Flavor);
 
 		UsingDirectivesGenerator.Generate(flavor)
-			.AppendToBuilder(builder, indentInfo);
+			.AppendToList(lines, indentInfo);
 
-		builder.AppendLine();
+		lines.Add("");
 
 		// TODO: support file-level namespaces?
-		builder.AppendLine($"namespace {context.Namespace}");
-		builder.AppendLine("{");
+		lines.Add($"namespace {configuration.Namespace}");
+		lines.Add("{");
 
-		FeatureGenerator.Generate(feature, flavor, context)
-			.AppendToBuilder(builder, indentInfo, indentBy: 1);
+		FeatureGenerator.Generate(feature, flavor, configuration)
+			.AppendToList(lines, indentInfo, indentBy: 1);
 
-		builder.AppendLine("}");
+		lines.Add("}");
 
-		return builder.ToString();
+		return new GeneratedClass(feature.Name.ToPascalCase(), lines);
 	}
 }
