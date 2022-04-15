@@ -1,14 +1,11 @@
 using System.Text;
 using Gherkin.Ast;
-using Microsoft.CodeAnalysis.CSharp;
 using static ResponsibleGherkin.PascalCaseConverter;
 
 namespace ResponsibleGherkin;
 
 public static class CodeGenerator
 {
-
-
 	public static string GenerateFile(
 		Feature feature,
 		FlavorType flavorType,
@@ -50,7 +47,7 @@ public static class CodeGenerator
 		foreach (var (scenario, isLast) in scenarios
 			.Select((s, i) => (s, i == scenarios.Count - 1)))
 		{
-			foreach (var scenarioLine in GenerateScenarioLines(scenario, flavor, context))
+			foreach (var scenarioLine in ScenarioGenerator.Generate(scenario, flavor, context))
 			{
 				yield return scenarioLine.IndentBy(1);
 			}
@@ -64,40 +61,5 @@ public static class CodeGenerator
 		yield return "}";
 	}
 
-	private static IEnumerable<Line> GenerateScenarioLines(
-		Scenario scenario,
-		Flavor flavor,
-		GenerationContext context)
-	{
-		yield return $"[{flavor.TestAttribute}]";
 
-		var methodName = $"{scenario.Keyword.Trim()}_{ConvertToPascalCase(scenario.Name)}";
-		yield return $"public {flavor.ReturnType} {methodName}() => this.{context.ExecutorName}.{flavor.RunMethod}(";
-
-		yield return GenerateScenario(scenario).IndentBy(1);
-
-		foreach (var line in GenerateSteps(scenario))
-		{
-			yield return line.IndentBy(1);
-		}
-	}
-
-	private static Line GenerateScenario(Scenario scenario) => $"Scenario({Quote(scenario.Name)}),";
-
-	private static IEnumerable<Line> GenerateSteps(StepsContainer stepsContainer)
-	{
-		var steps = stepsContainer.Steps.ToList();
-		return steps.Select((s, i) => GenerateStep(s, i == (steps.Count - 1)));
-	}
-
-	private static Line GenerateStep(Step step, bool isLast)
-	{
-		var keyword = step.Keyword.TrimEnd();
-
-		return keyword.IsSupportedKeyword()
-			? $"{keyword}({Quote(step.Text)}, Pending){(isLast ? ");" : ",")}"
-			: throw new Exception($"Unknown step keyword {keyword}");
-	}
-
-	private static string Quote(string str) => SymbolDisplay.FormatLiteral(str, true);
 }

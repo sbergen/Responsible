@@ -20,5 +20,4 @@ public class UsingDirectivesTests
 			},
 			lines.Select(line => line.Content).Take(3).ToArray());
 	}
-
 }
