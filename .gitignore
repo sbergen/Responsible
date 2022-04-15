@@ -2,3 +2,5 @@
 .idea
 .bin
 .obj
+*.received.txt
+
