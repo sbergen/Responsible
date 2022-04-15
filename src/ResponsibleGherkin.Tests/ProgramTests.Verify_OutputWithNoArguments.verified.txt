@@ -1,0 +1,12 @@
+﻿Description:
+  Generate Responsible test case stubs from Gherkin specifications.
+
+Usage:
+  responsible-gherkin <input-file> [options]
+
+Arguments:
+  <input-file>  Input feature file to generate code from.
+
+Options:
+  --version       Show version information
+  -?, -h, --help  Show help and usage information

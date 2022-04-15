@@ -1,12 +1,32 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.CommandLine;
+using System.CommandLine.IO;
+using System.Diagnostics.CodeAnalysis;
+using System.IO.Abstractions;
 
 namespace ResponsibleGherkin;
 
-[ExcludeFromCodeCoverage]
 public static class Program
 {
-	public static void Main()
+	// This only binds the root command invocation to the real file system and console.
+	// I.e. deals only with non-testable parts.
+	[ExcludeFromCodeCoverage]
+	public static void Main(string[] args) =>
+		BuildRootCommand(new FileSystem())
+			.Invoke(args, new SystemConsole());
+
+	public static RootCommand BuildRootCommand(IFileSystem fileSystem)
 	{
-		Console.WriteLine("I'm not ready to be invoked from the CLI Yet!");
+		var inputFileArgument = new Argument<string>(
+			"input-file",
+			"Input feature file to generate code from.");
+
+		var rootCommand = new RootCommand("Generate Responsible test case stubs from Gherkin specifications.")
+		{
+			inputFileArgument,
+		};
+
+		rootCommand.Name = "responsible-gherkin";
+
+		return rootCommand;
 	}
 }

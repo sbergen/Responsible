@@ -13,6 +13,7 @@
         <PackageReference Include="NUnit" Version="3.13.3" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
         <PackageReference Include="coverlet.collector" Version="3.1.0" />
+        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="16.1.25" />
         <PackageReference Include="Verify.NUnit" Version="16.5.4" />
     </ItemGroup>
 
