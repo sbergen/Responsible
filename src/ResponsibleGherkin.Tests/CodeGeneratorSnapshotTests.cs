@@ -1,16 +1,18 @@
 using System.Threading.Tasks;
-using NUnit.Framework;
-using static VerifyNUnit.Verifier;
+using VerifyXunit;
+using Xunit;
+using static VerifyXunit.Verifier;
 using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
 
+[UsesVerify]
 public class CodeGeneratorSnapshotTests
 {
-	[Test]
+	[Fact]
 	public Task VerifyBasicFeatureFile() => Verify(GenerateCode("BasicFeature"));
 
-	[Test]
+	[Fact]
 	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(
 		"BasicFeature", FlavorType.Unity));
 

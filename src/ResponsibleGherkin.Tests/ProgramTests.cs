@@ -2,24 +2,19 @@ using System.CommandLine;
 using System.CommandLine.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using static VerifyNUnit.Verifier;
+using VerifyXunit;
+using Xunit;
+using static VerifyXunit.Verifier;
 
 namespace ResponsibleGherkin.Tests;
 
+[UsesVerify]
 public class ProgramTests
 {
-	private MockFileSystem fileSystem;
-	private TestConsole console;
+	private readonly MockFileSystem fileSystem = new();
+	private readonly TestConsole console = new();
 
-	[SetUp]
-	public void SetUp()
-	{
-		this.fileSystem = new MockFileSystem();
-		this.console = new TestConsole();
-	}
-
-	[Test]
+	[Fact]
 	public Task Verify_OutputWithNoArguments()
 	{
 		this.Run();

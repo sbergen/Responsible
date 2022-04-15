@@ -4,4 +4,5 @@ public enum FlavorType
 {
 	Unity,
 	NUnit,
+	Xunit,
 }

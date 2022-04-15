@@ -1,17 +1,17 @@
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
 public class UsingDirectivesTests
 {
-	[Test]
+	[Fact]
 	public void UsingDirectives_AreSortedAlphabetically()
 	{
 		var lines = UsingDirectivesGenerator.Generate(
 			Flavor.NUnit with { RequiredNamespaces = new[] { "aac", "aaa", "aab" } });
 
-		Assert.AreEqual(
+		Assert.Equal(
 			new[]
 			{
 				"using aaa;",

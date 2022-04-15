@@ -1,34 +1,40 @@
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
 public class LineTests
 {
-	[TestCase(1, ExpectedResult = 2)]
-	[TestCase(2, ExpectedResult = 3)]
-	public int IndentBy_IncreasesIndent_WhenOriginalIndentIsOne(int amount) =>
-		new Line("some content", 1).IndentBy(amount).Indent;
+	[Theory]
+	[InlineData(1, 2)]
+	[InlineData(2, 3)]
+	public void IndentBy_IncreasesIndent_WhenOriginalIndentIsOne(int amount, int expected) =>
+		Assert.Equal(
+			expected,
+			new Line("some content", 1).IndentBy(amount).Indent);
 
-	[TestCase("",  ExpectedResult = "")]
-	[TestCase(" \t ",  ExpectedResult = "")]
-	[TestCase("foo\t",  ExpectedResult = "\tfoo")]
-	[TestCase("\tfoo",  ExpectedResult = "\t\tfoo")]
-	public string AppendToBuilder_IndentsCorrectly_WithTabs(string lineContent)
+	[Theory]
+	[InlineData("",  "")]
+	[InlineData(" \t ", "")]
+	[InlineData("foo\t", "\tfoo")]
+	[InlineData("\tfoo", "\t\tfoo")]
+	public void AppendToBuilder_IndentsCorrectly_WithTabs(string lineContent, string expected)
 	{
 		var builder = new StringBuilder();
 		new Line(lineContent, 1).AppendToBuilder(builder, IndentInfo.Tabs);
-		return builder.ToString().TrimEnd('\n', '\r');
+
+		Assert.Equal(expected, builder.ToString().TrimEnd('\n', '\r'));
 	}
 
-	[TestCase("",  ExpectedResult = "")]
-	[TestCase(" \t ",  ExpectedResult = "")]
-	[TestCase("foo\t",  ExpectedResult = "    foo")]
-	[TestCase("\tfoo",  ExpectedResult = "    \tfoo")] // we don't touch existing tabs
-	public string AppendToBuilder_IndentsCorrectly_WithSpaces(string lineContent)
+	[Theory]
+	[InlineData("", "")]
+	[InlineData(" \t ", "")]
+	[InlineData("foo\t", "    foo")]
+	[InlineData("\tfoo", "    \tfoo")] // we don't touch existing tabs
+	public void AppendToBuilder_IndentsCorrectly_WithSpaces(string lineContent, string expected)
 	{
 		var builder = new StringBuilder();
 		new Line(lineContent, 1).AppendToBuilder(builder, IndentInfo.Spaces);
-		return builder.ToString().TrimEnd('\n', '\r');
+		Assert.Equal(expected, builder.ToString().TrimEnd('\n', '\r'));
 	}
 }

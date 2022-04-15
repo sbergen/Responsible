@@ -1,24 +1,24 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
 public class FlavorTests
 {
-	[Test]
+	[Fact]
 	public void FromType_ThrowsMeaningfulException_ForInvalidType()
 	{
 		var exception = Assert.Throws<ArgumentOutOfRangeException>(
 			() => Flavor.FromType((FlavorType)42));
 
-		StringAssert.Contains("flavor", exception!.Message);
-		StringAssert.Contains("42", exception.Message);
+		Assert.Contains("flavor", exception.Message);
+		Assert.Contains("42", exception.Message);
 	}
 
-	[Test]
-	public void FromType_DoesNotThrow_ForValidType(
-		[Values] FlavorType type)
+	[Theory]
+	[ClassData(typeof(EnumValues<FlavorType>))]
+	public void FromType_DoesNotThrow_ForValidType(FlavorType type)
 	{
-		Assert.DoesNotThrow(() => Flavor.FromType(type));
+		Assert.NotNull(Flavor.FromType(type));
 	}
 }

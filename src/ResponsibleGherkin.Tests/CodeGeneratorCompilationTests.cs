@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using NUnit.Framework;
+using Xunit;
 using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
@@ -12,7 +12,7 @@ public class CodeGeneratorCompilationTests
 {
 	private static readonly Type[] MetaDataSourceTypes =
 	{
-		typeof(TestAttribute),
+		typeof(FactAttribute),
 		typeof(Responsible.Responsibly),
 	};
 
@@ -43,15 +43,16 @@ namespace {DefaultContext.Namespace}
 }}
 ";
 
-	[Test]
+	[Fact]
 	public void Precondition_TestBaseClass_CompilesWithoutDiagnostics() =>
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode);
 
-	[TestCase("BasicFeature")]
+	[Theory]
+	[InlineData("BasicFeature")]
 	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
-		var code = CodeGenerator.GenerateFile(document.Feature, FlavorType.NUnit, DefaultContext);
+		var code = CodeGenerator.GenerateFile(document.Feature, FlavorType.Xunit, DefaultContext);
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code);
 	}
 
@@ -63,6 +64,6 @@ namespace {DefaultContext.Namespace}
 		var compilation = CSharpCompilation.Create("MyTests", syntaxTrees, References, options);
 		var diagnostics = compilation.GetDiagnostics();
 
-		Assert.IsEmpty(diagnostics);
+		Assert.Empty(diagnostics);
 	}
 }

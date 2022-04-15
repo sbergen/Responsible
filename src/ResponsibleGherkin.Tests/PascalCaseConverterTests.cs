@@ -1,17 +1,18 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
 public class PascalCaseConverterTests
 {
-	[TestCase("", ExpectedResult = "")]
-	[TestCase(" ", ExpectedResult = "")]
-	[TestCase(" foo ", ExpectedResult = "Foo")]
-	[TestCase(" lots\nof\tfood ", ExpectedResult = "LotsOfFood")]
-	[TestCase(" lots     of      food ", ExpectedResult = "LotsOfFood")]
-	[TestCase("DSP scheduler", ExpectedResult = "DspScheduler")]
-	[TestCase("DspScheduler can do", ExpectedResult = "DspSchedulerCanDo")]
-	[TestCase("UI handler", ExpectedResult = "UIHandler", Ignore = "two-letter acronyms not handled")]
-	public string ConvertToPascalCase_ReturnsExceptedValue(string input)
-		=> PascalCaseConverter.ConvertToPascalCase(input);
+	[Theory]
+	[InlineData("", "")]
+	[InlineData(" ", "")]
+	[InlineData(" foo ", "Foo")]
+	[InlineData(" lots\nof\tfood ", "LotsOfFood")]
+	[InlineData(" lots     of      food ", "LotsOfFood")]
+	[InlineData("DSP scheduler", "DspScheduler")]
+	[InlineData("DspScheduler can do", "DspSchedulerCanDo")]
+	public void ConvertToPascalCase_ReturnsExceptedValue(string input, string expected) => Assert.Equal(
+		expected,
+		PascalCaseConverter.ConvertToPascalCase(input));
 }

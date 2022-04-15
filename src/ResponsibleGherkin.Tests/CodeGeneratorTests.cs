@@ -1,10 +1,10 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
 public class CodeGeneratorTests
 {
-	[Test]
+	[Fact]
 	public void CodeGeneration_Fails_WithUnsupportedKeywords()
 	{
 		var document = TestFeatures.LoadFeature("UnsupportedKeyword");
@@ -13,6 +13,6 @@ public class CodeGeneratorTests
 
 		// I'm tightly coupling the test data to this assertion, yes.
 		// Without some kind of test asset tagging, I'm not sure what would be cleaner.
-		StringAssert.Contains("Unsupported step keyword: '*'", exception!.Message);
+		Assert.Contains("Unsupported step keyword: '*'", exception!.Message);
 	}
 }
