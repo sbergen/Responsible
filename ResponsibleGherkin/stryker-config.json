@@ -1,0 +1,19 @@
+{
+    "stryker-config":
+    {
+        "test-projects": [
+            "../ResponsibleGherkin.Tests/ResponsibleGherkin.Tests.csproj"
+        ],
+        "project": "ResponsibleGherkin.csproj",
+        "reporters": [
+            "progress",
+            "html"
+        ],
+        "thresholds": {
+            "high": 100,
+            "low": 100,
+            "break": 100
+        },
+        "mutation-level": "Standard"
+    }
+}
