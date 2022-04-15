@@ -16,7 +16,7 @@ Additionally, in [Unity](https://unity.com/):
 
 ## Documentation
 
-Extensive documentation is available at the 
+Extensive documentation is available at the
 [documentation site](https://sbergen.github.io/Responsible/index.html):
 * [Overview](https://sbergen.github.io/Responsible/index.html)
 * [.NET Documentation](https://sbergen.github.io/Responsible/dotnet.html)
@@ -26,7 +26,7 @@ Extensive documentation is available at the
 * [Changelog](https://sbergen.github.io/Responsible/CHANGELOG.html)
 
 The online documentation is created from the main branch.
-Starting with version 3.0.1, the documentation for specific versions is also available as static HTML 
+Starting with version 3.0.1, the documentation for specific versions is also available as static HTML
 in [releases](https://github.com/sbergen/Responsible/releases).
 
 ## Questions? Ideas?
@@ -42,8 +42,8 @@ the repository structure is a bit unorthodox:
 * `com.beatwaves.responsible` contains the Unity Package.
 * `com.beatwaves.responsible/Runtime` contains the main runtime, shared with .NET.
   * Unity files are excluded in the `.csproj` file.
-* `Responsible` contains the .NET solution and .NET testing/CI related files.
+* `src` contains the .NET solution and .NET testing/CI related files.
 * `ResponsibleUnity` contains the Unity project and Unity-specific tests.
-* `Tests` contains the tests for the pure .NET classes.
+* `src/Responsible.Tests` contains the tests for the pure .NET classes.
   * `package.json` is used for including them in the Unity project as a package.
   * `Responsible.Tests.csproj` is used for including them in the main .NET solution.
