@@ -22,8 +22,7 @@ internal static class TestFeatures
 	    File.ReadAllText(FeatureFileName("UnsupportedKeyword"));
 
 	public static GherkinDocument LoadFeature(string featureName) =>
-		new Parser { StopAtFirstError = true }
-			.Parse(FeatureFileName(featureName));
+		new Parser().Parse(FeatureFileName(featureName));
 
 	private static string FeatureFileName(string featureName) =>
 		$"TestFeatures/{featureName}.feature";

@@ -8,6 +8,9 @@ public record GeneratedClass(
 {
 	public string BuildFileContent()
 	{
+		// String builder initial allocation is just optimization,
+		// No tests will fail if this is modified:
+		// Stryker disable once all
 		var stringBuilder = new StringBuilder(
 			this.FileLines.Sum(line => line.Length + Environment.NewLine.Length));
 

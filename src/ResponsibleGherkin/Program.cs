@@ -163,7 +163,7 @@ store it to a file, and then generate your code using
 					var feature = Run("read input", () =>
 					{
 						using var fileReader = fileSystem.File.OpenText(inputFile);
-						var document = new Parser { StopAtFirstError = true }.Parse(fileReader);
+						var document = new Parser().Parse(fileReader);
 						return document.Feature;
 					});
 
