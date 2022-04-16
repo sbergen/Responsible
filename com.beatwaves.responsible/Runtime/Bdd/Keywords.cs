@@ -33,13 +33,22 @@ namespace Responsible.Bdd
 			new BddStep(instruction.GroupedAs($"Given {description}"));
 
 		/// <summary>
-		/// Creates a step that describes additional initial context of a test.
+		/// Creates a step that describes additional after a Given, When, or Then.
 		/// </summary>
 		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
 		public static IBddStep And(
 			string description,
 			ITestInstruction<object> instruction) =>
 			new BddStep(instruction.GroupedAs($"And {description}"));
+
+		/// <summary>
+		/// Creates a step that describes additional after a Given, When, or Then.
+		/// </summary>
+		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
+		public static IBddStep But(
+			string description,
+			ITestInstruction<object> instruction) =>
+			new BddStep(instruction.GroupedAs($"But {description}"));
 
 		/// <summary>
 		/// Creates a step that describes an event or action in a test.

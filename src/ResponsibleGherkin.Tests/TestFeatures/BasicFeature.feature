@@ -11,3 +11,4 @@ Feature: Example feature
         And I'm good at doing it
         When I code more
         Then I will produce working software!
+        But it might not be useful

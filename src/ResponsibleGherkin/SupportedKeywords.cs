@@ -10,6 +10,7 @@ public static class SupportedKeywords
 		"When",
 		"Then",
 		"And",
+		"But",
 		"*",
 	};
 

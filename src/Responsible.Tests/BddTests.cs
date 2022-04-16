@@ -16,6 +16,7 @@ namespace Responsible.Tests
 		private bool andExecuted;
 		private bool whenExecuted;
 		private bool thenExecuted;
+		private bool butExecuted;
 		private ITestInstruction<object> scenario;
 
 		[SetUp]
@@ -25,6 +26,7 @@ namespace Responsible.Tests
 			this.andExecuted = false;
 			this.whenExecuted = false;
 			this.thenExecuted = false;
+			this.butExecuted = false;
 
 			this.scenario = Scenario("Test scenario").WithSteps(
 				Given(
@@ -38,7 +40,10 @@ namespace Responsible.Tests
 					Do("when inner", () => this.whenExecuted = true)),
 				Then(
 					"then",
-					Do("then inner", () => this.thenExecuted = true)));
+					Do("then inner", () => this.thenExecuted = true)),
+				But(
+					"but",
+					Do("but inner", () => this.butExecuted = true)));
 		}
 
 		[Test]
@@ -46,8 +51,8 @@ namespace Responsible.Tests
 		{
 			this.scenario.ToTask(this.Executor);
 			Assert.AreEqual(
-				(true, true, true, true),
-				(this.givenExecuted, this.andExecuted, this.whenExecuted, this.thenExecuted));
+				(true, true, true, true, true),
+				(this.givenExecuted, this.andExecuted, this.whenExecuted, this.thenExecuted, this.butExecuted));
 		}
 
 		[Test]
@@ -103,6 +108,7 @@ namespace Responsible.Tests
 		[TestCase("And")]
 		[TestCase("When")]
 		[TestCase("Then")]
+		[TestCase("But")]
 		[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
 		public void InstructionStack_DoesNotContainKeyword(string methodName)
 		{
