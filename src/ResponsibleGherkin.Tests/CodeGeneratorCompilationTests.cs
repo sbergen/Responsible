@@ -5,7 +5,7 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
-using static ResponsibleGherkin.Tests.TestFeatures;
+using static ResponsibleGherkin.Tests.TestData;
 
 namespace ResponsibleGherkin.Tests;
 
@@ -49,8 +49,10 @@ namespace {DefaultConfiguration.Namespace}
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode);
 
 	[Theory]
-	[InlineData("BasicFeature")]
-	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
+	[InlineData(MinimalFeature)]
+	[InlineData(BasicFeature)]
+	[InlineData(Rules)]
+	public void Feature_CompilesWithoutDiagnostics_WithXUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
 		var code = CodeGenerator.GenerateClass(document.Feature, DefaultConfiguration);

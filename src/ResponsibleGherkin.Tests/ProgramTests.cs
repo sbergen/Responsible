@@ -19,15 +19,15 @@ public class ProgramTests
 	{
 		this.fileSystem.AddFile(
 			"config.json",
-			new MockFileData(TestFeatures.DefaultConfigurationJson));
+			new MockFileData(TestData.DefaultConfigurationJson));
 
 		this.fileSystem.AddFile(
 			"MinimalFeature.feature",
-			TestFeatures.MinimalFeatureString);
+			TestData.MinimalFeatureContent);
 
 		this.fileSystem.AddFile(
 			"UnsupportedKeyword.feature",
-			TestFeatures.UnsupportedKeywordFeatureString);
+			TestData.UnsupportedKeywordFeatureContent);
 
 		this.fileSystem.AddFile(
 			"InvalidFeature.feature",
@@ -61,8 +61,8 @@ public class ProgramTests
 	public void Generate_ProducesSameResultAsManualInvoke()
 	{
 		var expected = CodeGenerator.GenerateClass(
-				TestFeatures.LoadFeature("MinimalFeature").Feature,
-				TestFeatures.DefaultConfiguration)
+				TestData.LoadFeature(TestData.MinimalFeature).Feature,
+				TestData.DefaultConfiguration)
 			.BuildFileContent();
 
 		this.RunAssertingSuccess("generate", "config.json", "MinimalFeature.feature", "./");
@@ -91,7 +91,7 @@ public class ProgramTests
 	public void Generate_ContainsDescriptiveError_WhenInputFileIsInvalid()
 	{
 		this.RunAssertingFailure("generate", "config.json", "InvalidFeature.feature", "./");
-		this.ConsoleErrors().Should().Contain("read input");
+		this.ConsoleErrors().Should().ContainAll("read input", "Parser errors");
 	}
 
 	[Fact]

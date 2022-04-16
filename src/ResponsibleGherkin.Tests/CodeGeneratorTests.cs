@@ -8,18 +8,16 @@ public class CodeGeneratorTests
 	[Fact]
 	public void CodeGeneration_Fails_WithUnsupportedKeywords()
 	{
-		var document = TestFeatures.LoadFeature("UnsupportedKeyword");
+		var document = TestData.LoadFeature(TestData.UnsupportedKeyword);
 
 		var codeGeneration = () => CodeGenerator.GenerateClass(
 			document.Feature,
-			TestFeatures.DefaultConfiguration);
+			TestData.DefaultConfiguration);
 
 		// I'm tightly coupling the test data to this assertion, yes.
 		// Without some kind of test asset tagging, I'm not sure what would be cleaner.
 		codeGeneration.Should()
 			.Throw<UnsupportedKeywordException>()
-			.And.Message.Should().Contain(
-				"Unsupported step keyword: '*'",
-				"the message should be informative");
+			.And.Message.Should().ContainAll("Unsupported scenario keyword", "Scenario Outline", "(at 2:3)");
 	}
 }

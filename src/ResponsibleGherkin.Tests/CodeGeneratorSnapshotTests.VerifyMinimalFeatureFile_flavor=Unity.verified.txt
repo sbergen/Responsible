@@ -1,0 +1,17 @@
+﻿using Responsible;
+using System.Collections;
+using UnityEngine.TestTools;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class MinimalFeature : MyTestBase
+	{
+		[UnityTest]
+		public IEnumerator Scenario_MinimalScenario() => this.Executor.YieldScenario(
+			Scenario("Minimal scenario"),
+			Given("I have ice cream", Pending),
+			When("I eat it", Pending),
+			Then("I will be happy", Pending));
+	}
+}

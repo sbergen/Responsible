@@ -10,12 +10,6 @@ public static class StepsGenerator
 		return steps.Select((s, i) => GenerateStep(s, i == (steps.Count - 1)));
 	}
 
-	private static Line GenerateStep(Step step, bool isLast)
-	{
-		var keyword = step.Keyword.TrimEnd();
-
-		return keyword.IsSupportedKeyword()
-			? $"{keyword}({step.Text.Quote()}, Pending){(isLast ? ");" : ",")}"
-			: throw new UnsupportedKeywordException("step", keyword);
-	}
+	private static Line GenerateStep(Step step, bool isLast) =>
+		$"{step.MapKeywordToValid()}({step.Text.Quote()}, Pending){(isLast ? ");" : ",")}";
 }

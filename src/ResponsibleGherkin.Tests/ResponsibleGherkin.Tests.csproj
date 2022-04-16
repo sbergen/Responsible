@@ -29,13 +29,16 @@
 
     <ItemGroup>
       <None Update="TestFeatures\BasicFeature.feature">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="TestFeatures\UnsupportedKeyword.feature">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="TestFeatures\MinimalFeature.feature">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="TestFeatures\Rules.feature">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

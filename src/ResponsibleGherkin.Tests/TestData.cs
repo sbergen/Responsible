@@ -5,7 +5,7 @@ using Gherkin.Ast;
 
 namespace ResponsibleGherkin.Tests;
 
-internal static class TestFeatures
+internal static class TestData
 {
 	public static readonly Configuration DefaultConfiguration = new(
 		FlavorType.Xunit,
@@ -16,10 +16,15 @@ internal static class TestFeatures
 
 	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
 
-  	public static readonly string MinimalFeatureString = File.ReadAllText(FeatureFileName("MinimalFeature"));
+	public const string MinimalFeature = "MinimalFeature";
+	public const string BasicFeature = "BasicFeature";
+	public const string UnsupportedKeyword = "UnsupportedKeyword";
+	public const string Rules = "Rules";
 
-    public static readonly string UnsupportedKeywordFeatureString =
-	    File.ReadAllText(FeatureFileName("UnsupportedKeyword"));
+	public static readonly string MinimalFeatureContent = File.ReadAllText(FeatureFileName(MinimalFeature));
+
+    public static readonly string UnsupportedKeywordFeatureContent =
+	    File.ReadAllText(FeatureFileName(UnsupportedKeyword));
 
 	public static GherkinDocument LoadFeature(string featureName) =>
 		new Parser().Parse(FeatureFileName(featureName));

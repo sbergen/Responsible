@@ -1,25 +1,27 @@
-﻿using NUnit.Framework;
-using Responsible;
+﻿using Responsible;
 using System.Threading.Tasks;
+using Xunit;
 using static Responsible.Bdd.Keywords;
 
 namespace MyNamespace
 {
 	public class ExampleFeature : MyTestBase
 	{
-		[Test]
+		[Fact]
 		public Task Scenario_ExampleScenario() => this.Executor.RunScenario(
 			Scenario("Example scenario"),
 			Given("the setup is \"correct\"", Pending),
+			And("A list is contained in the input", Pending),
 			When("the user does something", Pending),
 			Then("the state should be updated correctly", Pending));
 
-		[Test]
+		[Fact]
 		public Task Scenario_AnotherScenario() => this.Executor.RunScenario(
 			Scenario("Another scenario"),
 			Given("I know what I'm doing", Pending),
 			And("I'm good at doing it", Pending),
 			When("I code more", Pending),
-			Then("I will produce working software!", Pending));
+			Then("I will produce working software!", Pending),
+			But("it might not be useful", Pending));
 	}
 }
