@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Gherkin.Ast;
+using ResponsibleGherkin.Utilities;
 using Xunit;
 
 namespace ResponsibleGherkin.Tests;

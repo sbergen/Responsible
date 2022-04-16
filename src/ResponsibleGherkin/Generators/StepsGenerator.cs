@@ -1,6 +1,7 @@
 using Gherkin.Ast;
+using ResponsibleGherkin.Utilities;
 
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Generators;
 
 public static class StepsGenerator
 {

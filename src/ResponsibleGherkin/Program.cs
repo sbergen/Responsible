@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.Text.Json;
 using Gherkin;
+using ResponsibleGherkin.Generators;
 
 namespace ResponsibleGherkin;
 

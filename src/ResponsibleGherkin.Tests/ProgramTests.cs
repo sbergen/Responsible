@@ -3,6 +3,7 @@ using System.CommandLine.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using FluentAssertions;
+using ResponsibleGherkin.Generators;
 using VerifyXunit;
 using Xunit;
 using static VerifyXunit.Verifier;

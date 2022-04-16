@@ -4,6 +4,7 @@ using System.Reflection;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using ResponsibleGherkin.Generators;
 using Xunit;
 using static ResponsibleGherkin.Tests.TestData;
 

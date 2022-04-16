@@ -1,4 +1,6 @@
-namespace ResponsibleGherkin;
+using ResponsibleGherkin.Utilities;
+
+namespace ResponsibleGherkin.Generators;
 
 public static class MultipleItemGenerator
 {
