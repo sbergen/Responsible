@@ -23,6 +23,7 @@ public class CodeGeneratorCompilationTests
 		"netstandard, Version=2.0.0.0",
 		"System.Runtime, Version=6.0.0.0",
 		"System.Private.CoreLib, Version=6.0.0.0",
+		"System.Threading.Tasks, Version=4.0.0.0",
 	};
 
 	private static readonly PortableExecutableReference[] References = Enumerable
@@ -53,6 +54,7 @@ namespace {DefaultConfiguration.Namespace}
 	[InlineData(MinimalFeature)]
 	[InlineData(BasicFeature)]
 	[InlineData(Rules)]
+	[InlineData(BackgroundFeature)]
 	public void Feature_CompilesWithoutDiagnostics_WithXUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
