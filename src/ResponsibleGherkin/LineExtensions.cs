@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace ResponsibleGherkin;
 
 public static class LineExtensions

@@ -13,6 +13,6 @@ public class CodeGeneratorTests
 
 		// I'm tightly coupling the test data to this assertion, yes.
 		// Without some kind of test asset tagging, I'm not sure what would be cleaner.
-		Assert.Contains("Unsupported step keyword: '*'", exception!.Message);
+		Assert.Contains("Unsupported step keyword: '*'", exception.Message);
 	}
 }
