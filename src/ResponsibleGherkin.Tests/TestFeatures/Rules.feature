@@ -1,7 +1,8 @@
-# Copied from Gherkin docs...
 Feature: Highlander
 
   Rule: There can be only One
+    This rule is copied from the Gherkin docs
+    and I think it references something I'm not familiar with.
 
     Example: Only One -- More than one alive
       Given there are 3 ninjas

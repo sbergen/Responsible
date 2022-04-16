@@ -17,6 +17,11 @@ public static class ScenarioGenerator
 		Flavor flavor,
 		Configuration configuration)
 	{
+		foreach (var line in DescriptionGenerator.Generate(scenario))
+		{
+			yield return line;
+		}
+
 		yield return $"[{flavor.TestAttribute}]";
 
 		var methodName = $"{scenario.MapKeywordToValid()}_{scenario.Name.ToPascalCase()}";

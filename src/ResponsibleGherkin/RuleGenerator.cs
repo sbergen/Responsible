@@ -18,6 +18,17 @@ public static class RuleGenerator
 		Configuration configuration)
 	{
 		yield return $"#region {rule.Keyword} {rule.Name}";
+
+		if (!string.IsNullOrEmpty(rule.Description))
+		{
+			yield return "";
+
+			foreach (var line in DescriptionGenerator.Generate(rule))
+			{
+				yield return line;
+			}
+		}
+
 		yield return "";
 
 		var scenarios = rule.Children.OfType<Scenario>().ToList();
