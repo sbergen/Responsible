@@ -1,0 +1,30 @@
+﻿using Responsible;
+using System.Threading.Tasks;
+using Xunit;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class HavingBackgroundSetup : MyTestBase, IAsyncLifetime
+	{
+		// Sometimes you need to set up things for all cases
+		public Task InitializeAsync() => this.Executor.RunScenario(
+			Scenario("Set up the scenario"),
+			Given("a correct setup", Pending),
+			And("another step in the setup", Pending));
+
+		public Task DisposeAsync() => Task.CompletedTask;
+
+		[Fact]
+		public Task Scenario_FirstScenario() => this.Executor.RunScenario(
+			Scenario("First scenario"),
+			When("I do something", Pending),
+			Then("It will be done", Pending));
+
+		[Fact]
+		public Task Scenario_SecondScenario() => this.Executor.RunScenario(
+			Scenario("Second scenario"),
+			When("I do something else", Pending),
+			Then("It will also be done", Pending));
+	}
+}

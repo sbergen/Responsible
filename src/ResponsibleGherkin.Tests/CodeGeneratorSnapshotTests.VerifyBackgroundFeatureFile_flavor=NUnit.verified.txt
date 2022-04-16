@@ -1,0 +1,29 @@
+﻿using NUnit.Framework;
+using Responsible;
+using System.Threading.Tasks;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class HavingBackgroundSetup : MyTestBase
+	{
+		// Sometimes you need to set up things for all cases
+		[SetUp]
+		public Task SetUpBackground() => this.Executor.RunScenario(
+			Scenario("Set up the scenario"),
+			Given("a correct setup", Pending),
+			And("another step in the setup", Pending));
+
+		[Test]
+		public Task Scenario_FirstScenario() => this.Executor.RunScenario(
+			Scenario("First scenario"),
+			When("I do something", Pending),
+			Then("It will be done", Pending));
+
+		[Test]
+		public Task Scenario_SecondScenario() => this.Executor.RunScenario(
+			Scenario("Second scenario"),
+			When("I do something else", Pending),
+			Then("It will also be done", Pending));
+	}
+}

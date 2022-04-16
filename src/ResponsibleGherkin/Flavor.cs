@@ -1,12 +1,18 @@
+using Xunit;
+
 namespace ResponsibleGherkin;
 
 public record Flavor(
+	BackgroundFlavor BackgroundFlavor,
 	string[] RequiredNamespaces,
 	string TestAttribute,
 	string ReturnType,
 	string RunMethod)
 {
 	public static readonly Flavor Unity = new(
+		new BackgroundFlavor(
+			"SetUpBackground",
+			"UnitySetUp"),
 		new[]
 		{
 			"System.Collections",
@@ -17,6 +23,9 @@ public record Flavor(
 		"YieldScenario");
 
 	public static readonly Flavor NUnit = new(
+		new BackgroundFlavor(
+			"SetUpBackground",
+			"SetUp"),
 		new[]
 		{
 			"System.Threading.Tasks",
@@ -27,6 +36,11 @@ public record Flavor(
 		"RunScenario");
 
 	public static readonly Flavor Xunit = new(
+		new BackgroundFlavor(
+			nameof(IAsyncLifetime.InitializeAsync),
+			null,
+			nameof(IAsyncLifetime),
+			nameof(IAsyncLifetime.DisposeAsync)),
 		new[]
 		{
 			"System.Threading.Tasks",

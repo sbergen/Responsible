@@ -1,0 +1,29 @@
+﻿using Responsible;
+using System.Collections;
+using UnityEngine.TestTools;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class HavingBackgroundSetup : MyTestBase
+	{
+		// Sometimes you need to set up things for all cases
+		[UnitySetUp]
+		public IEnumerator SetUpBackground() => this.Executor.YieldScenario(
+			Scenario("Set up the scenario"),
+			Given("a correct setup", Pending),
+			And("another step in the setup", Pending));
+
+		[UnityTest]
+		public IEnumerator Scenario_FirstScenario() => this.Executor.YieldScenario(
+			Scenario("First scenario"),
+			When("I do something", Pending),
+			Then("It will be done", Pending));
+
+		[UnityTest]
+		public IEnumerator Scenario_SecondScenario() => this.Executor.YieldScenario(
+			Scenario("Second scenario"),
+			When("I do something else", Pending),
+			Then("It will also be done", Pending));
+	}
+}

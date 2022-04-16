@@ -15,15 +15,22 @@ public static class FeatureGenerator
 			yield return line;
 		}
 
-		yield return $"public class {feature.Name.ToPascalCase()} : {configuration.BaseClass}";
-		yield return "{";
+		var background = feature.Children
+			.OfType<Background>()
+			.FirstOrDefault();
+		var className =feature.Name.ToPascalCase();
+		var interfaces = background != null && flavor.BackgroundFlavor.Interface != null
+			? $", {flavor.BackgroundFlavor.Interface}"
+			: "";
 
-		// TODO support background
+		yield return $"public class {className} : {configuration.BaseClass}{interfaces}";
+		yield return "{";
 
 		var scenarios = feature.Children.OfType<Scenario>().ToList();
 		var rules = feature.Children.OfType<Rule>().ToList();
-		foreach (var line in ScenarioGenerator
-			.Generate(scenarios, flavor, configuration)
+		foreach (var line in
+			BackgroundGenerator.Generate(background, flavor, configuration).
+			Concat(ScenarioGenerator.Generate(scenarios, flavor, configuration))
 			.Concat(RuleGenerator.Generate(rules, flavor, configuration)))
 		{
 			yield return line.IndentBy(1);

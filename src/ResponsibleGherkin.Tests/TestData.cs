@@ -17,6 +17,7 @@ internal static class TestData
 	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
 
 	public const string MinimalFeature = "MinimalFeature";
+	public const string BackgroundFeature = "BackgroundFeature";
 	public const string BasicFeature = "BasicFeature";
 	public const string UnsupportedKeyword = "UnsupportedKeyword";
 	public const string Rules = "Rules";
