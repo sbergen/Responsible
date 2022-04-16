@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace ResponsibleGherkin.Tests;
@@ -8,17 +9,18 @@ public class FlavorTests
 	[Fact]
 	public void FromType_ThrowsMeaningfulException_ForInvalidType()
 	{
-		var exception = Assert.Throws<ArgumentOutOfRangeException>(
-			() => Flavor.FromType((FlavorType)42));
+		var fromType = () => Flavor.FromType((FlavorType)42);
 
-		Assert.Contains("flavor", exception.Message);
-		Assert.Contains("42", exception.Message);
+		fromType.Should()
+			.Throw<ArgumentOutOfRangeException>("an invalid flavor was used")
+			.WithMessage("*flavor*42*", "the message should be informative");
 	}
 
 	[Theory]
 	[ClassData(typeof(EnumValues<FlavorType>))]
 	public void FromType_DoesNotThrow_ForValidType(FlavorType type)
 	{
-		Assert.NotNull(Flavor.FromType(type));
+		var fromType = () => Flavor.FromType(type);
+		fromType.Should().NotThrow("valid inputs should be accepted");
 	}
 }
