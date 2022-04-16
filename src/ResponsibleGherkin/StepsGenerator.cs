@@ -16,6 +16,6 @@ public static class StepsGenerator
 
 		return keyword.IsSupportedKeyword()
 			? $"{keyword}({step.Text.Quote()}, Pending){(isLast ? ");" : ",")}"
-			: throw new UnsupportedKeywordException("step", keyword);
+			: throw new UnsupportedKeywordException("step", keyword, step.Location);
 	}
 }

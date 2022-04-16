@@ -18,8 +18,6 @@ public class CodeGeneratorTests
 		// Without some kind of test asset tagging, I'm not sure what would be cleaner.
 		codeGeneration.Should()
 			.Throw<UnsupportedKeywordException>()
-			.And.Message.Should().Contain(
-				"Unsupported step keyword: '*'",
-				"the message should be informative");
+			.And.Message.Should().ContainAll("Unsupported step keyword", "*", "(at 4:5)");
 	}
 }

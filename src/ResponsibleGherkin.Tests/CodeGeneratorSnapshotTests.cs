@@ -9,15 +9,14 @@ namespace ResponsibleGherkin.Tests;
 [UsesVerify]
 public class CodeGeneratorSnapshotTests
 {
-	[Fact]
-	public Task VerifyBasicFeatureFile() => Verify(GenerateCode(BasicFeature));
+	[Theory]
+	[InlineData(FlavorType.Unity)]
+	[InlineData(FlavorType.NUnit)]
+	[InlineData(FlavorType.Xunit)]
+	public async Task VerifyBasicFeatureFile(FlavorType flavor) =>
+		await Verify(GenerateCode(BasicFeature, flavor)).UseParameters(flavor);
 
-	[Fact]
-	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(BasicFeature, FlavorType.Unity));
-
-	private static string GenerateCode(
-		string name,
-		FlavorType flavor = FlavorType.NUnit) =>
+	private static string GenerateCode(string name, FlavorType flavor) =>
 		CodeGenerator
 			.GenerateClass(
 				LoadFeature(name).Feature,

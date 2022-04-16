@@ -91,7 +91,7 @@ public class ProgramTests
 	public void Generate_ContainsDescriptiveError_WhenInputFileIsInvalid()
 	{
 		this.RunAssertingFailure("generate", "config.json", "InvalidFeature.feature", "./");
-		this.ConsoleErrors().Should().Contain("read input");
+		this.ConsoleErrors().Should().ContainAll("read input", "Parser errors");
 	}
 
 	[Fact]
