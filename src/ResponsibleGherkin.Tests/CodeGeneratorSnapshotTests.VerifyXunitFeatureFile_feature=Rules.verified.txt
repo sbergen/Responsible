@@ -9,6 +9,9 @@ namespace MyNamespace
 	{
 		#region Rule There can be only One
 
+		// This rule is copied from the Gherkin docs
+		// and I think it references something I'm not familiar with.
+
 		[Fact]
 		public Task Example_OnlyOneMoreThanOneAlive() => this.Executor.RunScenario(
 			Scenario("Only One -- More than one alive"),

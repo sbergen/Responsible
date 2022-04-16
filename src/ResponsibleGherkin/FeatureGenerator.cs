@@ -9,6 +9,11 @@ public static class FeatureGenerator
 		Flavor flavor,
 		Configuration configuration)
 	{
+		foreach (var line in DescriptionGenerator.Generate(feature))
+		{
+			yield return line;
+		}
+
 		yield return $"public class {feature.Name.ToPascalCase()} : {configuration.BaseClass}";
 		yield return "{";
 

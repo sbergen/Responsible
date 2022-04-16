@@ -5,6 +5,8 @@ using static Responsible.Bdd.Keywords;
 
 namespace MyNamespace
 {
+	// This feature is just an example,
+	// and it has a multi-line description.
 	public class ExampleFeature : MyTestBase
 	{
 		[Fact]
@@ -15,6 +17,8 @@ namespace MyNamespace
 			When("the user does something", Pending),
 			Then("the state should be updated correctly", Pending));
 
+		// This is another example scenario,
+		// it also has a multi-line description.
 		[Fact]
 		public Task Scenario_AnotherScenario() => this.Executor.RunScenario(
 			Scenario("Another scenario"),
