@@ -41,6 +41,22 @@ references:
   isSpec: "True"
   fullName: Responsible.Bdd.Keywords.And
   nameWithType: Keywords.And
+- uid: Responsible.Bdd.Keywords.But(System.String,Responsible.ITestInstruction{System.Object})
+  name: But(String, ITestInstruction<Object>)
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_But_System_String_Responsible_ITestInstruction_System_Object__
+  commentId: M:Responsible.Bdd.Keywords.But(System.String,Responsible.ITestInstruction{System.Object})
+  name.vb: But(String, ITestInstruction(Of Object))
+  fullName: Responsible.Bdd.Keywords.But(System.String, Responsible.ITestInstruction<System.Object>)
+  fullName.vb: Responsible.Bdd.Keywords.But(System.String, Responsible.ITestInstruction(Of System.Object))
+  nameWithType: Keywords.But(String, ITestInstruction<Object>)
+  nameWithType.vb: Keywords.But(String, ITestInstruction(Of Object))
+- uid: Responsible.Bdd.Keywords.But*
+  name: But
+  href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_But_
+  commentId: Overload:Responsible.Bdd.Keywords.But
+  isSpec: "True"
+  fullName: Responsible.Bdd.Keywords.But
+  nameWithType: Keywords.But
 - uid: Responsible.Bdd.Keywords.Given(System.String,Responsible.ITestInstruction{System.Object})
   name: Given(String, ITestInstruction<Object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Given_System_String_Responsible_ITestInstruction_System_Object__

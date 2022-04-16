@@ -317,12 +317,61 @@ Allows you to quickly write scenarios, and leave the implementation for later.</
   </h3>
   <a id="Responsible_Bdd_Keywords_And_" data-uid="Responsible.Bdd.Keywords.And*"></a>
   <h4 id="Responsible_Bdd_Keywords_And_System_String_Responsible_ITestInstruction_System_Object__" data-uid="Responsible.Bdd.Keywords.And(System.String,Responsible.ITestInstruction{System.Object})">And(String, ITestInstruction&lt;Object&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a step that describes additional initial context of a test.</p>
+  <div class="markdown level1 summary"><p>Creates a step that describes additional after a Given, When, or Then.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static IBddStep And(string description, ITestInstruction&lt;object&gt; instruction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">description</span></td>
+        <td><p>Description of the step.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Responsible.ITestInstruction-1.html">ITestInstruction</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">instruction</span></td>
+        <td><p>Instruction to execute in this step.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Responsible.Bdd.IBddStep.html">IBddStep</a></td>
+        <td><p>The given instruction as a BDD test step.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Responsible_Bdd_Keywords_But_" data-uid="Responsible.Bdd.Keywords.But*"></a>
+  <h4 id="Responsible_Bdd_Keywords_But_System_String_Responsible_ITestInstruction_System_Object__" data-uid="Responsible.Bdd.Keywords.But(System.String,Responsible.ITestInstruction{System.Object})">But(String, ITestInstruction&lt;Object&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a step that describes additional after a Given, When, or Then.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IBddStep But(string description, ITestInstruction&lt;object&gt; instruction)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
