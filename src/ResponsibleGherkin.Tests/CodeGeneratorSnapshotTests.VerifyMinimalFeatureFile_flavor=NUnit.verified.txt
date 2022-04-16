@@ -1,0 +1,17 @@
+﻿using NUnit.Framework;
+using Responsible;
+using System.Threading.Tasks;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class MinimalFeature : MyTestBase
+	{
+		[Test]
+		public Task Scenario_MinimalScenario() => this.Executor.RunScenario(
+			Scenario("Minimal scenario"),
+			Given("I have ice cream", Pending),
+			When("I eat it", Pending),
+			Then("I will be happy", Pending));
+	}
+}

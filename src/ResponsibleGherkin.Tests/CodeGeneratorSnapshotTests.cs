@@ -9,12 +9,14 @@ namespace ResponsibleGherkin.Tests;
 [UsesVerify]
 public class CodeGeneratorSnapshotTests
 {
+	// Only verify the minimal version for now, to minimize the amount of snapshots
+	// Differences between flavours are simple enough to not have to test anything more complex.
 	[Theory]
 	[InlineData(FlavorType.Unity)]
 	[InlineData(FlavorType.NUnit)]
 	[InlineData(FlavorType.Xunit)]
-	public async Task VerifyBasicFeatureFile(FlavorType flavor) =>
-		await Verify(GenerateCode(BasicFeature, flavor)).UseParameters(flavor);
+	public async Task VerifyMinimalFeatureFile(FlavorType flavor) =>
+		await Verify(GenerateCode(MinimalFeature, flavor)).UseParameters(flavor);
 
 	private static string GenerateCode(string name, FlavorType flavor) =>
 		CodeGenerator
