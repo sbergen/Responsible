@@ -69,7 +69,9 @@ namespace Responsible.Tests
 				.Details("  ").NotStarted("When when")
 				.Details("    ").NotStarted("when inner")
 				.Details("  ").NotStarted("Then then")
-				.Details("    ").NotStarted("then inner");
+				.Details("    ").NotStarted("then inner")
+				.Details("  ").NotStarted("But but")
+				.Details("    ").NotStarted("but inner");
 		}
 
 		[Test]

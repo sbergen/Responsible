@@ -11,7 +11,6 @@ public static class SupportedKeywords
 		"Then",
 		"And",
 		"But",
-		"*",
 	};
 
 	private static readonly string[] SupportedScenarios =
