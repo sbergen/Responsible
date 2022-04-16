@@ -14,6 +14,8 @@ and thus not under semantic versioning.
 ### Added
 - New `GroupedAs` operator to allow more control over the state strings of compound operations.
 - Experimental: New BDD-style keywords to build scenarios.
+- Experimental: ResponsibleGherkin dotnet tool to convert Gherkin feature specifications into Responsible test stubs.
+  Versioning of this tool is still to be figured out.
 
 ## [4.2.0] - 2021-10-13
 
