@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using VerifyXunit;
 using Xunit;
 using static VerifyXunit.Verifier;
-using static ResponsibleGherkin.Tests.TestFeatures;
+using static ResponsibleGherkin.Tests.TestData;
 
 namespace ResponsibleGherkin.Tests;
 
@@ -10,11 +10,10 @@ namespace ResponsibleGherkin.Tests;
 public class CodeGeneratorSnapshotTests
 {
 	[Fact]
-	public Task VerifyBasicFeatureFile() => Verify(GenerateCode("BasicFeature"));
+	public Task VerifyBasicFeatureFile() => Verify(GenerateCode(BasicFeature));
 
 	[Fact]
-	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(
-		"BasicFeature", FlavorType.Unity));
+	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(BasicFeature, FlavorType.Unity));
 
 	private static string GenerateCode(
 		string name,
