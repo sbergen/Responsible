@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
@@ -64,6 +65,6 @@ namespace {DefaultConfiguration.Namespace}
 		var compilation = CSharpCompilation.Create("MyTests", syntaxTrees, References, options);
 		var diagnostics = compilation.GetDiagnostics();
 
-		Assert.Empty(diagnostics);
+		diagnostics.Should().BeEmpty();
 	}
 }
