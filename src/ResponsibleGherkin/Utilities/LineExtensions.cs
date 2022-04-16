@@ -1,4 +1,4 @@
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Utilities;
 
 public static class LineExtensions
 {

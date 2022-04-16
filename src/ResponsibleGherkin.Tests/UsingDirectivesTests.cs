@@ -1,5 +1,6 @@
 using System.Linq;
 using FluentAssertions;
+using ResponsibleGherkin.Generators;
 using Xunit;
 
 namespace ResponsibleGherkin.Tests;

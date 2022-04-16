@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Utilities;
 
 public static class StringExtensions
 {

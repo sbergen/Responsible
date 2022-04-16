@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Utilities;
 
 public static class PascalCaseConverter
 {

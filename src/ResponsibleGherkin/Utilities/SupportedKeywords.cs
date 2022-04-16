@@ -1,6 +1,6 @@
 using Gherkin.Ast;
 
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Utilities;
 
 public static class SupportedKeywords
 {

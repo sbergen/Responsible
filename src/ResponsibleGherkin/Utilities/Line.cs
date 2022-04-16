@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace ResponsibleGherkin;
+namespace ResponsibleGherkin.Utilities;
 
 public readonly record struct Line(string Content, int Indent = 0)
 {
