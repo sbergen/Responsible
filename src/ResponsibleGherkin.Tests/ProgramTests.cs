@@ -1,4 +1,3 @@
-using System;
 using System.CommandLine;
 using System.CommandLine.IO;
 using System.IO.Abstractions.TestingHelpers;
@@ -24,6 +23,10 @@ public class ProgramTests
 		this.fileSystem.AddFile(
 			"MinimalFeature.feature",
 			TestFeatures.MinimalFeatureString);
+
+		this.fileSystem.AddFile(
+			"UnsupportedKeyword.feature",
+			TestFeatures.UnsupportedKeywordFeatureString);
 
 		this.fileSystem.AddFile(
 			"InvalidFeature.feature",
@@ -89,10 +92,25 @@ public class ProgramTests
 	}
 
 	[Fact]
+	public void Generate_ContainsDescriptiveError_WhenInputFileIsNotSupported()
+	{
+		this.RunAssertingFailure("generate", "config.json", "UnsupportedKeyword.feature", "./");
+		Assert.Contains("generate code", this.console.Error.ToString()!);
+	}
+
+	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenDirectoryIsInvalid()
 	{
-		this.RunAssertingFailure("generate", "config.json", "MinimalFeature.feature", "......");
+		this.RunAssertingFailure("generate", "config.json", "MinimalFeature.feature", "*");
 		Assert.Contains("write output", this.console.Error.ToString()!);
+	}
+
+	[Fact]
+	public void Generate_CreatesOutputDirectory_WhenItDoesNotExist()
+	{
+		this.RunAssertingSuccess("generate", "config.json", "MinimalFeature.feature", "./Output");
+		Assert.True(this.fileSystem.Directory.Exists("Output"));
+		Assert.True(this.fileSystem.File.Exists("Output/MinimalFeature.cs"));
 	}
 
 	private void RunAssertingFailure(params string[] args)

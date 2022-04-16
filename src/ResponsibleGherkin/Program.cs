@@ -167,12 +167,13 @@ store it to a file, and then generate your code using
 						return document.Feature;
 					});
 
-					var content = Run("generate content", () => CodeGenerator.GenerateClass(
+					var content = Run("generate code", () => CodeGenerator.GenerateClass(
 						feature,
 						configuration));
 
 					var _ = Run("write output", () =>
 					{
+						fileSystem.Directory.CreateDirectory(outputDirectory);
 						fileSystem.File.WriteAllLines(
 							Path.Combine(outputDirectory, content.ClassFileName()),
 							content.FileLines);

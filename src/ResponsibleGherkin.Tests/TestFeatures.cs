@@ -16,7 +16,10 @@ internal static class TestFeatures
 
 	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
 
-	public static readonly string MinimalFeatureString = File.ReadAllText(FeatureFileName("MinimalFeature"));
+  	public static readonly string MinimalFeatureString = File.ReadAllText(FeatureFileName("MinimalFeature"));
+
+    public static readonly string UnsupportedKeywordFeatureString =
+	    File.ReadAllText(FeatureFileName("UnsupportedKeyword"));
 
 	public static GherkinDocument LoadFeature(string featureName) =>
 		new Parser { StopAtFirstError = true }
