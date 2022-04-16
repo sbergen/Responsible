@@ -7,12 +7,12 @@ public static class ScenarioGenerator
 	public static IEnumerable<Line> Generate(
 		Scenario scenario,
 		Flavor flavor,
-		GenerationContext context)
+		Configuration configuration)
 	{
 		yield return $"[{flavor.TestAttribute}]";
 
 		var methodName = $"{scenario.Keyword.Trim()}_{scenario.Name.ToPascalCase()}";
-		yield return $"public {flavor.ReturnType} {methodName}() => this.{context.ExecutorName}.{flavor.RunMethod}(";
+		yield return $"public {flavor.ReturnType} {methodName}() => this.{configuration.ExecutorName}.{flavor.RunMethod}(";
 
 		yield return GenerateScenario(scenario).IndentBy(1);
 

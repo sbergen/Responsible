@@ -1,0 +1,21 @@
+﻿{
+  Out:
+Description:
+  Generate test case stubs
+
+Usage:
+  responsible-gherkin generate <config> <input> <output> [options]
+
+Arguments:
+  <config>  Path to configuration file to use
+  <input>   Input feature file to generate code from
+  <output>  Directory to write content into
+
+Options:
+  -?, -h, --help  Show help and usage information
+
+
+
+,
+  Error: 
+}

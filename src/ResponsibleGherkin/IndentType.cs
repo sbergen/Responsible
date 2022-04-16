@@ -3,9 +3,8 @@ using System.Text.Json.Serialization;
 namespace ResponsibleGherkin;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum FlavorType
+public enum IndentType
 {
-	Unity,
-	NUnit,
-	Xunit,
+	Tabs,
+	Spaces,
 }

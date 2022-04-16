@@ -1,25 +1,27 @@
 using System.Threading.Tasks;
-using NUnit.Framework;
-using static VerifyNUnit.Verifier;
+using VerifyXunit;
+using Xunit;
+using static VerifyXunit.Verifier;
 using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
 
+[UsesVerify]
 public class CodeGeneratorSnapshotTests
 {
-	[Test]
+	[Fact]
 	public Task VerifyBasicFeatureFile() => Verify(GenerateCode("BasicFeature"));
 
-	[Test]
+	[Fact]
 	public Task VerifyBasicFeatureFile_WithUnity() => Verify(GenerateCode(
 		"BasicFeature", FlavorType.Unity));
 
 	private static string GenerateCode(
 		string name,
-		FlavorType flavor = FlavorType.NUnit,
-		GenerationContext? context = null) =>
-		CodeGenerator.GenerateFile(
-			LoadFeature(name).Feature,
-			flavor,
-			context ?? DefaultContext);
+		FlavorType flavor = FlavorType.NUnit) =>
+		CodeGenerator
+			.GenerateClass(
+				LoadFeature(name).Feature,
+				DefaultConfiguration with { Flavor = flavor })
+			.BuildFileContent();
 }

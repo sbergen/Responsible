@@ -14,7 +14,7 @@
         <MSBuildProjectExtensionsPath>.obj</MSBuildProjectExtensionsPath>
 
         <!-- For the same reasons as above, exclude these Unity files from standard projects -->
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.meta;package.json;*.asmdef</DefaultItemExcludes>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.meta;package.json;*.asmdef;StrykerOutput/**</DefaultItemExcludes>
 
         <!--
             CS1573: The build doesn't understand inheritdoc, so suppress warnings for missing parameter docs

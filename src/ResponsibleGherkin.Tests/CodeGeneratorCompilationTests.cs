@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using NUnit.Framework;
+using Xunit;
 using static ResponsibleGherkin.Tests.TestFeatures;
 
 namespace ResponsibleGherkin.Tests;
@@ -12,7 +12,7 @@ public class CodeGeneratorCompilationTests
 {
 	private static readonly Type[] MetaDataSourceTypes =
 	{
-		typeof(TestAttribute),
+		typeof(FactAttribute),
 		typeof(Responsible.Responsibly),
 	};
 
@@ -34,25 +34,26 @@ public class CodeGeneratorCompilationTests
 	private static readonly string TestBaseClassCode = $@"
 using Responsible;
 
-namespace {DefaultContext.Namespace}
+namespace {DefaultConfiguration.Namespace}
 {{
-	public abstract class {DefaultContext.BaseClass}
+	public abstract class {DefaultConfiguration.BaseClass}
 	{{
-		protected TestInstructionExecutor {DefaultContext.ExecutorName} {{ get; private set; }}
+		protected TestInstructionExecutor {DefaultConfiguration.ExecutorName} {{ get; private set; }}
 	}}
 }}
 ";
 
-	[Test]
+	[Fact]
 	public void Precondition_TestBaseClass_CompilesWithoutDiagnostics() =>
 		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode);
 
-	[TestCase("BasicFeature")]
+	[Theory]
+	[InlineData("BasicFeature")]
 	public void Feature_CompilesWithoutDiagnostics_WithNUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);
-		var code = CodeGenerator.GenerateFile(document.Feature, FlavorType.NUnit, DefaultContext);
-		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code);
+		var code = CodeGenerator.GenerateClass(document.Feature, DefaultConfiguration);
+		AssertCodeCompilesWithoutDiagnostics(TestBaseClassCode, code.BuildFileContent());
 	}
 
 	private static void AssertCodeCompilesWithoutDiagnostics(params string[] codes)
@@ -63,6 +64,6 @@ namespace {DefaultContext.Namespace}
 		var compilation = CSharpCompilation.Create("MyTests", syntaxTrees, References, options);
 		var diagnostics = compilation.GetDiagnostics();
 
-		Assert.IsEmpty(diagnostics);
+		Assert.Empty(diagnostics);
 	}
 }

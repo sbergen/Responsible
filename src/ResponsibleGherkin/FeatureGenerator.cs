@@ -7,9 +7,9 @@ public static class FeatureGenerator
 	public static IEnumerable<Line> Generate(
 		Feature feature,
 		Flavor flavor,
-		GenerationContext context)
+		Configuration configuration)
 	{
-		yield return $"public class {feature.Name.ToPascalCase()} : {context.BaseClass}";
+		yield return $"public class {feature.Name.ToPascalCase()} : {configuration.BaseClass}";
 		yield return "{";
 
 		var scenarios = feature.Children.OfType<Scenario>().ToList();
@@ -19,7 +19,7 @@ public static class FeatureGenerator
 		foreach (var (scenario, isLast) in scenarios
 			.Select((s, i) => (s, i == scenarios.Count - 1)))
 		{
-			foreach (var scenarioLine in ScenarioGenerator.Generate(scenario, flavor, context))
+			foreach (var scenarioLine in ScenarioGenerator.Generate(scenario, flavor, configuration))
 			{
 				yield return scenarioLine.IndentBy(1);
 			}

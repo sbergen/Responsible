@@ -1,18 +1,16 @@
-using System.Text;
-
 namespace ResponsibleGherkin;
 
 public static class LineExtensions
 {
-	public static void AppendToBuilder(
+	public static void AppendToList(
 		this IEnumerable<Line> lines,
-		StringBuilder stringBuilder,
+		IList<string> resultList,
 		IndentInfo indentInfo,
 		int indentBy = 0)
 	{
 		foreach (var line in lines)
 		{
-			line.IndentBy(indentBy).AppendToBuilder(stringBuilder, indentInfo);
+			resultList.Add(line.IndentBy(indentBy).BuildString(indentInfo));
 		}
 	}
 }

@@ -26,10 +26,21 @@ public record Flavor(
 		"Task",
 		"RunScenario");
 
+	public static readonly Flavor Xunit = new(
+		new[]
+		{
+			"System.Threading.Tasks",
+			"Xunit",
+		},
+		"Fact",
+		"Task",
+		"RunScenario");
+
 	public static Flavor FromType(FlavorType type) => type switch
 	{
 		FlavorType.Unity => Unity,
 		FlavorType.NUnit => NUnit,
+		FlavorType.Xunit => Xunit,
 		_ => throw new ArgumentOutOfRangeException(
 			nameof(type), type, "Invalid flavor of code generation"),
 	};

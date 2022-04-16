@@ -9,3 +9,7 @@ trim_trailing_whitespace = true
 charset = utf-8
 indent_style = tab
 indent_size = 4
+
+[{*.received.txt,*.verified.txt}]
+insert_final_newline = false
+trim_trailing_whitespace = false
