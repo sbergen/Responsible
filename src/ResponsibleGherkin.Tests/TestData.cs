@@ -19,6 +19,7 @@ internal static class TestData
 	public const string MinimalFeature = "MinimalFeature";
 	public const string BasicFeature = "BasicFeature";
 	public const string UnsupportedKeyword = "UnsupportedKeyword";
+	public const string Rules = "Rules";
 
 	public static readonly string MinimalFeatureContent = File.ReadAllText(FeatureFileName(MinimalFeature));
 

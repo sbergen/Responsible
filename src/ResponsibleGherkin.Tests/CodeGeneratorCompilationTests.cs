@@ -51,6 +51,7 @@ namespace {DefaultConfiguration.Namespace}
 	[Theory]
 	[InlineData(MinimalFeature)]
 	[InlineData(BasicFeature)]
+	[InlineData(Rules)]
 	public void Feature_CompilesWithoutDiagnostics_WithXUnit(string featureName)
 	{
 		var document = LoadFeature(featureName);

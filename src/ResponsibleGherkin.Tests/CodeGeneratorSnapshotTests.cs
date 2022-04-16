@@ -18,6 +18,12 @@ public class CodeGeneratorSnapshotTests
 	public async Task VerifyMinimalFeatureFile(FlavorType flavor) =>
 		await Verify(GenerateCode(MinimalFeature, flavor)).UseParameters(flavor);
 
+	[Theory]
+	[InlineData(BasicFeature)]
+	[InlineData(Rules)]
+	public async Task VerifyXunitFeatureFile(string feature) =>
+		await Verify(GenerateCode(feature, FlavorType.Xunit)).UseParameters(feature);
+
 	private static string GenerateCode(string name, FlavorType flavor) =>
 		CodeGenerator
 			.GenerateClass(

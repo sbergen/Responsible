@@ -1,0 +1,38 @@
+﻿using Responsible;
+using System.Threading.Tasks;
+using Xunit;
+using static Responsible.Bdd.Keywords;
+
+namespace MyNamespace
+{
+	public class Highlander : MyTestBase
+	{
+		#region Rule There can be only One
+
+		[Fact]
+		public Task Example_OnlyOneMoreThanOneAlive() => this.Executor.RunScenario(
+			Scenario("Only One -- More than one alive"),
+			Given("there are 3 ninjas", Pending),
+			And("there are more than one ninja alive", Pending),
+			When("2 ninjas meet, they will fight", Pending),
+			Then("one ninja dies (but not me)", Pending),
+			And("there is one ninja less alive", Pending));
+
+		[Fact]
+		public Task Example_OnlyOneOneAlive() => this.Executor.RunScenario(
+			Scenario("Only One -- One alive"),
+			Given("there is only 1 ninja alive", Pending),
+			Then("he (or she) will live forever ;-)", Pending));
+
+		#endregion
+
+		#region Rule There can be Two (in some cases)
+
+		[Fact]
+		public Task Example_TwoDeadAndRebornAsPhoenix() => this.Executor.RunScenario(
+			Scenario("Two -- Dead and Reborn as Phoenix"),
+			Given("the example ends...", Pending));
+
+		#endregion
+	}
+}

@@ -37,6 +37,9 @@
       <None Update="TestFeatures\MinimalFeature.feature">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="TestFeatures\Rules.feature">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

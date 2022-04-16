@@ -12,22 +12,15 @@ public static class FeatureGenerator
 		yield return $"public class {feature.Name.ToPascalCase()} : {configuration.BaseClass}";
 		yield return "{";
 
-		var scenarios = feature.Children.OfType<Scenario>().ToList();
-
 		// TODO support background
 
-		foreach (var (scenario, isLast) in scenarios
-			.Select((s, i) => (s, i == scenarios.Count - 1)))
+		var scenarios = feature.Children.OfType<Scenario>().ToList();
+		var rules = feature.Children.OfType<Rule>().ToList();
+		foreach (var line in ScenarioGenerator
+			.Generate(scenarios, flavor, configuration)
+			.Concat(RuleGenerator.Generate(rules, flavor, configuration)))
 		{
-			foreach (var scenarioLine in ScenarioGenerator.Generate(scenario, flavor, configuration))
-			{
-				yield return scenarioLine.IndentBy(1);
-			}
-
-			if (!isLast)
-			{
-				yield return "";
-			}
+			yield return line.IndentBy(1);
 		}
 
 		yield return "}";
