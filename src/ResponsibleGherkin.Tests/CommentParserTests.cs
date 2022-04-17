@@ -14,9 +14,9 @@ public class CommentParserTests
 	[InlineData("# responsible-indent: 4spaces")]
 	[InlineData("# responsible-indent: 1 foo")]
 	[InlineData("# responsible-indent: foo tabs")]
-	[InlineData("# responsible-namespace: ...")]
-	[InlineData("# responsible-base-class: base class")]
-	[InlineData("# responsible-executor: 123")]
+	[InlineData("# responsible-namespace:    ")]
+	[InlineData("# responsible-base-class: \t ")]
+	[InlineData("# responsible-executor:")]
 	public void Parse_ThrowsError_OnInvalidValues(string comment)
 	{
 		var parse = () => ParseSingleLine(comment);
@@ -53,6 +53,16 @@ public class CommentParserTests
 	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, char expectedChar) =>
 		ParseSingleLine(input)
 			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedChar));
+
+	[Theory]
+	[InlineData("# responsible-namespace: My.Nested. Namespace")]
+	[InlineData("# responsible-executor: GetContext().Executor")]
+	[InlineData("# responsible-base-class: Some.Other.Namespace.BaseClass")]
+	public void Parse_DoesNotThrow_WhenNamesAreValid(string input)
+	{
+		var parse = () => ParseSingleLine(input);
+		parse.Should().NotThrow("the input is valid");
+	}
 
 	[Fact]
 	public void FullConfiguration_CanBeBuiltFromComments()
