@@ -3,7 +3,6 @@ using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
-using System.Text.Json;
 using Gherkin;
 using ResponsibleGherkin.Generators;
 
@@ -12,18 +11,36 @@ namespace ResponsibleGherkin;
 public static class Program
 {
 	private const string CommandName = "responsible-gherkin";
-	private const string ConfigureName = "configure";
-	private const string GenerateName = "generate";
 
-	private const string MainDescription =
-		$@"Generate Responsible test case stubs from Gherkin specifications.
+	private static readonly string[] DefaultConfig =
+	{
+		"# responsible-flavor: Unity",
+		"# responsible-indent: 1 tab",
+		"# responsible-namespace: MyNamespace",
+		"# responsible-base-class: MyTestBase",
+		"# responsible-executor: Executor",
+	};
 
-First generate a configuration using
-    {CommandName} {ConfigureName} ...
+	private static string FalvorTypes = string.Join(", ", Enum.GetValues(typeof(FlavorType)).Cast<FlavorType>());
 
-store it to a file, and then generate your code using
-    {CommandName} {GenerateName} ...
-";
+	private static readonly string Description =
+		"Generate Responsible test case stubs from Gherkin specifications." +
+		"\n\n" +
+		"The configuration can be specified either in comments in the Gherkin file, or in a separate file. " +
+		"Comments in a Gherkin file always take precedence over the configuration file. " +
+		"However, specifying a configuration value more than once in one source is an error. " +
+		"The configuration format is fairly self-explanatory. " +
+		"Here is the default configuration:" +
+		"\n" +
+		string.Join(Environment.NewLine, DefaultConfig) +
+		"\n\n" +
+		$"Valid flavors are: {FalvorTypes} (case insensitive)\n" +
+		"Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.\n" +
+		"The namespace is the namespace for the generated code.\n" +
+		"The base class is what the generated test classes will inherit from.\n" +
+		"The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.\n" +
+		"\n" +
+		"If no configuration file is specified, the default configuration is used.";
 
 	// This only binds the root command invocation to the real file system and console.
 	// I.e. deals only with non-testable parts.
@@ -34,110 +51,40 @@ store it to a file, and then generate your code using
 
 	public static RootCommand BuildRootCommand(IFileSystem fileSystem)
 	{
-		var rootCommand = new RootCommand(MainDescription)
-		{
-			ConfigureCommand(),
-			GenerateCommand(fileSystem),
-		};
-
-		rootCommand.Name = CommandName;
-		rootCommand.TreatUnmatchedTokensAsErrors = true;
-
-		return rootCommand;
-	}
-
-	private static Command ConfigureCommand()
-	{
-		var flavorArgument = new Argument<FlavorType>(
-			"flavor",
-			"Flavor of code generation");
-
-		var namespaceArgument = new Argument<string>(
-			"namespace",
-			"Namespace to put classes in");
-
-		var baseClassArgument = new Argument<string>(
-			"base-class",
-			"Base class to derive from");
-
-		var executorArgument = new Argument<string>(
-			"executor",
-			"Name of parameter that has the TestInstructionExecutor");
-
-		var indentTypeArgument = new Argument<IndentType>(
-			"indent-type",
-			"Type of indentation to use");
-
-		var indentAmountArgument = new Argument<int>(
-			"indent-amount",
-			"Amount of indentation to use");
-
-		var command = new Command(
-			ConfigureName,
-			$"Generate a configuration to be used with {GenerateName}")
-		{
-			flavorArgument,
-			namespaceArgument,
-			baseClassArgument,
-			executorArgument,
-			indentTypeArgument,
-			indentAmountArgument,
-		};
-
-		command.SetHandler((
-				FlavorType flavor,
-				string @namespace,
-				string baseClass,
-				string executorName,
-				IndentType indentType,
-				int indentAmount,
-				InvocationContext invocationContext) =>
-			{
-				var configuration = new Configuration(
-					flavor,
-					new IndentInfo(indentAmount, indentType),
-					@namespace,
-					baseClass,
-					executorName);
-
-				invocationContext.Console.Out.WriteLine(JsonSerializer.Serialize(
-					configuration, new JsonSerializerOptions { WriteIndented = true }));
-			},
-			flavorArgument,
-			namespaceArgument,
-			baseClassArgument,
-			executorArgument,
-			indentTypeArgument,
-			indentAmountArgument);
-
-		return command;
-	}
-
-	private static Command GenerateCommand(IFileSystem fileSystem)
-	{
-		var configFileArgument = new Argument<string>(
-			"config",
-			"Path to configuration file to use");
-
 		var inputFileArgument = new Argument<string>(
 			"input",
 			"Input feature file to generate code from");
 
 		var outputDirectoryArgument = new Argument<string>(
 			"output",
+			() => ".",
 			"Directory to write content into");
 
-		var generateCommand = new Command(GenerateName, "Generate test case stubs")
+		var configFileOption = new Option<string>(
+			new[] { "-c", "--config-file" },
+			"Path to configuration file, otherwise a default configuration will be used");
+
+		var forceOption = new Option<bool>(
+			new[] { "-f", "--force" },
+			() => false,
+			"Overwrite output file, even if it already exists");
+
+		var command = new RootCommand(Description)
 		{
-			configFileArgument,
+			configFileOption,
+			forceOption,
 			inputFileArgument,
 			outputDirectoryArgument,
 		};
 
-		generateCommand.SetHandler((
-				string configFile,
+		command.Name = CommandName;
+		command.TreatUnmatchedTokensAsErrors = true;
+
+		command.SetHandler((
+				string? configFile,
 				string inputFile,
 				string outputDirectory,
+				bool force,
 				InvocationContext invocationContext) =>
 			{
 				T Run<T>(string name, Func<T> operation)
@@ -155,18 +102,23 @@ store it to a file, and then generate your code using
 
 				try
 				{
-					var configuration = Run("read configuration", () =>
+					var baseConfig = Run("read configuration", () =>
 					{
-						using var fileReader = fileSystem.File.OpenRead(configFile);
-						return JsonSerializer.Deserialize<Configuration>(fileReader);
+						var lines = configFile != null
+							? fileSystem.File.ReadAllLines(configFile)
+							: DefaultConfig;
+						return CommentParser.ParseLines(lines);
 					});
 
-					var feature = Run("read input", () =>
+					var (feature, featureConfig) = Run("read input", () =>
 					{
 						using var fileReader = fileSystem.File.OpenText(inputFile);
 						var document = new Parser().Parse(fileReader);
-						return document.Feature;
+						return (document.Feature, CommentParser.Parse(document.Comments));
 					});
+
+					var configuration = Run("merge configurations", () =>
+						Configuration.Merge(featureConfig, baseConfig));
 
 					var content = Run("generate code", () => CodeGenerator.GenerateClass(
 						feature,
@@ -175,10 +127,18 @@ store it to a file, and then generate your code using
 					var _ = Run("write output", () =>
 					{
 						fileSystem.Directory.CreateDirectory(outputDirectory);
-						fileSystem.File.WriteAllLines(
-							Path.Combine(outputDirectory, content.ClassFileName()),
-							content.FileLines);
-						return 0;
+						var outputFileName = Path.Combine(outputDirectory, content.ClassFileName());
+
+						if (!force && fileSystem.File.Exists(outputFileName))
+						{
+							throw new ArgumentException($"Output file '{outputFileName}' already exists.");
+						}
+
+						fileSystem.File.WriteAllLines(outputFileName, content.FileLines);
+
+						invocationContext.Console.WriteLine($"Wrote file '{outputFileName}'");
+
+						return 0; // Dummy value
 					});
 
 				}
@@ -187,10 +147,11 @@ store it to a file, and then generate your code using
 					invocationContext.ExitCode = 1;
 				}
 			},
-			configFileArgument,
+			configFileOption,
 			inputFileArgument,
-			outputDirectoryArgument);
+			outputDirectoryArgument,
+			forceOption);
 
-		return generateCommand;
+		return command;
 	}
 }

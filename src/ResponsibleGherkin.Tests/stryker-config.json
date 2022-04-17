@@ -6,7 +6,6 @@
             "ResponsibleGherkin.Tests.csproj"
         ],
         "project": "ResponsibleGherkin.csproj",
-        "concurrency": 1,
         "reporters": [
             "progress",
             "html"

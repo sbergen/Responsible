@@ -3,27 +3,39 @@
 Description:
   Generate Responsible test case stubs from Gherkin specifications.
   
-  First generate a configuration using
-      responsible-gherkin configure ...
+  The configuration can be specified either in comments in the Gherkin file, or in a separate file. Comments in a Gherkin file always take precedence over the configuration file. However, specifying a configuration value more than once in one source is an error. The configuration format is fairly self-explanatory. Here is the default configuration:
+  # responsible-flavor: Unity
+  # responsible-indent: 1 tab
+  # responsible-namespace: MyNamespace
+  # responsible-base-class: MyTestBase
+  # responsible-executor: Executor
   
-  store it to a file, and then generate your code using
-      responsible-gherkin generate ...
+  Valid flavors are: Unity, NUnit, Xunit (case insensitive)
+  Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.
+  The namespace is the namespace for the generated code.
+  The base class is what the generated test classes will inherit from.
+  The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.
   
+  If no configuration file is specified, the default configuration is used.
 
 Usage:
-  responsible-gherkin [command] [options]
+  responsible-gherkin <input> [<output>] [options]
+
+Arguments:
+  <input>   Input feature file to generate code from
+  <output>  Directory to write content into [default: .]
 
 Options:
-  --version       Show version information
-  -?, -h, --help  Show help and usage information
+  -c, --config-file <config-file>  Path to configuration file, otherwise a default configuration will be used
+  -f, --force                      Overwrite output file, even if it already exists [default: False]
+  --version                        Show version information
+  -?, -h, --help                   Show help and usage information
 
-Commands:
-  configure <NUnit|Unity|Xunit> <namespace> <base-class> <executor> <Spaces|Tabs> <indent-amount>  Generate a configuration to be used with generate
-  generate <config> <input> <output>                                                               Generate test case stubs
+
 
 ,
   Error:
-Required command was not provided.
+Required argument missing for command: 'responsible-gherkin'.
 
 
 }

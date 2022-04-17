@@ -1,5 +1,4 @@
 using System.IO;
-using System.Text.Json;
 using Gherkin;
 using Gherkin.Ast;
 
@@ -14,15 +13,22 @@ internal static class TestData
 		"MyTestBase",
 		"Executor");
 
-	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
+	public const string DefaultConfigurationAsComments = @"
+# responsible-indent: 1 tab
+# responsible-namespace: MyNamespace
+# responsible-flavor: xunit
+# responsible-executor: Executor
+# responsible-base-class: MyTestBase";
 
 	public const string MinimalFeature = "MinimalFeature";
 	public const string BackgroundFeature = "BackgroundFeature";
 	public const string BasicFeature = "BasicFeature";
 	public const string UnsupportedKeyword = "UnsupportedKeyword";
 	public const string Rules = "Rules";
+	public const string PartialConfigFeature = "FeatureWithPartialConfig";
 
 	public static readonly string MinimalFeatureContent = File.ReadAllText(FeatureFileName(MinimalFeature));
+	public static readonly string PartialConfigFeatureContent = File.ReadAllText(FeatureFileName(PartialConfigFeature));
 
     public static readonly string UnsupportedKeywordFeatureContent =
 	    File.ReadAllText(FeatureFileName(UnsupportedKeyword));

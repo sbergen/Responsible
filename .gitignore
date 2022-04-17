@@ -4,3 +4,5 @@
 .obj
 *.received.txt
 
+StrykerOutput.meta
+stryker-config.json.meta
