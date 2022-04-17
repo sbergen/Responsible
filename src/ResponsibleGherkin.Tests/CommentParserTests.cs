@@ -46,13 +46,13 @@ public class CommentParserTests
 			.Flavor.Should().Be(expected);
 
 	[Theory]
-	[InlineData("# rg-indent: 1 tab", 1, IndentType.Tabs)]
-	[InlineData("# rg-indent: 2 tabs", 2, IndentType.Tabs)]
-	[InlineData("# rg-indent: 1  space", 1, IndentType.Spaces)]
-	[InlineData("# rg-indent: 4\tspaces", 4, IndentType.Spaces)]
-	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, IndentType expectedTye) =>
+	[InlineData("# rg-indent: 1 tab", 1, '\t')]
+	[InlineData("# rg-indent: 2 tabs", 2, '\t')]
+	[InlineData("# rg-indent: 1  space", 1, ' ')]
+	[InlineData("# rg-indent: 4\tspaces", 4, ' ')]
+	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, char expectedChar) =>
 		ParseSingleLine(input)
-			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedTye));
+			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedChar));
 
 	[Fact]
 	public void FullConfiguration_CanBeBuiltFromComments()
@@ -68,7 +68,7 @@ public class CommentParserTests
 
 		var expected = new Configuration(
 			FlavorType.Xunit,
-			new IndentInfo(4, IndentType.Spaces),
+			new IndentInfo(4, ' '),
 			"MyNamespace",
 			"MyTestBase",
 			"Executor");

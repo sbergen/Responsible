@@ -10,7 +10,7 @@ public class ConfigurationParserTests
 	{
 		var partial = new PartialConfiguration(
 			FlavorType.Xunit,
-			new IndentInfo(1, IndentType.Tabs),
+			new IndentInfo(1, '\t'),
 			"MyNamespace",
 			"MyTestBase",
 			"MyExecutor");
@@ -25,7 +25,7 @@ public class ConfigurationParserTests
 	{
 		var partial = new PartialConfiguration(
 			null,
-			new IndentInfo(1, IndentType.Tabs),
+			new IndentInfo(1, '\t'),
 			null,
 			"MyTestBase",
 			"MyExecutor");
@@ -58,14 +58,14 @@ public class ConfigurationParserTests
 
 		var partial2 = new PartialConfiguration(
 			FlavorType.NUnit,
-			new IndentInfo(1, IndentType.Tabs), // This should be prioritized
+			new IndentInfo(1, '\t'), // This should be prioritized
 			"MyNamespace",
 			null,
 			null);
 
 		var partial3 = new PartialConfiguration(
 			FlavorType.Unity,
-			new IndentInfo(4, IndentType.Spaces),
+			new IndentInfo(4, ' '),
 			null,
 			"MyTestBase",
 			"MyExecutor");
@@ -73,7 +73,7 @@ public class ConfigurationParserTests
 		var merged = Configuration.Merge(partial1, partial2, partial3);
 		var expected = new Configuration(
 			FlavorType.Xunit,
-			new IndentInfo(1, IndentType.Tabs),
+			new IndentInfo(1, '\t'),
 			"MyNamespace",
 			"MyTestBase",
 			"MyExecutor");

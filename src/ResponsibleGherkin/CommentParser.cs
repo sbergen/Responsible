@@ -95,7 +95,7 @@ public static class CommentParser
 	private static IndentInfo? TryParseIndentInfo(string input)
 	{
 		static IndentInfo? ParseValues(string amountStr, string typeStr) =>
-			(amountStr.TryParseIntNullable(), typeStr.TryParseIndentType()) switch
+			(amountStr.TryParseIntNullable(), typeStr.TryParseIndentChar()) switch
 			{
 				({} amount, {} type) => new IndentInfo(amount, type),
 				_ => null,
@@ -107,12 +107,12 @@ public static class CommentParser
 		return parts.Length == 2 ? ParseValues(parts[0], parts[1]) : null;
 	}
 
-	private static IndentType? TryParseIndentType(this string input) => input switch
+	private static char? TryParseIndentChar(this string input) => input switch
 	{
-		"tab" => IndentType.Tabs,
-		"tabs" => IndentType.Tabs,
-		"space" => IndentType.Spaces,
-		"spaces" => IndentType.Spaces,
+		"tab" => '\t',
+		"tabs" => '\t',
+		"space" => ' ',
+		"spaces" => ' ',
 		_ => null,
 	};
 
