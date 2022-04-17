@@ -11,11 +11,14 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+## [4.3.0] - 2022-04-17
+
 ### Added
 - New `GroupedAs` operator to allow more control over the state strings of compound operations.
 - Experimental: New BDD-style keywords to build scenarios.
-- Experimental: ResponsibleGherkin dotnet tool to convert Gherkin feature specifications into Responsible test stubs.
-  Versioning of this tool is still to be figured out.
+- Experimental: `responsible-gherkin` dotnet tool to convert Gherkin feature specifications into Responsible test stubs.
+  This is a separate NuGet package, and will not have a changelog until there's a 1.0 release.
+  Feel free to try it out by installing with `dotnet tool install -g Beatwaves.ResponsibleGherkin`
 
 ## [4.2.0] - 2021-10-13
 
@@ -126,7 +129,8 @@ and thus not under semantic versioning.
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.2.0...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.3.0...HEAD
+[4.3.0]: https://github.com/sbergen/Responsible/releases/tag/v4.3.0
 [4.2.0]: https://github.com/sbergen/Responsible/releases/tag/v4.2.0
 [4.1.2]: https://github.com/sbergen/Responsible/releases/tag/v4.1.2
 [4.1.1]: https://github.com/sbergen/Responsible/releases/tag/v4.1.1

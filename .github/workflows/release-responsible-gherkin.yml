@@ -1,0 +1,35 @@
+on:
+  push:
+    tags:
+      - responsible-gherkin-v*
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Read current NuGet package version
+        id: nuget-version
+        run: |
+          version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' src/ResponsibleGherkin/ResponsibleGherkin.csproj)
+          echo "::set-output name=version::${version}"
+
+      - name: Parse tag version
+        id: tag-version
+        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\/responsible-gherkin-v/}"
+
+      - name: Check that the versions match
+        run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.tag-version.outputs.version }}
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build NuGet package
+        run: dotnet pack src --output nupkg
+
+      - name: Publish NuGet package
+        run: dotnet nuget push nupkg/Beatwaves.ResponsibleGherkin.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
