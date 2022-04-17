@@ -1,6 +1,5 @@
 using System.Globalization;
 using Gherkin.Ast;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace ResponsibleGherkin;
 
@@ -28,13 +27,13 @@ public static class CommentParser
 			TryParse("responsible-indent:", comment, content, ref indentInfo, TryParseIndentInfo);
 
 		void ParseNamespace(Comment comment, string content) =>
-			TryParse("responsible-namespace:", comment, content, ref @namespace, TryParseIdentifier);
+			TryParse("responsible-namespace:", comment, content, ref @namespace, TryParseIdentifierOrExpression);
 
 		void ParseBaseClass(Comment comment, string content) =>
-			TryParse("responsible-base-class:", comment, content, ref baseClass, TryParseIdentifier);
+			TryParse("responsible-base-class:", comment, content, ref baseClass, TryParseIdentifierOrExpression);
 
 		void ParseExecutorName(Comment comment, string content) =>
-			TryParse("responsible-executor:", comment, content, ref executorName, TryParseIdentifier);
+			TryParse("responsible-executor:", comment, content, ref executorName, TryParseIdentifierOrExpression);
 
 		var parsers = new Action<Comment, string>[]
 		{
@@ -117,8 +116,10 @@ public static class CommentParser
 			? result
 			: null;
 
-	private static string? TryParseIdentifier(this string input) =>
-		SyntaxFacts.IsValidIdentifier(input) ? input : null;
+	// Let's not try to be too smart. The compiler will reveal if it's wrong sooner or later.
+	// Just checking for empty is good enough for now.
+	private static string? TryParseIdentifierOrExpression(this string input) =>
+		string.IsNullOrEmpty(input) ? null : input;
 
 	private static string ExtractContent(Comment comment) => comment.Text.Trim(LineTrimChars);
 
