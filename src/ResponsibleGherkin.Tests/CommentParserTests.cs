@@ -14,44 +14,21 @@ public class CommentParserTests
 			.Should().BeEquivalentTo(PartialConfiguration.Empty);
 
 	[Theory]
-	[InlineData("# rg-flavor: Xunit", FlavorType.Xunit)]
-	[InlineData("# rg-flavor: nunit ", FlavorType.NUnit)]
-	[InlineData("#  \t rg-flavor: \t UNITY\t", FlavorType.Unity)]
-	public void Parse_ParsesFlavor_WhenValid(string input, FlavorType expected) =>
-		CommentParser.Parse(MakeComments(input))
-			.Flavor.Should().Be(expected);
-
-	// NOTE: This asserts the full exception message, other test don't need to
-	[Fact]
-	public void Parse_ThrowsError_WhenInvalidFlavor()
+	[InlineData("# rg-flavor: foobar")]
+	[InlineData("# rg-indent: 4spaces")]
+	[InlineData("# rg-indent: 1 foo")]
+	[InlineData("# rg-indent: foo tabs")]
+	[InlineData("# rg-namespace: ...")]
+	[InlineData("# rg-base-class: base class")]
+	[InlineData("# rg-executor: 123")]
+	public void Parse_ThrowsError_OnInvalidValues(string comment)
 	{
-		const string comment = "# rg-flavor: foobar";
 		var parse = () => CommentParser.Parse(MakeComments(comment));
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
 			.WithMessage($"Invalid configuration comment *'{comment}'*(at 1:0)");
 	}
 
-	[Theory]
-	[InlineData("# rg-indent: 1 tab", 1, IndentType.Tabs)]
-	[InlineData("# rg-indent: 2 tabs", 2, IndentType.Tabs)]
-	[InlineData("# rg-indent: 1  space", 1, IndentType.Spaces)]
-	[InlineData("# rg-indent: 4\tspaces", 4, IndentType.Spaces)]
-	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, IndentType expectedTye) =>
-		CommentParser.Parse(MakeComments(input))
-			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedTye));
-
-	[Theory]
-	[InlineData("# rg-indent: 4spaces")]
-	[InlineData("# rg-indent: 1 foo")]
-	[InlineData("# rg-indent: foo tabs")]
-	public void Parse_ThrowsError_WhenInvalidIndentInfo(string input)
-	{
-		var parse = () => CommentParser.Parse(MakeComments(input));
-		parse.Should()
-			.Throw<InvalidConfigurationException>()
-			.WithMessage($"*{input}*");
-	}
 
 	[Fact]
 	public void Parse_ThrowsError_WhenDuplicateValue()
@@ -62,6 +39,47 @@ public class CommentParserTests
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
 			.WithMessage($"Duplicate configuration value *'{comment2}'*(at 2:0)");
+	}
+
+	[Theory]
+	[InlineData("# rg-flavor: Xunit", FlavorType.Xunit)]
+	[InlineData("# rg-flavor: nunit ", FlavorType.NUnit)]
+	[InlineData("#  \t rg-flavor: \t UNITY\t", FlavorType.Unity)]
+	public void Parse_ParsesFlavor_WhenValid(string input, FlavorType expected) =>
+		CommentParser.Parse(MakeComments(input))
+			.Flavor.Should().Be(expected);
+
+	[Theory]
+	[InlineData("# rg-indent: 1 tab", 1, IndentType.Tabs)]
+	[InlineData("# rg-indent: 2 tabs", 2, IndentType.Tabs)]
+	[InlineData("# rg-indent: 1  space", 1, IndentType.Spaces)]
+	[InlineData("# rg-indent: 4\tspaces", 4, IndentType.Spaces)]
+	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, IndentType expectedTye) =>
+		CommentParser.Parse(MakeComments(input))
+			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedTye));
+
+	[Fact]
+	public void FullConfiguration_CanBeBuiltFromComments()
+	{
+		var comments = new[]
+		{
+			"# rg-indent: 4 spaces",
+			"# rg-namespace: MyNamespace",
+			"# rg-flavor: xunit",
+			"# rg-executor: Executor",
+			"# rg-base-class: MyTestBase",
+		};
+
+		var expected = new Configuration(
+			FlavorType.Xunit,
+			new IndentInfo(4, IndentType.Spaces),
+			"MyNamespace",
+			"MyTestBase",
+			"Executor");
+
+		var parsed = CommentParser.Parse(MakeComments(comments));
+
+		Configuration.FromPartial(parsed).Should().BeEquivalentTo(expected);
 	}
 
 	private static IEnumerable<Comment> MakeComments(params string[] content) => content

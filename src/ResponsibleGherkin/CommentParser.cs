@@ -1,5 +1,6 @@
 using System.Globalization;
 using Gherkin.Ast;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace ResponsibleGherkin;
 
@@ -22,10 +23,22 @@ public static class CommentParser
 		bool ParseIndentInfo(Comment comment, string content) =>
 			TryParse("rg-indent:", comment, content, ref indentInfo, TryParseIndentInfo);
 
+		bool ParseNamespace(Comment comment, string content) =>
+			TryParse("rg-namespace:", comment, content, ref @namespace, TryParseIdentifier);
+
+		bool ParseBaseClass(Comment comment, string content) =>
+			TryParse("rg-base-class:", comment, content, ref baseClass, TryParseIdentifier);
+
+		bool ParseExecutorName(Comment comment, string content) =>
+			TryParse("rg-executor:", comment, content, ref executorName, TryParseIdentifier);
+
 		var parsers = new Func<Comment, string, bool>[]
 		{
 			ParseFlavor,
 			ParseIndentInfo,
+			ParseNamespace,
+			ParseBaseClass,
+			ParseExecutorName,
 		};
 
 		foreach (var (comment, content) in comments
@@ -103,6 +116,9 @@ public static class CommentParser
 		int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result)
 			? result
 			: null;
+
+	private static string? TryParseIdentifier(this string input) =>
+		SyntaxFacts.IsValidIdentifier(input) ? input : null;
 
 	private static string ExtractContent(Comment comment) => comment.Text.Trim(LineTrimChars);
 
