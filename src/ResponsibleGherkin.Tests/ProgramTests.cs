@@ -152,6 +152,14 @@ public class ProgramTests
 			.ContainAll("Output file", "MinimalFeature.cs", "already exists");
 	}
 
+	[Fact]
+	public void Generate_OverwritesContent_WhenForceSpecified()
+	{
+		this.fileSystem.AddFile("MinimalFeature.cs", "");
+		this.RunAssertingSuccess("MinimalFeature.feature", "-f");
+		this.fileSystem.GetFile("MinimalFeature.cs").TextContents.Should().NotBeEmpty();
+	}
+
 	private void RunAssertingFailure(params string[] args)
 	{
 		this.Run(args).Should().NotBe(0, $"the run should fail, output was {this.console.Out}");

@@ -55,13 +55,19 @@ public static class Program
 			() => ".",
 			"Directory to write content into");
 
-		var configFileArgument = new Option<string>(
+		var configFileOption = new Option<string>(
 			new[] { "-c", "--config-file" },
 			"Path to configuration file, otherwise a default configuration will be used");
 
+		var forceOption = new Option<bool>(
+			new[] { "-f", "--force" },
+			() => false,
+			"Overwrite output file, even if it already exists");
+
 		var command = new RootCommand(Description)
 		{
-			configFileArgument,
+			configFileOption,
+			forceOption,
 			inputFileArgument,
 			outputDirectoryArgument,
 		};
@@ -73,6 +79,7 @@ public static class Program
 				string? configFile,
 				string inputFile,
 				string outputDirectory,
+				bool force,
 				InvocationContext invocationContext) =>
 			{
 				T Run<T>(string name, Func<T> operation)
@@ -117,7 +124,7 @@ public static class Program
 						fileSystem.Directory.CreateDirectory(outputDirectory);
 						var outputFileName = Path.Combine(outputDirectory, content.ClassFileName());
 
-						if (fileSystem.File.Exists(outputFileName))
+						if (!force && fileSystem.File.Exists(outputFileName))
 						{
 							throw new ArgumentException($"Output file '{outputFileName}' already exists.");
 						}
@@ -135,9 +142,10 @@ public static class Program
 					invocationContext.ExitCode = 1;
 				}
 			},
-			configFileArgument,
+			configFileOption,
 			inputFileArgument,
-			outputDirectoryArgument);
+			outputDirectoryArgument,
+			forceOption);
 
 		return command;
 	}
