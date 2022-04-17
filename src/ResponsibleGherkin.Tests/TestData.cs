@@ -14,11 +14,11 @@ internal static class TestData
 		"Executor");
 
 	public const string DefaultConfigurationAsComments = @"
-# rg-indent: 1 tab
-# rg-namespace: MyNamespace
-# rg-flavor: xunit
-# rg-executor: Executor
-# rg-base-class: MyTestBase";
+# responsible-indent: 1 tab
+# responsible-namespace: MyNamespace
+# responsible-flavor: xunit
+# responsible-executor: Executor
+# responsible-base-class: MyTestBase";
 
 	public const string MinimalFeature = "MinimalFeature";
 	public const string BackgroundFeature = "BackgroundFeature";

@@ -14,11 +14,11 @@ public static class Program
 
 	private static readonly string[] DefaultConfig =
 	{
-		"# rg-flavor: Unity",
-		"# rg-indent: 1 tab",
-		"# rg-namespace: MyNamespace",
-		"# rg-base-class: MyTestBase",
-		"# rg-executor: Executor",
+		"# responsible-flavor: Unity",
+		"# responsible-indent: 1 tab",
+		"# responsible-namespace: MyNamespace",
+		"# responsible-base-class: MyTestBase",
+		"# responsible-executor: Executor",
 	};
 
 	private static string FalvorTypes = string.Join(", ", Enum.GetValues(typeof(FlavorType)).Cast<FlavorType>());

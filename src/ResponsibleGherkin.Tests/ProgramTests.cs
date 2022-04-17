@@ -25,10 +25,10 @@ public class ProgramTests
 		this.fileSystem.AddFile(
 			"partialConfig.json",
 			@"
-# rg-indent: 1 tab
-# rg-flavor: xunit
-# rg-executor: Executor
-# rg-base-class: MyTestBase");
+# responsible-indent: 1 tab
+# responsible-flavor: xunit
+# responsible-executor: Executor
+# responsible-base-class: MyTestBase");
 
 		this.fileSystem.AddFile(
 			"MinimalFeature.feature",

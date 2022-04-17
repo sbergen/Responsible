@@ -22,19 +22,19 @@ public static class CommentParser
 		string? executorName = null;
 
 		void ParseFlavor(Comment comment, string content) =>
-			TryParse("rg-flavor:", comment, content, ref flavor, TryParseEnumNullable<FlavorType>);
+			TryParse("responsible-flavor:", comment, content, ref flavor, TryParseEnumNullable<FlavorType>);
 
 		void ParseIndentInfo(Comment comment, string content) =>
-			TryParse("rg-indent:", comment, content, ref indentInfo, TryParseIndentInfo);
+			TryParse("responsible-indent:", comment, content, ref indentInfo, TryParseIndentInfo);
 
 		void ParseNamespace(Comment comment, string content) =>
-			TryParse("rg-namespace:", comment, content, ref @namespace, TryParseIdentifier);
+			TryParse("responsible-namespace:", comment, content, ref @namespace, TryParseIdentifier);
 
 		void ParseBaseClass(Comment comment, string content) =>
-			TryParse("rg-base-class:", comment, content, ref baseClass, TryParseIdentifier);
+			TryParse("responsible-base-class:", comment, content, ref baseClass, TryParseIdentifier);
 
 		void ParseExecutorName(Comment comment, string content) =>
-			TryParse("rg-executor:", comment, content, ref executorName, TryParseIdentifier);
+			TryParse("responsible-executor:", comment, content, ref executorName, TryParseIdentifier);
 
 		var parsers = new Action<Comment, string>[]
 		{

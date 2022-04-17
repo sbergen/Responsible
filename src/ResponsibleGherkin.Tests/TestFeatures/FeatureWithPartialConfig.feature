@@ -1,5 +1,5 @@
-# rg-namespace: MyNamespace
-# rg-base-class: MyTestBaseOverride
+# responsible-namespace: MyNamespace
+# responsible-base-class: MyTestBaseOverride
 Feature: Partial config feature
   Scenario: Minimal scenario
     Given I have ice cream
