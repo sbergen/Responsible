@@ -21,22 +21,22 @@ public static class CommentParser
 		string? baseClass = null;
 		string? executorName = null;
 
-		bool ParseFlavor(Comment comment, string content) =>
+		void ParseFlavor(Comment comment, string content) =>
 			TryParse("rg-flavor:", comment, content, ref flavor, TryParseEnumNullable<FlavorType>);
 
-		bool ParseIndentInfo(Comment comment, string content) =>
+		void ParseIndentInfo(Comment comment, string content) =>
 			TryParse("rg-indent:", comment, content, ref indentInfo, TryParseIndentInfo);
 
-		bool ParseNamespace(Comment comment, string content) =>
+		void ParseNamespace(Comment comment, string content) =>
 			TryParse("rg-namespace:", comment, content, ref @namespace, TryParseIdentifier);
 
-		bool ParseBaseClass(Comment comment, string content) =>
+		void ParseBaseClass(Comment comment, string content) =>
 			TryParse("rg-base-class:", comment, content, ref baseClass, TryParseIdentifier);
 
-		bool ParseExecutorName(Comment comment, string content) =>
+		void ParseExecutorName(Comment comment, string content) =>
 			TryParse("rg-executor:", comment, content, ref executorName, TryParseIdentifier);
 
-		var parsers = new Func<Comment, string, bool>[]
+		var parsers = new Action<Comment, string>[]
 		{
 			ParseFlavor,
 			ParseIndentInfo,
@@ -48,10 +48,9 @@ public static class CommentParser
 		foreach (var (comment, content) in comments
 			.Select(comment => (comment, ExtractContent(comment))))
 		{
-			var alreadyParsed = false;
 			foreach (var parser in parsers)
 			{
-				alreadyParsed = alreadyParsed || parser(comment, content);
+				parser(comment, content);
 			}
 		}
 
@@ -63,7 +62,10 @@ public static class CommentParser
 			executorName);
 	}
 
-	private static bool TryParse<T>(
+	// This could be optimized by returning a boolean of whether or not something was parsed.
+	// However, Stryker is telling me that if I'm not explicitly testing it,
+	// the optimization is probably not worth it now :)
+	private static void TryParse<T>(
 		string identifier,
 		Comment comment,
 		string content,
@@ -79,12 +81,6 @@ public static class CommentParser
 				({ }, { }) => throw InvalidConfigurationException.ForDuplicateComment(comment),
 				(null, { } newValue) => newValue,
 			};
-
-			return true;
-		}
-		else
-		{
-			return false;
 		}
 	}
 
