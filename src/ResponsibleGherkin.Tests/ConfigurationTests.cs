@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ResponsibleGherkin.Tests;
 
-public class ConfigurationParserTests
+public class ConfigurationTests
 {
 	[Fact]
 	public void FromPartial_ReturnsEquivalent_WhenAllPropsPresent()
