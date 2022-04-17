@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
-using Gherkin.Ast;
 using Xunit;
 
 namespace ResponsibleGherkin.Tests;
