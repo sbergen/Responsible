@@ -17,7 +17,7 @@ public record Configuration(
 
 		if (missingProperties.Any())
 		{
-			throw new IncompleteConfigurationException(missingProperties);
+			throw InvalidConfigurationException.ForIncomplete(missingProperties);
 		}
 
 		return new Configuration(

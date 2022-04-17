@@ -33,7 +33,7 @@ public class ConfigurationParserTests
 		var fromPartial = () => Configuration.FromPartial(partial);
 
 		fromPartial.Should()
-			.Throw<IncompleteConfigurationException>()
+			.Throw<InvalidConfigurationException>()
 			.WithMessage("Incomplete configuration, missing 2 properties: Flavor, Namespace");
 	}
 
@@ -42,7 +42,7 @@ public class ConfigurationParserTests
 	{
 		var mergeEmpty = () => Configuration.Merge();
 		mergeEmpty.Should()
-			.Throw<IncompleteConfigurationException>()
+			.Throw<InvalidConfigurationException>()
 			.WithMessage("*5*");
 	}
 

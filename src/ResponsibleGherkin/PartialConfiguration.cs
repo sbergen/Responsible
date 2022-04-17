@@ -5,4 +5,8 @@ public record PartialConfiguration(
 	IndentInfo? IndentInfo,
 	string? Namespace,
 	string? BaseClass,
-	string? ExecutorName);
+	string? ExecutorName)
+{
+	public static readonly PartialConfiguration Empty =
+		new(default, default, default, default, default);
+}
