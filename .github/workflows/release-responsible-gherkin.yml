@@ -18,7 +18,7 @@ jobs:
 
       - name: Parse tag version
         id: tag-version
-        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\/responsible-gherkin-v/}
+        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\/responsible-gherkin-v/}"
 
       - name: Check that the versions match
         run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.tag-version.outputs.version }}
