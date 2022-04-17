@@ -21,19 +21,24 @@ public static class Program
 		"# rg-executor: Executor",
 	};
 
+	private static string FalvorTypes = string.Join(", ", Enum.GetValues(typeof(FlavorType)).Cast<FlavorType>());
+
 	private static readonly string Description =
 		"Generate Responsible test case stubs from Gherkin specifications." +
 		"\n\n" +
-		"The configuration can be specified either in comments in the Gherkin files, or in a separate file. " +
+		"The configuration can be specified either in comments in the Gherkin file, or in a separate file. " +
 		"Comments in a Gherkin file always take precedence over the configuration file. " +
-		"However, specifying a configuration value more than once in in one source is an error. " +
+		"However, specifying a configuration value more than once in one source is an error. " +
 		"The configuration format is fairly self-explanatory. " +
 		"Here is the default configuration:" +
 		"\n" +
 		string.Join(Environment.NewLine, DefaultConfig) +
 		"\n\n" +
-		$"Valid flavors are: {string.Join(", ", Enum.GetValues(typeof(FlavorType)))} (case insensitive)\n" +
+		$"Valid flavors are: {FalvorTypes} (case insensitive)\n" +
 		"Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.\n" +
+		"The namespace is the namespace for the generated code.\n" +
+		"The base class is what the generated test classes will inherit from.\n" +
+		"The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.\n" +
 		"\n" +
 		"If no configuration file is specified, the default configuration is used.";
 

@@ -3,15 +3,18 @@
 Description:
   Generate Responsible test case stubs from Gherkin specifications.
   
-  The configuration can be specified either in comments in the Gherkin files, or in a separate file. Comments in a Gherkin file always take precedence over the configuration file. However, specifying a configuration value more than once in in one source is an error. The configuration format is fairly self-explanatory. Here is the default configuration:
+  The configuration can be specified either in comments in the Gherkin file, or in a separate file. Comments in a Gherkin file always take precedence over the configuration file. However, specifying a configuration value more than once in one source is an error. The configuration format is fairly self-explanatory. Here is the default configuration:
   # rg-flavor: Unity
   # rg-indent: 1 tab
   # rg-namespace: MyNamespace
   # rg-base-class: MyTestBase
   # rg-executor: Executor
   
-  Valid flavors are: ResponsibleGherkin.FlavorType[] (case insensitive)
+  Valid flavors are: Unity, NUnit, Xunit (case insensitive)
   Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.
+  The namespace is the namespace for the generated code.
+  The base class is what the generated test classes will inherit from.
+  The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.
   
   If no configuration file is specified, the default configuration is used.
 

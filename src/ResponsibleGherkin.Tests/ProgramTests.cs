@@ -55,13 +55,6 @@ public class ProgramTests
 	}
 
 	[Fact]
-	public async Task Verify_CommandHelp()
-	{
-		this.RunAssertingSuccess("-h");
-		await Verify(this.FullConsoleOutput());
-	}
-
-	[Fact]
 	public void Generate_ProducesSameResultAsManualInvoke()
 	{
 		var expected = CodeGenerator.GenerateClass(
