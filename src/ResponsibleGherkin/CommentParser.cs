@@ -12,10 +12,22 @@ public static class CommentParser
 		string? baseClass = null;
 		string? executorName = null;
 
+		bool ParseFlavor(Comment comment, string content) =>
+			TryParse("rg-flavor:", comment, content, ref flavor, TryParseEnumNullable<FlavorType>);
+
+		var parsers = new Func<Comment, string, bool>[]
+		{
+			ParseFlavor,
+		};
+
 		foreach (var (comment, content) in comments
 			.Select(comment => (comment, ExtractContent(comment))))
 		{
-			TryParseFlavor(comment, content, ref flavor);
+			var alreadyParsed = false;
+			foreach (var parser in parsers)
+			{
+				alreadyParsed = alreadyParsed || parser(comment, content);
+			}
 		}
 
 		return new PartialConfiguration(
@@ -26,26 +38,22 @@ public static class CommentParser
 			executorName);
 	}
 
-	private static bool TryParseFlavor(Comment comment, string content, ref FlavorType? flavor)
+	private static bool TryParse<T>(
+		string identifier,
+		Comment comment,
+		string content,
+		ref T? value,
+		Func<string, T?> parser)
 	{
-		var valueStr = content.GetValueFor("rg-flavor:");
+		var valueStr = content.GetValueFor(identifier);
 		if (valueStr != null)
 		{
-			if (Enum.TryParse<FlavorType>(valueStr, ignoreCase: true, out var value))
+			value = (value, parser(valueStr)) switch
 			{
-				if (flavor.HasValue)
-				{
-					throw InvalidConfigurationException.ForDuplicateComment(comment);
-				}
-				else
-				{
-					flavor = value;
-				}
-			}
-			else
-			{
-				throw InvalidConfigurationException.ForInvalidComment(comment);
-			}
+				(_, null) => throw InvalidConfigurationException.ForInvalidComment(comment),
+				({ }, { }) => throw InvalidConfigurationException.ForDuplicateComment(comment),
+				(null, { } newValue) => newValue,
+			};
 
 			return true;
 		}
@@ -54,6 +62,10 @@ public static class CommentParser
 			return false;
 		}
 	}
+
+	private static T? TryParseEnumNullable<T>(string input)
+		where T : struct, Enum =>
+		Enum.TryParse<T>(input, ignoreCase: true, out var value) ? value : null;
 
 	private static string ExtractContent(Comment comment) => comment.Text.Trim('#', ' ', '\t');
 
