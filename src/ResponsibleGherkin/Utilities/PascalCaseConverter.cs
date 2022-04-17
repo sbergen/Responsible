@@ -21,8 +21,6 @@ public static class PascalCaseConverter
 	public static string ConvertToPascalCase(string str)
 	{
 		// Assume length is about the same, prepare for leading underscore.
-		// Disable Stryker, as this is just optimization.
-		// Stryker disable all once
 		var builder = new StringBuilder(str.Length + 1);
 
 		// previous is "before the start of the string" here

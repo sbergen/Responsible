@@ -17,6 +17,9 @@
         },
         "mutation-level": "Standard",
         "test-case-filter": "FullyQualifiedName!~CodeGeneratorCompilationTests",
-        "additional-timeout": 10000
+        "additional-timeout": 10000,
+        "ignore-methods": [
+            "StringBuilder.ctor"
+        ]
     }
 }
