@@ -31,5 +31,5 @@ jobs:
       - name: Build NuGet package
         run: dotnet pack src --output nupkg
 
-      # - name: Publish NuGet package
-      #  run: dotnet nuget push nupkg/Beatwaves.ResponsibleGherkin.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
+      - name: Publish NuGet package
+        run: dotnet nuget push nupkg/Beatwaves.ResponsibleGherkin.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
