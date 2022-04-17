@@ -94,6 +94,15 @@ public class ProgramTests
 	}
 
 	[Fact]
+	public void Generate_ProducesMeaningfulError_WhenConfigurationIsPartial()
+	{
+		this.RunAssertingFailure("-c", "partialConfig.json", "MinimalFeature.feature", "./");
+
+		this.ConsoleErrors().Should().ContainAll(
+			"merge configurations", "missing", "properties");
+	}
+
+	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenConfigFileIsMissing()
 	{
 		this.RunAssertingFailure("-c", "foobar", "MinimalFeature.feature", "./");
