@@ -10,8 +10,7 @@ public class CommentParserTests
 {
 	[Fact]
 	public void Parse_ReturnsEmptyConfiguration_WhenCommentsEmpty() =>
-		CommentParser.Parse(MakeComments())
-			.Should().BeEquivalentTo(PartialConfiguration.Empty);
+		ParseLines().Should().BeEquivalentTo(PartialConfiguration.Empty);
 
 	[Theory]
 	[InlineData("# rg-flavor: foobar")]
@@ -23,7 +22,7 @@ public class CommentParserTests
 	[InlineData("# rg-executor: 123")]
 	public void Parse_ThrowsError_OnInvalidValues(string comment)
 	{
-		var parse = () => CommentParser.Parse(MakeComments(comment));
+		var parse = () => ParseSingleLine(comment);
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
 			.WithMessage($"Invalid configuration comment *'{comment}'*(at 1:0)");
@@ -35,7 +34,7 @@ public class CommentParserTests
 	{
 		const string comment1 = "# rg-flavor: xunit";
 		const string comment2 = "# rg-flavor: NUnit";
-		var parse = () => CommentParser.Parse(MakeComments(comment1, comment2));
+		var parse = () => ParseLines(comment1, comment2);
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
 			.WithMessage($"Duplicate configuration value *'{comment2}'*(at 2:0)");
@@ -46,7 +45,7 @@ public class CommentParserTests
 	[InlineData("# rg-flavor: nunit ", FlavorType.NUnit)]
 	[InlineData("#  \t rg-flavor: \t UNITY\t", FlavorType.Unity)]
 	public void Parse_ParsesFlavor_WhenValid(string input, FlavorType expected) =>
-		CommentParser.Parse(MakeComments(input))
+		ParseSingleLine(input)
 			.Flavor.Should().Be(expected);
 
 	[Theory]
@@ -55,7 +54,7 @@ public class CommentParserTests
 	[InlineData("# rg-indent: 1  space", 1, IndentType.Spaces)]
 	[InlineData("# rg-indent: 4\tspaces", 4, IndentType.Spaces)]
 	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, IndentType expectedTye) =>
-		CommentParser.Parse(MakeComments(input))
+		ParseSingleLine(input)
 			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedTye));
 
 	[Fact]
@@ -77,11 +76,11 @@ public class CommentParserTests
 			"MyTestBase",
 			"Executor");
 
-		var parsed = CommentParser.Parse(MakeComments(comments));
+		var parsed = CommentParser.ParseLines(comments);
 
 		Configuration.FromPartial(parsed).Should().BeEquivalentTo(expected);
 	}
 
-	private static IEnumerable<Comment> MakeComments(params string[] content) => content
-		.Select((c, i) => new Comment(new Location(i + 1), c));
+	private static PartialConfiguration ParseLines(params string[] lines) => CommentParser.ParseLines(lines);
+	private static PartialConfiguration ParseSingleLine(string line) => CommentParser.ParseLines(new[] { line });
 }

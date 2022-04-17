@@ -9,6 +9,10 @@ public static class CommentParser
 	private static readonly char[] IntraLineSeparators = { ' ', '\t' };
 	private static readonly char[] LineTrimChars = { '#', ' ', '\t' };
 
+	public static PartialConfiguration ParseLines(IEnumerable<string> lines) =>
+		Parse(lines.Select((line, i) =>
+			new Comment(new Location(i + 1), line)));
+
 	public static PartialConfiguration Parse(IEnumerable<Comment> comments)
 	{
 		FlavorType? flavor = null;

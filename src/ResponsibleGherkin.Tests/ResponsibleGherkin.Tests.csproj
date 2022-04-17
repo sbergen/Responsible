@@ -43,6 +43,9 @@
       <None Update="TestFeatures\BackgroundFeature.feature">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="TestFeatures\FeatureWithPartialConfig.feature">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

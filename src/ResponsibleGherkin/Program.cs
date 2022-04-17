@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.Text.Json;
 using Gherkin;
+using Gherkin.Ast;
 using ResponsibleGherkin.Generators;
 
 namespace ResponsibleGherkin;
@@ -155,18 +156,21 @@ store it to a file, and then generate your code using
 
 				try
 				{
-					var configuration = Run("read configuration", () =>
+					var baseConfig = Run("read configuration", () =>
 					{
-						using var fileReader = fileSystem.File.OpenRead(configFile);
-						return JsonSerializer.Deserialize<Configuration>(fileReader);
+						var lines = fileSystem.File.ReadAllLines(configFile);
+						return CommentParser.ParseLines(lines);
 					});
 
-					var feature = Run("read input", () =>
+					var (feature, featureConfig) = Run("read input", () =>
 					{
 						using var fileReader = fileSystem.File.OpenText(inputFile);
 						var document = new Parser().Parse(fileReader);
-						return document.Feature;
+						return (document.Feature, CommentParser.Parse(document.Comments));
 					});
+
+					var configuration = Run("merge configurations", () =>
+						Configuration.Merge(featureConfig, baseConfig));
 
 					var content = Run("generate code", () => CodeGenerator.GenerateClass(
 						feature,

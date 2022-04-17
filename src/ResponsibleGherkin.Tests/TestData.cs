@@ -14,15 +14,22 @@ internal static class TestData
 		"MyTestBase",
 		"Executor");
 
-	public static readonly string DefaultConfigurationJson = JsonSerializer.Serialize(DefaultConfiguration);
+	public const string DefaultConfigurationAsComments = @"
+# rg-indent: 1 tab
+# rg-namespace: MyNamespace
+# rg-flavor: xunit
+# rg-executor: Executor
+# rg-base-class: MyTestBase";
 
 	public const string MinimalFeature = "MinimalFeature";
 	public const string BackgroundFeature = "BackgroundFeature";
 	public const string BasicFeature = "BasicFeature";
 	public const string UnsupportedKeyword = "UnsupportedKeyword";
 	public const string Rules = "Rules";
+	public const string PartialConfigFeature = "FeatureWithPartialConfig";
 
 	public static readonly string MinimalFeatureContent = File.ReadAllText(FeatureFileName(MinimalFeature));
+	public static readonly string PartialConfigFeatureContent = File.ReadAllText(FeatureFileName(PartialConfigFeature));
 
     public static readonly string UnsupportedKeywordFeatureContent =
 	    File.ReadAllText(FeatureFileName(UnsupportedKeyword));
