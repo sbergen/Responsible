@@ -3,9 +3,7 @@ using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
-using System.Text.Json;
 using Gherkin;
-using Gherkin.Ast;
 using ResponsibleGherkin.Generators;
 
 namespace ResponsibleGherkin;
@@ -13,18 +11,6 @@ namespace ResponsibleGherkin;
 public static class Program
 {
 	private const string CommandName = "responsible-gherkin";
-	private const string ConfigureName = "configure";
-	private const string GenerateName = "generate";
-
-	private const string MainDescription =
-		$@"Generate Responsible test case stubs from Gherkin specifications.
-
-First generate a configuration using
-    {CommandName} {ConfigureName} ...
-
-store it to a file, and then generate your code using
-    {CommandName} {GenerateName} ...
-";
 
 	// This only binds the root command invocation to the real file system and console.
 	// I.e. deals only with non-testable parts.
@@ -34,87 +20,6 @@ store it to a file, and then generate your code using
 			.Invoke(args, new SystemConsole());
 
 	public static RootCommand BuildRootCommand(IFileSystem fileSystem)
-	{
-		var rootCommand = new RootCommand(MainDescription)
-		{
-			ConfigureCommand(),
-			GenerateCommand(fileSystem),
-		};
-
-		rootCommand.Name = CommandName;
-		rootCommand.TreatUnmatchedTokensAsErrors = true;
-
-		return rootCommand;
-	}
-
-	private static Command ConfigureCommand()
-	{
-		var flavorArgument = new Argument<FlavorType>(
-			"flavor",
-			"Flavor of code generation");
-
-		var namespaceArgument = new Argument<string>(
-			"namespace",
-			"Namespace to put classes in");
-
-		var baseClassArgument = new Argument<string>(
-			"base-class",
-			"Base class to derive from");
-
-		var executorArgument = new Argument<string>(
-			"executor",
-			"Name of parameter that has the TestInstructionExecutor");
-
-		var indentTypeArgument = new Argument<IndentType>(
-			"indent-type",
-			"Type of indentation to use");
-
-		var indentAmountArgument = new Argument<int>(
-			"indent-amount",
-			"Amount of indentation to use");
-
-		var command = new Command(
-			ConfigureName,
-			$"Generate a configuration to be used with {GenerateName}")
-		{
-			flavorArgument,
-			namespaceArgument,
-			baseClassArgument,
-			executorArgument,
-			indentTypeArgument,
-			indentAmountArgument,
-		};
-
-		command.SetHandler((
-				FlavorType flavor,
-				string @namespace,
-				string baseClass,
-				string executorName,
-				IndentType indentType,
-				int indentAmount,
-				InvocationContext invocationContext) =>
-			{
-				var configuration = new Configuration(
-					flavor,
-					new IndentInfo(indentAmount, indentType),
-					@namespace,
-					baseClass,
-					executorName);
-
-				invocationContext.Console.Out.WriteLine(JsonSerializer.Serialize(
-					configuration, new JsonSerializerOptions { WriteIndented = true }));
-			},
-			flavorArgument,
-			namespaceArgument,
-			baseClassArgument,
-			executorArgument,
-			indentTypeArgument,
-			indentAmountArgument);
-
-		return command;
-	}
-
-	private static Command GenerateCommand(IFileSystem fileSystem)
 	{
 		var configFileArgument = new Argument<string>(
 			"config",
@@ -128,14 +33,17 @@ store it to a file, and then generate your code using
 			"output",
 			"Directory to write content into");
 
-		var generateCommand = new Command(GenerateName, "Generate test case stubs")
+		var command = new RootCommand("Generate Responsible test case stubs from Gherkin specifications.")
 		{
 			configFileArgument,
 			inputFileArgument,
 			outputDirectoryArgument,
 		};
 
-		generateCommand.SetHandler((
+		command.Name = CommandName;
+		command.TreatUnmatchedTokensAsErrors = true;
+
+		command.SetHandler((
 				string configFile,
 				string inputFile,
 				string outputDirectory,
@@ -195,6 +103,6 @@ store it to a file, and then generate your code using
 			inputFileArgument,
 			outputDirectoryArgument);
 
-		return generateCommand;
+		return command;
 	}
 }

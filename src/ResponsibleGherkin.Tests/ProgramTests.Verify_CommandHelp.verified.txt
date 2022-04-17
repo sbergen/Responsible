@@ -1,10 +1,10 @@
 ﻿{
   Out:
 Description:
-  Generate test case stubs
+  Generate Responsible test case stubs from Gherkin specifications.
 
 Usage:
-  responsible-gherkin generate <config> <input> <output> [options]
+  responsible-gherkin <config> <input> <output> [options]
 
 Arguments:
   <config>  Path to configuration file to use
@@ -12,6 +12,7 @@ Arguments:
   <output>  Directory to write content into
 
 Options:
+  --version       Show version information
   -?, -h, --help  Show help and usage information
 
 

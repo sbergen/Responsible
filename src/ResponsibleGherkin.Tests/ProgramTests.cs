@@ -54,19 +54,10 @@ public class ProgramTests
 		await Verify(this.ConsoleOutput());
 	}
 
-	[Theory]
-	[InlineData("configure")]
-	[InlineData("generate")]
-	public async Task Verify_CommandHelp(string command)
-	{
-		this.RunAssertingSuccess(command, "-h");
-		await Verify(this.ConsoleOutput()).UseParameters(command);
-	}
-
 	[Fact]
-	public async Task Verify_SuccessfulConfigure()
+	public async Task Verify_CommandHelp()
 	{
-		this.RunAssertingSuccess("configure", "xunit", "MyNamespace", "BddTest", "Executor", "tabs", "1");
+		this.RunAssertingSuccess("-h");
 		await Verify(this.ConsoleOutput());
 	}
 
@@ -78,7 +69,7 @@ public class ProgramTests
 				TestData.DefaultConfiguration)
 			.BuildFileContent();
 
-		this.RunAssertingSuccess("generate", "config.json", "MinimalFeature.feature", "./");
+		this.RunAssertingSuccess("config.json", "MinimalFeature.feature", "./");
 		var generatedContent = this.fileSystem.File.ReadAllText("MinimalFeature.cs");
 
 		generatedContent.Should().Be(
@@ -94,7 +85,7 @@ public class ProgramTests
 				TestData.DefaultConfiguration with { BaseClass = "MyTestBaseOverride" })
 			.BuildFileContent();
 
-		this.RunAssertingSuccess("generate", "partialConfig.json", "PartialConfigFeature.feature", "./");
+		this.RunAssertingSuccess("partialConfig.json", "PartialConfigFeature.feature", "./");
 		var generatedContent = this.fileSystem.File.ReadAllText("PartialConfigFeature.cs");
 
 		generatedContent.Should().Be(
@@ -105,42 +96,42 @@ public class ProgramTests
 	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenConfigFileIsMissing()
 	{
-		this.RunAssertingFailure("generate", "foobar", "MinimalFeature.feature", "./");
+		this.RunAssertingFailure("foobar", "MinimalFeature.feature", "./");
 		this.ConsoleErrors().Should().Contain("read configuration");
 	}
 
 	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenInputFileIsMissing()
 	{
-		this.RunAssertingFailure("generate", "config.json", "foobar", "./");
+		this.RunAssertingFailure("config.json", "foobar", "./");
 		this.ConsoleErrors().Should().Contain("read input");
 	}
 
 	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenInputFileIsInvalid()
 	{
-		this.RunAssertingFailure("generate", "config.json", "InvalidFeature.feature", "./");
+		this.RunAssertingFailure("config.json", "InvalidFeature.feature", "./");
 		this.ConsoleErrors().Should().ContainAll("read input", "Parser errors");
 	}
 
 	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenInputFileIsNotSupported()
 	{
-		this.RunAssertingFailure("generate", "config.json", "UnsupportedKeyword.feature", "./");
+		this.RunAssertingFailure("config.json", "UnsupportedKeyword.feature", "./");
 		this.ConsoleErrors().Should().Contain("generate code");
 	}
 
 	[Fact]
 	public void Generate_ContainsDescriptiveError_WhenDirectoryIsInvalid()
 	{
-		this.RunAssertingFailure("generate", "config.json", "MinimalFeature.feature", "*");
+		this.RunAssertingFailure("config.json", "MinimalFeature.feature", "*");
 		this.ConsoleErrors().Should().Contain("write output");
 	}
 
 	[Fact]
 	public void Generate_CreatesOutputDirectory_WhenItDoesNotExist()
 	{
-		this.RunAssertingSuccess("generate", "config.json", "MinimalFeature.feature", "./Output");
+		this.RunAssertingSuccess("config.json", "MinimalFeature.feature", "./Output");
 		this.fileSystem.Directory.Exists("Output").Should().BeTrue("it should be created");
 		this.fileSystem.File.Exists("Output/MinimalFeature.cs").Should().BeTrue("the file should be generated");
 	}
