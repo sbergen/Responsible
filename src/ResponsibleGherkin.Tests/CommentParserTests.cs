@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -22,14 +21,36 @@ public class CommentParserTests
 		CommentParser.Parse(MakeComments(input))
 			.Flavor.Should().Be(expected);
 
+	// NOTE: This asserts the full exception message, other test don't need to
 	[Fact]
-	public void Parse_ThrowsError_WhenInvalidFormat()
+	public void Parse_ThrowsError_WhenInvalidFlavor()
 	{
 		const string comment = "# rg-flavor: foobar";
 		var parse = () => CommentParser.Parse(MakeComments(comment));
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
 			.WithMessage($"Invalid configuration comment *'{comment}'*(at 1:0)");
+	}
+
+	[Theory]
+	[InlineData("# rg-indent: 1 tab", 1, IndentType.Tabs)]
+	[InlineData("# rg-indent: 2 tabs", 2, IndentType.Tabs)]
+	[InlineData("# rg-indent: 1  space", 1, IndentType.Spaces)]
+	[InlineData("# rg-indent: 4\tspaces", 4, IndentType.Spaces)]
+	public void Parse_ParsesIndentInfo_WhenValid(string input, int expectedAmount, IndentType expectedTye) =>
+		CommentParser.Parse(MakeComments(input))
+			.IndentInfo.Should().BeEquivalentTo(new IndentInfo(expectedAmount, expectedTye));
+
+	[Theory]
+	[InlineData("# rg-indent: 4spaces")]
+	[InlineData("# rg-indent: 1 foo")]
+	[InlineData("# rg-indent: foo tabs")]
+	public void Parse_ThrowsError_WhenInvalidIndentInfo(string input)
+	{
+		var parse = () => CommentParser.Parse(MakeComments(input));
+		parse.Should()
+			.Throw<InvalidConfigurationException>()
+			.WithMessage($"*{input}*");
 	}
 
 	[Fact]
