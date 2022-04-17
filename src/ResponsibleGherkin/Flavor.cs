@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace ResponsibleGherkin;
 
 public record Flavor(
@@ -37,10 +35,10 @@ public record Flavor(
 
 	public static readonly Flavor Xunit = new(
 		new BackgroundFlavor(
-			nameof(IAsyncLifetime.InitializeAsync),
+			"InitializeAsync",
 			null,
-			nameof(IAsyncLifetime),
-			nameof(IAsyncLifetime.DisposeAsync)),
+			"IAsyncLifetime",
+			"DisposeAsync"),
 		new[]
 		{
 			"System.Threading.Tasks",
