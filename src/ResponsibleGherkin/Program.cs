@@ -12,6 +12,31 @@ public static class Program
 {
 	private const string CommandName = "responsible-gherkin";
 
+	private static readonly string[] DefaultConfig =
+	{
+		"# rg-flavor: Unity",
+		"# rg-indent: 1 tab",
+		"# rg-namespace: MyNamespace",
+		"# rg-base-class: MyTestBase",
+		"# rg-executor: Executor",
+	};
+
+	private static readonly string Description =
+		"Generate Responsible test case stubs from Gherkin specifications." +
+		"\n\n" +
+		"The configuration can be specified either in comments in the Gherkin files, or in a separate file. " +
+		"Comments in a Gherkin file always take precedence over the configuration file. " +
+		"However, specifying a configuration value more than once in in one source is an error. " +
+		"The configuration format is fairly self-explanatory. " +
+		"Here is the default configuration:" +
+		"\n" +
+		string.Join(Environment.NewLine, DefaultConfig) +
+		"\n\n" +
+		$"Valid flavors are: {string.Join(", ", Enum.GetValues(typeof(FlavorType)))} (case insensitive)\n" +
+		"Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.\n" +
+		"\n" +
+		"If no configuration file is specified, the default configuration is used.";
+
 	// This only binds the root command invocation to the real file system and console.
 	// I.e. deals only with non-testable parts.
 	[ExcludeFromCodeCoverage]
@@ -21,19 +46,20 @@ public static class Program
 
 	public static RootCommand BuildRootCommand(IFileSystem fileSystem)
 	{
-		var configFileArgument = new Argument<string>(
-			"config",
-			"Path to configuration file to use");
-
 		var inputFileArgument = new Argument<string>(
 			"input",
 			"Input feature file to generate code from");
 
 		var outputDirectoryArgument = new Argument<string>(
 			"output",
+			() => ".",
 			"Directory to write content into");
 
-		var command = new RootCommand("Generate Responsible test case stubs from Gherkin specifications.")
+		var configFileArgument = new Option<string>(
+			new[] { "-c", "--config-file" },
+			"Path to configuration file, otherwise a default configuration will be used");
+
+		var command = new RootCommand(Description)
 		{
 			configFileArgument,
 			inputFileArgument,
@@ -44,7 +70,7 @@ public static class Program
 		command.TreatUnmatchedTokensAsErrors = true;
 
 		command.SetHandler((
-				string configFile,
+				string? configFile,
 				string inputFile,
 				string outputDirectory,
 				InvocationContext invocationContext) =>
@@ -66,7 +92,9 @@ public static class Program
 				{
 					var baseConfig = Run("read configuration", () =>
 					{
-						var lines = fileSystem.File.ReadAllLines(configFile);
+						var lines = configFile != null
+							? fileSystem.File.ReadAllLines(configFile)
+							: DefaultConfig;
 						return CommentParser.ParseLines(lines);
 					});
 
@@ -87,10 +115,18 @@ public static class Program
 					var _ = Run("write output", () =>
 					{
 						fileSystem.Directory.CreateDirectory(outputDirectory);
-						fileSystem.File.WriteAllLines(
-							Path.Combine(outputDirectory, content.ClassFileName()),
-							content.FileLines);
-						return 0;
+						var outputFileName = Path.Combine(outputDirectory, content.ClassFileName());
+
+						if (fileSystem.File.Exists(outputFileName))
+						{
+							throw new ArgumentException($"Output file '{outputFileName}' already exists.");
+						}
+
+						fileSystem.File.WriteAllLines(outputFileName, content.FileLines);
+
+						invocationContext.Console.WriteLine($"Wrote file '{outputFileName}'");
+
+						return 0; // Dummy value
 					});
 
 				}
