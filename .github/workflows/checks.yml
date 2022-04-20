@@ -100,8 +100,8 @@ jobs:
       - name: Run Tests
         id: run-tests
         run: |
-          dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx;LogFileName=results.xml"
-          echo "::set-output name=tests::TestResults/results.xml"
+          dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx"
+          echo "::set-output name=tests::TestResults/*.trx"
 
       - name: Push to testspace
         if: ${{ always() }}
