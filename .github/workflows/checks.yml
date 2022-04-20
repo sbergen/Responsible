@@ -119,7 +119,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: netstandard Test Results
-          path: Responsible/TestResults
+          path: src/TestResults
 
   test-mutation-core:
     uses: ./.github/workflows/stryker.yml
