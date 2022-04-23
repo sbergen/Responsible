@@ -55,10 +55,9 @@ public class EditorConfigHandlerTests
 		.Should().BeEquivalentTo(Config(new IndentInfo(3, ' ')));
 
 	[Fact]
-	public void SpaceIndentStyle_ReturnsNull_WhenInvalidValueSpecified() => new Dictionary<string, string>
+	public void SpaceIndentStyle_ReturnsNull_WhenIndentSizeMissing() => new Dictionary<string, string>
 		{
 			["indent_style"] = "space",
-			["indent_size"] = "invalid",
 		}
 		.ConfigFromEditorConfigProperties()
 		.Should().BeEquivalentTo(PartialConfiguration.Empty);
