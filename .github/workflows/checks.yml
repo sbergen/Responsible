@@ -40,18 +40,18 @@ jobs:
 
       - name: Run tests
         id: tests
-        uses: game-ci/unity-test-runner@v2.0.0
+        uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
-          customParameters: -enableCodeCoverage
-            -coverageResultsPath "../artifacts/CodeCoverage/"
-            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
-            -debugCodeOptimization
-            -nographics
-            -disable-assembly-updater
+          coverageOptions: assemblyFilters:+Responsible,+Responsible.Editor
+          customParameters: -nographics -disable-assembly-updater
+
+      - name: Move CodeCoverage into artifacts
+        if: ${{ always() }}
+        run: mv ${{ steps.tests.outputs.coveragePath }} ${{ steps.tests.outputs.artifactsPath }}/CodeCoverage
 
       - name: Push to testspace
         if: ${{ always() }}
