@@ -27,6 +27,6 @@ public static class CodeGenerator
 
 		lines.Add("}");
 
-		return new GeneratedClass(feature.Name.ToPascalCase(), lines);
+		return new GeneratedClass(lines);
 	}
 }

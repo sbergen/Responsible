@@ -2,9 +2,7 @@ using System.Text;
 
 namespace ResponsibleGherkin;
 
-public record GeneratedClass(
-	string ClassName,
-	IReadOnlyList<string> FileLines)
+public record GeneratedClass(IReadOnlyList<string> FileLines)
 {
 	public string BuildFileContent()
 	{
@@ -21,6 +19,4 @@ public record GeneratedClass(
 
 		return stringBuilder.ToString();
 	}
-
-	public string ClassFileName() => $"{this.ClassName}.cs";
 }

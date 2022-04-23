@@ -3,7 +3,6 @@ using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
-using Gherkin;
 using ResponsibleGherkin.Generators;
 
 namespace ResponsibleGherkin;
@@ -15,7 +14,7 @@ public static class Program
 	private static readonly string[] DefaultConfig =
 	{
 		"# responsible-flavor: Unity",
-		"# responsible-indent: 1 tab",
+		"# responsible-indent: 4 spaces",
 		"# responsible-namespace: MyNamespace",
 		"# responsible-base-class: MyTestBase",
 		"# responsible-executor: Executor",
@@ -27,21 +26,26 @@ public static class Program
 	private static readonly string Description =
 		"Generate Responsible test case stubs from Gherkin specifications." +
 		"\n\n" +
-		"The configuration can be specified either in comments in the Gherkin file, or in a separate file. " +
-		"Comments in a Gherkin file always take precedence over the configuration file. " +
+		"The configuration will be resolved by merging the following sources in descending priority order:\n" +
+		"  * Comments in the Gherkin file\n" +
+		"  * Manually specified configuration file\n" +
+		"  * EditorConfig file resolved from the output path\n" +
+		"  * Only if no manual configuration provided, the default configuration\n" +
+		"\n" +
+		"After merging the configurations, there must be a value specified for each configuration property. " +
 		"However, specifying a configuration value more than once in one source is an error. " +
+		"\n\n" +
 		"The configuration format is fairly self-explanatory. " +
 		"Here is the default configuration:" +
 		"\n" +
 		string.Join(Environment.NewLine, DefaultConfig) +
 		"\n\n" +
-		$"Valid flavors are: {FlavorTypes} (case insensitive)\n" +
-		"Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.\n" +
-		"The namespace is the namespace for the generated code.\n" +
-		"The base class is what the generated test classes will inherit from.\n" +
-		"The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.\n" +
-		"\n" +
-		"If no configuration file is specified, the default configuration is used.";
+		"The properties are\n" +
+		$"  * flavor: {FlavorTypes} (case insensitive)\n" +
+		"  * indent: e.g. '1 tab', '4 spaces', '1 space'\n" +
+		"  * namespace: the namespace for the generated code\n" +
+		"  * base-class: base class for generated test classes\n" +
+		"  * executor: property (or field) name in the base class, containing a TestInstructionExecutor";
 
 	// This only binds the root command invocation to the real file system and console.
 	// I.e. deals only with non-testable parts.
@@ -103,39 +107,39 @@ public static class Program
 
 				try
 				{
-					var baseConfig = Run("read configuration", () =>
-					{
-						var lines = configFile != null
-							? fileSystem.File.ReadAllLines(configFile)
-							: DefaultConfig;
-						return CommentParser.ParseLines(lines);
-					});
+					var providedConfig = Run("read configuration", () =>
+						configFile != null
+							? CommentParser.ParseLines(fileSystem.File.ReadAllLines(configFile))
+							: PartialConfiguration.Empty);
 
-					var (feature, featureConfig) = Run("read input", () =>
-					{
-						using var fileReader = fileSystem.File.OpenText(inputFile);
-						var document = new Parser().Parse(fileReader);
-						return (document.Feature, CommentParser.Parse(document.Comments));
-					});
+					// Only use default as a fallback if no config file provided
+					var fallbackConfig = configFile != null
+						? PartialConfiguration.Empty
+						: CommentParser.ParseLines(DefaultConfig);
+
+					var input = Run("read input", () => InputFile.Read(fileSystem, inputFile));
 
 					var configuration = Run("merge configurations", () =>
-						Configuration.Merge(featureConfig, baseConfig));
+						Configuration.Merge(
+							input.CommentsConfiguration,
+							providedConfig,
+							input.EditorConfigConfiguration,
+							fallbackConfig));
 
-					var content = Run("generate code", () => CodeGenerator.GenerateClass(
-						feature,
-						configuration));
+					var generatedClass = Run("generate code", () => CodeGenerator
+						.GenerateClass(input.Feature, configuration));
 
 					var _ = Run("write output", () =>
 					{
 						fileSystem.Directory.CreateDirectory(outputDirectory);
-						var outputFileName = Path.Combine(outputDirectory, content.ClassFileName());
+						var outputFileName = Path.Combine(outputDirectory, input.ClassFileName);
 
 						if (!force && fileSystem.File.Exists(outputFileName))
 						{
 							throw new ArgumentException($"Output file '{outputFileName}' already exists.");
 						}
 
-						fileSystem.File.WriteAllLines(outputFileName, content.FileLines);
+						fileSystem.File.WriteAllLines(outputFileName, generatedClass.FileLines);
 
 						invocationContext.Console.WriteLine($"Wrote file '{outputFileName}'");
 

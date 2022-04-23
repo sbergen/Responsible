@@ -3,20 +3,27 @@
 Description:
   Generate Responsible test case stubs from Gherkin specifications.
   
-  The configuration can be specified either in comments in the Gherkin file, or in a separate file. Comments in a Gherkin file always take precedence over the configuration file. However, specifying a configuration value more than once in one source is an error. The configuration format is fairly self-explanatory. Here is the default configuration:
+  The configuration will be resolved by merging the following sources in descending priority order:
+    * Comments in the Gherkin file
+    * Manually specified configuration file
+    * EditorConfig file resolved from the output path
+    * Only if no manual configuration provided, the default configuration
+  
+  After merging the configurations, there must be a value specified for each configuration property. However, specifying a configuration value more than once in one source is an error. 
+  
+  The configuration format is fairly self-explanatory. Here is the default configuration:
   # responsible-flavor: Unity
-  # responsible-indent: 1 tab
+  # responsible-indent: 4 spaces
   # responsible-namespace: MyNamespace
   # responsible-base-class: MyTestBase
   # responsible-executor: Executor
   
-  Valid flavors are: Unity, NUnit, Xunit (case insensitive)
-  Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.
-  The namespace is the namespace for the generated code.
-  The base class is what the generated test classes will inherit from.
-  The executor is the property (or field) name in the base class, containing a TestInstructionExecutor.
-  
-  If no configuration file is specified, the default configuration is used.
+  The properties are
+    * flavor: Unity, NUnit, Xunit (case insensitive)
+    * indent: e.g. '1 tab', '4 spaces', '1 space'
+    * namespace: the namespace for the generated code
+    * base-class: base class for generated test classes
+    * executor: property (or field) name in the base class, containing a TestInstructionExecutor
 
 Usage:
   responsible-gherkin <input> [<output>] [options]
