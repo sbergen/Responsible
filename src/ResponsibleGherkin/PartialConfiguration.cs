@@ -1,12 +1,11 @@
 namespace ResponsibleGherkin;
 
 public record PartialConfiguration(
-	FlavorType? Flavor,
-	IndentInfo? IndentInfo,
-	string? Namespace,
-	string? BaseClass,
-	string? ExecutorName)
+	FlavorType? Flavor = default,
+	IndentInfo? IndentInfo = default,
+	string? Namespace = default,
+	string? BaseClass = default,
+	string? ExecutorName = default)
 {
-	public static readonly PartialConfiguration Empty =
-		new(default, default, default, default, default);
+	public static readonly PartialConfiguration Empty = new();
 }
