@@ -21,7 +21,8 @@ public static class Program
 		"# responsible-executor: Executor",
 	};
 
-	private static string FalvorTypes = string.Join(", ", Enum.GetValues(typeof(FlavorType)).Cast<FlavorType>());
+	private static readonly string FlavorTypes =
+		string.Join(", ", Enum.GetValues(typeof(FlavorType)).Cast<FlavorType>());
 
 	private static readonly string Description =
 		"Generate Responsible test case stubs from Gherkin specifications." +
@@ -34,7 +35,7 @@ public static class Program
 		"\n" +
 		string.Join(Environment.NewLine, DefaultConfig) +
 		"\n\n" +
-		$"Valid flavors are: {FalvorTypes} (case insensitive)\n" +
+		$"Valid flavors are: {FlavorTypes} (case insensitive)\n" +
 		"Valid indent values are e.g. '1 tab', '4 spaces', '1 space'.\n" +
 		"The namespace is the namespace for the generated code.\n" +
 		"The base class is what the generated test classes will inherit from.\n" +
