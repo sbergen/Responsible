@@ -5,13 +5,12 @@ namespace ResponsibleGherkin;
 public static class EditorConfigHandler
 {
 	// Make this separate for better testability
-	public static IReadOnlyDictionary<string, string>? ResolveEditorConfigProperties(string filePath) =>
-		new EditorConfigParser().Parse(filePath)?.Properties;
+	public static IReadOnlyDictionary<string, string> ResolveEditorConfigProperties(string filePath) =>
+		new EditorConfigParser().Parse(filePath).Properties;
 
 	public static PartialConfiguration ConfigFromEditorConfigProperties(
-		this IReadOnlyDictionary<string, string>? properties) => properties != null
-		? new PartialConfiguration(IndentInfo: ResolveIndentStyle(properties))
-		: PartialConfiguration.Empty;
+		this IReadOnlyDictionary<string, string> properties) =>
+		new(IndentInfo: ResolveIndentStyle(properties));
 
 	private static IndentInfo? ResolveIndentStyle(IReadOnlyDictionary<string, string> properties) =>
 		properties.GetValueOrDefault("indent_style") switch

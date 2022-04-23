@@ -8,11 +8,6 @@ namespace ResponsibleGherkin.Tests;
 public class EditorConfigHandlerTests
 {
 	[Fact]
-	public void NullProperties_ReturnsEmptyConfiguration() =>
-		default(Dictionary<string, string>).ConfigFromEditorConfigProperties()
-			.Should().BeEquivalentTo(PartialConfiguration.Empty);
-
-	[Fact]
 	public void EmptyProperties_ReturnsEmptyConfiguration() =>
 		new Dictionary<string, string>().ConfigFromEditorConfigProperties()
 			.Should().BeEquivalentTo(PartialConfiguration.Empty);
@@ -53,6 +48,15 @@ public class EditorConfigHandlerTests
 		}
 		.ConfigFromEditorConfigProperties()
 		.Should().BeEquivalentTo(Config(new IndentInfo(3, ' ')));
+
+	[Fact]
+	public void SpaceIndentStyle_ReturnsNull_WhenInvalidValueSpecified() => new Dictionary<string, string>
+		{
+			["indent_style"] = "space",
+			["indent_size"] = "invalid",
+		}
+		.ConfigFromEditorConfigProperties()
+		.Should().BeEquivalentTo(PartialConfiguration.Empty);
 
 	[Fact]
 	public void SpaceIndentStyle_ReturnsNull_WhenIndentSizeMissing() => new Dictionary<string, string>
