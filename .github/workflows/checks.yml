@@ -40,32 +40,28 @@ jobs:
 
       - name: Run tests
         id: tests
-        uses: game-ci/unity-test-runner@v2.0.0
+        uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
-          customParameters: -enableCodeCoverage
-            -coverageResultsPath "../artifacts/CodeCoverage/"
-            -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor
-            -debugCodeOptimization
-            -nographics
-            -disable-assembly-updater
+          coverageOptions: assemblyFilters:+Responsible,+Responsible.Editor
+          customParameters: -nographics -disable-assembly-updater
 
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
-          [${{ matrix.unityVersion }}]artifacts/editmode-results.xml
-          [${{ matrix.unityVersion }}]artifacts/playmode-results.xml
+          [${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
+          [${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
         uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: "artifacts/CodeCoverage/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
-            artifacts/CodeCoverage/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml"
+          files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
+            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
 
       - name: Archive test results
@@ -73,7 +69,14 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
-          path: artifacts
+          path: ${{ steps.tests.outputs.artifactsPath }}
+
+      - name: Archive coverage results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Unity Coverage Results ${{ matrix.unityVersion }}
+          path: ${{ steps.tests.outputs.coveragePath }}
 
   test-netstandard:
     runs-on: ubuntu-latest
