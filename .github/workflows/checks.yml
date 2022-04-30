@@ -43,7 +43,7 @@ jobs:
         id: tests
         uses: game-ci/unity-test-runner@v2
         env:
-          UNITY_LICENSE: ${{ secrets[UNITY_LICENSE_2020] }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2020 }}
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
