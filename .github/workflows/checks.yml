@@ -13,16 +13,16 @@ jobs:
       matrix:
         unityVersion:
           - 2019.4.14f1
-          - 2020.3.1f1
+          - 2020.3.33f1
+          - 2021.3.1f1
 
-        # No dots allowed in secret names, so we need to have this mapping
         include:
-          - unityVersion: 2019.4.14f1
-            licenseSecret: UNITY_LICENSE_2019
+          - unityVersion: 2019.4.38f1
             majorUnityVersion: 2019
           - unityVersion: 2020.3.1f1
-            licenseSecret: UNITY_LICENSE_2020
-            majorUnityVersion: 2019
+            majorUnityVersion: 2020
+          - unityVersion: 2021.3.1f1
+            majorUnityVersion: 2021
 
     steps:
       - uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
         id: tests
         uses: game-ci/unity-test-runner@v2
         env:
-          UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
+          UNITY_LICENSE: ${{ secrets[UNITY_LICENSE_2020] }}
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
