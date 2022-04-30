@@ -30,6 +30,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
 		{
 			this.responder1.MayComplete = true;
@@ -58,6 +59,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
 		{
 			this.responder1.MayComplete = true;

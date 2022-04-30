@@ -26,6 +26,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
 		{
 			this.second.MayRespond = true;
@@ -70,6 +71,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void UntilReadyToRespond_PublishesError_FromAnyResponder([Values] bool errorInFirst)
 		{
 			var exception = new Exception("Fail!");

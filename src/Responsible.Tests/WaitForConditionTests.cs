@@ -100,6 +100,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void WaitForCondition_CleansUpSuccessfully_AfterCancellation()
 		{
 			using (var tokenSource = new CancellationTokenSource())

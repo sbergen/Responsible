@@ -46,6 +46,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void Until_DoesNotExecute_IfConditionIsMetFirst()
 		{
 			var cond1 = false;

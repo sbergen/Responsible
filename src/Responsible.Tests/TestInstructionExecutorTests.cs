@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -16,6 +17,7 @@ namespace Responsible.Tests
 		};
 
 		[Test]
+		[TaskExceptionTest]
 		public void Dispose_CancelsInstructions()
 		{
 			var task = Never.ExpectWithinSeconds(1).ToTask(this.Executor);
