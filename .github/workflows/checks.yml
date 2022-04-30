@@ -19,8 +19,10 @@ jobs:
         include:
           - unityVersion: 2019.4.14f1
             licenseSecret: UNITY_LICENSE_2019
+            majorUnityVersion: 2019
           - unityVersion: 2020.3.1f1
             licenseSecret: UNITY_LICENSE_2020
+            majorUnityVersion: 2019
 
     steps:
       - uses: actions/checkout@v3
@@ -33,10 +35,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ResponsibleUnity/Library
-          key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
+          key: ${{ matrix.majorUnityVersion }}-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
           restore-keys: |
-            Library-${{ matrix.unityVersion }}
-            Library-
+            ${{ matrix.majorUnityVersion }}-Library-
 
       - name: Run tests
         id: tests

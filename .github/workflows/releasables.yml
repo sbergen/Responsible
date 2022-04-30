@@ -36,10 +36,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ResponsibleUnity/Library
-          key: Library-docfx-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
+          key: 2019-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
           restore-keys: |
-            Library-docfx-
-            Library-
+            2019-Library-
 
       - name: Generate docs
         uses: game-ci/unity-builder@v2
