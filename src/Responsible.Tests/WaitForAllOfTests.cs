@@ -58,6 +58,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void WaitForAllOf_Completes_WhenOneHasError()
 		{
 			var canThrow = false;

@@ -73,6 +73,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void BasicResponder_RespectsIndividualTimeouts()
 		{
 			var task = this.respondToConditions
@@ -94,6 +95,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void BasicResponder_FailureDescription_IsAsExpected()
 		{
 			var task = WaitForCondition("Condition", () => false)

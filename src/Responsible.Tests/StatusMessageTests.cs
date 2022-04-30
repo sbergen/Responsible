@@ -48,6 +48,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void CanceledMessage_ContainsCorrectDetails()
 		{
 			using (var cts = new CancellationTokenSource())

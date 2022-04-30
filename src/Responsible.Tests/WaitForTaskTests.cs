@@ -64,6 +64,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void CanceledExecution_RunsCorrectly()
 		{
 			using (var cancellationSource = new CancellationTokenSource())

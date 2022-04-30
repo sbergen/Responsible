@@ -7,6 +7,7 @@ namespace Responsible.Tests
 	public class OperationStateTests : ResponsibleTestBase
 	{
 		[Test]
+		[TaskExceptionTest]
 		public void ReusingSameInstruction_ProvidesSeparateState()
 		{
 			bool condition = true;

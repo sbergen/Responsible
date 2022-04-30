@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -18,6 +19,7 @@ namespace Responsible.Tests
 			=> Substitute.For<IGlobalContextProvider>();
 
 		[Test]
+		[TaskExceptionTest]
 		public void Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
 		{
 			var task = WaitForAllOf(

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -24,6 +25,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectWithinSeconds_CancelsSuccessfully()
 		{
 			var cts = new CancellationTokenSource();
@@ -47,6 +49,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectCondition_ContainsErrorDetails_WhenExceptionThrown()
 		{
 			this.AssertErrorDetailsAfterOneSecond(
@@ -100,6 +103,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectResponder_DoesNotTerminateWithTimeout_IfWaitFulfilled()
 		{
 			// The instruction takes longer than the timeout
@@ -119,6 +123,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectResponder_ContainsErrorDetails_WhenConditionTimedOut()
 		{
 			var responder = Never.ThenRespondWithAction("Nop", Nop);
@@ -131,6 +136,7 @@ Test operation stack");
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectResponder_ContainsErrorDetails_WhenInstructionTimedOut()
 		{
 			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
@@ -144,6 +150,7 @@ Test operation stack");
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void ExpectResponder_ContainsErrorDetails_WhenExceptionThrown()
 		{
 			var responder = ImmediateTrue.ThenRespondWithAction("Throw error", _ => throw new Exception("Test"));

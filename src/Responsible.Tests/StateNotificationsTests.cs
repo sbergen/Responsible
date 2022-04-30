@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using NUnit.Framework;
 using Responsible.State;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -35,6 +36,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void StateNotifications_PublishesFinished_WhenOperationCanceled()
 		{
 			var tokenSource = new CancellationTokenSource();
@@ -59,6 +61,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void StateNotifications_PublishesMatchingStates_WithMultipleOperations()
 		{
 			var tokenSource1 = new CancellationTokenSource();
