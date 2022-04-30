@@ -1,7 +1,5 @@
 using System;
-using System.Threading;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
 
 namespace Responsible.Tests.Utilities
@@ -13,7 +11,11 @@ namespace Responsible.Tests.Utilities
 	[AttributeUsage(AttributeTargets.Method)]
 	public class TaskExceptionTestAttribute : Attribute, IWrapSetUpTearDown
 	{
-		public TestCommand Wrap(TestCommand command) => new SuppressExecutionFlowCommand(command);
+		public TestCommand Wrap(TestCommand command) =>
+#if !UNITY_2021_3
+			command;
+#else
+			new SuppressExecutionFlowCommand(command);
 
 		private class SuppressExecutionFlowCommand : DelegatingTestCommand
 		{
@@ -22,13 +24,15 @@ namespace Responsible.Tests.Utilities
 			{
 			}
 
-			public override TestResult Execute(ITestExecutionContext context)
+			public override NUnit.Framework.Internal.TestResult Execute(
+				NUnit.Framework.Internal.ITestExecutionContext context)
 			{
-				using (ExecutionContext.SuppressFlow())
+				using (System.Threading.ExecutionContext.SuppressFlow())
 				{
 					return this.innerCommand.Execute(context);
 				}
 			}
 		}
+#endif
 	}
 }
