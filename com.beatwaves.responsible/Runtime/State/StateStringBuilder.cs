@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Responsible.Utilities;
 
@@ -241,7 +240,9 @@ namespace Responsible.State
 				var e = failed.Error;
 				this.AddIndented(
 					"Failed with:",
-					b => b.Add($"{e.GetType()}: '{TruncatedExceptionMessage(e)}'"));
+					b => b.AddNestedDetails(
+						$"{e.GetType()}:",
+						nested => nested.AddDetails(e.Message)));
 
 				this.AddEmptyLine();
 
@@ -256,11 +257,5 @@ namespace Responsible.State
 
 			return this;
 		}
-
-		private static string TruncatedExceptionMessage(Exception e) => new string(e.Message
-			.Select(Indexed.Make)
-			.TakeWhile(indexed => indexed.Index < 100 && indexed.Value != '\n')
-			.Select(indexed => indexed.Value)
-			.ToArray());
 	}
 }
