@@ -210,10 +210,10 @@ namespace Responsible.State
 		{
 			this.AddStatus(status, description);
 
-			this.AddEmptyLine();
-
 			if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
 			{
+				this.AddEmptyLine();
+
 				if (extraContext != null)
 				{
 					extraContext(this);

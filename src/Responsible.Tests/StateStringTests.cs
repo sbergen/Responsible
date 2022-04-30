@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.State;
 using Responsible.Tests.Utilities;
@@ -39,11 +41,16 @@ namespace Responsible.Tests
 			if (run)
 			{
 				state.ToTask(this.Executor);
-				StringAssert.Contains(details, state.ToString());
+				var stateString = state.ToString();
+
+				StringAssert.Contains(details, stateString);
 			}
 			else
 			{
-				StringAssert.DoesNotContain(details, state.ToString());
+				var stateString = state.ToString();
+
+				StringAssert.DoesNotContain(details, stateString);
+				AssertNoEmptyLines(stateString);
 			}
 		}
 
@@ -57,13 +64,18 @@ namespace Responsible.Tests
 			if (run)
 			{
 				state.ToTask(this.Executor);
-				StringAssert.Contains(noContextText, state.ToString());
-				StringAssert.Contains(considerText, state.ToString());
+				var stateString = state.ToString();
+
+				StringAssert.Contains(noContextText, stateString);
+				StringAssert.Contains(considerText, stateString);
 			}
 			else
 			{
-				StringAssert.DoesNotContain(noContextText, state.ToString());
-				StringAssert.DoesNotContain(considerText, state.ToString());
+				var stateString = state.ToString();
+
+				StringAssert.DoesNotContain(noContextText, stateString);
+				StringAssert.DoesNotContain(considerText, stateString);
+				AssertNoEmptyLines(stateString);
 			}
 		}
 
@@ -78,6 +90,19 @@ namespace Responsible.Tests
 			Assert.AreEqual(
 				builder.ToString(),
 				"Description:\n  first line\n  second line");
+		}
+
+		[AssertionMethod]
+		private static void AssertNoEmptyLines(string str)
+		{
+			var emptyLineCount = str
+				.Split('\n')
+				.Select(s => s.Trim())
+				.Count(string.IsNullOrEmpty);
+			Assert.AreEqual(
+				0,
+				emptyLineCount,
+				$"String should not contain empty lines, was:\n{str}");
 		}
 	}
 }
