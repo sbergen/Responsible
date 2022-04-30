@@ -13,14 +13,7 @@ jobs:
       matrix:
         unityVersion:
           - 2019.4.14f1
-          - 2020.3.1f1
-
-        # No dots allowed in secret names, so we need to have this mapping
-        include:
-          - unityVersion: 2019.4.14f1
-            licenseSecret: UNITY_LICENSE_2019
-          - unityVersion: 2020.3.1f1
-            licenseSecret: UNITY_LICENSE_2020
+          - 2020.3.33f1
 
     steps:
       - uses: actions/checkout@v3
@@ -29,20 +22,28 @@ jobs:
         with:
           domain: ${{github.repository_owner}}
 
+      - name: Parse major unity version
+        id: major-unity-version
+        uses: actions/github-script@v6
+        env:
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+        with:
+          result-encoding: string
+          script: return process.env['UNITY_VERSION'].substr(0, 4);
+
       - name: Cache
         uses: actions/cache@v3
         with:
           path: ResponsibleUnity/Library
-          key: Library-${{ matrix.unityVersion }}-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**') }}
+          key: ${{ steps.major-unity-version.outputs.result }}-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
           restore-keys: |
-            Library-${{ matrix.unityVersion }}
-            Library-
+            ${{ steps.major-unity-version.outputs.result }}-Library-
 
       - name: Run tests
         id: tests
         uses: game-ci/unity-test-runner@v2
         env:
-          UNITY_LICENSE: ${{ secrets[matrix.licenseSecret] }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2020 }}
         with:
           projectPath: ResponsibleUnity
           unityVersion: ${{ matrix.unityVersion }}
@@ -52,8 +53,8 @@ jobs:
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
-          [${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
-          [${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
@@ -108,7 +109,7 @@ jobs:
 
       - name: Push to testspace
         if: ${{ always() }}
-        run: testspace ${{ steps.run-tests.outputs.tests }}
+        run: testspace [.NET]${{ steps.run-tests.outputs.tests }}
 
       - name: Push to codecov.io
         uses: codecov/codecov-action@v3
