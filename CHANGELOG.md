@@ -11,6 +11,10 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+### Changed
+- Include hint in state strings about being able to provide extra context to wait conditions
+- Improve exception message handling by not truncating long messages (I don't remember why I did this originally)
+
 ## [4.3.0] - 2022-04-17
 
 ### Added

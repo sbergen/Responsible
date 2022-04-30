@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Responsible.Utilities;
 
@@ -199,15 +198,40 @@ namespace Responsible.State
 
 		private StateStringBuilder AddStatus(
 			TestOperationStatus status,
-			string description,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this
+			string description) => this
 			.AddIndented(
 				status.MakeStatusLine(description),
-				_ => this.AddFailureDetails(status, extraContext));
+				_ => this.AddFailureDetails(status));
+
+		private StateStringBuilder AddStatus(
+			TestOperationStatus status,
+			string description,
+			[CanBeNull] Action<StateStringBuilder> extraContext)
+		{
+			this.AddStatus(status, description);
+
+			if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
+			{
+				this.AddEmptyLine();
+
+				if (extraContext != null)
+				{
+					extraContext(this);
+				}
+				else
+				{
+					this.AddNestedDetails(
+						"No extra context provided",
+						b => b.AddDetails(
+							"Consider using the 'extraContext' parameter to get more descriptive output!"));
+				}
+			}
+
+			return this;
+		}
 
 		private StateStringBuilder AddFailureDetails(
-			TestOperationStatus status,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null)
+			TestOperationStatus status)
 		{
 			if (status is TestOperationStatus.Failed failed)
 			{
@@ -216,7 +240,9 @@ namespace Responsible.State
 				var e = failed.Error;
 				this.AddIndented(
 					"Failed with:",
-					b => b.Add($"{e.GetType()}: '{TruncatedExceptionMessage(e)}'"));
+					b => b.AddNestedDetails(
+						$"{e.GetType()}:",
+						nested => nested.AddDetails(e.Message)));
 
 				this.AddEmptyLine();
 
@@ -229,20 +255,7 @@ namespace Responsible.State
 				});
 			}
 
-			if (extraContext != null &&
-				(status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting))
-			{
-				this.AddEmptyLine();
-				extraContext(this);
-			}
-
 			return this;
 		}
-
-		private static string TruncatedExceptionMessage(Exception e) => new string(e.Message
-			.Select(Indexed.Make)
-			.TakeWhile(indexed => indexed.Index < 100 && indexed.Value != '\n')
-			.Select(indexed => indexed.Value)
-			.ToArray());
 	}
 }
