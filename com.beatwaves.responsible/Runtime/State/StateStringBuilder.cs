@@ -199,15 +199,40 @@ namespace Responsible.State
 
 		private StateStringBuilder AddStatus(
 			TestOperationStatus status,
-			string description,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null) => this
+			string description) => this
 			.AddIndented(
 				status.MakeStatusLine(description),
-				_ => this.AddFailureDetails(status, extraContext));
+				_ => this.AddFailureDetails(status));
+
+		private StateStringBuilder AddStatus(
+			TestOperationStatus status,
+			string description,
+			[CanBeNull] Action<StateStringBuilder> extraContext)
+		{
+			this.AddStatus(status, description);
+
+			this.AddEmptyLine();
+
+			if (status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting)
+			{
+				if (extraContext != null)
+				{
+					extraContext(this);
+				}
+				else
+				{
+					this.AddNestedDetails(
+						"No extra context provided",
+						b => b.AddDetails(
+							"Consider using the 'extraContext' parameter to get more descriptive output!"));
+				}
+			}
+
+			return this;
+		}
 
 		private StateStringBuilder AddFailureDetails(
-			TestOperationStatus status,
-			[CanBeNull] Action<StateStringBuilder> extraContext = null)
+			TestOperationStatus status)
 		{
 			if (status is TestOperationStatus.Failed failed)
 			{
@@ -227,13 +252,6 @@ namespace Responsible.State
 						b.Add(sourceLine);
 					}
 				});
-			}
-
-			if (extraContext != null &&
-				(status is TestOperationStatus.Failed || status is TestOperationStatus.Waiting))
-			{
-				this.AddEmptyLine();
-				extraContext(this);
 			}
 
 			return this;

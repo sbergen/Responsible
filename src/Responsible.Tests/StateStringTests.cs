@@ -42,5 +42,44 @@ namespace Responsible.Tests
 				.Details(@"xxxxxxx\^")
 				.Nowhere("~");
 		}
+
+		[Test]
+		public void ExtraContext_IsIncluded_WhenProvidedAndApplicable([Values] bool run)
+		{
+			var details = "details that should be included";
+			var state = Responsibly
+				.WaitForCondition(
+					"Never",
+					() => false,
+					builder => builder.AddDetails(details))
+				.ExpectWithinSeconds(1).CreateState();
+
+			if (run)
+			{
+				state.ToTask(this.Executor);
+				StringAssert.Contains(details, state.ToString());
+			}
+			else
+			{
+				StringAssert.DoesNotContain(details, state.ToString());
+			}
+		}
+
+		[Test]
+		public void ExtraContextHint_IsIncluded_WhenNotProvidedAndApplicable([Values] bool run)
+		{
+			var state = Never.ExpectWithinSeconds(1).CreateState();
+			var noContextString = "No extra context provided";
+
+			if (run)
+			{
+				state.ToTask(this.Executor);
+				StringAssert.Contains(noContextString, state.ToString());
+			}
+			else
+			{
+				StringAssert.DoesNotContain(noContextString, state.ToString());
+			}
+		}
 	}
 }

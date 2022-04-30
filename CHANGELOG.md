@@ -11,6 +11,9 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- Include hint in state strings about being able to provide extra context to wait conditions
+
 ## [4.3.0] - 2022-04-17
 
 ### Added
