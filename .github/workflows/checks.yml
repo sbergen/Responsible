@@ -53,8 +53,8 @@ jobs:
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
-          [Unity ${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
-          [Unity ${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
