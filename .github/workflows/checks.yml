@@ -16,14 +16,6 @@ jobs:
           - 2020.3.33f1
           - 2021.3.1f1
 
-        include:
-          - unityVersion: 2019.4.38f1
-            majorUnityVersion: 2019
-          - unityVersion: 2020.3.1f1
-            majorUnityVersion: 2020
-          - unityVersion: 2021.3.1f1
-            majorUnityVersion: 2021
-
     steps:
       - uses: actions/checkout@v3
 
@@ -31,13 +23,22 @@ jobs:
         with:
           domain: ${{github.repository_owner}}
 
+      - name: Parse major unity version
+        id: major-unity-version
+        uses: actions/github-script@v6
+        env:
+          UNITY_VERSION: ${{ matrix.unityVersion }}
+        with:
+          result-encoding: string
+          script: return process.env['UNITY_VERSION'].substr(4);
+
       - name: Cache
         uses: actions/cache@v3
         with:
           path: ResponsibleUnity/Library
-          key: ${{ matrix.majorUnityVersion }}-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
+          key: ${{ steps.major-unity-version.outputs.result }}-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
           restore-keys: |
-            ${{ matrix.majorUnityVersion }}-Library-
+            ${{ steps.major-unity-version.outputs.result }}-Library-
 
       - name: Run tests
         id: tests
