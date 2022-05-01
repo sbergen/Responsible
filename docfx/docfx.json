@@ -27,7 +27,11 @@
         }
       ],
       "overwrite": [ "namespaces/**.md" ],
-      "resource": [],
+      "resource": [
+        {
+          "files": [ "images/**" ]
+        }
+      ],
       "globalMetadata": {
         "_appTitle": "Responsible",
         "_enableSearch": false,

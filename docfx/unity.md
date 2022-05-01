@@ -78,3 +78,5 @@ By using the Editor window available under `Window -> Responsible -> Operation S
 you can observe the progress of your tests executing.
 The contents of the window updates in real time and matches the output produced on failures,
 except for the operation stack and stack trace.
+
+<img src="images/UnityStateWindow.png" srcset="images/UnityStateWindow.png 2x" alt="Screenshot of Unity Operation State Window">
