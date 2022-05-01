@@ -17,10 +17,15 @@ namespace Responsible.Editor
 			window.Show();
 		}
 
-		private void OnEnable() => this.state = new TestOperationStatusWindowState(
-			this.rootVisualElement,
-			TestInstructionExecutor.SubscribeToStates,
-			PlayModeStateChangeListener.RegisterCallback);
+		private void OnEnable()
+		{
+			var style = this.rootVisualElement.style;
+			style.paddingTop = style.paddingLeft = style.paddingRight = 5;
+			this.state = new TestOperationStatusWindowState(
+				this.rootVisualElement,
+				TestInstructionExecutor.SubscribeToStates,
+				PlayModeStateChangeListener.RegisterCallback);
+		}
 
 		private void OnDestroy() => this.state.Dispose();
 
