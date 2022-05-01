@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 
 namespace Responsible.State
 {
@@ -10,6 +9,6 @@ namespace Responsible.State
 	internal interface IDiscreteWaitConditionState : ITestOperationState
 	{
 		string Description { get; }
-		[CanBeNull] Action<StateStringBuilder> ExtraContext { get; }
+		Action<StateStringBuilder>? ExtraContext { get; }
 	}
 }

@@ -9,9 +9,9 @@ namespace Responsible.Tests
 {
 	public class UntilReadyToTests : ResponsibleTestBase
 	{
-		private ConditionResponder<int> first;
-		private ConditionResponder<int> second;
-		private Task task;
+		private ConditionResponder<int> first = null!;
+		private ConditionResponder<int> second = null!;
+		private Task task = null!;
 
 		[SetUp]
 		public void SetUp()

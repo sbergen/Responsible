@@ -10,10 +10,10 @@ namespace Responsible.Tests
 {
 	public class RespondToAllOfTests : ResponsibleTestBase
 	{
-		private ConditionResponder<TestDataBase> responder1;
-		private ConditionResponder<TestDataDerived> responder2;
+		private ConditionResponder<TestDataBase> responder1 = null!;
+		private ConditionResponder<TestDataDerived> responder2 = null!;
 
-		private Task<TestDataBase[]> task;
+		private Task<TestDataBase[]> task = null!;
 		private bool Completed => this.task.IsCompleted;
 
 		[SetUp]

@@ -12,7 +12,7 @@ namespace Responsible.Tests
 
 		private bool startedToReact;
 
-		private ITestResponder<object> respondToConditions;
+		private ITestResponder<object> respondToConditions = null!;
 
 		[SetUp]
 		public void SetUp()

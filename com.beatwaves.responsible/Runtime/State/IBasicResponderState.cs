@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Responsible.State
 {
 	/// <summary>
@@ -10,6 +8,6 @@ namespace Responsible.State
 	{
 		string Description { get; }
 		ITestOperationState WaitState { get; }
-		[CanBeNull] ITestOperationState InstructionState { get; }
+		ITestOperationState? InstructionState { get; }
 	}
 }

@@ -93,12 +93,12 @@ namespace Responsible.State
 		}
 
 		[ExcludeFromCodeCoverage] // Unreachable defensive code
-		internal static void AssertNotStarted(TestOperationStatus status)
+		private static void AssertNotStarted(TestOperationStatus status)
 		{
 			if (status != NotExecuted.Instance)
 			{
 				throw new InvalidOperationException(
-					$"Operation already started ({status?.GetType().Name})");
+					$"Operation already started ({status.GetType().Name})");
 			}
 		}
 

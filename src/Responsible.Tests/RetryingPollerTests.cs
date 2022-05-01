@@ -7,7 +7,7 @@ namespace Responsible.Tests
 {
 	public class RetryingPollerTests
 	{
-		private RetryingPoller poller;
+		private RetryingPoller poller = null!;
 
 		[SetUp]
 		public void SetUp()
@@ -87,7 +87,7 @@ namespace Responsible.Tests
 				.When(x => x.Invoke())
 				.Do(_ =>
 				{
-					handle?.Dispose();
+					handle.Dispose();
 				});
 
 

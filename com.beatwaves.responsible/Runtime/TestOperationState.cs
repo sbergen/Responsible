@@ -49,9 +49,9 @@ namespace Responsible
 			=> state.ExecuteUnsafe<T>(runContext, cancellationToken);
 
 		// This is needed in some internals, so for convenience, we don't constrain it to structs
-		internal static ITestOperationState<object> BoxResult<T>(this ITestOperationState<T> state) =>
+		internal static ITestOperationState<object?> BoxResult<T>(this ITestOperationState<T> state) =>
 			typeof(T).IsClass
-				? (ITestOperationState<object>)state
+				? (ITestOperationState<object?>)state
 				: new BoxedOperationState<T>(state);
 	}
 }

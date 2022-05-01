@@ -13,7 +13,7 @@ namespace Responsible.Tests
 		private static readonly ITestInstruction<int> NeverZero =
 			Never.ExpectWithinSeconds(1).Select(_ => 0);
 
-		private TaskCompletionSource<int> completionSource;
+		private TaskCompletionSource<int> completionSource = null!;
 		private CancellationToken cancellationToken;
 
 		[SetUp]

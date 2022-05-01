@@ -21,6 +21,13 @@ namespace Responsible.State
 		/// </summary>
 		/// <param name="builder">State string builder to append the description of this operation state to.</param>
 		void BuildDescription(StateStringBuilder builder);
+
+		/// <summary>
+		///	Builds a detailed representation of the execution state of the test operation.
+		/// </summary>
+		/// <remarks>Declaring this in the interface to make it non-nullable.</remarks>
+		/// <returns>A detailed representation of the state of the test operation.</returns>
+		string ToString();
 	}
 
 	/// <summary>

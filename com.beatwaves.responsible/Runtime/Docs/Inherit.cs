@@ -107,7 +107,7 @@ namespace Responsible.Docs
 		public void CallerMemberWithDescriptionAndContext<T>(
 			string description,
 			T arg,
-			Action<StateStringBuilder> extraContext = null,
+			Action<StateStringBuilder>? extraContext = null,
 			string memberName = "",
 			string sourceFilePath = "",
 			int sourceLineNumber = 0)
@@ -121,7 +121,7 @@ namespace Responsible.Docs
 			string description,
 			T1 arg1,
 			T2 arg2,
-			Action<StateStringBuilder> extraContext = null,
+			Action<StateStringBuilder>? extraContext = null,
 			string memberName = "",
 			string sourceFilePath = "",
 			int sourceLineNumber = 0)

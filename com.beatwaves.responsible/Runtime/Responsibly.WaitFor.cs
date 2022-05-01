@@ -41,7 +41,7 @@ namespace Responsible
 			string description,
 			Func<T> getObject,
 			Func<T, bool> condition,
-			Action<StateStringBuilder> extraContext = null,
+			Action<StateStringBuilder>? extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
@@ -65,7 +65,7 @@ namespace Responsible
 		public static ITestWaitCondition<object> WaitForCondition(
 			string description,
 			Func<bool> condition,
-			Action<StateStringBuilder> extraContext = null,
+			Action<StateStringBuilder>? extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)

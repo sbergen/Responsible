@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
 
@@ -13,7 +12,7 @@ namespace Responsible.State
 		private readonly Func<T1, T2> selector;
 		private readonly SourceContext sourceContext;
 
-		[CanBeNull] private ITestOperationState<T2> selectState;
+		private ITestOperationState<T2>? selectState;
 
 		public TestOperationStatus SelectStatus => this.selectState?.Status ?? TestOperationStatus.NotExecuted.Instance;
 
@@ -29,7 +28,7 @@ namespace Responsible.State
 		{
 			var result = await this.first.Execute(runContext, cancellationToken);
 			this.selectState = new SynchronousTestInstruction<T2>(
-				null, // This should never be used
+				null!, // This should never be used
 				() => this.selector(result),
 				this.sourceContext).CreateState();
 			return await this.selectState.Execute(runContext, cancellationToken);

@@ -8,7 +8,7 @@ namespace Responsible.TestResponders
 		public BoxedTestResponder(ITestResponder<T> responder)
 			: base(() => new BoxedOperationState<ITestOperationState<T>, ITestOperationState<object>>(
 				responder.CreateState(),
-				TestOperationState.BoxResult))
+				TestOperationState.BoxResult!))
 		{
 		}
 	}

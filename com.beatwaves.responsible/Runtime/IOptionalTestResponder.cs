@@ -8,7 +8,7 @@ namespace Responsible
 	///
 	/// See <see cref="OptionalTestResponder"/> for extension methods on optional responders.
 	/// </summary>
-	public interface IOptionalTestResponder : ITestOperation<IMultipleTaskSource<ITestOperationState<object>>>
+	public interface IOptionalTestResponder : ITestOperation<IMultipleTaskSource<ITestOperationState<object?>>>
 	{
 	}
 }

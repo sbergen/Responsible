@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 
 namespace Responsible.State
@@ -11,7 +10,7 @@ namespace Responsible.State
 		private readonly Func<TFirst, ITestOperationState<TSecond>> makeContinuation;
 
 		private TestOperationStatus creationStatus = TestOperationStatus.NotExecuted.Instance;
-		[CanBeNull] private ITestOperationState<TSecond> executionState;
+		private ITestOperationState<TSecond>? executionState;
 
 		public ContinuationState State => this.executionState != null
 			? (ContinuationState)new ContinuationState.Available(this.executionState)

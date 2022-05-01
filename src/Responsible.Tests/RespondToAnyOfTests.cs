@@ -8,11 +8,11 @@ namespace Responsible.Tests
 {
 	public class RespondToAnyOfTests : ResponsibleTestBase
 	{
-		private ConditionResponder responder1;
-		private ConditionResponder responder2;
+		private ConditionResponder responder1 = null!;
+		private ConditionResponder responder2 = null!;
 
 		private bool mayComplete;
-		private Task<object> task;
+		private Task<object> task = null!;
 
 		[SetUp]
 		public void SetUp()

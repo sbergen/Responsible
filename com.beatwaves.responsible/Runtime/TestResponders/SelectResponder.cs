@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
 
@@ -20,7 +19,7 @@ namespace Responsible.TestResponders
 			private readonly Func<T1, T2> selector;
 			private readonly SourceContext sourceContext;
 
-			[CanBeNull] private SelectOperationState<T1, T2> selectState;
+			private SelectOperationState<T1, T2>? selectState;
 
 			public State(
 				ITestResponder<T1> responder,

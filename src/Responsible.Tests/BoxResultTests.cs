@@ -9,9 +9,9 @@ namespace Responsible.Tests
 	{
 		private bool complete;
 
-		private ITestWaitCondition<bool> waitForComplete;
-		private ITestInstruction<bool> returnTrue;
-		private ITestInstruction<int> throwError;
+		private ITestWaitCondition<bool> waitForComplete = null!;
+		private ITestInstruction<bool> returnTrue = null!;
+		private ITestInstruction<int> throwError = null!;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp()

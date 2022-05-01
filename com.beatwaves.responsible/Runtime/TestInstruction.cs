@@ -160,7 +160,7 @@ namespace Responsible
 		[Pure]
 		public static ITestInstruction<object> BoxResult<T>(this ITestInstruction<T> instruction)
 			where T : struct
-			=> new BoxedTestInstruction<T>(instruction);
+			=> new BoxedTestInstruction<T>(instruction)!;
 
 		/// <summary>
 		/// Wraps a test instruction to produce a state string where the state string of the original instruction

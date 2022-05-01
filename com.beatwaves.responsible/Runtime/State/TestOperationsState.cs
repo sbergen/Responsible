@@ -27,7 +27,7 @@ namespace Responsible.State
 			{
 				var result = await this.ExecuteInner(nestedRunContext, cancellationToken);
 				this.Status = new TestOperationStatus.Completed(this.Status);
-				return (TResult)(object)result; // See the Execute extension method for why this is safe.
+				return (TResult)(object)result!; // See the Execute extension method for why this is safe.
 			}
 			catch (OperationCanceledException)
 			{

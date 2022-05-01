@@ -8,7 +8,7 @@ namespace Responsible.Tests
 	public class GroupedAsTests : ResponsibleTestBase
 	{
 		private bool executed;
-		private ITestInstruction<object> groupedAsInstruction;
+		private ITestInstruction<object> groupedAsInstruction = null!;
 
 		[SetUp]
 		public void SetUp()

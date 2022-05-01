@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace Responsible.Utilities
 {
@@ -30,7 +29,7 @@ namespace Responsible.Utilities
 			return this.Self;
 		}
 
-		private protected T AddIndented(string content, [CanBeNull] Action<T> contextAdder)
+		private protected T AddIndented(string content, Action<T>? contextAdder)
 		{
 			this.Add(content);
 			if (contextAdder != null)

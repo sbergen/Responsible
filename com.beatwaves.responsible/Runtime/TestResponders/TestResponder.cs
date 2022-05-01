@@ -24,7 +24,7 @@ namespace Responsible.TestResponders
 
 			public string Description { get; }
 			public ITestOperationState WaitState => this.waitCondition;
-			public ITestOperationState InstructionState { get; private set; }
+			public ITestOperationState? InstructionState { get; private set; }
 
 			public State(
 				string description,

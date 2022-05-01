@@ -18,11 +18,11 @@ namespace Responsible.Tests
 		protected static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);
 
-		protected IFailureListener FailureListener { get; private set; }
-		protected IGlobalContextProvider GlobalContextProvider { get; private set; }
-		protected MockTestScheduler Scheduler { get; private set; }
+		protected IFailureListener? FailureListener { get; private set; }
+		protected IGlobalContextProvider? GlobalContextProvider { get; private set; }
+		protected MockTestScheduler Scheduler { get; private set; } = null!;
 
-		protected TestInstructionExecutor Executor { get; private set; }
+		protected TestInstructionExecutor Executor { get; private set; } = null!;
 
 		protected static void Nop<T>(T unused)
 		{
@@ -33,9 +33,10 @@ namespace Responsible.Tests
 		protected static TestFailureException GetFailureException(Task task)
 		{
 			Assert.IsNotNull(task.Exception, "Should have exception");
-			Assert.AreEqual(1, task.Exception.InnerExceptions.Count);
-			Assert.IsInstanceOf<TestFailureException>(task.Exception.InnerExceptions[0]);
-			return task.Exception.InnerExceptions[0] as TestFailureException;
+			var exception = task.Exception!;
+			Assert.AreEqual(1, exception.InnerExceptions.Count);
+			Assert.IsInstanceOf<TestFailureException>(exception.InnerExceptions[0]);
+			return (TestFailureException)exception.InnerExceptions[0];
 		}
 
 		[SetUp]
@@ -58,9 +59,9 @@ namespace Responsible.Tests
 			this.Executor.Dispose();
 		}
 
-		protected virtual IExternalResultSource ExternalResultSource() => null;
-		protected virtual IFailureListener MakeFailureListener() => null;
-		protected virtual IGlobalContextProvider MakeGlobalContextProvider() => null;
-		protected virtual IReadOnlyList<Type> RethrowableExceptions => null;
+		protected virtual IExternalResultSource? ExternalResultSource() => null;
+		protected virtual IFailureListener? MakeFailureListener() => null;
+		protected virtual IGlobalContextProvider? MakeGlobalContextProvider() => null;
+		protected virtual IReadOnlyList<Type>? RethrowableExceptions => null;
 	}
 }

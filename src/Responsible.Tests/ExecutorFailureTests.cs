@@ -31,7 +31,7 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsNotNull(GetFailureException(task));
-			this.FailureListener.Received(1).OperationFailed(
+			this.FailureListener!.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(log => Regex.IsMatch(
 					log,
@@ -49,7 +49,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			Assert.IsNotNull(GetFailureException(task));
-			this.FailureListener.Received(1).OperationFailed(
+			this.FailureListener!.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
 		}
@@ -68,7 +68,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			this.FailureListener.Received(1).OperationFailed(
+			this.FailureListener!.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(str =>
 					str.Contains("Should be in logs") &&
@@ -78,13 +78,13 @@ namespace Responsible.Tests
 		[Test]
 		public void Executor_RequestsGlobalContext_OnFailure()
 		{
-			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+			this.GlobalContextProvider!.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
 			Do("Throw", () => throw new Exception())
 				.ToTask(this.Executor);
 
-			this.FailureListener.Received(1).OperationFailed(
+			this.FailureListener!.Received(1).OperationFailed(
 				Arg.Any<Exception>(),
 				Arg.Is<string>(str =>
 					str.Contains("Global context:") &&
@@ -94,7 +94,7 @@ namespace Responsible.Tests
 		[Test]
 		public void Executor_RequestsGlobalContext_OnTimeout()
 		{
-			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+			this.GlobalContextProvider!.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
 			WaitForCondition("Never", () => false)
@@ -103,7 +103,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			this.FailureListener.Received(1).OperationFailed(
+			this.FailureListener!.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(str =>
 					str.Contains("Global context:") &&

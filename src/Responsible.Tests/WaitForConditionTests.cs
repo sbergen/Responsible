@@ -12,7 +12,7 @@ namespace Responsible.Tests
 		[Test]
 		public void WaitForConditionOn_Completes_OnlyWhenConditionIsTrueOnReturnedObject()
 		{
-			object boxedBool = null;
+			object? boxedBool = null;
 
 			var task = WaitForConditionOn(
 					"Wait for boxedBool to be true",

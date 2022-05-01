@@ -10,7 +10,7 @@ namespace Responsible.Tests
 	public class StateNotificationsTests : ResponsibleTestBase
 	{
 		private (TestOperationStateTransition type, ITestOperationState state)? notification;
-		private IDisposable subscription;
+		private IDisposable subscription = null!;
 
 		[SetUp]
 		public void SetUp()

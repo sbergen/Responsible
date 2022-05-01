@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
@@ -17,7 +16,7 @@ namespace Responsible.Tests
 		private bool whenExecuted;
 		private bool thenExecuted;
 		private bool butExecuted;
-		private ITestInstruction<object> scenario;
+		private ITestInstruction<object> scenario = null!;
 
 		[SetUp]
 		public void SetUp()
@@ -111,15 +110,14 @@ namespace Responsible.Tests
 		[TestCase("When")]
 		[TestCase("Then")]
 		[TestCase("But")]
-		[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
 		public void InstructionStack_DoesNotContainKeyword(string methodName)
 		{
 			var throwInstruction = Do("Throw", () => throw new Exception());
 			var method = typeof(Keywords)
 				.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
-			var instruction = (ITestInstruction<object>)method.Invoke(
+			var instruction = (ITestInstruction<object>)method!.Invoke(
 				null,
-				new object[] { methodName, throwInstruction });
+				new object[] { methodName, throwInstruction })!;
 			var state = instruction.CreateState();
 
 			state.ToTask(this.Executor);
@@ -145,8 +143,8 @@ namespace Responsible.Tests
 		}
 
 		private static string GetCallerDetails(
-			[CallerMemberName] string member = null,
-			[CallerFilePath] string file = null) =>
+			[CallerMemberName] string? member = null,
+			[CallerFilePath] string? file = null) =>
 			$"{member} (at {file}";
 	}
 }

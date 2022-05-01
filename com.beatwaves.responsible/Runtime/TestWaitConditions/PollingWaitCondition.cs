@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.State;
 using Responsible.Utilities;
@@ -14,7 +13,7 @@ namespace Responsible.TestWaitConditions
 			string description,
 			Func<T> getConditionState,
 			Func<T, bool> condition,
-			[CanBeNull] Action<StateStringBuilder> extraContext,
+			Action<StateStringBuilder>? extraContext,
 			SourceContext sourceContext)
 			: base(() => new State(description, getConditionState, condition, extraContext, sourceContext))
 		{
@@ -26,13 +25,13 @@ namespace Responsible.TestWaitConditions
 			private readonly Func<T, bool> condition;
 
 			public string Description { get; }
-			public Action<StateStringBuilder> ExtraContext { get; }
+			public Action<StateStringBuilder>? ExtraContext { get; }
 
 			public State(
 				string description,
 				Func<T> getConditionState,
 				Func<T, bool> condition,
-				[CanBeNull] Action<StateStringBuilder> extraContext,
+				Action<StateStringBuilder>? extraContext,
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{

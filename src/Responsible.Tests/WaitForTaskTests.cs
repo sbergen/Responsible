@@ -12,9 +12,9 @@ namespace Responsible.Tests
 	{
 		private const string Description = "Task";
 
-		private TaskCompletionSource<int> completionSource;
+		private TaskCompletionSource<int> completionSource = null!;
 		private bool taskStarted;
-		private ITestOperationState<int> state;
+		private ITestOperationState<int> state = null!;
 
 		[SetUp]
 		public void SetUp()

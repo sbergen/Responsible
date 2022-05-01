@@ -10,8 +10,8 @@ namespace Responsible.Tests
 		private bool mayCompleteFirst;
 		private bool mayCompleteSecond;
 
-		private ITestWaitCondition<object> waitForFirst;
-		private ITestWaitCondition<object> waitForSecond;
+		private ITestWaitCondition<object> waitForFirst = null!;
+		private ITestWaitCondition<object> waitForSecond = null!;
 
 		private static readonly Exception TestException = new Exception("Test");
 		private static readonly ITestInstruction<object> ErrorInstruction =

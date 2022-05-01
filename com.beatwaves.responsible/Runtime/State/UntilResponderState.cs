@@ -9,12 +9,12 @@ namespace Responsible.State
 	internal class UntilResponderState<T> : TestOperationState<T>
 	{
 		private readonly string untilDescription;
-		private readonly ITestOperationState<IMultipleTaskSource<ITestOperationState<object>>> respondTo;
+		private readonly ITestOperationState<IMultipleTaskSource<ITestOperationState<object?>>> respondTo;
 		private readonly ITestOperationState<T> until;
 
 		public UntilResponderState(
 			string untilDescription,
-			ITestOperationState<IMultipleTaskSource<ITestOperationState<object>>> respondTo,
+			ITestOperationState<IMultipleTaskSource<ITestOperationState<object?>>> respondTo,
 			ITestOperationState<T> until,
 			SourceContext sourceContext)
 			: base(sourceContext)

@@ -21,7 +21,7 @@ namespace Responsible.TestWaitConditions
 			private readonly Func<CancellationToken, Task<T>> taskRunner;
 
 			public string Description { get; }
-			public Action<StateStringBuilder> ExtraContext => null;
+			public Action<StateStringBuilder>? ExtraContext => null;
 
 			public State(string description, Func<CancellationToken, Task<T>> taskRunner, SourceContext sourceContext)
 				: base(sourceContext)

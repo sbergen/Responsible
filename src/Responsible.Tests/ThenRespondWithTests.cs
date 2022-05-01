@@ -85,7 +85,7 @@ namespace Responsible.Tests
 			ITestWaitCondition<TWait> waitCondition)
 		{
 			object ThrowException(TWait _) => throw new Exception("Test");
-			ITestInstruction<object> throwInstruction = DoAndReturn("Throw", () => ThrowException(default));
+			ITestInstruction<object> throwInstruction = DoAndReturn("Throw", () => ThrowException(default!));
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:

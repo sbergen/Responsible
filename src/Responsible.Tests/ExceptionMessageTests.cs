@@ -18,7 +18,7 @@ namespace Responsible.Tests
 		[Test]
 		public void ExceptionMessage_IncludesAllDetails()
 		{
-			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
+			this.GlobalContextProvider!.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
 			var task = WaitForCondition(

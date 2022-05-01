@@ -7,9 +7,9 @@ namespace Responsible.Tests
 {
 	public class SelectFromResponderTests : ResponsibleTestBase
 	{
-		private ConditionResponder<int> responder;
-		private Task<int> task;
-		private Func<int, int> selector;
+		private ConditionResponder<int> responder = null!;
+		private Task<int> task = null!;
+		private Func<int, int> selector = null!;
 
 		[SetUp]
 		public void SetUp()

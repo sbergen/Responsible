@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Responsible.Utilities;
 
 namespace Responsible.State
@@ -163,7 +162,7 @@ namespace Responsible.State
 			string description,
 			ITestOperationState primaryState,
 			ITestOperationState wait,
-			[CanBeNull] ITestOperationState instruction)
+			ITestOperationState? instruction)
 		{
 			var status = primaryState.Status;
 			var statusLine = status.MakeStatusLine(description);
@@ -191,7 +190,7 @@ namespace Responsible.State
 
 		private StateStringBuilder AddOptional(
 			string description,
-			[CanBeNull] ITestOperationState child)
+			ITestOperationState? child)
 			=> child != null
 				? this.AddIndented(description, child.BuildDescription)
 				: this.Add($"{description} ...");
@@ -206,7 +205,7 @@ namespace Responsible.State
 		private StateStringBuilder AddStatus(
 			TestOperationStatus status,
 			string description,
-			[CanBeNull] Action<StateStringBuilder> extraContext)
+			Action<StateStringBuilder>? extraContext)
 		{
 			this.AddStatus(status, description);
 

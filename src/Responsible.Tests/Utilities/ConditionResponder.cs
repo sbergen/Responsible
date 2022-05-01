@@ -7,8 +7,8 @@ namespace Responsible.Tests.Utilities
 	{
 		public const string WaitForCompletionDescription = "Wait for completion";
 
-		private Exception exception;
-		private Exception waitException;
+		private Exception? exception;
+		private Exception? waitException;
 
 		public bool MayRespond { get; set; }
 		public bool MayComplete { get; set; }

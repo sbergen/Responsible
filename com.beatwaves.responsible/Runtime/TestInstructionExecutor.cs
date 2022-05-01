@@ -28,10 +28,10 @@ namespace Responsible
 
 		private readonly CancellationTokenSource mainCancellationTokenSource = new CancellationTokenSource();
 		private readonly ITestScheduler scheduler;
-		private readonly IExternalResultSource externalResultSource;
-		private readonly IFailureListener failureListener;
-		private readonly IGlobalContextProvider globalContextProvider;
-		private readonly IReadOnlyList<Type> rethrowableExceptions;
+		private readonly IExternalResultSource? externalResultSource;
+		private readonly IFailureListener? failureListener;
+		private readonly IGlobalContextProvider? globalContextProvider;
+		private readonly IReadOnlyList<Type>? rethrowableExceptions;
 
 		/// <summary>
 		/// Callback delegate type for test operation state notifications.
@@ -75,10 +75,10 @@ namespace Responsible
 		/// </param>
 		public TestInstructionExecutor(
 			ITestScheduler scheduler,
-			IExternalResultSource externalResultSource = null,
-			IFailureListener failureListener = null,
-			IGlobalContextProvider globalContextProvider = null,
-			IReadOnlyList<Type> rethrowableExceptions = null)
+			IExternalResultSource? externalResultSource = null,
+			IFailureListener? failureListener = null,
+			IGlobalContextProvider? globalContextProvider = null,
+			IReadOnlyList<Type>? rethrowableExceptions = null)
 		{
 			this.scheduler = scheduler;
 			this.externalResultSource = externalResultSource;
@@ -110,47 +110,46 @@ namespace Responsible
 			CancellationToken cancellationToken)
 		{
 			var runContext = new RunContext(sourceContext, this.scheduler);
-			using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
-				cancellationToken, this.mainCancellationTokenSource.Token))
-			{
-				try
-				{
-					NotificationCallbacks.ForEach(callback =>
-						callback(TestOperationStateTransition.Started, rootState));
+			using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+				cancellationToken, this.mainCancellationTokenSource.Token);
 
-					if (this.externalResultSource != null)
-					{
-						return await linkedTokenSource.Token.Amb(
-							this.externalResultSource.GetExternalResult<T>,
-							ct => rootState.Execute(runContext, ct));
-					}
-					else
-					{
-						return await rootState.Execute(runContext, linkedTokenSource.Token);
-					}
+			try
+			{
+				NotificationCallbacks.ForEach(callback =>
+					callback(TestOperationStateTransition.Started, rootState));
+
+				if (this.externalResultSource != null)
+				{
+					return await linkedTokenSource.Token.Amb(
+						this.externalResultSource.GetExternalResult<T>,
+						ct => rootState.Execute(runContext, ct));
 				}
-				catch (Bdd.PendingStepException)
+				else
+				{
+					return await rootState.Execute(runContext, linkedTokenSource.Token);
+				}
+			}
+			catch (Bdd.PendingStepException)
+			{
+				throw;
+			}
+			catch (Exception e)
+			{
+				if (this.ShouldRethrow(e))
 				{
 					throw;
 				}
-				catch (Exception e)
-				{
-					if (this.ShouldRethrow(e))
-					{
-						throw;
-					}
 
-					var message = e is TimeoutException
-						? this.MakeTimeoutMessage(rootState)
-						: this.MakeErrorMessage(rootState, e);
-					this.failureListener?.OperationFailed(e, message);
-					throw new TestFailureException(message, e);
-				}
-				finally
-				{
-					NotificationCallbacks.ForEach(callback =>
-						callback(TestOperationStateTransition.Finished, rootState));
-				}
+				var message = e is TimeoutException
+					? this.MakeTimeoutMessage(rootState)
+					: this.MakeErrorMessage(rootState, e);
+				this.failureListener?.OperationFailed(e, message);
+				throw new TestFailureException(message, e);
+			}
+			finally
+			{
+				NotificationCallbacks.ForEach(callback =>
+					callback(TestOperationStateTransition.Finished, rootState));
 			}
 		}
 
