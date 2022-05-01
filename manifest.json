@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "VQiuZih9qTkIWvJXd3jFrg=="
+          "hash": "/PG2qq+XxAeyi7Xgwgh0fA=="
         }
       },
       "is_incremental": false,
@@ -34,6 +34,17 @@
         ".html": {
           "relative_path": "dotnet.html",
           "hash": "FGc4/8hCVw8FZoVwZCLnvw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/UnityStateWindow.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/UnityStateWindow.png"
         }
       },
       "is_incremental": false,
@@ -621,7 +632,7 @@
       "output": {
         ".html": {
           "relative_path": "unity.html",
-          "hash": "VGuw96zHbDsYIDVxvI/SpA=="
+          "hash": "/q5XoBLyKLomMGjQLHLuuA=="
         }
       },
       "is_incremental": false,
@@ -649,6 +660,13 @@
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 54,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
