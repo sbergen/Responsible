@@ -12,7 +12,7 @@ and thus not under semantic versioning.
 ## [Unreleased]
 
 ### Added
-- `RunAsLoop` operator, for running test instructions synchronously as a run loop.
+- `RunAsLoop` operator, for running test instructions synchronously as a loop with a tick callback.
 
 ### Changed
 - Include hint in state strings about being able to provide extra context to wait conditions

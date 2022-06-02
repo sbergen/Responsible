@@ -34,18 +34,18 @@ namespace Responsible.Utilities
 
 		private class RunLoopExceptionSource : IExternalResultSource
 		{
-			private Action<Exception> abortCurrentInstructionAction;
+			private Action<Exception> abortCurrentInstruction;
 
 			public void SetException(Exception exception)
 			{
 				// This is essentially guaranteed to not be null, so don't check it explicitly.
-				this.abortCurrentInstructionAction(exception);
+				this.abortCurrentInstruction(exception);
 			}
 
 			Task<T> IExternalResultSource.GetExternalResult<T>(CancellationToken cancellationToken)
 			{
 				var completionSource = new TaskCompletionSource<T>(cancellationToken);
-				this.abortCurrentInstructionAction = completionSource.SetException;
+				this.abortCurrentInstruction = completionSource.SetException;
 				return completionSource.Task;
 			}
 		}
