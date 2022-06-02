@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
+using Responsible.Utilities;
 
 namespace Responsible
 {
@@ -193,5 +194,40 @@ namespace Responsible
 			this ITestInstruction<T> instruction,
 			string description)
 			=> new GroupedAsInstruction<T>(description, instruction);
+
+		/// <summary>
+		/// Synchronously executes a test instruction by repeatedly calling a callback,
+		/// until the instruction has completed successfully or with an error.
+		/// </summary>
+		/// <param name="instruction">Instruction to run in a run loop.</param>
+		/// <param name="runOneIteration">Action to run for each iteration of the loop.</param>
+		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
+		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
+		/// <returns>The result of the test instruction, if it completes successfully.</returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2, T3}"/>
+		public static T RunAsLoop<T>(
+			this ITestInstruction<T> instruction,
+			Action runOneIteration,
+			CancellationToken cancellationToken = default,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+		{
+			var scheduler = new RunLoopScheduler();
+			using (var executor = new TestInstructionExecutor(scheduler, scheduler.ExternalResultSource))
+			{
+				var task = executor.RunInstruction(
+					instruction.CreateState(),
+					new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
+					cancellationToken);
+
+				while (!task.IsCompleted)
+				{
+					scheduler.Run(runOneIteration);
+				}
+
+				return task.GetAwaiter().GetResult();
+			}
+		}
 	}
 }
