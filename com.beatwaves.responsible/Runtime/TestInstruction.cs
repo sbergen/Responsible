@@ -198,17 +198,18 @@ namespace Responsible
 		/// <summary>
 		/// Synchronously executes a test instruction by repeatedly calling a callback,
 		/// until the instruction has completed successfully or with an error.
-		/// The provided callback will be executed before any conditions are polled.
+		/// The provided callback will be executed before any conditions are polled,
+		/// and should run any actions required for the instruction to complete.
 		/// </summary>
-		/// <param name="instruction">Instruction to run in a run loop.</param>
-		/// <param name="runOneIteration">Action to run for each iteration of the loop.</param>
+		/// <param name="instruction">Instruction to run.</param>
+		/// <param name="tick">Action to run for each iteration of the loop.</param>
 		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
 		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
 		/// <returns>The result of the test instruction, if it completes successfully.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2, T3}"/>
 		public static T RunAsLoop<T>(
 			this ITestInstruction<T> instruction,
-			Action runOneIteration,
+			Action tick,
 			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
@@ -224,7 +225,7 @@ namespace Responsible
 
 				while (!task.IsCompleted)
 				{
-					scheduler.Run(runOneIteration);
+					scheduler.Run(tick);
 				}
 
 				return task.GetAwaiter().GetResult();
