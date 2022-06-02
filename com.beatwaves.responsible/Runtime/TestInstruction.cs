@@ -198,6 +198,7 @@ namespace Responsible
 		/// <summary>
 		/// Synchronously executes a test instruction by repeatedly calling a callback,
 		/// until the instruction has completed successfully or with an error.
+		/// The provided callback will be executed before any conditions are polled.
 		/// </summary>
 		/// <param name="instruction">Instruction to run in a run loop.</param>
 		/// <param name="runOneIteration">Action to run for each iteration of the loop.</param>

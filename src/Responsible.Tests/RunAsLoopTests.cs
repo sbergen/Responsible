@@ -1,5 +1,7 @@
 using System;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
+using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
@@ -20,6 +22,21 @@ namespace Responsible.Tests
 				.RunAsLoop(() => ++frame);
 
 			Assert.AreEqual(10, result);
+		}
+
+		[Test]
+		public void RunLoopFrameCount_ContainsExpectedValues()
+		{
+			var frame = -1;
+			var exception = Assert.Throws<TestFailureException>(() => Responsibly
+				.WaitForCondition("frame", () => frame == 10)
+				.ExpectWithinSeconds(1)
+				.ContinueWith(Do("Throw", () => throw new Exception()))
+				.RunAsLoop(() => ++frame));
+
+			StateAssert.StringContainsInOrder(exception?.Message)
+				.Completed("frame")
+				.Details("≈ 10 frames");
 		}
 
 		[Test]
