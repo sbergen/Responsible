@@ -218,7 +218,7 @@ namespace Responsible
 			{
 				var task = executor.RunInstruction(
 					instruction.CreateState(),
-					new SourceContext(nameof(ToTask), memberName, sourceFilePath, sourceLineNumber),
+					new SourceContext(nameof(RunAsLoop), memberName, sourceFilePath, sourceLineNumber),
 					cancellationToken);
 
 				while (!task.IsCompleted)

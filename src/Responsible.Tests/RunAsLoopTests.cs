@@ -23,7 +23,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsTestFailureException_WhenTimedOut()
+		public void RunAsLoop_ThrowsProperException_WhenTimedOut()
 		{
 			var exception = Assert.Throws<TestFailureException>(() => Responsibly
 				.WaitForCondition("Never", () => false)
@@ -31,10 +31,11 @@ namespace Responsible.Tests
 				.RunAsLoop(() => { }));
 
 			Assert.IsInstanceOf<TimeoutException>(exception?.InnerException);
+			AssertMessageContainsOperationNameTag(exception);
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsTestFailureException_WhenInstructionThrows()
+		public void RunAsLoop_ThrowsProperException_WhenInstructionThrows()
 		{
 			var exception = Assert.Throws<TestFailureException>(() => Responsibly
 				.WaitForCondition(
@@ -44,10 +45,11 @@ namespace Responsible.Tests
 				.RunAsLoop(() => { }));
 
 			Assert.AreEqual(TestExceptionMessage, exception?.InnerException?.Message);
+			AssertMessageContainsOperationNameTag(exception);
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsTestFailureException_WhenRunLoopThrows()
+		public void RunAsLoop_ThrowsProperException_WhenRunLoopThrows()
 		{
 			var exception = Assert.Throws<TestFailureException>(() => Responsibly
 				.WaitForCondition("Never", () => false)
@@ -55,6 +57,12 @@ namespace Responsible.Tests
 				.RunAsLoop(() => throw new Exception(TestExceptionMessage)));
 
 			Assert.AreEqual(TestExceptionMessage, exception?.InnerException?.Message);
+			// Can't (currently, easily) get the current instruction from this to include the instruction stack
 		}
+
+		private static void AssertMessageContainsOperationNameTag(TestFailureException exception) =>
+			StringAssert.Contains(
+				$"[{nameof(TestInstruction.RunAsLoop)}]",
+				exception.Message);
 	}
 }
