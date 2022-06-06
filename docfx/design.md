@@ -58,8 +58,8 @@ as an asynchronous task using the `ToTask` extension method.
 On Unity you can also use the `ToYieldInstruction` extension method,
 to get a yield instruction for a `[UnityTest]` play mode test.
 Additionally, the
-[`RunAsSimulatedUpdateLoop`](xref:TestInstruction.RunAsSimulatedUpdateLoop)
-and [`RunAsLoop`](xref:TestInstruction.RunAsLoop)
+[`RunAsSimulatedUpdateLoop`](xref:Responsible.TestInstruction.RunAsSimulatedUpdateLoop)
+and [`RunAsLoop`](xref:Responsible.TestInstruction.RunAsLoop)
 operators can be used to synchronously run instructions in a loop,
 using a user-provided tick callback to simulate step-by-step updates.
 
