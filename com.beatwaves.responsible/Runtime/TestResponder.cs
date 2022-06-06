@@ -56,6 +56,25 @@ namespace Responsible
 			new AnyOfResponder<T>(new[] { responder });
 
 		/// <summary>
+		/// Converts a test responder to an optional test responder which repeatedly executes the responder,
+		/// zero or more times.
+		/// </summary>
+		/// <returns>An optional responder, which repeatedly responds to <paramref name="respondTo"/>.</returns>
+		/// <param name="respondTo">Responder to convert to a repeated responder.</param>
+		/// <typeparam name="T">
+		/// Result type of the responder, which is discarded by the returned optional responder.
+		/// </typeparam>
+		[Pure]
+		public static IOptionalTestResponder Repeatedly<T>(
+			this ITestResponder<T> respondTo,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new RepeatedlyResponder<T>(
+				respondTo,
+				new SourceContext(nameof(Repeatedly), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
 		/// Applies a selector to the result of a test responder when the responder completes,
 		/// transforming the result type to another type.
 		/// </summary>
