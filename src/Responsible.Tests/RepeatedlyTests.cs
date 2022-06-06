@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -108,6 +109,47 @@ namespace Responsible.Tests
 			Assert.IsNull(task.Exception);
 			Assert.IsTrue(task.IsCompleted);
 			Assert.AreEqual(2, this.executionCount);
+		}
+
+		[Test]
+		[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+		public void MultipleRepeatedlyResponders_FunctionAsExpected()
+		{
+			bool? ping = null;
+			var count = 0;
+
+			var incrementCount = Do(
+				"Increment count and reset",
+				() =>
+				{
+					++count;
+					ping = null;
+				});
+
+			var countIsFive = WaitForCondition("Count is five", () => count == 5);
+
+			var task = Responsibly
+				.WaitForAllOf(
+					WaitForCondition("Ping", () => ping == true)
+						.ThenRespondWith("Ping the count", incrementCount)
+						.Repeatedly(3)
+						.Until(countIsFive),
+					WaitForCondition("Pong", () => ping == false)
+						.ThenRespondWith("Pong the count", incrementCount)
+						.Repeatedly(3)
+						.Until(countIsFive))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			for (var i = 0; i < 10; i++)
+			{
+				ping = i % 2 == 0;
+				this.AdvanceDefaultFrame();
+			}
+
+			Assert.IsNull(task.Exception);
+			Assert.IsTrue(task.IsCompleted);
+			Assert.AreEqual(5, count);
 		}
 
 		[Test]
