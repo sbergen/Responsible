@@ -8,7 +8,8 @@ namespace Responsible.Utilities
 		private DateTimeOffset timeNow = DateTimeOffset.Now;
 
 		public SimulatedUpdateLoopScheduler(double framesPerSecond) =>
-			this.frameDuration = TimeSpan.FromSeconds(1 / framesPerSecond);
+			// On Unity (and older .NET), FromSeconds discards sub-millisecond information
+			this.frameDuration = TimeSpan.FromTicks((int)Math.Round(TimeSpan.TicksPerSecond / framesPerSecond));
 
 		protected override void Tick(Action<TimeSpan> tick)
 		{

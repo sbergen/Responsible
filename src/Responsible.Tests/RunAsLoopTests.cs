@@ -12,8 +12,7 @@ namespace Responsible.Tests
 		[Test]
 		public void RunAsSimulatedUpdateLoop_UsesSimulatedFrameDurationForTime()
 		{
-			// First poll happens at time zero, so we ignore the first increment
-			var frameCount = -1;
+			var frameCount = 0;
 			TimeSpan frameDuration = default;
 
 			_ = Responsibly
@@ -26,7 +25,8 @@ namespace Responsible.Tests
 						frameDuration = duration;
 					});
 
-			Assert.AreEqual(TimeSpan.FromSeconds(1.0 / 60), frameDuration);
+			// On Unity (and older .NET), FromSeconds discards sub-millisecond information
+			Assert.AreEqual(TimeSpan.FromTicks((int)Math.Round(TimeSpan.TicksPerSecond / 60.0)), frameDuration);
 			Assert.AreEqual(60, frameCount);
 		}
 
