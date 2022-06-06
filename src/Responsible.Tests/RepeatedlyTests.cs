@@ -43,7 +43,7 @@ namespace Responsible.Tests
 		public void RepeatedlyUntil_CompletesSynchronously_WhenUntilConditionAlreadyMet()
 		{
 			var task = this.responder
-				.Repeatedly()
+				.Repeatedly(1)
 				.Until(ImmediateTrue)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
@@ -57,7 +57,7 @@ namespace Responsible.Tests
 		public void RepeatedlyUntil_DoesNotRequireResponderToExecute()
 		{
 			var task = this.responder
-				.Repeatedly()
+				.Repeatedly(1)
 				.Until(this.waitForCompletion)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
@@ -74,7 +74,7 @@ namespace Responsible.Tests
 		public void RepeatedlyUntil_Completes_WhenResponderExecutesOnce()
 		{
 			var task = this.responder
-				.Repeatedly()
+				.Repeatedly(1)
 				.Until(this.waitForCompletion)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
@@ -93,7 +93,7 @@ namespace Responsible.Tests
 		public void RepeatedlyUntil_Completes_WhenResponderExecutesTwice()
 		{
 			var task = this.responder
-				.Repeatedly()
+				.Repeatedly(2)
 				.Until(this.waitForCompletion)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
@@ -115,7 +115,7 @@ namespace Responsible.Tests
 		{
 			var cts = new CancellationTokenSource();
 			var task = this.responder
-				.Repeatedly()
+				.Repeatedly(1)
 				.Until(Never)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor, cts.Token);
@@ -127,10 +127,29 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void Repeatedly_Fails_WhenMaximumCountReached()
+		{
+			var execCount = 0;
+			var task = ImmediateTrue
+				.ThenRespondWithAction("Increment execution count", _ => ++execCount)
+				.Repeatedly(10)
+				.Until(Never)
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			Assert.AreEqual(10, execCount);
+
+			var error = GetFailureException(task);
+			Assert.IsInstanceOf<RepetitionLimitExceededException>(error.InnerException);
+			// ReSharper disable once PossibleNullReferenceException, checked above
+			StringAssert.Contains("10", error.InnerException.Message);
+		}
+
+		[Test]
 		public void RepeatedlyStateString_MatchesExpected_WhenNoExecutions()
 		{
 			var state = this.responder
-				.Repeatedly()
+				.Repeatedly(0)
 				.Until(Never)
 				.ExpectWithinSeconds(1)
 				.CreateState();
@@ -144,7 +163,7 @@ namespace Responsible.Tests
 		public void RepeatedlyStateString_MatchesExpected_WhenNoConditionCompletions()
 		{
 			var state = this.responder
-				.Repeatedly()
+				.Repeatedly(1)
 				.Until(Never)
 				.ExpectWithinSeconds(1)
 				.CreateState();
@@ -160,7 +179,7 @@ namespace Responsible.Tests
 		public void RepeatedlyStateString_MatchesExpected_WhenSomeCompletions()
 		{
 			var state = this.responder
-				.Repeatedly()
+				.Repeatedly(2)
 				.Until(Never)
 				.ExpectWithinSeconds(1)
 				.CreateState();
