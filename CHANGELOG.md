@@ -13,6 +13,7 @@ and thus not under semantic versioning.
 
 ### Added
 - `RunAsLoop` and `RunAsSimulatedUpdateLoop` operators, for running test instructions synchronously as a loop with a tick callback.
+- `Repeatedly` operator, which turns a test responder into an optional responder that executes repeatedly.
 
 ### Changed
 - Include hint in state strings about being able to provide extra context to wait conditions
