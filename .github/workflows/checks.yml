@@ -65,6 +65,7 @@ jobs:
           files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
             ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Archive test results
         if: ${{ always() }}
@@ -118,6 +119,7 @@ jobs:
         with:
           flags: netstandard
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Archive test results
         if: ${{ always() }}
