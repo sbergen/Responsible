@@ -44,18 +44,23 @@ as you don't need separate overloads for operations returning values and operati
 Because all the operation interfaces are covariant,
 you can easily use a more derived operation where a less derived type is required.
 However, if you are working with value types,
-you may need to use the `BoxResult` operator, to convert the type to `object`.
+you may need to use the `BoxResult` operator to convert the type to `object`.
 
 ### Instructions
 
 Instructions are represented by the
 [`ITestInstruction<T>`](xref:Responsible.ITestInstruction`1) interface.
 They represent a synchronous or asynchronous operation producing a single result.
+
 Instructions can be executed by a
 [`TestInstructionExecutor`](xref:Responsible.TestInstructionExecutor)
 as an asynchronous task using the `ToTask` extension method.
-On Unity you cal also use the `ToYieldInstruction` extension method,
+On Unity you can also use the `ToYieldInstruction` extension method,
 to get a yield instruction for a `[UnityTest]` play mode test.
+Additionally, the `RunAsSimulatedUpdateLoop` and `RunAsLoop`
+operators can be used to synchronously run instructions in a loop,
+using a user-provided tick callback to simulate step-by-step updates.
+
 All instructions should have an internal timeout.
 The basic operations for chaining instructions are `ContinueWith` and `Sequence`.
 See [`TestInstruction`](xref:Responsible.TestInstruction) for all extension methods.
@@ -118,7 +123,7 @@ While Responsible is already useful on it's own, it is built to be extensible,
 and becomes even more powerful when you write your own operators on top of it.
 It's recommended to build your own wait conditions and instructions for common use cases
 by wrapping or combining the basic operations.
-You could e.g. create a method with the following signature:  
+You could e.g. create a method with the following signature:
 `ITestWaitCondition<GameObject> WaitForDescendantByNameToBeActive(GameObject gameObject, string name)`.
 
 You may want to pass in explicit `CallerMemberName` etc. arguments to your own low-level operations
@@ -155,7 +160,7 @@ everything is expected to happen in a single thread.
 If the method names in the [`Responsibly`](xref:Responsible.Responsibly)
 class do not conflict with anything else,
 using `using static Responsible.Responsibly;` can make your code more concise.
-The method names were designed to work well like this. 
+The method names were designed to work well like this.
 
 All the basic operations (excluding optional responders) implement the
 `ITestOperation<T>` interface, which contains the `CreateState` method,
@@ -180,7 +185,7 @@ var waitForQuux = WaitForQuux(...);
 
 var waitForFooAndBar = waitForFoo.AndThen(waitForBar);
 var waitForFooAndQuux = waitForFoo.AndThen(waitForQuux);
-``` 
+```
 Here, `waitForFoo` is being reused in two different contexts,
 and reusing e.g. `waitForFooAndBar` later is also fine.
 What happens under the hood, is that for each *execution* of an operation,

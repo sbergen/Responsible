@@ -11,6 +11,9 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `RunAsLoop` and `RunAsSimulatedUpdateLoop` operators, for running test instructions synchronously as a loop with a tick callback.
+
 ### Changed
 - Include hint in state strings about being able to provide extra context to wait conditions
 - Improve exception message handling by not truncating long messages (I don't remember why I did this originally)
