@@ -126,17 +126,20 @@ as you don't need separate overloads for operations returning values and operati
 Because all the operation interfaces are covariant,
 you can easily use a more derived operation where a less derived type is required.
 However, if you are working with value types,
-you may need to use the <code>BoxResult</code> operator, to convert the type to <code>object</code>.</p>
+you may need to use the <code>BoxResult</code> operator to convert the type to <code>object</code>.</p>
 <h3 id="instructions">Instructions</h3>
 <p>Instructions are represented by the
 <a class="xref" href="api/Responsible.ITestInstruction-1.html"><code>ITestInstruction&lt;T&gt;</code></a> interface.
-They represent a synchronous or asynchronous operation producing a single result.
-Instructions can be executed by a
+They represent a synchronous or asynchronous operation producing a single result.</p>
+<p>Instructions can be executed by a
 <a class="xref" href="api/Responsible.TestInstructionExecutor.html"><code>TestInstructionExecutor</code></a>
 as an asynchronous task using the <code>ToTask</code> extension method.
-On Unity you cal also use the <code>ToYieldInstruction</code> extension method,
+On Unity you can also use the <code>ToYieldInstruction</code> extension method,
 to get a yield instruction for a <code>[UnityTest]</code> play mode test.
-All instructions should have an internal timeout.
+Additionally, the <code>RunAsSimulatedUpdateLoop</code> and <code>RunAsLoop</code>
+operators can be used to synchronously run instructions in a loop,
+using a user-provided tick callback to simulate step-by-step updates.</p>
+<p>All instructions should have an internal timeout.
 The basic operations for chaining instructions are <code>ContinueWith</code> and <code>Sequence</code>.
 See <a class="xref" href="api/Responsible.TestInstruction.html"><code>TestInstruction</code></a> for all extension methods.</p>
 <h3 id="wait-conditions">Wait Conditions</h3>
@@ -187,7 +190,7 @@ more derived types can be used where a less derived type is expected.</p>
 and becomes even more powerful when you write your own operators on top of it.
 It's recommended to build your own wait conditions and instructions for common use cases
 by wrapping or combining the basic operations.
-You could e.g. create a method with the following signature:<br>
+You could e.g. create a method with the following signature:
 <code>ITestWaitCondition&lt;GameObject&gt; WaitForDescendantByNameToBeActive(GameObject gameObject, string name)</code>.</p>
 <p>You may want to pass in explicit <code>CallerMemberName</code> etc. arguments to your own low-level operations
 to capture the original caller location.

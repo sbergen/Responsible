@@ -962,6 +962,38 @@ references:
   fullName.vb: Responsible.TestInstruction.GroupedAs(Of T)(Responsible.ITestInstruction(Of T), System.String)
   nameWithType: TestInstruction.GroupedAs<T>(ITestInstruction<T>, String)
   nameWithType.vb: TestInstruction.GroupedAs(Of T)(ITestInstruction(Of T), String)
+- uid: Responsible.TestInstruction.RunAsLoop*
+  name: RunAsLoop
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop_
+  commentId: Overload:Responsible.TestInstruction.RunAsLoop
+  isSpec: "True"
+  fullName: Responsible.TestInstruction.RunAsLoop
+  nameWithType: TestInstruction.RunAsLoop
+- uid: Responsible.TestInstruction.RunAsLoop``1(Responsible.ITestInstruction{``0},System.Action,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop__1_Responsible_ITestInstruction___0__System_Action_System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.RunAsLoop``1(Responsible.ITestInstruction{``0},System.Action,System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Int32)
+  fullName: Responsible.TestInstruction.RunAsLoop<T>(Responsible.ITestInstruction<T>, System.Action, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.RunAsLoop(Of T)(Responsible.ITestInstruction(Of T), System.Action, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestInstruction.RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Int32)
+- uid: Responsible.TestInstruction.RunAsSimulatedUpdateLoop*
+  name: RunAsSimulatedUpdateLoop
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsSimulatedUpdateLoop_
+  commentId: Overload:Responsible.TestInstruction.RunAsSimulatedUpdateLoop
+  isSpec: "True"
+  fullName: Responsible.TestInstruction.RunAsSimulatedUpdateLoop
+  nameWithType: TestInstruction.RunAsSimulatedUpdateLoop
+- uid: Responsible.TestInstruction.RunAsSimulatedUpdateLoop``1(Responsible.ITestInstruction{``0},System.Double,System.Action{System.TimeSpan},System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name: RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, Double, Action<TimeSpan>, CancellationToken, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsSimulatedUpdateLoop__1_Responsible_ITestInstruction___0__System_Double_System_Action_System_TimeSpan__System_Threading_CancellationToken_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.RunAsSimulatedUpdateLoop``1(Responsible.ITestInstruction{``0},System.Double,System.Action{System.TimeSpan},System.Threading.CancellationToken,System.String,System.String,System.Int32)
+  name.vb: RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Int32)
+  fullName: Responsible.TestInstruction.RunAsSimulatedUpdateLoop<T>(Responsible.ITestInstruction<T>, System.Double, System.Action<System.TimeSpan>, System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.RunAsSimulatedUpdateLoop(Of T)(Responsible.ITestInstruction(Of T), System.Double, System.Action(Of System.TimeSpan), System.Threading.CancellationToken, System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, Double, Action<TimeSpan>, CancellationToken, String, String, Int32)
+  nameWithType.vb: TestInstruction.RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Int32)
 - uid: Responsible.TestInstruction.Select*
   name: Select
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Select_
