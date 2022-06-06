@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Responsible.Utilities
 {
-	internal class RunLoopScheduler : ITestScheduler
+	internal abstract class RunLoopScheduler<TTickArgument> : ITestScheduler
 	{
 		private readonly RunLoopExceptionSource runLoopExceptionSource = new RunLoopExceptionSource();
 		private readonly RetryingPoller poller = new RetryingPoller();
@@ -12,11 +12,11 @@ namespace Responsible.Utilities
 
 		public IExternalResultSource ExternalResultSource => this.runLoopExceptionSource;
 
-		public void Run(Action runOneIteration)
+		public void Run(Action<TTickArgument> tick)
 		{
 			try
 			{
-				runOneIteration();
+				this.Tick(tick);
 				this.poller.Poll();
 				++this.frameNow;
 			}
@@ -26,8 +26,10 @@ namespace Responsible.Utilities
 			}
 		}
 
+		protected abstract void Tick(Action<TTickArgument> tick);
+		public abstract DateTimeOffset TimeNow { get; }
+
 		int ITestScheduler.FrameNow => this.frameNow;
-		DateTimeOffset ITestScheduler.TimeNow => DateTimeOffset.Now;
 
 		IDisposable ITestScheduler.RegisterPollCallback(Action action) =>
 			this.poller.RegisterPollCallback(action);

@@ -10,6 +10,27 @@ namespace Responsible.Tests
 		private const string TestExceptionMessage = "Test exception";
 
 		[Test]
+		public void RunAsSimulatedUpdateLoop_UsesSimulatedFrameDurationForTime()
+		{
+			// First poll happens at time zero, so we ignore the first increment
+			var frameCount = -1;
+			TimeSpan frameDuration = default;
+
+			_ = Responsibly
+				.WaitForSeconds(1)
+				.RunAsSimulatedUpdateLoop(
+					60,
+					duration =>
+					{
+						++frameCount;
+						frameDuration = duration;
+					});
+
+			Assert.AreEqual(TimeSpan.FromSeconds(1.0 / 60), frameDuration);
+			Assert.AreEqual(60, frameCount);
+		}
+
+		[Test]
 		public void RunAsLoop_CompletesWithExpectedValue()
 		{
 			var frame = 0;

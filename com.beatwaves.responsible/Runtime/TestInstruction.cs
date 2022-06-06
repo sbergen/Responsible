@@ -196,32 +196,72 @@ namespace Responsible
 			=> new GroupedAsInstruction<T>(description, instruction);
 
 		/// <summary>
+		/// Synchronously executes a test instruction by simulating an update loop at the given frame rate.
+		/// The provided tick callback will be called fro each simulated frame, with the frame duration as an argument.
+		/// </summary>
+		/// <remarks>
+		/// Any timeouts used when executing an instruction using this method will be based on simulated time.
+		/// </remarks>
+		/// <param name="instruction">Instruction to run.</param>
+		/// <param name="framesPerSecond">Frame rate to simulate</param>
+		/// <param name="tick">Action to run on each simulated frame. Takes the frame duration as an argument.</param>
+		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
+		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
+		/// <returns>The result of the test instruction, if it completes successfully.</returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3,T4}"/>
+		public static T RunAsSimulatedUpdateLoop<T>(
+			this ITestInstruction<T> instruction,
+			double framesPerSecond,
+			Action<TimeSpan> tick,
+			CancellationToken cancellationToken = default,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0) =>
+			instruction.RunAsLoop(
+				tick,
+				cancellationToken,
+				new SimulatedUpdateLoopScheduler(framesPerSecond),
+				new SourceContext(nameof(RunAsSimulatedUpdateLoop), memberName, sourceFilePath, sourceLineNumber));
+
+
+		/// <summary>
 		/// Synchronously executes a test instruction by repeatedly calling a callback,
 		/// until the instruction has completed successfully or with an error.
 		/// The provided callback will be executed before any conditions are polled,
 		/// and should run any actions required for the instruction to complete.
 		/// </summary>
+		/// <remarks>
+		/// Any timeouts used when executing an instruction using this method will be based on wall-clock time.
+		/// </remarks>
 		/// <param name="instruction">Instruction to run.</param>
 		/// <param name="tick">Action to run for each iteration of the loop.</param>
 		/// <param name="cancellationToken">Optional cancellation token to cancel the instruction prematurely.</param>
 		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
 		/// <returns>The result of the test instruction, if it completes successfully.</returns>
-		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2, T3}"/>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
 		public static T RunAsLoop<T>(
 			this ITestInstruction<T> instruction,
 			Action tick,
 			CancellationToken cancellationToken = default,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
-			[CallerLineNumber] int sourceLineNumber = 0)
+			[CallerLineNumber] int sourceLineNumber = 0) =>
+			instruction.RunAsLoop(
+				_ => tick(),
+				cancellationToken,
+				new GenericRunLoopScheduler(),
+				new SourceContext(nameof(RunAsLoop), memberName, sourceFilePath, sourceLineNumber));
+
+		private static T RunAsLoop<T, TTickArgument>(
+			this ITestInstruction<T> instruction,
+			Action<TTickArgument> tick,
+			CancellationToken cancellationToken,
+			RunLoopScheduler<TTickArgument> scheduler,
+			SourceContext sourceContext)
 		{
-			var scheduler = new RunLoopScheduler();
 			using (var executor = new TestInstructionExecutor(scheduler, scheduler.ExternalResultSource))
 			{
-				var task = executor.RunInstruction(
-					instruction.CreateState(),
-					new SourceContext(nameof(RunAsLoop), memberName, sourceFilePath, sourceLineNumber),
-					cancellationToken);
+				var task = executor.RunInstruction(instruction.CreateState(), sourceContext, cancellationToken);
 
 				while (!task.IsCompleted)
 				{

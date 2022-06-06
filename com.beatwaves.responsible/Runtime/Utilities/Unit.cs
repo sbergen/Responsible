@@ -6,6 +6,6 @@ namespace Responsible.Utilities
 		{
 		}
 
-		public static object Instance => new Unit();
+		public static object Instance { get; } = new Unit();
 	}
 }
