@@ -55,6 +55,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest] // This test depends on cancellation to function synchronously
 		public void RepeatedlyUntil_DoesNotRequireResponderToExecute()
 		{
 			var task = this.responder
@@ -72,6 +73,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest] // This test depends on cancellation to function synchronously
 		public void RepeatedlyUntil_Completes_WhenResponderExecutesOnce()
 		{
 			var task = this.responder
@@ -90,6 +92,7 @@ namespace Responsible.Tests
 			Assert.AreEqual(1, this.executionCount);
 		}
 
+		[TaskExceptionTest] // This test depends on cancellation to function synchronously
 		[Test]
 		public void RepeatedlyUntil_Completes_WhenResponderExecutesTwice()
 		{
@@ -113,6 +116,7 @@ namespace Responsible.Tests
 
 		[Test]
 		[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+		[TaskExceptionTest] // This test depends on cancellation to function synchronously
 		public void MultipleRepeatedlyResponders_FunctionAsExpected()
 		{
 			bool? ping = null;
@@ -153,6 +157,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		[TaskExceptionTest]
 		public void Repeatedly_CanBeCanceled()
 		{
 			var cts = new CancellationTokenSource();
