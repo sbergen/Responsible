@@ -18,10 +18,13 @@ namespace Responsible.Utilities
 			{
 				try
 				{
-					var state = getState();
-					if (condition(state))
+					if (!cancellationToken.IsCancellationRequested)
 					{
-						tcs.SetResult(state);
+						var state = getState();
+						if (condition(state))
+						{
+							tcs.SetResult(state);
+						}
 					}
 				}
 				catch (Exception e)

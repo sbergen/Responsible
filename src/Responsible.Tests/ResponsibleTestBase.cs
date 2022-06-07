@@ -38,6 +38,19 @@ namespace Responsible.Tests
 			return task.Exception.InnerExceptions[0] as TestFailureException;
 		}
 
+		protected static async Task<TestFailureException> AwaitFailureException(Task task)
+		{
+			try
+			{
+				await task;
+				throw new InvalidOperationException("Task was expected to fail, but did not.");
+			}
+			catch (TestFailureException e)
+			{
+				return e;
+			}
+		}
+
 		[SetUp]
 		public void BaseSetUp()
 		{
