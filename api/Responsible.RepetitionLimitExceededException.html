@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ITestInstruction&lt;T&gt;
+    <title>Class RepetitionLimitExceededException
    | Responsible </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ITestInstruction&lt;T&gt;
+    <meta name="title" content="Class RepetitionLimitExceededException
    | Responsible ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -116,8 +116,8 @@
                           <li class="">
                             <a href="Responsible.IOptionalTestResponder.html" title="IOptionalTestResponder" class="">IOptionalTestResponder</a>
                           </li>
-                          <li class="active">
-                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="active">ITestInstruction&lt;T&gt;</a>
+                          <li class="">
+                            <a href="Responsible.ITestInstruction-1.html" title="ITestInstruction&lt;T&gt;" class="">ITestInstruction&lt;T&gt;</a>
                           </li>
                           <li class="">
                             <a href="Responsible.ITestOperation-1.html" title="ITestOperation&lt;T&gt;" class="">ITestOperation&lt;T&gt;</a>
@@ -137,8 +137,8 @@
                           <li class="">
                             <a href="Responsible.OptionalTestResponder.html" title="OptionalTestResponder" class="">OptionalTestResponder</a>
                           </li>
-                          <li class="">
-                            <a href="Responsible.RepetitionLimitExceededException.html" title="RepetitionLimitExceededException" class="">RepetitionLimitExceededException</a>
+                          <li class="active">
+                            <a href="Responsible.RepetitionLimitExceededException.html" title="RepetitionLimitExceededException" class="active">RepetitionLimitExceededException</a>
                           </li>
                           <li class="">
                             <a href="Responsible.Responsibly.html" title="Responsibly" class="">Responsibly</a>
@@ -268,72 +268,76 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Responsible.ITestInstruction`1">
+            <article class="content wrap" id="_content" data-uid="Responsible.RepetitionLimitExceededException">
   
   
-  <h1 id="Responsible_ITestInstruction_1" data-uid="Responsible.ITestInstruction`1" class="text-break">Interface ITestInstruction&lt;T&gt;
+  <h1 id="Responsible_RepetitionLimitExceededException" data-uid="Responsible.RepetitionLimitExceededException" class="text-break">Class RepetitionLimitExceededException
   </h1>
-  <div class="markdown level0 summary"><p>Represents a test instruction - a synchronous or asynchronous operation producing a single result when executed.
-All standard test instructions in Responsible have an enforced timeout.</p>
-<p>See <a class="xref" href="Responsible.TestInstruction.html">TestInstruction</a> for extension methods for working with test instructions,
-and <a class="xref" href="Responsible.Responsibly.html">Responsibly</a> for methods for creating basic test instructions.</p>
+  <div class="markdown level0 summary"><p>The exception type that will be thrown if the maximum number of repetitions of
+a repeated operation is exceeded.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></div>
+    <div class="level2"><span class="xref">RepetitionLimitExceededException</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">ISerializable</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Responsible.ITestOperation-1.html#Responsible_ITestOperation_1_CreateState">ITestOperation&lt;T&gt;.CreateState()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.getbaseexception#system-exception-getbaseexception">Exception.GetBaseException()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.getobjectdata#system-exception-getobjectdata(system-runtime-serialization-serializationinfo-system-runtime-serialization-streamingcontext)">Exception.GetObjectData(SerializationInfo, StreamingContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.gettype#system-exception-gettype">Exception.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.tostring#system-exception-tostring">Exception.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.data#system-exception-data">Exception.Data</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.helplink#system-exception-helplink">Exception.HelpLink</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.hresult#system-exception-hresult">Exception.HResult</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.innerexception#system-exception-innerexception">Exception.InnerException</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.message#system-exception-message">Exception.Message</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.source#system-exception-source">Exception.Source</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.stacktrace#system-exception-stacktrace">Exception.StackTrace</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.targetsite#system-exception-targetsite">Exception.TargetSite</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception.serializeobjectstate">Exception.SerializeObjectState</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Responsible.html">Responsible</a></h6>
   <h6><strong>Assembly</strong>: Responsible.dll</h6>
-  <h5 id="Responsible_ITestInstruction_1_syntax">Syntax</h5>
+  <h5 id="Responsible_RepetitionLimitExceededException_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ITestInstruction&lt;out T&gt; : ITestOperation&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class RepetitionLimitExceededException : Exception, ISerializable</code></pre>
   </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T</span></td>
-        <td><p>Result type of the test instruction.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="extensionmethods">Extension Methods</h3>
+  <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Responsible.LinqSupport.html#Responsible_LinqSupport_SelectMany__3_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_Func___0___1___2__">LinqSupport.SelectMany&lt;TSource, TSelector, TResult&gt;(ITestInstruction&lt;TSource&gt;, Func&lt;TSource, ITestInstruction&lt;TSelector&gt;&gt;, Func&lt;TSource, TSelector, TResult&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToYieldInstruction&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.ToTask&lt;T&gt;(ITestInstruction&lt;T&gt;, TestInstructionExecutor, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, ITestInstruction&lt;T2&gt;&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_">TestInstruction.ContinueWith&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, ITestInstruction&lt;T2&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_">TestInstruction.Select&lt;T1, T2&gt;(ITestInstruction&lt;T1&gt;, Func&lt;T1, T2&gt;, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String_">TestInstruction.GroupedAs&lt;T&gt;(ITestInstruction&lt;T&gt;, String)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsSimulatedUpdateLoop__1_Responsible_ITestInstruction___0__System_Double_System_Action_System_TimeSpan__System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.RunAsSimulatedUpdateLoop&lt;T&gt;(ITestInstruction&lt;T&gt;, Double, Action&lt;TimeSpan&gt;, CancellationToken, String, String, Int32)</a>
-  </div>
-  <div>
-      <a class="xref" href="Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop__1_Responsible_ITestInstruction___0__System_Action_System_Threading_CancellationToken_System_String_System_String_System_Int32_">TestInstruction.RunAsLoop&lt;T&gt;(ITestInstruction&lt;T&gt;, Action, CancellationToken, String, String, Int32)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">System.Runtime.Serialization.ISerializable</a>
   </div>
 </article>
           </div>

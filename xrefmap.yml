@@ -548,6 +548,12 @@ references:
   fullName.vb: Responsible.OptionalTestResponder.UntilReadyTo(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestResponder(Of T), System.String, System.String, System.Int32)
   nameWithType: OptionalTestResponder.UntilReadyTo<T>(IOptionalTestResponder, ITestResponder<T>, String, String, Int32)
   nameWithType.vb: OptionalTestResponder.UntilReadyTo(Of T)(IOptionalTestResponder, ITestResponder(Of T), String, String, Int32)
+- uid: Responsible.RepetitionLimitExceededException
+  name: RepetitionLimitExceededException
+  href: api/Responsible.RepetitionLimitExceededException.html
+  commentId: T:Responsible.RepetitionLimitExceededException
+  fullName: Responsible.RepetitionLimitExceededException
+  nameWithType: RepetitionLimitExceededException
 - uid: Responsible.Responsibly
   name: Responsibly
   href: api/Responsible.Responsibly.html
@@ -1204,6 +1210,22 @@ references:
   fullName.vb: Responsible.TestResponder.Optionally(Of T)(Responsible.ITestResponder(Of T))
   nameWithType: TestResponder.Optionally<T>(ITestResponder<T>)
   nameWithType.vb: TestResponder.Optionally(Of T)(ITestResponder(Of T))
+- uid: Responsible.TestResponder.Repeatedly*
+  name: Repeatedly
+  href: api/Responsible.TestResponder.html#Responsible_TestResponder_Repeatedly_
+  commentId: Overload:Responsible.TestResponder.Repeatedly
+  isSpec: "True"
+  fullName: Responsible.TestResponder.Repeatedly
+  nameWithType: TestResponder.Repeatedly
+- uid: Responsible.TestResponder.Repeatedly``1(Responsible.ITestResponder{``0},System.Int32,System.String,System.String,System.Int32)
+  name: Repeatedly<T>(ITestResponder<T>, Int32, String, String, Int32)
+  href: api/Responsible.TestResponder.html#Responsible_TestResponder_Repeatedly__1_Responsible_ITestResponder___0__System_Int32_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestResponder.Repeatedly``1(Responsible.ITestResponder{``0},System.Int32,System.String,System.String,System.Int32)
+  name.vb: Repeatedly(Of T)(ITestResponder(Of T), Int32, String, String, Int32)
+  fullName: Responsible.TestResponder.Repeatedly<T>(Responsible.ITestResponder<T>, System.Int32, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestResponder.Repeatedly(Of T)(Responsible.ITestResponder(Of T), System.Int32, System.String, System.String, System.Int32)
+  nameWithType: TestResponder.Repeatedly<T>(ITestResponder<T>, Int32, String, String, Int32)
+  nameWithType.vb: TestResponder.Repeatedly(Of T)(ITestResponder(Of T), Int32, String, String, Int32)
 - uid: Responsible.TestResponder.Select*
   name: Select
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Select_
