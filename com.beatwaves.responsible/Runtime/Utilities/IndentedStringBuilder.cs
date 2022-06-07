@@ -16,12 +16,14 @@ namespace Responsible.Utilities
 		private readonly StringBuilder stringBuilder = new StringBuilder();
 		private int indentAmount;
 
+		private int LengthWithoutNewLine => this.stringBuilder.Length - Environment.NewLine.Length;
+
 		private T Self => (T)this;
 
 		/// <summary>Converts the content into a string with the specified indentations.</summary>
 		/// <returns>The string representation of the built content.</returns>
 		// Trim out last newline when converting to final string
-		public override string ToString() => this.stringBuilder.ToString(0, this.stringBuilder.Length - 1);
+		public override string ToString() => this.stringBuilder.ToString(0, this.LengthWithoutNewLine);
 
 		private protected T Add(string content)
 		{
@@ -45,7 +47,7 @@ namespace Responsible.Utilities
 
 		private protected T AddToPreviousLine(string addToEndOfPrevious)
 		{
-			this.stringBuilder.Insert(this.stringBuilder.Length - 1, addToEndOfPrevious);
+			this.stringBuilder.Insert(this.LengthWithoutNewLine, addToEndOfPrevious);
 			return this.Self;
 		}
 

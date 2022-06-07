@@ -20,6 +20,9 @@ and thus not under semantic versioning.
 - Improve exception message handling by not truncating long messages (I don't remember why I did this originally)
 - Add a bit of padding to the Unity operation status window
 
+### Fixed
+- Fix some state strings on Windows, where `Environment.NewLine` is more than one character.
+
 ## [4.3.0] - 2022-04-17
 
 ### Added
