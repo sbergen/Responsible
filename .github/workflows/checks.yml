@@ -62,8 +62,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
-            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml"
+          files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
