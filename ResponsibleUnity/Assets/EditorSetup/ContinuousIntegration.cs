@@ -13,7 +13,7 @@ namespace Responsible.EditorSetup
     public static class ContinuousIntegration
     {
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        private static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.Parent.FullName;
+        public static readonly string RepositoryPath = new DirectoryInfo(Application.dataPath).Parent.Parent.FullName;
         private static readonly string DocFxDir = Path.Combine(RepositoryPath, "docfx");
         private static readonly string DocFxJsonPath = Path.Combine(DocFxDir, "docfx.json");
 
