@@ -56,15 +56,14 @@ jobs:
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
-          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
-          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]TestResults/test-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
         uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
+          files: TestResults//ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -73,14 +72,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
-
-      - name: Archive coverage results
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Unity Coverage Results ${{ matrix.unityVersion }}
-          path: ${{ steps.tests.outputs.coveragePath }}
+          path: TestResults
 
   test-netstandard:
     runs-on: ubuntu-latest
