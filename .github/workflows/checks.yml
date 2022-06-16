@@ -53,12 +53,6 @@ jobs:
           options: -v ${{ github.workspace }}:/project
           run: /project/ResponsibleUnity/run-tests.sh
 
-      - name: Fix test result ownership (and debug)
-        run: |
-          ls -l TestResults/*
-          sudo chown -R runner:docker TestResults
-          ls -l TestResults/*
-
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
@@ -69,7 +63,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: TestResults/ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
+          files: "TestResults/ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
