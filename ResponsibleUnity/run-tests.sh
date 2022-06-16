@@ -8,4 +8,4 @@ set -e
 
 mkdir /project/TestResults
 unity-editor -batchmode -logFile /dev/stdout -manualLicenseFile /project/unity-license
-unity-editor -batchmode -enableCodeCoverage -debugCodeOptimization -executeMethod Responsible.EditorSetup.TestRunner.RunTests -logFile /dev/stdout -projectPath /project/ResponsibleUnity -coverageResultsPath /project/TestResults
+unity-editor -batchmode -nographics -disable-assembly-updater -enableCodeCoverage -debugCodeOptimization -executeMethod Responsible.EditorSetup.TestRunner.RunTests -logFile /dev/stdout -projectPath /project/ResponsibleUnity -coverageResultsPath /project/TestResults -coverageOptions assemblyFilters:+Responsible,+Responsible.Editor

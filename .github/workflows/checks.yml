@@ -40,16 +40,18 @@ jobs:
           restore-keys: |
             ${{ steps.major-unity-version.outputs.result }}-Library-
 
-      - name: Run tests
-        id: tests
-        uses: game-ci/unity-test-runner@v2
+      - name: Write Unity license file
+        run: echo "$UNITY_LICENSE" | tr -d '\r' > unity-license
+        shell: bash
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2020 }}
+          UNITY_LICENSE : ${{ secrets.UNITY_LICENSE_2020 }}
+
+      - name: Run tests
+        uses: addnab/docker-run-action@v3
         with:
-          projectPath: ResponsibleUnity
-          unityVersion: ${{ matrix.unityVersion }}
-          coverageOptions: assemblyFilters:+Responsible,+Responsible.Editor
-          customParameters: -nographics -disable-assembly-updater
+          image: unityci/editor:${{ matrix.unityVersion }}-linux-il2cpp-1
+          options: -v ${{ github.workspace }}:/project
+          run: /project/ResponsibleUnity/run-tests.sh
 
       - name: Push to testspace
         if: ${{ always() }}
