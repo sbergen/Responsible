@@ -1,8 +1,8 @@
-
 using System.Threading.Tasks;
 using System.Xml;
 using UnityEditor;
 using UnityEditor.TestTools.TestRunner.Api;
+using UnityEngine;
 
 namespace Responsible.EditorSetup
 {
@@ -11,21 +11,34 @@ namespace Responsible.EditorSetup
 		[MenuItem("CI/Run tests %#T")]
 		public static async void RunTests()
 		{
-			var callbacks = new Callbacks();
-
-			TestRunnerApi.RegisterTestCallback(callbacks);
-			TestRunnerApi.ExecuteTestRun(new ExecutionSettings(new Filter
+			var failCount = -1;
+			try
 			{
-				testMode = TestMode.EditMode | TestMode.PlayMode,
-			}));
+				var callbacks = new Callbacks();
 
-			var results = await callbacks.Results;
+				TestRunnerApi.RegisterTestCallback(callbacks);
+				TestRunnerApi.ExecuteTestRun(new ExecutionSettings(new Filter
+				{
+					testMode = TestMode.EditMode | TestMode.PlayMode,
+				}));
 
-			using (var writer = XmlWriter.Create(
-				"test-results.xml",
-				new XmlWriterSettings { Indent = true }))
+				var results = await callbacks.Results;
+
+				using (var writer = XmlWriter.Create(
+					$"{ContinuousIntegration.RepositoryPath}/TestResults/test-results.xml",
+					new XmlWriterSettings { Indent = true }))
+				{
+					results.ToXml().WriteTo(writer);
+				}
+
+				failCount = results.FailCount;
+			}
+			finally
 			{
-				results.ToXml().WriteTo(writer);
+				if (Application.isBatchMode)
+				{
+					EditorApplication.Exit(failCount);
+				}
 			}
 		}
 
