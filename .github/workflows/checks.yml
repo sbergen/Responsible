@@ -53,6 +53,9 @@ jobs:
           options: -v ${{ github.workspace }}:/project
           run: /project/ResponsibleUnity/run-tests.sh
 
+      - name: Fix test result ownership
+        run: sudo chown -R runner:docker TestResults
+
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
