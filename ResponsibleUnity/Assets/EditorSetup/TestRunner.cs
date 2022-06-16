@@ -1,5 +1,6 @@
+using System;
+using System.Reflection;
 using System.Threading.Tasks;
-using System.Xml;
 using UnityEditor;
 using UnityEditor.TestTools.TestRunner.Api;
 using UnityEngine;
@@ -24,12 +25,19 @@ namespace Responsible.EditorSetup
 
 				var results = await callbacks.Results;
 
-				using (var writer = XmlWriter.Create(
-					$"{ContinuousIntegration.RepositoryPath}/TestResults/test-results.xml",
-					new XmlWriterSettings { Indent = true }))
+				// No public way to write the test-run xml element :(
+				var resultsWriterType = typeof(TestRunnerApi).Assembly
+					.GetType("UnityEditor.TestTools.TestRunner.Api.ResultsWriter");
+				var writeMethod = resultsWriterType.GetMethod(
+					"WriteResultToFile",
+					BindingFlags.Instance | BindingFlags.Public);
+				var resultsWriter = Activator.CreateInstance(resultsWriterType);
+				// ReSharper disable once PossibleNullReferenceException
+				writeMethod.Invoke(resultsWriter, new object[]
 				{
-					results.ToXml().WriteTo(writer);
-				}
+					results,
+					$"{ContinuousIntegration.RepositoryPath}/TestResults/test-results.xml",
+				});
 
 				failCount = results.FailCount;
 			}
