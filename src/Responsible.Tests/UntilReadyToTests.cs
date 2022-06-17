@@ -11,7 +11,7 @@ namespace Responsible.Tests
 	{
 		private ConditionResponder<int> first;
 		private ConditionResponder<int> second;
-		private Task<int> task;
+		private Task task;
 
 		[SetUp]
 		public void SetUp()

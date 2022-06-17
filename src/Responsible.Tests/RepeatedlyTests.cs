@@ -43,11 +43,11 @@ namespace Responsible.Tests
 		[Test]
 		public async Task RepeatedlyUntil_CompletesSynchronously_WhenUntilConditionAlreadyMet()
 		{
-			await this.responder
+			await AwaitTaskCompletionForUnity(this.responder
 				.Repeatedly(1)
 				.Until(ImmediateTrue)
 				.ExpectWithinSeconds(1)
-				.ToTask(this.Executor);
+				.ToTask(this.Executor));
 
 			Assert.AreEqual(0, this.executionCount);
 		}
@@ -64,7 +64,7 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			await task;
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(0, this.executionCount);
 		}
 
@@ -82,7 +82,7 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			await task;
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(1, this.executionCount);
 		}
 
@@ -102,7 +102,7 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			await task;
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(2, this.executionCount);
 		}
 
@@ -142,7 +142,7 @@ namespace Responsible.Tests
 				this.AdvanceDefaultFrame();
 			}
 
-			await task;
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(5, count);
 		}
 
