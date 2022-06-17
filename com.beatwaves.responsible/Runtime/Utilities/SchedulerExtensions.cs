@@ -1,3 +1,12 @@
+// Unity 2021 cancellation can be asynchronous, so we need to do some extra checks.
+// The checks can never be reached in .NET and older Unity versions,
+// so branch coverage suffers if we always do the checks (even though they are safe).
+// To maintain 100% coverage (as I want to see if I'm missing branches),
+// enable these checks only in newer Unity versions.
+#if UNITY_2021_1_OR_NEWER
+#define ASYNC_CANCELLATION
+#endif
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +27,9 @@ namespace Responsible.Utilities
 			{
 				try
 				{
-					// Unity 2021 cancellation can be asynchronous, so this check is required
+#if ASYNC_CANCELLATION
 					if (!cancellationToken.IsCancellationRequested)
+#endif
 					{
 						var state = getState();
 						if (condition(state))
@@ -37,7 +47,7 @@ namespace Responsible.Utilities
 			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
-				// Unity 2021 cancellation can be asynchronous, so this check is required
+				// Might be cancelled before execution
 				if (!cancellationToken.IsCancellationRequested)
 				{
 					CheckCondition(); // Complete immediately if already met
@@ -66,8 +76,10 @@ namespace Responsible.Utilities
 
 			void CheckTimeout()
 			{
-				// Unity 2021 cancellation can be asynchronous, so the cancellation check is required
-				if (!cancellationToken.IsCancellationRequested &&
+				if (
+#if ASYNC_CANCELLATION
+					!cancellationToken.IsCancellationRequested &&
+#endif
 					scheduler.TimeNow >= deadline)
 				{
 					completionSource.SetException(new TimeoutException());
