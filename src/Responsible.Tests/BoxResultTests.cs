@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -36,10 +37,10 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void BoxedTestInstruction_HasError_WhenInstructionHasError()
+		public async Task BoxedTestInstruction_HasError_WhenInstructionHasError()
 		{
 			var task = this.throwError.BoxResult().ToTask(this.Executor);
-			Assert.NotNull(GetFailureException(task));
+			Assert.NotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
@@ -59,7 +60,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void BoxedCondition_PublishesError_WhenTimedOut()
+		public async Task BoxedCondition_PublishesError_WhenTimedOut()
 		{
 			var task = Never
 				.BoxResult()
@@ -70,7 +71,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
@@ -91,7 +92,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void BoxedTestResponder_PublishesError_OnError()
+		public async Task BoxedTestResponder_PublishesError_OnError()
 		{
 			var task = this.waitForComplete
 				.ThenRespondWith("Respond", this.throwError)
@@ -104,11 +105,11 @@ namespace Responsible.Tests
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
-		public void BoxedTestResponder_PublishesError_OnTimeout()
+		public async Task BoxedTestResponder_PublishesError_OnTimeout()
 		{
 			var task = this.waitForComplete
 				.ThenRespondWith("Respond", this.returnTrue)
@@ -120,7 +121,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 	}
 }

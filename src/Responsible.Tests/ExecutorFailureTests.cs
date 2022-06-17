@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
@@ -19,8 +20,7 @@ namespace Responsible.Tests
 			=> Substitute.For<IGlobalContextProvider>();
 
 		[Test]
-		[TaskExceptionTest]
-		public void Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
+		public async Task Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
 		{
 			var task = WaitForAllOf(
 					WaitForCondition("NO", () => false),
@@ -30,7 +30,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(log => Regex.IsMatch(
@@ -40,7 +40,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Executor_PropagatesAndNotifiesFailure_WhenWaitThrows()
+		public async Task Executor_PropagatesAndNotifiesFailure_WhenWaitThrows()
 		{
 			var task = WaitForCondition(
 					"FAIL",
@@ -48,7 +48,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));
