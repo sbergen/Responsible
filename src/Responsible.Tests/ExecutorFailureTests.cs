@@ -1,5 +1,5 @@
 using System;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
@@ -19,9 +19,13 @@ namespace Responsible.Tests
 			=> Substitute.For<IGlobalContextProvider>();
 
 		[Test]
-		[TaskExceptionTest]
-		public void Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
+		public async Task Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
 		{
+			string receivedMessage = null;
+			this.FailureListener.OperationFailed(
+				Arg.Any<Exception>(),
+				Arg.Do<string>(msg => receivedMessage = msg));
+
 			var task = WaitForAllOf(
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
@@ -30,17 +34,21 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
-				Arg.Is<string>(log => Regex.IsMatch(
-					log,
-					@"timed out.*\[\-\] NO.*\[✓\] YES",
-					RegexOptions.Singleline)));
+				Arg.Any<string>());
+
+			StateAssert
+				.StringContainsInOrder(receivedMessage)
+				.Details("timed out")
+				.JustCanceled("NO")
+				.Completed("YES");
 		}
 
 		[Test]
-		public void Executor_PropagatesAndNotifiesFailure_WhenWaitThrows()
+		public async Task Executor_PropagatesAndNotifiesFailure_WhenWaitThrows()
 		{
 			var task = WaitForCondition(
 					"FAIL",
@@ -48,7 +56,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));

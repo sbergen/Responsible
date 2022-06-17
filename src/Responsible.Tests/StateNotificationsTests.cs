@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.State;
-using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -36,12 +36,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void StateNotifications_PublishesFinished_WhenOperationCanceled()
+		public async Task StateNotifications_PublishesFinished_WhenOperationCanceled()
 		{
 			var tokenSource = new CancellationTokenSource();
-			WaitForFrames(0).ToTask(this.Executor, tokenSource.Token);
+			var task = WaitForFrames(0).ToTask(this.Executor, tokenSource.Token);
 			tokenSource.Cancel();
+
+			await AwaitFailureExceptionForUnity(task);
+
 			Assert.AreEqual(TestOperationStateTransition.Finished, this.notification?.type);
 		}
 
@@ -61,21 +63,22 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void StateNotifications_PublishesMatchingStates_WithMultipleOperations()
+		public async Task StateNotifications_PublishesMatchingStates_WithMultipleOperations()
 		{
 			var tokenSource1 = new CancellationTokenSource();
-			WaitForFrames(0).ToTask(this.Executor, tokenSource1.Token);
+			var task1 = WaitForFrames(0).ToTask(this.Executor, tokenSource1.Token);
 			var state1 = this.notification?.state;
 
 			var tokenSource2 = new CancellationTokenSource();
-			WaitForFrames(0).ToTask(this.Executor, tokenSource2.Token);
+			var task2 = WaitForFrames(0).ToTask(this.Executor, tokenSource2.Token);
 			var state2 = this.notification?.state;
 
 			tokenSource1.Cancel();
+			await AwaitFailureExceptionForUnity(task1);
 			Assert.AreEqual(state1, this.notification?.state);
 
 			tokenSource2.Cancel();
+			await AwaitFailureExceptionForUnity(task2);
 			Assert.AreEqual(state2, this.notification?.state);
 		}
 	}

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -55,7 +56,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void BasicResponder_Fails_WhenContinuationThrows()
+		public async Task BasicResponder_Fails_WhenContinuationThrows()
 		{
 			var task = ImmediateTrue
 				.ThenRespondWith<bool, object>(
@@ -64,7 +65,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("Throw exception in selector")
 				.Completed("True")
@@ -73,7 +74,6 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
 		public void BasicResponder_RespectsIndividualTimeouts()
 		{
 			var task = this.respondToConditions
@@ -95,8 +95,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void BasicResponder_FailureDescription_IsAsExpected()
+		public async Task BasicResponder_FailureDescription_IsAsExpected()
 		{
 			var task = WaitForCondition("Condition", () => false)
 				.ThenRespondWith("Response", _ => Return(0))
@@ -104,11 +103,12 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var message = GetFailureException(task).Message;
+			var message = (await AwaitFailureExceptionForUnity(task)).Message;
+
 			StateAssert.StringContainsInOrder(message)
 				.Failed("Response CONDITION EXPECTED WITHIN")
 				.Details("WAIT FOR")
-				.Canceled("Condition")
+				.JustCanceled("Condition")
 				.Details("THEN RESPOND WITH ...");
 		}
 	}

@@ -23,7 +23,7 @@ namespace Responsible.Tests
 		{
 			this.groupedAsInstruction.ToTask(this.Executor);
 
-			Assert.IsTrue(executed);
+			Assert.IsTrue(this.executed);
 		}
 
 		[Test]

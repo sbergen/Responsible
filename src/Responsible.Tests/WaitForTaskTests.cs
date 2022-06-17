@@ -52,28 +52,27 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void FailedExecution_RunsCorrectly()
+		public async Task FailedExecution_RunsCorrectly()
 		{
 			var task = this.state.ToTask(this.Executor);
 			var exception = new Exception("Test failure");
 			this.completionSource.SetException(exception);
 
 			StateAssert.StringContainsInOrder(this.state.ToString()).Failed(Description);
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(exception, error.InnerException);
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void CanceledExecution_RunsCorrectly()
+		public async Task CanceledExecution_RunsCorrectly()
 		{
 			using (var cancellationSource = new CancellationTokenSource())
 			{
 				var task = this.state.ToTask(this.Executor, cancellationSource.Token);
 				cancellationSource.Cancel();
+				var error = await AwaitFailureExceptionForUnity(task);
 
 				StateAssert.StringContainsInOrder(this.state.ToString()).Canceled(Description);
-				var error = GetFailureException(task);
 				Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 			}
 		}

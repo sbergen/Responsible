@@ -27,7 +27,7 @@ namespace Responsible.Editor.Utilities
 			var yielded = 0;
 			foreach (var nextIndex in str
 				.AllIndicesOf('\n')
-				.Where((index, i) => (i + 1) % maxLines == 0))
+				.Where((_, i) => (i + 1) % maxLines == 0))
 			{
 				yield return str.Substring(yielded, nextIndex - yielded);
 				yielded = nextIndex + 1;

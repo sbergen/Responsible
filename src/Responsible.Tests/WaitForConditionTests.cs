@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -63,7 +64,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void WaitForCondition_ContainsDetails_WhenTimedOut()
+		public async Task WaitForCondition_ContainsDetails_WhenTimedOut()
 		{
 			var task = WaitForCondition(
 					"Never",
@@ -74,7 +75,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StringAssert.Contains("Should be in output", exception.Message);
 		}
 
@@ -100,7 +101,6 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
 		public void WaitForCondition_CleansUpSuccessfully_AfterCancellation()
 		{
 			using (var tokenSource = new CancellationTokenSource())
@@ -146,7 +146,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void WaitForCondition_ContainsCorrectDetails_WhenCanceled()
+		public async Task WaitForCondition_ContainsCorrectDetails_WhenCanceled()
 		{
 			var extraContextRequested = false;
 
@@ -168,10 +168,9 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-
 			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(error.Message)
 				.Canceled("Should be canceled")
 				.FailureDetails();

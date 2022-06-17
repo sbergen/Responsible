@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -58,8 +59,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void WaitForAllOf_Completes_WhenOneHasError()
+		public async Task WaitForAllOf_Completes_WhenOneHasError()
 		{
 			var canThrow = false;
 
@@ -87,7 +87,7 @@ namespace Responsible.Tests
 			canThrow = true;
 			this.AdvanceDefaultFrame();
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(expectedException, exception.InnerException);
 		}
 

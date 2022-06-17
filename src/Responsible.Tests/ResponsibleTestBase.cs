@@ -30,12 +30,40 @@ namespace Responsible.Tests
 
 		protected void AdvanceDefaultFrame() => this.Scheduler.AdvanceFrame(OneFrame);
 
-		protected static TestFailureException GetFailureException(Task task)
+		// At least cancellation completes asynchronously (but later in the frame) in Unity 2021
+		protected static async Task<TestFailureException> AwaitFailureExceptionForUnity(Task task)
 		{
-			Assert.IsNotNull(task.Exception, "Should have exception");
-			Assert.AreEqual(1, task.Exception.InnerExceptions.Count);
-			Assert.IsInstanceOf<TestFailureException>(task.Exception.InnerExceptions[0]);
-			return task.Exception.InnerExceptions[0] as TestFailureException;
+			try
+			{
+				await AwaitTaskCompletionForUnity(task); // Ensure we have a timeout
+				throw new InvalidOperationException("Task was expected to fail, but did not.");
+			}
+			catch (TestFailureException e)
+			{
+				return e;
+			}
+		}
+
+		// Some tasks don't complete asynchronously (but later in the frame) in Unity 2021
+		protected static async Task AwaitTaskCompletionForUnity(Task task)
+		{
+			if (await Task.WhenAny(task, Task.Delay(TimeSpan.FromSeconds(1))) == task)
+			{
+#if UNITY_2021_3_OR_NEWER
+				var startFrame = UnityEngine.Time.frameCount;
+#endif
+				await task;
+#if UNITY_2021_3_OR_NEWER
+				Assert.AreEqual(
+					startFrame,
+					UnityEngine.Time.frameCount,
+					"Task is expected to complete later in the the same frame");
+#endif
+			}
+			else
+			{
+				throw new TimeoutException("Task did not complete when expected");
+			}
 		}
 
 		[SetUp]

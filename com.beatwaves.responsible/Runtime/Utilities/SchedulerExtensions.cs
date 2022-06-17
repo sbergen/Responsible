@@ -18,10 +18,14 @@ namespace Responsible.Utilities
 			{
 				try
 				{
-					var state = getState();
-					if (condition(state))
+					// Unity 2021 cancellation can be asynchronous, so this check is required
+					if (!cancellationToken.IsCancellationRequested)
 					{
-						tcs.SetResult(state);
+						var state = getState();
+						if (condition(state))
+						{
+							tcs.SetResult(state);
+						}
 					}
 				}
 				catch (Exception e)
@@ -33,6 +37,7 @@ namespace Responsible.Utilities
 			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
+				// Unity 2021 cancellation can be asynchronous, so this check is required
 				if (!cancellationToken.IsCancellationRequested)
 				{
 					CheckCondition(); // Complete immediately if already met
@@ -61,7 +66,9 @@ namespace Responsible.Utilities
 
 			void CheckTimeout()
 			{
-				if (scheduler.TimeNow >= deadline)
+				// Unity 2021 cancellation can be asynchronous, so the cancellation check is required
+				if (!cancellationToken.IsCancellationRequested &&
+					scheduler.TimeNow >= deadline)
 				{
 					completionSource.SetException(new TimeoutException());
 				}

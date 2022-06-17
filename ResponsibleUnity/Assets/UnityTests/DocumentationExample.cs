@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
-		public void CreateDocumentationFailure()
+		public async Task CreateDocumentationFailure()
 		{
 			var foo = new Foo();
 			var bar = new Bar();
@@ -55,7 +56,7 @@ namespace Responsible.UnityTests
 
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Debug.Log(error.Message.Replace(
 				nameof(TestInstruction.ToTask),
 				nameof(TestInstruction.ToYieldInstruction)));

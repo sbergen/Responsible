@@ -2,7 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -12,7 +11,7 @@ namespace Responsible.Tests
 	public class ExpectWithinSecondsTests : ResponsibleTestBase
 	{
 		[Test]
-		public void ExpectCondition_TerminatesWithError_AfterTimeout()
+		public async Task ExpectCondition_TerminatesWithError_AfterTimeout()
 		{
 			var task = Never
 				.ExpectWithinSeconds(1)
@@ -20,13 +19,12 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TimeoutException>(error.InnerException);
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void ExpectWithinSeconds_CancelsSuccessfully()
+		public async Task ExpectWithinSeconds_CancelsSuccessfully()
 		{
 			var cts = new CancellationTokenSource();
 			var task = Never
@@ -34,32 +32,29 @@ namespace Responsible.Tests
 				.ToTask(this.Executor, cts.Token);
 
 			cts.Cancel();
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 		}
 
 		[Test]
-		public void ExpectCondition_ContainsErrorDetails_WhenTimedOut()
+		public async Task ExpectCondition_ContainsErrorDetails_WhenTimedOut()
 		{
-			this.AssertErrorDetailsAfterOneSecond(
+			await this.AssertErrorDetailsAfterOneSecond(
 				Never.ExpectWithinSeconds(1).BoxResult(),
-				@"\[!\] Never EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Failed("Never EXPECTED WITHIN"));
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void ExpectCondition_ContainsErrorDetails_WhenExceptionThrown()
+		public async Task ExpectCondition_ContainsErrorDetails_WhenExceptionThrown()
 		{
-			this.AssertErrorDetailsAfterOneSecond(
+			await this.AssertErrorDetailsAfterOneSecond(
 				WaitForCondition(
 						"Throwing condition",
 						() => throw new Exception("Test"))
 					.ExpectWithinSeconds(1),
-				@"\[!\] Throwing condition EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Failed("Throwing condition EXPECTED WITHIN"));
 		}
 
 		[Test]
@@ -71,9 +66,10 @@ namespace Responsible.Tests
 				.CreateState()
 				.ToString();
 
-			Assert.That(description, Does.Match($@".*1\.00 s.*
-\s*\[ \] First.*
-\s*\[ \] Second.*"));
+			StateAssert.StringContainsInOrder(description)
+				.Details("1.00 s")
+				.NotStarted("First")
+				.NotStarted("Second");
 		}
 
 		[Test]
@@ -84,13 +80,12 @@ namespace Responsible.Tests
 				.CreateState()
 				.ToString();
 
-			Assert.That(
-				description,
-				Does.Match($@"\s*\[ \] Only.*WITHIN.*1\.00 s"));
+			StateAssert.StringContainsInOrder(description)
+				.NotStarted("Only EXPECTED WITHIN 1.00 s");
 		}
 
 		[Test]
-		public void ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
+		public async Task ExpectResponder_TerminatesWithError_IfWaitNotFulfilled()
 		{
 			var task = Never
 				.ThenRespondWithAction("NOP", Nop)
@@ -99,11 +94,10 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
-		[TaskExceptionTest]
 		public void ExpectResponder_DoesNotTerminateWithTimeout_IfWaitFulfilled()
 		{
 			// The instruction takes longer than the timeout
@@ -123,56 +117,56 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void ExpectResponder_ContainsErrorDetails_WhenConditionTimedOut()
+		public async Task ExpectResponder_ContainsErrorDetails_WhenConditionTimedOut()
 		{
 			var responder = Never.ThenRespondWithAction("Nop", Nop);
-			this.AssertErrorDetailsAfterOneSecond(
+			await this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
-				@"timed out.*
-\[!\] Nop CONDITION EXPECTED WITHIN [^!]*
-Failed with.*
-Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("timed out")
+					.Failed("Nop CONDITION EXPECTED WITHIN")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void ExpectResponder_ContainsErrorDetails_WhenInstructionTimedOut()
+		public async Task ExpectResponder_ContainsErrorDetails_WhenInstructionTimedOut()
 		{
 			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
-			this.AssertErrorDetailsAfterOneSecond(
+			await this.AssertErrorDetailsAfterOneSecond(
 				responder.BoxResult().ExpectWithinSeconds(1),
-				@"timed out.*
-\[!\] Response CONDITION EXPECTED WITHIN.*
-\s+\[!\] Never EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("timed out")
+					.Failed("Response CONDITION EXPECTED WITHIN")
+					.Failed("Never EXPECTED WITHIN")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void ExpectResponder_ContainsErrorDetails_WhenExceptionThrown()
+		public async Task ExpectResponder_ContainsErrorDetails_WhenExceptionThrown()
 		{
 			var responder = ImmediateTrue.ThenRespondWithAction("Throw error", _ => throw new Exception("Test"));
-			this.AssertErrorDetailsAfterOneSecond(
+			await this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
-				@"failed.*
-\[!\] Throw error CONDITION EXPECTED WITHIN.*
-\s+\[!\] Throw error .*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("failed")
+					.Failed("Throw error CONDITION EXPECTED WITHIN")
+					.Failed("Throw error")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
-		private void AssertErrorDetailsAfterOneSecond(
+		private async Task AssertErrorDetailsAfterOneSecond(
 			ITestInstruction<object> instruction,
-			[RegexPattern] string regex)
+			Action<string> detailsAssert)
 		{
 			var task = instruction.ToTask(this.Executor);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var exception = GetFailureException(task);
-			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));
+			var exception = await AwaitFailureExceptionForUnity(task);
+			detailsAssert(exception.Message);
 
 			var multipleFailuresDescription =
 				$"Should contain only singe failure details, but was:\n{exception.Message}";

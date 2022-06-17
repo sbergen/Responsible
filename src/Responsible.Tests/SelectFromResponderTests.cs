@@ -31,28 +31,28 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromResponder_PublishesCorrectError_WhenResponderFails()
+		public async Task SelectFromResponder_PublishesCorrectError_WhenResponderFails()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 		[Test]
-		public void SelectFromResponder_PublishesCorrectError_WhenResponderWaitFails()
+		public async Task SelectFromResponder_PublishesCorrectError_WhenResponderWaitFails()
 		{
 			this.responder.CompleteWaitWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 		[Test]
-		public void SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
+		public async Task SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(this.task);
+			var error = await AwaitFailureExceptionForUnity(this.task);
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Details(ConditionResponder.WaitForCompletionDescription)
@@ -60,13 +60,13 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromResponder_ContainsCorrectDetails_WhenSelectFails()
+		public async Task SelectFromResponder_ContainsCorrectDetails_WhenSelectFails()
 		{
 			this.selector = _ => throw new Exception("Fail!");
 			this.responder.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(this.task);
+			var error = await AwaitFailureExceptionForUnity(this.task);
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("SELECT")
@@ -75,13 +75,13 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromResponder_ContainsCorrectDetails_WhenResponderFails()
+		public async Task SelectFromResponder_ContainsCorrectDetails_WhenResponderFails()
 		{
 			var failMessage = "Test failure";
 			this.responder.CompleteWaitWithError(new Exception(failMessage));
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(this.task);
+			var error = await AwaitFailureExceptionForUnity(this.task);
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("Respond")

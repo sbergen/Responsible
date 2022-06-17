@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -34,7 +35,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void ContinueWith_PropagatesErrorFromFirst(
+		public async Task ContinueWith_PropagatesErrorFromFirst(
 			[Values] bool shouldCompleteSecond,
 			[Values] Strategy strategy)
 		{
@@ -43,18 +44,18 @@ namespace Responsible.Tests
 			var task = this.ContinueWithNothing(ErrorInstruction, strategy)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
-		public void ContinueWith_PropagatesError_WhenContinuationThrows()
+		public async Task ContinueWith_PropagatesError_WhenContinuationThrows()
 		{
 			var task = Responsibly
 				.Return(new object())
 				.ContinueWith<object, object>(_ => throw new Exception("Test exception"))
 				.ToTask(this.Executor);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("Return")
 				.Failed("...")
@@ -62,7 +63,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void ContinueWith_PropagatesErrorFromSecond_AfterFirstCompleted(
+		public async Task ContinueWith_PropagatesErrorFromSecond_AfterFirstCompleted(
 			[Values] Strategy strategy)
 		{
 			var task = this.ContinueWithError(this.waitForFirst.ExpectWithinSeconds(1), strategy)
@@ -73,7 +74,7 @@ namespace Responsible.Tests
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.AreSame(TestException, GetFailureException(task).InnerException);
+			Assert.AreSame(TestException, (await AwaitFailureExceptionForUnity(task)).InnerException);
 		}
 
 		[Test]

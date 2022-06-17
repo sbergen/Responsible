@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using static Responsible.Responsibly;
 
@@ -28,7 +29,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Sequence_StopsExecution_WhenErrorEncountered()
+		public async Task Sequence_StopsExecution_WhenErrorEncountered()
 		{
 			var completed1 = false;
 			var completed2 = false;
@@ -45,7 +46,7 @@ namespace Responsible.Tests
 			Assert.AreEqual(
 				(true, false),
 				(completed1, completed2));
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 	}
 }

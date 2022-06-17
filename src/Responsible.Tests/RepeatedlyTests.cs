@@ -41,22 +41,19 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RepeatedlyUntil_CompletesSynchronously_WhenUntilConditionAlreadyMet()
+		public async Task RepeatedlyUntil_CompletesSynchronously_WhenUntilConditionAlreadyMet()
 		{
-			var task = this.responder
+			await AwaitTaskCompletionForUnity(this.responder
 				.Repeatedly(1)
 				.Until(ImmediateTrue)
 				.ExpectWithinSeconds(1)
-				.ToTask(this.Executor);
+				.ToTask(this.Executor));
 
-			Assert.IsNull(task.Exception);
-			Assert.IsTrue(task.IsCompleted);
 			Assert.AreEqual(0, this.executionCount);
 		}
 
 		[Test]
-		[TaskExceptionTest] // This test depends on cancellation to function synchronously
-		public void RepeatedlyUntil_DoesNotRequireResponderToExecute()
+		public async Task RepeatedlyUntil_DoesNotRequireResponderToExecute()
 		{
 			var task = this.responder
 				.Repeatedly(1)
@@ -67,14 +64,12 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNull(task.Exception);
-			Assert.IsTrue(task.IsCompleted);
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(0, this.executionCount);
 		}
 
 		[Test]
-		[TaskExceptionTest] // This test depends on cancellation to function synchronously
-		public void RepeatedlyUntil_Completes_WhenResponderExecutesOnce()
+		public async Task RepeatedlyUntil_Completes_WhenResponderExecutesOnce()
 		{
 			var task = this.responder
 				.Repeatedly(1)
@@ -87,14 +82,12 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNull(task.Exception);
-			Assert.IsTrue(task.IsCompleted);
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(1, this.executionCount);
 		}
 
-		[TaskExceptionTest] // This test depends on cancellation to function synchronously
 		[Test]
-		public void RepeatedlyUntil_Completes_WhenResponderExecutesTwice()
+		public async Task RepeatedlyUntil_Completes_WhenResponderExecutesTwice()
 		{
 			var task = this.responder
 				.Repeatedly(2)
@@ -109,15 +102,13 @@ namespace Responsible.Tests
 			this.complete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNull(task.Exception);
-			Assert.IsTrue(task.IsCompleted);
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(2, this.executionCount);
 		}
 
 		[Test]
 		[SuppressMessage("ReSharper", "AccessToModifiedClosure")]
-		[TaskExceptionTest] // This test depends on cancellation to function synchronously
-		public void MultipleRepeatedlyResponders_FunctionAsExpected()
+		public async Task MultipleRepeatedlyResponders_FunctionAsExpected()
 		{
 			bool? ping = null;
 			var count = 0;
@@ -151,14 +142,12 @@ namespace Responsible.Tests
 				this.AdvanceDefaultFrame();
 			}
 
-			Assert.IsNull(task.Exception);
-			Assert.IsTrue(task.IsCompleted);
+			await AwaitTaskCompletionForUnity(task);
 			Assert.AreEqual(5, count);
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void Repeatedly_CanBeCanceled()
+		public async Task Repeatedly_CanBeCanceled()
 		{
 			var cts = new CancellationTokenSource();
 			var task = this.responder
@@ -169,12 +158,12 @@ namespace Responsible.Tests
 
 			cts.Cancel();
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 		}
 
 		[Test]
-		public void Repeatedly_Fails_WhenMaximumCountReached()
+		public async Task Repeatedly_Fails_WhenMaximumCountReached()
 		{
 			var execCount = 0;
 			var task = ImmediateTrue
@@ -186,7 +175,7 @@ namespace Responsible.Tests
 
 			Assert.AreEqual(10, execCount);
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<RepetitionLimitExceededException>(error.InnerException);
 			// ReSharper disable once PossibleNullReferenceException, checked above
 			StringAssert.Contains("10", error.InnerException.Message);

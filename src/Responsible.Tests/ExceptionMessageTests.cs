@@ -16,7 +16,7 @@ namespace Responsible.Tests
 			Substitute.For<IGlobalContextProvider>();
 
 		[Test]
-		public void ExceptionMessage_IncludesAllDetails()
+		public async Task ExceptionMessage_IncludesAllDetails()
 		{
 			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
@@ -27,7 +27,7 @@ namespace Responsible.Tests
 					builder => builder.AddDetails("Local details"))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
-			var failureException = GetFailureException(task);
+			var failureException = await AwaitFailureExceptionForUnity(task);
 
 			StateAssert
 				.StringContainsInOrder(failureException.Message)
@@ -49,17 +49,17 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void ExceptionMessage_DoesNotIncludeCompletelyEmptyLines()
+		public async Task ExceptionMessage_DoesNotIncludeCompletelyEmptyLines()
 		{
 			var task = Do("Throw", () => throw new Exception())
 				.ToTask(this.Executor);
-			var lines = GetFailureException(task).Message.Split('\n');
+			var lines = (await AwaitFailureExceptionForUnity(task)).Message.Split('\n');
 			CollectionAssert.Contains(lines, " ");
 			CollectionAssert.DoesNotContain(lines, "");
 		}
 
 		[Test]
-		public void OperationStack_ContainsSourceOnlyOnce_WithSequence()
+		public async Task OperationStack_ContainsSourceOnlyOnce_WithSequence()
 		{
 			var task = TestInstruction
 				.Sequence(new[]
@@ -72,23 +72,23 @@ namespace Responsible.Tests
 				})
 				.ToTask(this.Executor);
 
-			ExpectOperatorCountInError(task, "Sequence", 1);
+			await ExpectOperatorCountInError(task, "Sequence", 1);
 		}
 
 		[Test]
-		public void OperationStack_ContainsSourceTwice_WithMultipleOperatorsOnSameLine()
+		public async Task OperationStack_ContainsSourceTwice_WithMultipleOperatorsOnSameLine()
 		{
 			var throwInstruction = Do("Throw error", () => throw new Exception());
 			var task = Return(1).ContinueWith(throwInstruction).ContinueWith(Return(3))
 				.ToTask(this.Executor);
 
-			ExpectOperatorCountInError(task, "ContinueWith", 2);
+			await ExpectOperatorCountInError(task, "ContinueWith", 2);
 		}
 
 		[AssertionMethod]
-		private static void ExpectOperatorCountInError(Task task, string operatorName, int count)
+		private static async Task ExpectOperatorCountInError(Task task, string operatorName, int count)
 		{
-			var message = GetFailureException(task).Message;
+			var message = (await AwaitFailureExceptionForUnity(task)).Message;
 			var sequenceCount = Regex.Matches(message, $@"\[{operatorName}\]").Count;
 			Assert.AreEqual(count, sequenceCount, $"[{operatorName}] should occur {count} time(s) in the error message: {message}");
 		}

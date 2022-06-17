@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -48,8 +49,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void CanceledMessage_ContainsCorrectDetails()
+		public async Task CanceledMessage_ContainsCorrectDetails()
 		{
 			using (var cts = new CancellationTokenSource())
 			{
@@ -58,9 +58,11 @@ namespace Responsible.Tests
 				this.AdvanceDefaultFrame(); // Should not count in time
 
 				// Start execution, canceled after one frame
-				state.ToTask(this.Executor, cts.Token);
+				var task = state.ToTask(this.Executor, cts.Token);
 				this.AdvanceDefaultFrame();
 				cts.Cancel();
+
+				await AwaitFailureExceptionForUnity(task);
 
 				StateAssert.StringContainsInOrder(state.ToString())
 					.Canceled("Never")

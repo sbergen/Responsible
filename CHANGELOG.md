@@ -22,6 +22,7 @@ and thus not under semantic versioning.
 
 ### Fixed
 - Fix some state strings on Windows, where `Environment.NewLine` is more than one character.
+- Fix some cancellation issues with Unity 2021 (where cancellation might happen asynchronously later in the same frame)
 
 ## [4.3.0] - 2022-04-17
 
