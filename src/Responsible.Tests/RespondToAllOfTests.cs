@@ -95,7 +95,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(await AwaitFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 
@@ -116,7 +116,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(await AwaitFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 		[Test]
@@ -143,7 +143,7 @@ namespace Responsible.Tests
 					.ExpectWithinSeconds(1)
 					.ToTask(this.Executor, cts.Token);
 
-				var exception = await AwaitFailureException(canceledTask);
+				var exception = await AwaitFailureExceptionForUnity(canceledTask);
 				Assert.IsInstanceOf<TaskCanceledException>(exception.InnerException);
 			}
 		}

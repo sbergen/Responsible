@@ -32,7 +32,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("EXPECT WITHIN")
 				.Completed(description)

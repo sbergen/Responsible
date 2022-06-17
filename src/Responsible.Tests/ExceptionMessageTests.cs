@@ -27,7 +27,7 @@ namespace Responsible.Tests
 					builder => builder.AddDetails("Local details"))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
-			var failureException = await AwaitFailureException(task);
+			var failureException = await AwaitFailureExceptionForUnity(task);
 
 			StateAssert
 				.StringContainsInOrder(failureException.Message)
@@ -53,7 +53,7 @@ namespace Responsible.Tests
 		{
 			var task = Do("Throw", () => throw new Exception())
 				.ToTask(this.Executor);
-			var lines = (await AwaitFailureException(task)).Message.Split('\n');
+			var lines = (await AwaitFailureExceptionForUnity(task)).Message.Split('\n');
 			CollectionAssert.Contains(lines, " ");
 			CollectionAssert.DoesNotContain(lines, "");
 		}
@@ -88,7 +88,7 @@ namespace Responsible.Tests
 		[AssertionMethod]
 		private static async Task ExpectOperatorCountInError(Task task, string operatorName, int count)
 		{
-			var message = (await AwaitFailureException(task)).Message;
+			var message = (await AwaitFailureExceptionForUnity(task)).Message;
 			var sequenceCount = Regex.Matches(message, $@"\[{operatorName}\]").Count;
 			Assert.AreEqual(count, sequenceCount, $"[{operatorName}] should occur {count} time(s) in the error message: {message}");
 		}

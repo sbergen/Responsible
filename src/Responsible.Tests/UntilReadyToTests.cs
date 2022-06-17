@@ -11,7 +11,7 @@ namespace Responsible.Tests
 	{
 		private ConditionResponder<int> first;
 		private ConditionResponder<int> second;
-		private Task task;
+		private Task<int> task;
 
 		[SetUp]
 		public void SetUp()
@@ -26,8 +26,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
+		public async Task UntilReadyToRespond_DoesNotExecuteFirst_WhenSecondIsFirstToBeReady()
 		{
 			this.second.MayRespond = true;
 
@@ -43,6 +42,9 @@ namespace Responsible.Tests
 
 			this.second.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
+
+			await AwaitTaskCompletionForUnity(this.task);
+
 			Assert.IsTrue(this.second.CompletedRespond, "Second should have completed");
 			Assert.IsTrue(this.task.IsCompleted, "Full operation should have completed");
 		}
@@ -71,8 +73,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void UntilReadyToRespond_PublishesError_FromAnyResponder([Values] bool errorInFirst)
+		public async Task UntilReadyToRespond_PublishesError_FromAnyResponder([Values] bool errorInFirst)
 		{
 			var exception = new Exception("Fail!");
 			if (errorInFirst)
@@ -85,14 +86,14 @@ namespace Responsible.Tests
 			}
 
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 		[Test]
-		public void UntilReadyToRespond_TimesOut_AsExpected()
+		public async Task UntilReadyToRespond_TimesOut_AsExpected()
 		{
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
 		}
 
 		[Test]

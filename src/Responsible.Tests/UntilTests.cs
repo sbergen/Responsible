@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -46,8 +47,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void Until_DoesNotExecute_IfConditionIsMetFirst()
+		public async Task Until_DoesNotExecute_IfConditionIsMetFirst()
 		{
 			var cond1 = false;
 			var untilCond = false;
@@ -81,13 +81,15 @@ namespace Responsible.Tests
 			cond2 = true;
 			this.AdvanceDefaultFrame();
 
+			await AwaitTaskCompletionForUnity(task);
+
 			Assert.AreEqual(
 				(false, true, true),
 				(firstCompleted, secondCompleted, task.IsCompleted));
 		}
 
 		[Test]
-		public void Until_TimesOut_AsExpected()
+		public async Task Until_TimesOut_AsExpected()
 		{
 			var completed = false;
 
@@ -101,7 +103,7 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsFalse(completed);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]

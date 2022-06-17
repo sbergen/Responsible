@@ -158,7 +158,7 @@ namespace Responsible.Tests
 
 			cts.Cancel();
 
-			var error = await AwaitFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 		}
 
@@ -175,7 +175,7 @@ namespace Responsible.Tests
 
 			Assert.AreEqual(10, execCount);
 
-			var error = await AwaitFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<RepetitionLimitExceededException>(error.InnerException);
 			// ReSharper disable once PossibleNullReferenceException, checked above
 			StringAssert.Contains("10", error.InnerException.Message);

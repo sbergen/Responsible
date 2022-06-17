@@ -68,7 +68,7 @@ namespace Responsible.Tests
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:
-					return waitCondition.ThenRespondWith("Respond", x => Return(obj));
+					return waitCondition.ThenRespondWith("Respond", _ => Return(obj));
 				case ConstructionStrategy.Instruction:
 					return waitCondition.ThenRespondWith("Respond", Return(obj));
 				case ConstructionStrategy.Func:
@@ -89,7 +89,7 @@ namespace Responsible.Tests
 			switch (strategy)
 			{
 				case ConstructionStrategy.Continuation:
-					return waitCondition.ThenRespondWith("Respond", x => throwInstruction);
+					return waitCondition.ThenRespondWith("Respond", _ => throwInstruction);
 				case ConstructionStrategy.Instruction:
 					return waitCondition.ThenRespondWith("Respond", throwInstruction);
 				case ConstructionStrategy.Func:

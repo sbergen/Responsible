@@ -65,7 +65,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("Throw exception in selector")
 				.Completed("True")
@@ -103,7 +103,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var message = (await AwaitFailureException(task)).Message;
+			var message = (await AwaitFailureExceptionForUnity(task)).Message;
 
 			StateAssert.StringContainsInOrder(message)
 				.Failed("Response CONDITION EXPECTED WITHIN")

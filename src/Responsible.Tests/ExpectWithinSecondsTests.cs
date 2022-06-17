@@ -19,7 +19,7 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			var error = await AwaitFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TimeoutException>(error.InnerException);
 		}
 
@@ -32,7 +32,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor, cts.Token);
 
 			cts.Cancel();
-			var error = await AwaitFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 		}
 
@@ -96,7 +96,7 @@ namespace Responsible.Tests
 
 			Assert.IsFalse(task.IsFaulted);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -164,7 +164,7 @@ Test operation stack");
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));
 
 			var multipleFailuresDescription =

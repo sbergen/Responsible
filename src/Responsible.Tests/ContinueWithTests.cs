@@ -44,7 +44,7 @@ namespace Responsible.Tests
 			var task = this.ContinueWithNothing(ErrorInstruction, strategy)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ namespace Responsible.Tests
 				.ContinueWith<object, object>(_ => throw new Exception("Test exception"))
 				.ToTask(this.Executor);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("Return")
 				.Failed("...")
@@ -74,7 +74,7 @@ namespace Responsible.Tests
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.AreSame(TestException, (await AwaitFailureException(task)).InnerException);
+			Assert.AreSame(TestException, (await AwaitFailureExceptionForUnity(task)).InnerException);
 		}
 
 		[Test]

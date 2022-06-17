@@ -52,7 +52,7 @@ namespace Responsible.Tests
 
 			var exception = new Exception("Test Exception");
 			this.completionSource.SetException(exception);
-			var error = await AwaitFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(exception, error.InnerException);
 		}
 

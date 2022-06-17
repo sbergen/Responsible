@@ -68,7 +68,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -76,7 +76,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -84,7 +84,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -92,7 +92,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -104,7 +104,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
@@ -123,7 +123,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = await AwaitFailureException(task);
+			var exception = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")

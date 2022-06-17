@@ -64,16 +64,15 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void CanceledExecution_RunsCorrectly()
+		public async Task CanceledExecution_RunsCorrectly()
 		{
 			using (var cancellationSource = new CancellationTokenSource())
 			{
 				var task = this.state.ToTask(this.Executor, cancellationSource.Token);
 				cancellationSource.Cancel();
+				var error = await AwaitFailureExceptionForUnity(task);
 
 				StateAssert.StringContainsInOrder(this.state.ToString()).Canceled(Description);
-				var error = GetFailureException(task);
 				Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
 			}
 		}

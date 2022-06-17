@@ -34,7 +34,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
@@ -56,7 +56,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));

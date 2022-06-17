@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -20,25 +21,25 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromCondition_PublishesError_WhenExceptionThrown()
+		public async Task SelectFromCondition_PublishesError_WhenExceptionThrown()
 		{
 			var task = ImmediateTrue
-				.Select<bool, int>(r => throw new Exception("Fail!"))
+				.Select<bool, int>(_ => throw new Exception("Fail!"))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
-		public void SelectFromCondition_ContainsFailureDetails_WhenFailed()
+		public async Task SelectFromCondition_ContainsFailureDetails_WhenFailed()
 		{
 			var task = ImmediateTrue
-				.Select<bool, int>(r => throw new Exception("Fail!"))
+				.Select<bool, int>(_ => throw new Exception("Fail!"))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("EXPECT WITHIN")
 				.Failed("SELECT")
@@ -46,14 +47,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromCondition_ContainsCorrectDetails_WhenConditionFailed()
+		public async Task SelectFromCondition_ContainsCorrectDetails_WhenConditionFailed()
 		{
 			var task = WaitForCondition("Throw", () => throw new Exception("Fail!"))
 				.Select(r => r)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("Throw")
 				.FailureDetails()

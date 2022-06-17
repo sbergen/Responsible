@@ -40,7 +40,7 @@ namespace Responsible.Tests
 		public async Task BoxedTestInstruction_HasError_WhenInstructionHasError()
 		{
 			var task = this.throwError.BoxResult().ToTask(this.Executor);
-			Assert.NotNull(await AwaitFailureException(task));
+			Assert.NotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -71,7 +71,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -105,7 +105,7 @@ namespace Responsible.Tests
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
@@ -121,7 +121,7 @@ namespace Responsible.Tests
 			Assert.IsFalse(task.IsFaulted);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureException(task));
+			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
 		}
 	}
 }
