@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -7,8 +8,7 @@ namespace Responsible.Tests
 	public class OperationStateTests : ResponsibleTestBase
 	{
 		[Test]
-		[TaskExceptionTest]
-		public void ReusingSameInstruction_ProvidesSeparateState()
+		public async Task ReusingSameInstruction_ProvidesSeparateState()
 		{
 			bool condition = true;
 
@@ -32,11 +32,11 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureException(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("EXPECT WITHIN")
 				.Completed(description)
-				.Canceled(description);
+				.JustCanceled(description);
 		}
 
 	}

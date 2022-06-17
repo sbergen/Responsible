@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
-using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -35,7 +34,7 @@ namespace Responsible.Tests
 				Arg.Any<TimeoutException>(),
 				Arg.Is<string>(log => Regex.IsMatch(
 					log,
-					@"timed out.*\[\-\] NO.*\[✓\] YES",
+					@"timed out.*\[\.\] NO.*\[✓\] YES", // Note that '.' is any character, because Unity...
 					RegexOptions.Singleline)));
 		}
 

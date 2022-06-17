@@ -45,14 +45,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void ExternalResult_CausesFailure_WhenErroredEarly()
+		public async Task ExternalResult_CausesFailure_WhenErroredEarly()
 		{
 			var task = NeverZero.ToTask(this.Executor);
 			Assert.IsFalse(task.IsCompleted);
 
 			var exception = new Exception("Test Exception");
 			this.completionSource.SetException(exception);
-			var error = GetFailureException(task);
+			var error = await AwaitFailureException(task);
 			Assert.AreSame(exception, error.InnerException);
 		}
 

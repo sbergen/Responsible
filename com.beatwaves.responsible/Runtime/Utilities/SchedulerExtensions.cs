@@ -36,6 +36,7 @@ namespace Responsible.Utilities
 			using (scheduler.RegisterPollCallback(CheckCondition))
 			using (cancellationToken.Register(tcs.SetCanceled))
 			{
+				// Unity 2021 cancellation is not synchronous, so this check is required
 				if (!cancellationToken.IsCancellationRequested)
 				{
 					CheckCondition(); // Complete immediately if already met
@@ -64,7 +65,9 @@ namespace Responsible.Utilities
 
 			void CheckTimeout()
 			{
-				if (scheduler.TimeNow >= deadline)
+				// Unity 2021 cancellation is not synchronous, so this check is required
+				if (!cancellationToken.IsCancellationRequested &&
+					scheduler.TimeNow >= deadline)
 				{
 					completionSource.SetException(new TimeoutException());
 				}

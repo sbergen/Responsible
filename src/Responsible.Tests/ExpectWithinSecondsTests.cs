@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NUnit.Framework;
-using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -126,7 +125,7 @@ namespace Responsible.Tests
 			await this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
 				@"timed out.*
-\[!\] Nop CONDITION EXPECTED WITHIN [^!]*
+\[!\] Nop CONDITION EXPECTED WITHIN .*?
 Failed with.*
 Test operation stack");
 		}
