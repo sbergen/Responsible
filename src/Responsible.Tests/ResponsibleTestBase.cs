@@ -30,14 +30,6 @@ namespace Responsible.Tests
 
 		protected void AdvanceDefaultFrame() => this.Scheduler.AdvanceFrame(OneFrame);
 
-		protected static TestFailureException GetFailureException(Task task)
-		{
-			Assert.IsNotNull(task.Exception, "Should have exception");
-			Assert.AreEqual(1, task.Exception.InnerExceptions.Count);
-			Assert.IsInstanceOf<TestFailureException>(task.Exception.InnerExceptions[0]);
-			return task.Exception.InnerExceptions[0] as TestFailureException;
-		}
-
 		// At least cancellation completes asynchronously (but later in the frame) in Unity 2021
 		protected static async Task<TestFailureException> AwaitFailureExceptionForUnity(Task task)
 		{

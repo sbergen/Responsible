@@ -47,12 +47,12 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
+		public async Task SelectFromResponder_ContainsFailureDetails_WhenResponderFailed()
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(this.task);
+			var error = await AwaitFailureExceptionForUnity(this.task);
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Details(ConditionResponder.WaitForCompletionDescription)
@@ -60,13 +60,13 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void SelectFromResponder_ContainsCorrectDetails_WhenSelectFails()
+		public async Task SelectFromResponder_ContainsCorrectDetails_WhenSelectFails()
 		{
 			this.selector = _ => throw new Exception("Fail!");
 			this.responder.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
-			var error = GetFailureException(this.task);
+			var error = await AwaitFailureExceptionForUnity(this.task);
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("SELECT")

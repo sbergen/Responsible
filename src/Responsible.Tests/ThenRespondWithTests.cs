@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
@@ -36,7 +37,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void ThenRespondWith_PropagatesErrorFromWait([Values] ConstructionStrategy strategy)
+		public async Task ThenRespondWith_PropagatesErrorFromWait([Values] ConstructionStrategy strategy)
 		{
 			var condition = WaitForCondition(
 				"Ready to execute",
@@ -46,17 +47,17 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.NotNull(GetFailureException(task));
+			Assert.NotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		[Test]
-		public void ThenRespondWith_PropagatesErrorFromInstruction([Values] ConstructionStrategy strategy)
+		public async Task ThenRespondWith_PropagatesErrorFromInstruction([Values] ConstructionStrategy strategy)
 		{
 			var task = MakeErrorResponder(strategy, ImmediateTrue)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.NotNull(GetFailureException(task));
+			Assert.NotNull(await AwaitFailureExceptionForUnity(task));
 		}
 
 		private static ITestResponder<object> MakeObjectResponder<TWait>(

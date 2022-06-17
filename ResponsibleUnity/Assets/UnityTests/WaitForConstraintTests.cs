@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests;
 using static Responsible.Responsibly;
@@ -64,7 +65,7 @@ namespace Responsible.UnityTests
 		}
 
 		[Test]
-		public void WaitForConstraint_HasDetails_OnTimeout()
+		public async Task WaitForConstraint_HasDetails_OnTimeout()
 		{
 			var str = "BAR";
 			var task = WaitForConstraint(
@@ -76,12 +77,12 @@ namespace Responsible.UnityTests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.That(error.Message, Does.Contain("Expected").And.Contain("But was"));
 		}
 
 		[Test]
-		public void WaitForConstraint_HandlesErrorGracefully()
+		public async Task WaitForConstraint_HandlesErrorGracefully()
 		{
 			var task = WaitForConstraint<string>(
 					"Some string",
@@ -90,7 +91,7 @@ namespace Responsible.UnityTests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.That(
 				error.Message,
 				Does.Contain("[!] Some string").And.Contain("Fail!"));

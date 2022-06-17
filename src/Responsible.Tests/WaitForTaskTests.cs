@@ -52,14 +52,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void FailedExecution_RunsCorrectly()
+		public async Task FailedExecution_RunsCorrectly()
 		{
 			var task = this.state.ToTask(this.Executor);
 			var exception = new Exception("Test failure");
 			this.completionSource.SetException(exception);
 
 			StateAssert.StringContainsInOrder(this.state.ToString()).Failed(Description);
-			var error = GetFailureException(task);
+			var error = await AwaitFailureExceptionForUnity(task);
 			Assert.AreSame(exception, error.InnerException);
 		}
 
