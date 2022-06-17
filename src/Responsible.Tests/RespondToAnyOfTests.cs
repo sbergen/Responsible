@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
@@ -30,8 +29,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
+		public async Task RespondToAnyOf_Completes_WhenEitherCompleted([Values] bool completeFirst)
 		{
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
@@ -51,7 +49,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			this.task.Wait(TimeSpan.Zero);
+			await AwaitTaskCompletionForUnity(this.task);
 
 			Assert.AreEqual(
 				(true, completeFirst, !completeFirst),
@@ -59,8 +57,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		[TaskExceptionTest]
-		public void RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
+		public async Task RespondToAnyOf_ConditionsDoNotExecute_WhenUntilConditionCompletesFirst()
 		{
 			this.responder1.MayComplete = true;
 			this.responder2.MayComplete = true;
@@ -75,6 +72,8 @@ namespace Responsible.Tests
 			this.responder2.MayRespond = true;
 
 			this.AdvanceDefaultFrame();
+
+			await AwaitTaskCompletionForUnity(this.task);
 
 			Assert.AreEqual(
 				(true, false, false),

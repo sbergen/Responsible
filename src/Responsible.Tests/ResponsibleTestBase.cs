@@ -51,6 +51,29 @@ namespace Responsible.Tests
 			}
 		}
 
+		// Some tasks don't complete synchronously (but later in the frame) in Unity 2021
+		protected static async Task<T> AwaitTaskCompletionForUnity<T>(Task<T> task)
+		{
+			if (await Task.WhenAny(task, Task.Delay(TimeSpan.FromSeconds(1))) == task)
+			{
+#if UNITY_2021_3_OR_NEWER
+				var startFrame = UnityEngine.Time.frameCount;
+#endif
+				var result = await task;
+#if UNITY_2021_3_OR_NEWER
+				Assert.AreEqual(
+					startFrame,
+					UnityEngine.Time.frameCount,
+					"Task is expected to complete later in the the same frame");
+#endif
+				return result;
+			}
+			else
+			{
+				throw new TimeoutException("Task did not complete when expected");
+			}
+		}
+
 		[SetUp]
 		public void BaseSetUp()
 		{

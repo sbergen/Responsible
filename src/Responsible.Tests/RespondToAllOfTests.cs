@@ -82,7 +82,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RespondToAllOf_CompletesWithError_OnTimeout([Values] bool completeFirst)
+		public async Task RespondToAllOf_CompletesWithError_OnTimeout([Values] bool completeFirst)
 		{
 			if (completeFirst)
 			{
@@ -95,12 +95,12 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureException(this.task));
 		}
 
 
 		[Test]
-		public void RespondToAllOf_CompletesWithError_OnAnyResponderError([Values] bool throwFromFirst)
+		public async Task RespondToAllOf_CompletesWithError_OnAnyResponderError([Values] bool throwFromFirst)
 		{
 			var error = new Exception("Fail!");
 			if (throwFromFirst)
@@ -116,7 +116,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(GetFailureException(this.task));
+			Assert.IsNotNull(await AwaitFailureException(this.task));
 		}
 
 		[Test]
@@ -133,7 +133,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RespondToAllOf_IsCanceled_WhenCanceledBeforeExecution()
+		public async Task RespondToAllOf_IsCanceled_WhenCanceledBeforeExecution()
 		{
 			using (var cts = new CancellationTokenSource())
 			{
@@ -143,7 +143,7 @@ namespace Responsible.Tests
 					.ExpectWithinSeconds(1)
 					.ToTask(this.Executor, cts.Token);
 
-				var exception = GetFailureException(canceledTask);
+				var exception = await AwaitFailureException(canceledTask);
 				Assert.IsInstanceOf<TaskCanceledException>(exception.InnerException);
 			}
 		}
