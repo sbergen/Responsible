@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -63,39 +64,39 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void AndThen_TimesOutOnFirst_WithReadySecondCondition()
+		public async Task AndThen_TimesOutOnFirst_WithReadySecondCondition()
 		{
 			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
-		public void AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
+		public async Task AndThen_TimesOutOnFirst_WithDeferredSecondCondition()
 		{
 			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
-		public void AndThen_TimesOutOnSecond_WithReadySecondCondition()
+		public async Task AndThen_TimesOutOnSecond_WithReadySecondCondition()
 		{
 			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
-		public void AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
+		public async Task AndThen_TimesOutOnSecond_WithDeferredSecondCondition()
 		{
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(GetFailureException(task));
+			Assert.IsNotNull(await AwaitFailureException(task));
 		}
 
 		[Test]
-		public void AndThen_Fails_IfContinuationConstructionThrows()
+		public async Task AndThen_Fails_IfContinuationConstructionThrows()
 		{
 			var expectedException = new Exception("Test exception");
 			var task = ImmediateTrue
@@ -103,7 +104,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureException(task);
 			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
@@ -112,7 +113,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void AndThen_Fails_IfContinuationThrows()
+		public async Task AndThen_Fails_IfContinuationThrows()
 		{
 			var expectedException = new Exception("Test exception");
 			var task = ImmediateTrue
@@ -122,7 +123,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			var exception = GetFailureException(task);
+			var exception = await AwaitFailureException(task);
 			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
