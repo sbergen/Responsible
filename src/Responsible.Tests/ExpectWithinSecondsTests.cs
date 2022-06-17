@@ -2,8 +2,8 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -41,9 +41,8 @@ namespace Responsible.Tests
 		{
 			await this.AssertErrorDetailsAfterOneSecond(
 				Never.ExpectWithinSeconds(1).BoxResult(),
-				@"\[!\] Never EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Failed("Never EXPECTED WITHIN"));
 		}
 
 		[Test]
@@ -54,9 +53,8 @@ namespace Responsible.Tests
 						"Throwing condition",
 						() => throw new Exception("Test"))
 					.ExpectWithinSeconds(1),
-				@"\[!\] Throwing condition EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Failed("Throwing condition EXPECTED WITHIN"));
 		}
 
 		[Test]
@@ -68,9 +66,10 @@ namespace Responsible.Tests
 				.CreateState()
 				.ToString();
 
-			Assert.That(description, Does.Match($@".*1\.00 s.*
-\s*\[ \] First.*
-\s*\[ \] Second.*"));
+			StateAssert.StringContainsInOrder(description)
+				.Details("1.00 s")
+				.NotStarted("First")
+				.NotStarted("Second");
 		}
 
 		[Test]
@@ -81,9 +80,8 @@ namespace Responsible.Tests
 				.CreateState()
 				.ToString();
 
-			Assert.That(
-				description,
-				Does.Match($@"\s*\[ \] Only.*WITHIN.*1\.00 s"));
+			StateAssert.StringContainsInOrder(description)
+				.NotStarted("Only EXPECTED WITHIN 1.00 s");
 		}
 
 		[Test]
@@ -124,10 +122,11 @@ namespace Responsible.Tests
 			var responder = Never.ThenRespondWithAction("Nop", Nop);
 			await this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
-				@"timed out.*
-\[!\] Nop CONDITION EXPECTED WITHIN .*?
-Failed with.*
-Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("timed out")
+					.Failed("Nop CONDITION EXPECTED WITHIN")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
 		[Test]
@@ -136,11 +135,12 @@ Test operation stack");
 			var responder = ImmediateTrue.ThenRespondWith("Response", Never.ExpectWithinSeconds(0.5));
 			await this.AssertErrorDetailsAfterOneSecond(
 				responder.BoxResult().ExpectWithinSeconds(1),
-				@"timed out.*
-\[!\] Response CONDITION EXPECTED WITHIN.*
-\s+\[!\] Never EXPECTED WITHIN.*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("timed out")
+					.Failed("Response CONDITION EXPECTED WITHIN")
+					.Failed("Never EXPECTED WITHIN")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
 		[Test]
@@ -149,23 +149,24 @@ Test operation stack");
 			var responder = ImmediateTrue.ThenRespondWithAction("Throw error", _ => throw new Exception("Test"));
 			await this.AssertErrorDetailsAfterOneSecond(
 				responder.ExpectWithinSeconds(1),
-				@"failed.*
-\[!\] Throw error CONDITION EXPECTED WITHIN.*
-\s+\[!\] Throw error .*
-\s+Failed with.*
-\s+Test operation stack");
+				state => StateAssert.StringContainsInOrder(state)
+					.Details("failed")
+					.Failed("Throw error CONDITION EXPECTED WITHIN")
+					.Failed("Throw error")
+					.Details("Failed with")
+					.Details("Test operation stack"));
 		}
 
 		private async Task AssertErrorDetailsAfterOneSecond(
 			ITestInstruction<object> instruction,
-			[RegexPattern] string regex)
+			Action<string> detailsAssert)
 		{
 			var task = instruction.ToTask(this.Executor);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var exception = await AwaitFailureExceptionForUnity(task);
-			Assert.That(exception.Message, Does.Match($"(?s:{regex})"));
+			detailsAssert(exception.Message);
 
 			var multipleFailuresDescription =
 				$"Should contain only singe failure details, but was:\n{exception.Message}";
