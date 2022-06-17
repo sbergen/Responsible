@@ -1,9 +1,9 @@
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
 namespace Responsible.Tests
@@ -21,6 +21,11 @@ namespace Responsible.Tests
 		[Test]
 		public async Task Executor_PropagatesAndNotifiesFailure_WhenOperationTimesOut()
 		{
+			string receivedMessage = null;
+			this.FailureListener.OperationFailed(
+				Arg.Any<Exception>(),
+				Arg.Do<string>(msg => receivedMessage = msg));
+
 			var task = WaitForAllOf(
 					WaitForCondition("NO", () => false),
 					WaitForCondition("YES", () => true))
@@ -30,12 +35,16 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(OneSecond);
 
 			Assert.IsNotNull(await AwaitFailureException(task));
+
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
-				Arg.Is<string>(log => Regex.IsMatch(
-					log,
-					@"timed out.*\[\.\] NO.*\[✓\] YES", // Note that '.' is any character, because Unity...
-					RegexOptions.Singleline)));
+				Arg.Any<string>());
+
+			StateAssert
+				.StringContainsInOrder(receivedMessage)
+				.Details("timed out")
+				.JustCanceled("NO")
+				.Completed("YES");
 		}
 
 		[Test]
