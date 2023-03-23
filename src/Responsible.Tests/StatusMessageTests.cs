@@ -6,6 +6,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
+	[SetCulture("en-US")]
 	public class StatusMessageTests : ResponsibleTestBase
 	{
 		[Test]
