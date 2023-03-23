@@ -11,6 +11,8 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+## [4.4.0] - 2023-03-23
+
 ### Added
 - `RunAsLoop` and `RunAsSimulatedUpdateLoop` operators, for running test instructions synchronously as a loop with a tick callback.
 - `Repeatedly` operator, which turns a test responder into an optional responder that executes repeatedly.
@@ -142,7 +144,8 @@ and thus not under semantic versioning.
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.3.0...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.4.0...HEAD
+[4.4.0]: https://github.com/sbergen/Responsible/releases/tag/v4.4.0
 [4.3.0]: https://github.com/sbergen/Responsible/releases/tag/v4.3.0
 [4.2.0]: https://github.com/sbergen/Responsible/releases/tag/v4.2.0
 [4.1.2]: https://github.com/sbergen/Responsible/releases/tag/v4.1.2
