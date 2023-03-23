@@ -99,7 +99,7 @@ jobs:
       - name: Run Tests
         id: run-tests
         run: |
-          dotnet test --collect:"XPlat Code Coverage" -r TestResults --settings runsettings.xml --logger "trx"
+          dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults --settings runsettings.xml --logger "trx"
           echo "::set-output name=tests::TestResults/*.trx"
 
       - name: Push to testspace
