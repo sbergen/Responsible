@@ -40,6 +40,18 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "failure.md",
+      "output": {
+        ".html": {
+          "relative_path": "failure.html",
+          "hash": "GKhWFK+ZCMHZLkhnMUGi5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "images/UnityStateWindow.png",
       "output": {
@@ -56,7 +68,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "PAuiMF30X9BnT2z5k+gLwA=="
+          "hash": "RZwPswlgNwX//+oasFU5vg=="
         }
       },
       "is_incremental": false,
@@ -665,7 +677,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 5,
+          "total_file_count": 6,
           "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
