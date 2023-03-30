@@ -29,31 +29,7 @@ yield return WaitForCondition("Foo to be ready", () => foo.IsReady)
 ```
 
 If `foo.Consume` were to throw an error, the output would look like this:
-```
-Test operation execution failed!
-
-Failure context:
-[!] Foo the bar CONDITION EXPECTED WITHIN 10.00 s (Failed after 0.12 s ≈ 7 frames)
-  WAIT FOR
-    [✓] Foo to be ready (Completed in 0.05 s ≈ 3 frames)
-    [✓] Bar to be completed (Completed in 0.07 s ≈ 4 frames)
-  THEN RESPOND WITH
-    [!] Consume bar (Failed after 0.00 s ≈ 0 frames)
-
-      Failed with:
-        System.Exception:
-          Something failed
-
-      Test operation stack:
-        [Do] MethodName (at Path/To/Source.cs:41)
-        [ExpectWithinSeconds] MethodName (at Path/To/Source.cs:42)
-        [ContinueWith] MethodName (at Path/To/Source.cs:43)
-        [ToYieldInstruction] MethodName (at Path/To/Source.cs:44)
-[ ] Continue operation
-
-Error: System.Exception: Something failed
-  at <normal exception stack trace comes here>
-```
+[!INCLUDE [Failure example](failure.md)]
 
 In Unity, by using the Editor window available under `Window -> Responsible -> Operation State`,
 you can observe the progress of your tests executing.

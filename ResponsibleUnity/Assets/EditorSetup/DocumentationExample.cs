@@ -1,14 +1,12 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Responsible.Tests;
-using UnityEngine;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 
-namespace Responsible.UnityTests
+namespace Responsible.EditorSetup
 {
-	public class DocumentationExample : ResponsibleTestBase
+	public static class DocumentationExample
 	{
 		class Foo
 		{
@@ -30,40 +28,55 @@ namespace Responsible.UnityTests
 			public bool IsCompleted { get; set; }
 		}
 
-		[Test]
-		public async Task CreateDocumentationFailure()
+		public static async Task<string> CreateDocumentationFailure()
 		{
 			var foo = new Foo();
 			var bar = new Bar();
 
+			var scheduler = new MockTestScheduler();
 			var task = WaitForCondition("Foo to be ready", () => foo.IsReady)
 				.AndThen(WaitForCondition("Bar to be completed", () => bar.IsCompleted))
 				.ThenRespondWith("Foo the bar", Do("Consume bar", () => foo.Consume(bar)))
 				.ExpectWithinSeconds(10)
 				.ContinueWith(Do("Continue operation", foo.ContinueOperation))
-				.ToTask(this.Executor);
+				.ToTask(new TestInstructionExecutor(scheduler));
 
-			this.AdvanceDefaultFrame();
-			this.AdvanceDefaultFrame();
+			var oneFrame = TimeSpan.FromSeconds(1.0 / 60);
+			scheduler.AdvanceFrame(oneFrame);
+			scheduler.AdvanceFrame(oneFrame);
 
 			foo.IsReady = true;
 
-			this.AdvanceDefaultFrame();
-			this.AdvanceDefaultFrame();
-			this.AdvanceDefaultFrame();
-			this.AdvanceDefaultFrame();
+			scheduler.AdvanceFrame(oneFrame);
+			scheduler.AdvanceFrame(oneFrame);
+			scheduler.AdvanceFrame(oneFrame);
+			scheduler.AdvanceFrame(oneFrame);
 
 			bar.IsCompleted = true;
 
-			this.AdvanceDefaultFrame();
+			scheduler.AdvanceFrame(oneFrame);
 
-			var error = await AwaitFailureExceptionForUnity(task);
-			var simpleReplacements = error.Message
+			Exception exception = null;
+			try
+			{
+				await task;
+			}
+			catch (Exception e)
+			{
+				exception = e;
+			}
+
+			if (exception == null)
+			{
+				throw new InvalidOperationException("Expected test task to fail!");
+			}
+
+			var simpleReplacements = exception.Message
 				.Replace(
 					nameof(TestInstruction.ToTask),
 					nameof(TestInstruction.ToYieldInstruction))
 				.Replace(
-					nameof(this.CreateDocumentationFailure),
+					nameof(CreateDocumentationFailure),
 					"MethodName");
 			var sourceReplaced = Regex.Replace(
 				simpleReplacements,
@@ -74,7 +87,8 @@ namespace Responsible.UnityTests
 				@"System.Exception: Something failed.*",
 				"System.Exception: Something failed\n  at <normal exception stack trace comes here>",
 				RegexOptions.Singleline);
-			Debug.Log(stackTraceOmitted);
+
+			return $"````\n{stackTraceOmitted}\n```";
 		}
 	}
 }
