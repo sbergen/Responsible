@@ -1,7 +1,9 @@
 {
     "name": "Responsible.EditorSetup",
     "references": [
+        "Responsible",
         "Responsible.Editor",
+        "Responsible.Tests",
         "Unity.Rider.Editor"
     ],
     "includePlatforms": [

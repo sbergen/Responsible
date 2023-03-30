@@ -24,26 +24,43 @@ namespace Responsible.EditorSetup
         /// so we need to first generate the solution.
         /// </summary>
         [MenuItem("CI/Build Documentation %#D")]
-        public static void BuildDocumentation()
+        public static async void BuildDocumentation()
         {
-            Debug.Log("Syncing solution...");
-            SyncSolution();
+	        var returnCode = 0;
 
-            Debug.Log("Building documentation...");
-            var (status, stdout) = RunCommand(
-                workingDir: DocFxDir,
-                command: "docfx",
-                Quote(DocFxJsonPath), "--warningsAsErrors", "--force");
+	        try
+	        {
+		        Debug.Log("Updating failure example...");
+		        File.WriteAllText(
+			        Path.Combine(DocFxDir, "failure.md"),
+			        await DocumentationExample.CreateDocumentationFailure());
 
-            if (status != 0)
-            {
-                Debug.LogError($"Building documentation failed:\n{stdout}");
-                throw new Exception($"Building documentation failed ({status})");
-            }
-            else
-            {
-                Debug.Log($"Finished building documentation:\n{stdout}");
-            }
+		        Debug.Log("Syncing solution...");
+		        SyncSolution();
+
+		        Debug.Log("Building documentation...");
+		        string stdout;
+		        (returnCode, stdout) = RunCommand(
+			        workingDir: DocFxDir,
+			        command: "docfx",
+			        Quote(DocFxJsonPath), "--warningsAsErrors", "--force");
+
+		        if (returnCode != 0)
+		        {
+			        Debug.LogError($"Building documentation failed:\n{stdout}");
+		        }
+		        else
+		        {
+			        Debug.Log($"Finished building documentation:\n{stdout}");
+		        }
+	        }
+	        finally
+			{
+				if (Application.isBatchMode)
+				{
+					EditorApplication.Exit(returnCode);
+				}
+			}
         }
 
         [SuppressMessage(
