@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Responsible.Tests;
@@ -57,9 +58,23 @@ namespace Responsible.UnityTests
 			this.AdvanceDefaultFrame();
 
 			var error = await AwaitFailureExceptionForUnity(task);
-			Debug.Log(error.Message.Replace(
-				nameof(TestInstruction.ToTask),
-				nameof(TestInstruction.ToYieldInstruction)));
+			var simpleReplacements = error.Message
+				.Replace(
+					nameof(TestInstruction.ToTask),
+					nameof(TestInstruction.ToYieldInstruction))
+				.Replace(
+					nameof(this.CreateDocumentationFailure),
+					"MethodName");
+			var sourceReplaced = Regex.Replace(
+				simpleReplacements,
+				@"\(at .*?\.cs:(\d+)\)",
+				match => $"(at Path/To/Source.cs:{match.Groups[1].Value})");
+			var stackTraceOmitted = Regex.Replace(
+				sourceReplaced,
+				@"System.Exception: Something failed.*",
+				"System.Exception: Something failed\n  at <normal exception stack trace comes here>",
+				RegexOptions.Singleline);
+			Debug.Log(stackTraceOmitted);
 		}
 	}
 }
