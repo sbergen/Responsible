@@ -31,7 +31,7 @@ namespace Responsible.EditorSetup
 	        try
 	        {
 		        Debug.Log("Updating failure example...");
-		        await File.WriteAllTextAsync(
+		        File.WriteAllText(
 			        Path.Combine(DocFxDir, "failure.md"),
 			        await DocumentationExample.CreateDocumentationFailure());
 
