@@ -88,7 +88,7 @@ namespace Responsible.EditorSetup
 				"System.Exception: Something failed\n  at <normal exception stack trace comes here>",
 				RegexOptions.Singleline);
 
-			return $"````\n{stackTraceOmitted}\n```";
+			return $"```\n{stackTraceOmitted}\n```";
 		}
 	}
 }
