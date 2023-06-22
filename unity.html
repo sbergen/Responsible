@@ -86,17 +86,12 @@
 <h1 id="responsible-in-unity">Responsible in Unity</h1>
 
 <h2 id="supported-unity-versions">Supported Unity versions</h2>
+<p>Responsible aims to support all current LTS Version:</p>
 <ul>
-<li>2019, 2020: Fully supported. CI is periodically updated to run on the latest releases,
+<li>2021, 2022 LTS: Fully supported. CI is periodically updated to run on the latest releases,
 but might lag behind a bit. Please report any issues you find.</li>
-<li>2021: There was a change in <code>async/await</code> behavior around Unity 2021.3,
-which subtly changes the execution timing of canceled tasks.
-This now works differently from both standard .NET runtimes and earlier Unity versions.
-Due to this, and Responsible not being actively used on 2021 (as far as I know),
-the probability for there being some issues with 2021 is more likely than with older versions.
-Please report any issues you find.</li>
-<li>No TECH stream releases are tested, but feel free to report issues you find, and they might get fixed.
-However, ensuring correct functionality on 2021 is a higher priority right now.</li>
+<li>No TECH stream releases are tested, but feel free to report issues you find, and they might get fixed.</li>
+<li>2019, 2020: Worked in the past, official support dropped in 4.5.0</li>
 </ul>
 <h2 id="overview">Overview</h2>
 <p>Responsible was originally written for Unity,
