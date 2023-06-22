@@ -3,7 +3,7 @@
   "version": "4.4.0",
   "displayName": "Responsible",
   "description": "Reactive asynchronous automated testing utility to enhance the Unity Test Runner.\nProvides a framework for constructing asynchronous\n- wait conditions,\n- test instructions,\n- and responders, which execute an instruction when a condition is met\nAlso includes utilities for combining and chaining all of the above.",
-  "unity": "2019.4",
+  "unity": "2021.3",
   "keywords": [
     "testing"
   ],

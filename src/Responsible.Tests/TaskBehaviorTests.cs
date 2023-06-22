@@ -16,10 +16,10 @@ namespace Responsible.Tests
 		{
 			var task = FaultTaskAfterCancellation();
 
-#if UNITY_2021_3
+#if UNITY_2021_3 || UNITY_2022_3
 			Assert.IsNull(
 				task.Exception,
-				"Expecting Unity 2021.3 to still be broken: If this test fails, remove the workarounds 🎉");
+				"Expecting Unity 2021 && 2022 to still be broken: If this test fails, remove the workarounds 🎉");
 #else
 			Assert.IsInstanceOf<AggregateException>(task.Exception);
 #endif

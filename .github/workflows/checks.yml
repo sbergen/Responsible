@@ -12,9 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         unityVersion:
-          - 2019.4.39f1
-          - 2020.3.35f1
-          - 2021.3.4f1
+          - 2021.3.27f1
+          - 2022.3.2f1
 
     steps:
       - uses: actions/checkout@v3
@@ -40,30 +39,30 @@ jobs:
           restore-keys: |
             ${{ steps.major-unity-version.outputs.result }}-Library-
 
-      - name: Write Unity license file
-        run: echo "$UNITY_LICENSE" | tr -d '\r' > unity-license
-        shell: bash
-        env:
-          UNITY_LICENSE : ${{ secrets.UNITY_LICENSE_2020 }}
-
       - name: Run tests
-        uses: addnab/docker-run-action@v3
+        id: tests
+        uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2020 }}
         with:
-          image: unityci/editor:${{ matrix.unityVersion }}-linux-il2cpp-1
-          options: -v ${{ github.workspace }}:/project
-          run: /project/ResponsibleUnity/run-tests.sh
+          projectPath: ResponsibleUnity
+          unityVersion: ${{ matrix.unityVersion }}
+          coverageOptions: assemblyFilters:+Responsible,+Responsible.Editor
+          customParameters: -nographics -disable-assembly-updater
 
       - name: Push to testspace
         if: ${{ always() }}
         run: testspace
-          [Unity-${{ matrix.unityVersion }}]TestResults/test-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/editmode-results.xml
+          [Unity-${{ matrix.unityVersion }}]${{ steps.tests.outputs.artifactsPath }}/playmode-results.xml
 
       - name: Push to codecov.io
         if: ${{ always() }}
         uses: codecov/codecov-action@v3
         with:
           flags: Unity${{ matrix.unityVersion }}
-          files: "TestResults/ResponsibleUnity-opencov/Automated/TestCoverageResults_0000.xml"
+          files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0001.xml,\
+            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0001.xml"
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -72,7 +71,14 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
-          path: TestResults
+          path: ${{ steps.tests.outputs.artifactsPath }}
+
+      - name: Archive coverage results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Unity Coverage Results ${{ matrix.unityVersion }}
+          path: ${{ steps.tests.outputs.coveragePath }}
 
   test-netstandard:
     runs-on: ubuntu-latest
