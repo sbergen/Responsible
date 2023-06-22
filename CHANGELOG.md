@@ -11,6 +11,12 @@ and thus not under semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- Added support for Unity 2022
+
+### Removed
+- Dropped support for Unity 2019 and 2020
+
 ## [4.4.0] - 2023-03-23
 
 ### Added
