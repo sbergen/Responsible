@@ -2,16 +2,11 @@
 
 ## Supported Unity versions
 
-* 2019, 2020: Fully supported. CI is periodically updated to run on the latest releases,
+Responsible aims to support all current LTS Version:
+* 2021: Fully supported. CI is periodically updated to run on the latest releases,
   but might lag behind a bit. Please report any issues you find.
-* 2021: There was a change in `async/await` behavior around Unity 2021.3,
-  which subtly changes the execution timing of canceled tasks.
-  This now works differently from both standard .NET runtimes and earlier Unity versions.
-  Due to this, and Responsible not being actively used on 2021 (as far as I know),
-  the probability for there being some issues with 2021 is more likely than with older versions.
-  Please report any issues you find.
+* 2022: Work in progress, will be same as 2021.
 * No TECH stream releases are tested, but feel free to report issues you find, and they might get fixed.
-  However, ensuring correct functionality on 2021 is a higher priority right now.
 
 ## Overview
 
