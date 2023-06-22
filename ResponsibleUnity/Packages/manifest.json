@@ -4,7 +4,7 @@
     "com.beatwaves.responsible.tests": "file:../../src/Responsible.Tests",
     "com.unity.ide.rider": "3.0.24",
     "com.unity.test-framework": "1.3.7",
-    "com.unity.testtools.codecoverage": "1.2.2",
+    "com.unity.testtools.codecoverage": "1.2.4",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
