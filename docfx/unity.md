@@ -3,9 +3,10 @@
 ## Supported Unity versions
 
 Responsible aims to support all current LTS Version:
-* 2021, 2022: Fully supported. CI is periodically updated to run on the latest releases,
+* 2021, 2022 LTS: Fully supported. CI is periodically updated to run on the latest releases,
   but might lag behind a bit. Please report any issues you find.
 * No TECH stream releases are tested, but feel free to report issues you find, and they might get fixed.
+* 2019, 2020: Worked in the past, official support dropped in 4.5.0
 
 ## Overview
 
