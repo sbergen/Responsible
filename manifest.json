@@ -320,7 +320,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.RepetitionLimitExceededException.html",
-          "hash": "fk/ehMyp+ef/r4sOgFmh3w=="
+          "hash": "PxB6PVkXJs1upM52k96/mg=="
         }
       },
       "is_incremental": false,
@@ -416,7 +416,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestFailureException.html",
-          "hash": "l2B+ED/fSZpQ8jOHTS4XaA=="
+          "hash": "gqRtUOy7pkIBhKSobpsEpA=="
         }
       },
       "is_incremental": false,
@@ -512,7 +512,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Unity.UnhandledLogMessageException.html",
-          "hash": "hajlcL1Y2wRqDaBst9bCcA=="
+          "hash": "3WlsVI8riKnJi6nZ3QB1Ug=="
         }
       },
       "is_incremental": false,
