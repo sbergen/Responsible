@@ -62,8 +62,8 @@ jobs:
         with:
           flags: Unity${{ matrix.unityVersion }}
           files: "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0000.xml,\
-            "${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0001.xml,\
-            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml",\
+            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/EditMode/TestCoverageResults_0001.xml,\
+            ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0000.xml,\
             ${{ steps.tests.outputs.coveragePath }}/ResponsibleUnity-opencov/PlayMode/TestCoverageResults_0001.xml"
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
