@@ -96,6 +96,11 @@ and thus not under semantic versioning.</p>
 <ul>
 <li>Added support for Unity 2022</li>
 </ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix path trimming (start from &quot;Assets&quot;) in failure messages on Windows</li>
+<li>Internal tests: Fix some tests that didn't work properly depending on platform and/or locale</li>
+</ul>
 <h3 id="removed">Removed</h3>
 <ul>
 <li>Dropped support for Unity 2019 and 2020</li>
@@ -112,7 +117,7 @@ and thus not under semantic versioning.</p>
 <li>Improve exception message handling by not truncating long messages (I don't remember why I did this originally)</li>
 <li>Add a bit of padding to the Unity operation status window</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Fix some state strings on Windows, where <code>Environment.NewLine</code> is more than one character.</li>
 <li>Fix some cancellation issues with Unity 2021 (where cancellation might happen asynchronously later in the same frame)</li>
@@ -131,13 +136,13 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <ul>
 <li>Allow passing a list of exceptions to be rethrown, instead of wrapped in <code>TestFailureException</code>. This allows e.g. NUnit's <code>IgnoreException</code> to function properly.</li>
 </ul>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Long descriptions in the operation state window no longer cause tests to fail because Unity spits out an error about too many vertices in a Label.</li>
 <li>Make NUnit's <code>Assert.Ignore</code>, <code>Assert.Inconclusive</code>, and <code>Assert.Pass</code> work properly on Unity (see Added section above for .NET).</li>
 </ul>
 <h2 id="412---2021-07-17"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.1.2">4.1.2</a> - 2021-07-17</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><code>TestInstructionExecutor.Dispose</code> no longer throws an exception if called twice.</li>
 <li><code>Sequence</code> will no longer include duplicate entires in the test instruction stack section of error messages.</li>
@@ -149,7 +154,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Unity: Intercept errors logged from non-Unity threads also.</li>
 </ul>
 <h2 id="411---2021-05-20"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.1.1">4.1.1</a> - 2021-05-20</h2>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>Fix error handling in <code>ContinueWith</code> and <code>AndThen</code> to publish the correct exception. This was previously causing an internal exception to be published instead under certain conditions.</li>
 </ul>
@@ -158,7 +163,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Change responder state string from <code>EXPECTED WITHIN</code> to <code>CONDITION EXPECTED WITHIN</code> to better reflect what it actually does.</li>
 </ul>
 <h2 id="410---2021-05-13"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.1.0">4.1.0</a> - 2021-05-13</h2>
-<h3 id="fixed-4">Fixed</h3>
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li>Fix description of <code>Return</code>.</li>
 <li>Handle source paths not under project gracefully when executing in Unity Editor.</li>
@@ -193,7 +198,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Support for adding extra global context into failure messages.</li>
 </ul>
 <h2 id="301---2021-03-14"><a href="https://github.com/sbergen/Responsible/releases/tag/v3.0.1">3.0.1</a> - 2021-03-14</h2>
-<h3 id="fixed-5">Fixed</h3>
+<h3 id="fixed-6">Fixed</h3>
 <ul>
 <li>Fix inclusion of documentation in releases, no changes in the library itself.</li>
 </ul>
@@ -220,7 +225,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Splits <code>WaitForCoroutine</code> to two versions: <code>WaitForCoroutine</code> and <code>WaitForCoroutineMethod</code>.</li>
 </ul>
 <h2 id="120---2020-12-02"><a href="https://github.com/sbergen/Responsible/releases/tag/v1.2.0">1.2.0</a> - 2020-12-02</h2>
-<h3 id="fixed-6">Fixed</h3>
+<h3 id="fixed-7">Fixed</h3>
 <ul>
 <li>Fix source context of <code>Responsible.Do</code> (<code>&quot;DoAndReturn&quot;</code> -&gt; <code>&quot;Do&quot;</code>)</li>
 <li>Show canceled wait conditions as canceled instead of running in output. A wait may get canceled e.g. as part of an optional test responder.</li>
@@ -237,7 +242,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Allows executing <code>ITestOperationState</code> using <code>ToYieldInstruction/Observable</code>, allowing you to log the state while executing it.</li>
 <li>Sample project with sample tests.</li>
 </ul>
-<h3 id="fixed-7">Fixed</h3>
+<h3 id="fixed-8">Fixed</h3>
 <ul>
 <li>Add context to output when <code>ExpectWithinSeconds</code> times out.</li>
 <li>Fix referential transparency of <code>WaitForConstraint</code>: <code>IResolveConstraint.Resolve()</code> can mutate the condition and produce weird results when called multiple times.</li>
