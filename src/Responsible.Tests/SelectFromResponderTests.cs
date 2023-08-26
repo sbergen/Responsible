@@ -70,8 +70,7 @@ namespace Responsible.Tests
 
 			StateAssert.StringContainsInOrder(error.Message)
 				.Failed("SELECT")
-				.FailureDetails()
-				.Nowhere(ConditionResponder.WaitForCompletionDescription);
+				.FailureDetails();
 		}
 
 		[Test]

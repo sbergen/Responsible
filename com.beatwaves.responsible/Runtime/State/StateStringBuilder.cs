@@ -167,25 +167,18 @@ namespace Responsible.State
 		{
 			var status = primaryState.Status;
 			var statusLine = status.MakeStatusLine(description);
-			if (status is TestOperationStatus.Completed ||
-				status is TestOperationStatus.NotExecuted)
-			{
-				this.Add(statusLine);
-			}
-			else
-			{
-				this.AddIndented(statusLine, b => b
-					.AddOptional("WAIT FOR", wait)
-					.AddOptional("THEN RESPOND WITH", instruction));
 
-				// Add primary state failure details, if we didn't have failure details yet
-				var failureIncluded =
-					wait.Status is TestOperationStatus.Failed ||
-					instruction?.Status is TestOperationStatus.Failed;
-				if (!failureIncluded)
-				{
-					this.AddFailureDetails(status);
-				}
+			this.AddIndented(statusLine, b => b
+				.AddOptional("WAIT FOR", wait)
+				.AddOptional("THEN RESPOND WITH", instruction));
+
+			// Add primary state failure details, if we didn't have failure details yet
+			var failureIncluded =
+				wait.Status is TestOperationStatus.Failed ||
+				instruction?.Status is TestOperationStatus.Failed;
+			if (!failureIncluded)
+			{
+				this.AddFailureDetails(status);
 			}
 		}
 

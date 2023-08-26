@@ -40,12 +40,6 @@ namespace Responsible.Tests.Utilities
 		// An empty line requires whitespace to work nicely with Unity
 		public AssertStateString EmptyLine() => this.DetailsRegex(@"\n\s+\n");
 
-		public AssertStateString Nowhere(string details)
-		{
-			Assert.That(this.str, Does.Not.Contain(details));
-			return this;
-		}
-
 		public AssertStateString Details(string details)
 		{
 			var index = this.str.Substring(this.currentIndex).IndexOf(details, StringComparison.Ordinal);
