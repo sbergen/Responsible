@@ -67,7 +67,7 @@ namespace Responsible.Tests
 				.ToString();
 
 			StateAssert.StringContainsInOrder(description)
-				.Details("1.00 s")
+				.Details($"{1d:0.00} s")
 				.NotStarted("First")
 				.NotStarted("Second");
 		}
@@ -81,7 +81,7 @@ namespace Responsible.Tests
 				.ToString();
 
 			StateAssert.StringContainsInOrder(description)
-				.NotStarted("Only EXPECTED WITHIN 1.00 s");
+				.NotStarted($"Only EXPECTED WITHIN {1d:0.00} s");
 		}
 
 		[Test]

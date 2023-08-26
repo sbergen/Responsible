@@ -127,7 +127,7 @@ namespace Responsible.Tests
 				.CreateState();
 
 			StateAssert.StringContainsInOrder(state.ToString())
-				.NotStarted("EXPECT WITHIN 1.00 s ALL OF")
+				.NotStarted($"EXPECT WITHIN {1d:0.00} s ALL OF")
 				.NotStarted("Respond")
 				.NotStarted("Respond");
 		}

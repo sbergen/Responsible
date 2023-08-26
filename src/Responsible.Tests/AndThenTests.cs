@@ -127,7 +127,7 @@ namespace Responsible.Tests
 			Assert.AreSame(expectedException, exception.InnerException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
-				.Failed("...")
+				.Failed("throw")
 				.Details("Test exception");
 		}
 	}
