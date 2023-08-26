@@ -17,7 +17,7 @@ namespace Responsible.UnityTests
 			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("Throw")
-				.Details(@"\(at Assets/UnityTests/SourcePrettifyTests\.cs\:");
+				.Details("(at Assets/UnityTests/SourcePrettifyTests.cs:");
 		}
 
 		[Test]
@@ -32,7 +32,7 @@ namespace Responsible.UnityTests
 			var exception = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("Throw")
-				.Details(@"\(at /foo/bar\.cs\:");
+				.Details("(at /foo/bar.cs:");
 		}
 	}
 }

@@ -33,7 +33,7 @@ namespace Responsible.Tests
 		public void WaitForFrames_ContainsCorrectStatusInDescription()
 		{
 			var state = WaitForFrames(0).CreateState();
-			var description = @"WAIT FOR 0 FRAME\(S\)";
+			var description = @"WAIT FOR 0 FRAME(S)";
 			StateAssert.StringContainsInOrder(state.ToString()).NotStarted(description);
 			state.ToTask(this.Executor);
 			StateAssert.StringContainsInOrder(state.ToString()).Waiting(description);

@@ -25,9 +25,15 @@ namespace Responsible.Context
 #if UNITY_EDITOR
 			var dataPath = UnityEngine.Application.dataPath;
 			var projectPath = dataPath.Substring(0, dataPath.Length - "Assets".Length);
-			FormatSourcePath = path => path.StartsWith(projectPath)
-				? path.Substring(projectPath.Length)
-				: path;
+
+			FormatSourcePath = path =>
+			{
+				// Compensate for how Unity mangles the path separators
+				var pathWithForwardSlashes = path.Replace("\\", "/");
+				return pathWithForwardSlashes.StartsWith(projectPath)
+					? pathWithForwardSlashes.Substring(projectPath.Length)
+					: path;
+			};
 #else
 			FormatSourcePath = path => path;
 #endif

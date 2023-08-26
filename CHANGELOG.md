@@ -14,6 +14,10 @@ and thus not under semantic versioning.
 ### Added
 - Added support for Unity 2022
 
+### Fixed
+- Fix path trimming (start from "Assets") in failure messages on Windows
+- Internal tests: Fix some tests that didn't work properly depending on platform and/or locale
+
 ### Removed
 - Dropped support for Unity 2019 and 2020
 

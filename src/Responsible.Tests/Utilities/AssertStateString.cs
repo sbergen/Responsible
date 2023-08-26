@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -37,7 +38,7 @@ namespace Responsible.Tests.Utilities
 		public AssertStateString FailureDetails() => this.Details("Failed with:");
 
 		// An empty line requires whitespace to work nicely with Unity
-		public AssertStateString EmptyLine() => this.Details(@"\n\s+\n");
+		public AssertStateString EmptyLine() => this.DetailsRegex(@"\n\s+\n");
 
 		public AssertStateString Nowhere(string details)
 		{
@@ -45,20 +46,27 @@ namespace Responsible.Tests.Utilities
 			return this;
 		}
 
-		public AssertStateString Details([RegexPattern] string regex)
+		public AssertStateString Details(string details)
+		{
+			var index = this.str.Substring(this.currentIndex).IndexOf(details, StringComparison.Ordinal);
+
+			if (index < 0)
+			{
+				FailWithNoMatch(details);
+			}
+
+			this.assertedStrings.Add(details);
+			this.currentIndex += index + details.Length;
+			return this;
+		}
+
+		public AssertStateString DetailsRegex([RegexPattern] string regex)
 		{
 			var match = Regex.Match(this.str.Substring(this.currentIndex), regex);
 
 			if (!match.Success)
 			{
-				var alreadyAsserted = string.Join("\n  ", this.assertedStrings);
-				Assert.Fail(
-$@"Expected to find
-  {regex}
-After consuming
-  {alreadyAsserted}
-In:
-{this.str}");
+				FailWithNoMatch(regex);
 			}
 
 			this.assertedStrings.Add(regex);
@@ -66,7 +74,19 @@ In:
 			return this;
 		}
 
+		private void FailWithNoMatch(string toMatch)
+		{
+			var alreadyAsserted = string.Join("\n  ", this.assertedStrings);
+				Assert.Fail(
+$@"Expected to find
+  {toMatch}
+After consuming
+  {alreadyAsserted}
+In:
+{this.str}");
+		}
+
 		private AssertStateString DetailsWithMarker(char marker, string description) =>
-			this.Details($@"\[{marker}\] {description}");
+			this.Details($@"[{marker}] {description}");
 	}
 }

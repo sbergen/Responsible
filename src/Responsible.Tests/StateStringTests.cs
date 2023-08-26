@@ -88,8 +88,8 @@ namespace Responsible.Tests
 				b => b.AddDetails("first line\nsecond line"));
 
 			Assert.AreEqual(
-				builder.ToString(),
-				"Description:\n  first line\n  second line");
+				"Description:\n  first line\n  second line",
+				builder.ToString().Replace("\r\n", "\n"));
 		}
 
 		[AssertionMethod]

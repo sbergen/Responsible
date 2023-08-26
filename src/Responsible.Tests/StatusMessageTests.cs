@@ -6,7 +6,6 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
-	[SetCulture("en-US")]
 	public class StatusMessageTests : ResponsibleTestBase
 	{
 		[Test]
@@ -20,7 +19,7 @@ namespace Responsible.Tests
 
 			StateAssert.StringContainsInOrder(state.ToString())
 				.Waiting("Never")
-				.Details(@"Started 0\.00 s ≈ 0 frames ago");
+				.Details($@"Started {0d:0.00} s ≈ 0 frames ago");
 
 			this.AdvanceDefaultFrame();
 			StateAssert.StringContainsInOrder(state.ToString())
