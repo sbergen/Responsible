@@ -96,6 +96,11 @@ and thus not under semantic versioning.</p>
 <ul>
 <li>Added support for Unity 2022</li>
 </ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Never collapse responders in state strings (even when completed or not executed).
+More info is better here.</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
 <ul>
 <li>Fix path trimming (start from &quot;Assets&quot;) in failure messages on Windows</li>
@@ -111,7 +116,7 @@ and thus not under semantic versioning.</p>
 <li><code>RunAsLoop</code> and <code>RunAsSimulatedUpdateLoop</code> operators, for running test instructions synchronously as a loop with a tick callback.</li>
 <li><code>Repeatedly</code> operator, which turns a test responder into an optional responder that executes repeatedly.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Include hint in state strings about being able to provide extra context to wait conditions</li>
 <li>Improve exception message handling by not truncating long messages (I don't remember why I did this originally)</li>
@@ -147,7 +152,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li><code>TestInstructionExecutor.Dispose</code> no longer throws an exception if called twice.</li>
 <li><code>Sequence</code> will no longer include duplicate entires in the test instruction stack section of error messages.</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Use <code>X s ≈ Y frames</code> instead of <code>X s and Y frames</code> in output to clarify the meaning.</li>
 <li>Add stack trace to <code>UnhandledLogMessageException.Message</code></li>
@@ -158,7 +163,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <ul>
 <li>Fix error handling in <code>ContinueWith</code> and <code>AndThen</code> to publish the correct exception. This was previously causing an internal exception to be published instead under certain conditions.</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Change responder state string from <code>EXPECTED WITHIN</code> to <code>CONDITION EXPECTED WITHIN</code> to better reflect what it actually does.</li>
 </ul>
@@ -169,14 +174,14 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Handle source paths not under project gracefully when executing in Unity Editor.</li>
 <li>Fix state string if <code>ContinueWith</code> or <code>AndThen</code> continuation function throws an exception.</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Handle aborting tests better in the Unity state window.</li>
 <li>Simplify unnecessarily complex timeout time formatting.</li>
 <li>Allow passing <code>IGlobalContextProvider</code> to <code>UnityTestInstructionExecutor</code>.</li>
 </ul>
 <h2 id="400---2021-03-28"><a href="https://github.com/sbergen/Responsible/releases/tag/v4.0.0">4.0.0</a> - 2021-03-28</h2>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Removed the UniRx dependency, now uses <code>async/await</code> internally instead.</li>
 <li>Unity-specific functionality was moved to work through abstractions.</li>
@@ -208,7 +213,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>HTML documentation generated with DocFX</li>
 <li>Test operation status window in Unity Editor, under <code>Window/Responsible/Operation State</code></li>
 </ul>
-<h3 id="changed-5">Changed</h3>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Some parameters renamed for better documentation.</li>
 </ul>
@@ -217,7 +222,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Classes and functionality which was intended to be internal were marked as internal.</li>
 </ul>
 <h2 id="200---2021-02-26"><a href="https://github.com/sbergen/Responsible/releases/tag/v2.0.0">2.0.0</a> - 2021-02-26</h2>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
 <li>Simplifies the public API by reducing the number of overloads used. This should make auto-completion and compiler errors more friendly.</li>
 <li>Removes <code>WaitForCondition</code>, <code>WaitForConditionOn</code> and <code>WaitForCoroutine</code> overrides, which make a result using a selector: <code>Select</code> can be used instead.</li>
@@ -230,7 +235,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Fix source context of <code>Responsible.Do</code> (<code>&quot;DoAndReturn&quot;</code> -&gt; <code>&quot;Do&quot;</code>)</li>
 <li>Show canceled wait conditions as canceled instead of running in output. A wait may get canceled e.g. as part of an optional test responder.</li>
 </ul>
-<h3 id="changed-7">Changed</h3>
+<h3 id="changed-8">Changed</h3>
 <ul>
 <li>Simplify output when <code>ExpectWithinSecond</code> is used, by showing <code>EXPECTED WITHIN ...</code> on the same line as the expected operation, instead of <code>EXPECT WITHIN ...</code> with the operation nested below it. This is only applicable to simple wait conditions and responders.</li>
 </ul>
@@ -247,7 +252,7 @@ Feel free to try it out by installing with <code>dotnet tool install -g Beatwave
 <li>Add context to output when <code>ExpectWithinSeconds</code> times out.</li>
 <li>Fix referential transparency of <code>WaitForConstraint</code>: <code>IResolveConstraint.Resolve()</code> can mutate the condition and produce weird results when called multiple times.</li>
 </ul>
-<h3 id="changed-8">Changed</h3>
+<h3 id="changed-9">Changed</h3>
 <ul>
 <li>Makes <code>...Seconds</code> operators use <code>double</code> instead of <code>int</code> (<em>practically</em> backwards compatible).</li>
 <li>Improve documentation, especially about getting started.</li>
