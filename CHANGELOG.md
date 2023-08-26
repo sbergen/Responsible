@@ -14,6 +14,10 @@ and thus not under semantic versioning.
 ### Added
 - Added support for Unity 2022
 
+### Changed
+- Never collapse responders in state strings (even when completed or not executed).
+  More info is better here. 
+
 ### Fixed
 - Fix path trimming (start from "Assets") in failure messages on Windows
 - Internal tests: Fix some tests that didn't work properly depending on platform and/or locale
