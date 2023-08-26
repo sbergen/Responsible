@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -47,7 +48,7 @@ namespace Responsible.Tests.Utilities
 
 		public AssertStateString Details(string details)
 		{
-			var index = this.str.Substring(this.currentIndex).IndexOf(details);
+			var index = this.str.Substring(this.currentIndex).IndexOf(details, StringComparison.Ordinal);
 
 			if (index < 0)
 			{
