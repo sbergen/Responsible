@@ -33,7 +33,7 @@ namespace Responsible.Bdd
 			new BddStep(instruction.GroupedAs($"Given {description}"));
 
 		/// <summary>
-		/// Creates a step that describes additional after a Given, When, or Then.
+		/// Creates a step that describes additional steps after a Given, When, or Then.
 		/// </summary>
 		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
 		public static IBddStep And(
@@ -42,7 +42,7 @@ namespace Responsible.Bdd
 			new BddStep(instruction.GroupedAs($"And {description}"));
 
 		/// <summary>
-		/// Creates a step that describes additional after a Given, When, or Then.
+		/// Creates a step that describes additional steps after a Given, When, or Then.
 		/// </summary>
 		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
 		public static IBddStep But(
@@ -52,6 +52,8 @@ namespace Responsible.Bdd
 
 		/// <summary>
 		/// Creates a step that describes an event or action in a test.
+		/// This can be a person interacting with the system,
+		/// or it can be an event triggered by another system.
 		/// </summary>
 		/// <inheritdoc cref="Docs.Inherit.BddKeyword"/>
 		public static IBddStep When(
