@@ -16,7 +16,7 @@ jobs:
           - 2022.3.2f1
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -93,7 +93,7 @@ jobs:
           fail-fast: false
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
@@ -154,7 +154,7 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
