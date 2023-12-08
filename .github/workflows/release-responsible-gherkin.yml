@@ -24,7 +24,7 @@ jobs:
         run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.tag-version.outputs.version }}
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6'
 
