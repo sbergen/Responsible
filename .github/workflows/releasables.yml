@@ -21,7 +21,7 @@ jobs:
         run: dotnet pack src --output nupkg
 
       - name: Archive nupkg
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nupkg
           path: nupkg/*
@@ -52,7 +52,7 @@ jobs:
           customParameters: -disable-assembly-updater
 
       - name: Archive docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Docs
           path: docfx/docs_site
