@@ -47,11 +47,11 @@ the real power of Responsible comes from its composable operators.
 To read more about the design principles behind Responsible,
 see the [Design Documentation](design.md).
 
-## Experimental: BDD-style tests
+## BDD-style tests
 
 If you like to write your tests in BDD-style,
-check out the [experimental features](xref:Responsible.Bdd)
-which form an embedded DSL to do this with Responsible!
+check out the [Responsible.Bdd namespace](xref:Responsible.Bdd)
+which forms an embedded DSL to do this with Responsible!
 
 ## Reactive Programming?
 
