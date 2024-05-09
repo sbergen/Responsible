@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Responsible.Context;
 using Responsible.TestInstructions;
+using Responsible.TestWaitConditions;
 using Responsible.Utilities;
 
 namespace Responsible
@@ -194,6 +195,35 @@ namespace Responsible
 			this ITestInstruction<T> instruction,
 			string description)
 			=> new GroupedAsInstruction<T>(description, instruction);
+
+
+		/// <summary>
+		/// Repeats the <paramref name="instruction"/> until <paramref name="condition"/> is completed. 
+		/// </summary>
+		/// <remarks>
+		/// <paramref name="condition"/> is only checked once per frame,
+		/// so make sure <paramref name="instruction"/> does not complete synchronously!
+		/// </remarks>
+		/// <typeparam name="TWait">Return type of the wait condition.</typeparam>
+		/// <typeparam name="TInstruction">Return type of the test instruction.</typeparam>
+		/// <param name="instruction">Instruction to repeat.</param>
+		/// <param name="condition">Condition to repeat until.</param>
+		/// <param name="maximumRepeatCount">Maximum repeat count used to prevent an infinite loop.</param>		
+		/// <returns>A wait condition that completes with the result of <paramref name="condition"/>.</returns>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
+		[Pure]
+		public static ITestWaitCondition<TWait> RepeatUntil<TWait, TInstruction>(
+			this ITestInstruction<TInstruction> instruction,
+			ITestWaitCondition<TWait> condition,
+			int maximumRepeatCount,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new RepeatUntilCondition<TWait, TInstruction>(
+				instruction,
+				condition,
+				maximumRepeatCount,
+				new SourceContext(nameof(RepeatUntil), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Synchronously executes a test instruction by simulating an update loop at the given frame rate.
