@@ -5,9 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Changes in state strings or Unity Editor utilities are **not** considered breaking changes.
-
-Everything in the `Responsible.Bdd` namespace is currently considered experimental,
-and thus not under semantic versioning.
+Experimental features are also **not** under semantic versioning.
 
 ## [Unreleased]
 
@@ -17,6 +15,7 @@ and thus not under semantic versioning.
 ### Changed
 - Never collapse responders in state strings (even when completed or not executed).
   More info is better here. 
+- `Responsible.Bdd` no longer considered experimental.
 
 ### Fixed
 - Fix path trimming (start from "Assets") in failure messages on Windows

@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 namespace Responsible.Bdd
 {
 	/// <summary>
-	/// Experimental: Helper class to build scenarios with proper source context.
+	/// Helper class to build scenarios with proper source context.
 	/// </summary>
 	public sealed class ScenarioBuilder
 	{
