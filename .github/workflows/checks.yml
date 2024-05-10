@@ -32,7 +32,7 @@ jobs:
           script: return process.env['UNITY_VERSION'].substr(0, 4);
 
       - name: Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ResponsibleUnity/Library
           key: ${{ steps.major-unity-version.outputs.result }}-Library-${{ hashFiles('com.beatwaves.responsible/**', 'ResponsibleUnity/**', 'src/Responsible.Tests/**') }}
