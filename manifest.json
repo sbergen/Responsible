@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "CHANGELOG.html",
-          "hash": "pnnLvoDUSVJMyM5ASmVM/g=="
+          "hash": "6is1Lk8UPSHIF+v4rh6AwA=="
         }
       },
       "is_incremental": false,
@@ -80,7 +80,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.Bdd.IBddStep.html",
-          "hash": "Ph+ChNmd23xBFtxY42cVPA=="
+          "hash": "4XP65VAi7DECwzmLVCzf/Q=="
         }
       },
       "is_incremental": false,
@@ -236,7 +236,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.ITestInstruction-1.html",
-          "hash": "cNFOtjizfScm+tN1t4Au0Q=="
+          "hash": "/nJxfsLuutO50eCKepAyvg=="
         }
       },
       "is_incremental": false,
@@ -428,7 +428,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Responsible.TestInstruction.html",
-          "hash": "8ObNcw5/GWO1Lx0WYgqmEg=="
+          "hash": "TekjgKFnKCMDNjH14gAVCQ=="
         }
       },
       "is_incremental": false,

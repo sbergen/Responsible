@@ -968,6 +968,22 @@ references:
   fullName.vb: Responsible.TestInstruction.GroupedAs(Of T)(Responsible.ITestInstruction(Of T), System.String)
   nameWithType: TestInstruction.GroupedAs<T>(ITestInstruction<T>, String)
   nameWithType.vb: TestInstruction.GroupedAs(Of T)(ITestInstruction(Of T), String)
+- uid: Responsible.TestInstruction.RepeatUntil*
+  name: RepeatUntil
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RepeatUntil_
+  commentId: Overload:Responsible.TestInstruction.RepeatUntil
+  isSpec: "True"
+  fullName: Responsible.TestInstruction.RepeatUntil
+  nameWithType: TestInstruction.RepeatUntil
+- uid: Responsible.TestInstruction.RepeatUntil``2(Responsible.ITestInstruction{``1},Responsible.ITestWaitCondition{``0},System.Int32,System.String,System.String,System.Int32)
+  name: RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, Int32, String, String, Int32)
+  href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RepeatUntil__2_Responsible_ITestInstruction___1__Responsible_ITestWaitCondition___0__System_Int32_System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestInstruction.RepeatUntil``2(Responsible.ITestInstruction{``1},Responsible.ITestWaitCondition{``0},System.Int32,System.String,System.String,System.Int32)
+  name.vb: RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Int32, String, String, Int32)
+  fullName: Responsible.TestInstruction.RepeatUntil<TWait, TInstruction>(Responsible.ITestInstruction<TInstruction>, Responsible.ITestWaitCondition<TWait>, System.Int32, System.String, System.String, System.Int32)
+  fullName.vb: Responsible.TestInstruction.RepeatUntil(Of TWait, TInstruction)(Responsible.ITestInstruction(Of TInstruction), Responsible.ITestWaitCondition(Of TWait), System.Int32, System.String, System.String, System.Int32)
+  nameWithType: TestInstruction.RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, Int32, String, String, Int32)
+  nameWithType.vb: TestInstruction.RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Int32, String, String, Int32)
 - uid: Responsible.TestInstruction.RunAsLoop*
   name: RunAsLoop
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop_
