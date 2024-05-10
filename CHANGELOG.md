@@ -11,6 +11,7 @@ Experimental features are also **not** under semantic versioning.
 
 ### Added
 - Added support for Unity 2022
+- Added `RepeatUntil` extension on test instruction
 
 ### Changed
 - Never collapse responders in state strings (even when completed or not executed).
