@@ -14,6 +14,7 @@ Additionally, in [Unity](https://unity.com/):
 * Observe test execution progress while they are running in the Editor
 * Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
+[Godot](https://godotengine.org/) now also has [experimental support](godot.md)!
 
 ## Usage and Output Example
 
