@@ -14,6 +14,8 @@ Additionally, in [Unity](https://unity.com/):
 * Observe test execution progress while they are running in the Editor
 * Stop worrying about a specific long-standing [Unity bug](https://issuetracker.unity3d.com/issues/unitytests-do-not-fail-when-nested-coroutines-throws-an-exception)
 
+Responsible now also has [experimental support](https://www.beatwaves.net/Responsible/godot.html) for [Godot](https://godotengine.org/)!
+
 ## Documentation
 
 Extensive documentation is available at the
@@ -21,6 +23,7 @@ Extensive documentation is available at the
 * [Overview](https://sbergen.github.io/Responsible/index.html)
 * [.NET Documentation](https://sbergen.github.io/Responsible/dotnet.html)
 * [Unity Documentation](https://sbergen.github.io/Responsible/unity.html)
+* [Experimental Godot support](https://www.beatwaves.net/Responsible/godot.html)
 * [Design Documentation](https://sbergen.github.io/Responsible/design.html)
 * [API Reference](https://sbergen.github.io/Responsible/api/Responsible.html)
 * [Changelog](https://sbergen.github.io/Responsible/CHANGELOG.html)
