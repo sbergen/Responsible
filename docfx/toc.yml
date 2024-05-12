@@ -4,6 +4,8 @@
   href: dotnet.md
 - name: Unity
   href: unity.md
+- name: Godot
+  href: godot.md
 - name: Design Overview
   href: design.md
 - name: API Documentation
