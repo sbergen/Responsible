@@ -2,7 +2,7 @@
 
 [Godot 4](https://godotengine.org/) support (C# only)
 in Responsible is currently **experimental**
-and currently requires a bit of manual setup.
+and requires a bit of manual setup.
 As I don't use Godot myself,
 I am not confident in publishing a package for Godot support
 until I've received some feedback from more experienced Godot developers.
