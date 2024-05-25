@@ -59,7 +59,7 @@ namespace Responsible.EditorSetup
 		        (returnCode, stdout) = RunCommand(
 			        workingDir: DocFxDir,
 			        command: "docfx",
-			        Quote(DocFxJsonPath), "--warningsAsErrors", "--force");
+			        Quote(DocFxJsonPath), "--warningsAsErrors");
 
 		        if (returnCode != 0)
 		        {

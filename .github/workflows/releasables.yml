@@ -48,7 +48,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           projectPath: ResponsibleUnity
-          customImage: thesbergen/unityci-docfx:2022
+          customImage: thesbergen/unityci-docfx:2022-dotnet
           targetPlatform: StandaloneLinux64
           buildMethod: Responsible.EditorSetup.ContinuousIntegration.BuildDocumentation
           customParameters: -disable-assembly-updater
