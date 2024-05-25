@@ -100,7 +100,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6'
+          dotnet-version: '8'
 
       - uses: testspace-com/setup-testspace@v1
         with:
@@ -161,7 +161,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6'
+          dotnet-version: '8'
 
       - name: dotnet restore
         run: |

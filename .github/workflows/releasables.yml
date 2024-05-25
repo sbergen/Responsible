@@ -15,7 +15,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6'
+          dotnet-version: '8'
 
       - name: Build nupkg
         run: dotnet pack src --output nupkg
@@ -140,7 +140,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6'
+          dotnet-version: '8'
 
       - name: Download Docs
         uses: actions/download-artifact@v4
