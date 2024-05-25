@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 // ReSharper disable AccessToModifiedClosure
 
@@ -58,6 +59,43 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			Assert.NotNull(await AwaitFailureExceptionForUnity(task));
+		}
+
+		[Test]
+		public async Task Status_IsWaiting_WhenWaitHasCompletedButInstructionNotStarted()
+		{
+			var state = ImmediateTrue
+				.ThenRespondWith("Responder", _ => WaitForSeconds(1))
+				.CreateState();
+
+			// This is lower-level than I'd want,
+			// but still the most direct way to start the instruction.
+			var instructionState = await state.ToTask(this.Executor);
+			_ = instructionState.ToTask(this.Executor); // Start, but don't wait
+
+			StateAssert.StringContainsInOrder(state.ToString())
+				.Waiting("Responder")
+				.Completed("True")
+				.Waiting("WAIT FOR");
+		}
+
+		[Test]
+		public void Status_IsWaiting_WhenWaitHasNotCompleted()
+		{
+			var state = Never
+				.ThenRespondWith(
+					"Responder",
+					_ => Do("Specific failure", () => throw new Exception()))
+				.CreateState();
+
+			state.ToTask(this.Executor); // Start execution
+
+			var stateString = state.ToString();
+			StateAssert.StringContainsInOrder(stateString)
+				.Waiting("Responder")
+				.Waiting("Never");
+
+			StringAssert.DoesNotContain("Specific failure", stateString);
 		}
 
 		private static ITestResponder<object> MakeObjectResponder<TWait>(

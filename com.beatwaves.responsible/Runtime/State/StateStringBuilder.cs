@@ -93,7 +93,7 @@ namespace Responsible.State
 
 		internal void AddResponder(IBasicResponderState responder) => this.AddResponder(
 			responder.Description,
-			responder.InstructionState ?? responder,
+			primaryState: responder.InstructionState ?? responder,
 			responder.WaitState,
 			responder.InstructionState);
 

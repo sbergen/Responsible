@@ -28,6 +28,22 @@ namespace Responsible.Tests
 		}
 
 		[Test]
+		public void BlankLines_ContainASpace_ForUnity()
+		{
+			var state = Responsibly
+				.Do("Fail", () => throw new Exception())
+				.CreateState();
+
+			state.ToTask(this.Executor); // Complete task
+
+			var lines = state.ToString().Split(Environment.NewLine);
+			CollectionAssert.Contains(
+				lines,
+				" ",
+				"Blank lines should contain a space, so that Unity does not strip it");
+		}
+
+		[Test]
 		public void ExtraContext_IsIncluded_WhenProvidedAndApplicable([Values] bool run)
 		{
 			var details = "details that should be included";
