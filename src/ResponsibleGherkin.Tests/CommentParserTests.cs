@@ -26,11 +26,13 @@ public class CommentParserTests
 	}
 
 
-	[Fact]
-	public void Parse_ThrowsError_WhenDuplicateValue()
+	[Theory]
+	[InlineData("# responsible-flavor: xunit", "# responsible-flavor: NUnit")]
+	[InlineData("# responsible-base-class: C1", "# responsible-base-class: C1")]
+	[InlineData("# responsible-executor: E1", "# responsible-executor: E2")]
+	public void Parse_ThrowsError_WhenDuplicateValue(
+		string comment1, string comment2)
 	{
-		const string comment1 = "# responsible-flavor: xunit";
-		const string comment2 = "# responsible-flavor: NUnit";
 		var parse = () => ParseLines(comment1, comment2);
 		parse.Should()
 			.Throw<InvalidConfigurationException>()
