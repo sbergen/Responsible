@@ -14,7 +14,7 @@ namespace Responsible.State
 		[CanBeNull] private ITestOperationState<TSecond> executionState;
 
 		public ContinuationState State => this.executionState != null
-			? (ContinuationState)new ContinuationState.Available(this.executionState)
+			? new ContinuationState.Available(this.executionState)
 			: new ContinuationState.NotAvailable(this.creationStatus);
 
 		public Continuation(Func<TFirst, ITestOperationState<TSecond>> makeContinuation)
