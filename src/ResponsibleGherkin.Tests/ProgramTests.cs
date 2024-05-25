@@ -10,7 +10,6 @@ using static VerifyXunit.Verifier;
 
 namespace ResponsibleGherkin.Tests;
 
-[UsesVerify]
 public class ProgramTests
 {
 	private readonly MockFileSystem fileSystem = new();

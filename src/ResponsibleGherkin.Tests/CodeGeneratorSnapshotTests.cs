@@ -7,7 +7,6 @@ using static ResponsibleGherkin.Tests.TestData;
 
 namespace ResponsibleGherkin.Tests;
 
-[UsesVerify]
 public class CodeGeneratorSnapshotTests
 {
 	[Theory]

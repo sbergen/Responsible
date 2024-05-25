@@ -19,15 +19,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="editorconfig" Version="0.12.2" />
+      <PackageReference Include="editorconfig" Version="0.15.0" />
       <PackageReference Include="Gherkin" Version="23.0.1" />
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" />
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
-      <PackageReference Include="System.IO.Abstractions" Version="16.1.25" />
+      <PackageReference Include="System.IO.Abstractions" Version="21.0.2" />
     </ItemGroup>
 
 </Project>
