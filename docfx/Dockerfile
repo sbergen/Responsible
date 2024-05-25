@@ -1,4 +1,4 @@
-FROM unityci/editor:ubuntu-2019.4.14f1-linux-il2cpp-0.10.0 as builder
+FROM unityci/editor:ubuntu-2022.3.29f1-base-3 as builder
 RUN apt-get -q update \
     && apt-get -q install -y --no-install-recommends --allow-downgrades \
     unzip
@@ -7,7 +7,7 @@ RUN mkdir -p /docfx \
     && unzip /docfx/docfx.zip -d /docfx/ \
     && rm /docfx/docfx.zip
 
-FROM unityci/editor:ubuntu-2019.4.14f1-linux-il2cpp-0.10.0
+FROM unityci/editor:ubuntu-2022.3.29f1-base-3
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -q update \
     && apt-get install -y --no-install-recommends gnupg ca-certificates \
