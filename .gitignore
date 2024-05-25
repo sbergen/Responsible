@@ -1,5 +1,6 @@
 *.user
 .idea
+.vs
 .bin
 .obj
 *.received.txt
