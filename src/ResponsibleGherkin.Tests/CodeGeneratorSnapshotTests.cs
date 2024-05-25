@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using ResponsibleGherkin.Generators;
-using VerifyXunit;
 using Xunit;
 using static VerifyXunit.Verifier;
 using static ResponsibleGherkin.Tests.TestData;
