@@ -1,5 +1,4 @@
 {
-  "homepages": [],
   "source_base_path": "/github/workspace/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -8,11 +7,9 @@
       "source_relative_path": "../CHANGELOG.md",
       "output": {
         ".html": {
-          "relative_path": "CHANGELOG.html",
-          "hash": "m+x+T6JF0CU6vO1Wl4sJvg=="
+          "relative_path": "CHANGELOG.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -20,11 +17,9 @@
       "source_relative_path": "design.md",
       "output": {
         ".html": {
-          "relative_path": "design.html",
-          "hash": "yusZeDTSPeVsjLRWLGcZnQ=="
+          "relative_path": "design.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -32,11 +27,9 @@
       "source_relative_path": "dotnet.md",
       "output": {
         ".html": {
-          "relative_path": "dotnet.html",
-          "hash": "X6FSdUO+pxNKf5FDOqHs+g=="
+          "relative_path": "dotnet.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -44,11 +37,9 @@
       "source_relative_path": "failure.md",
       "output": {
         ".html": {
-          "relative_path": "failure.html",
-          "hash": "GZvHZcvAPDHuSAZiCkMf8w=="
+          "relative_path": "failure.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -56,11 +47,9 @@
       "source_relative_path": "godot.md",
       "output": {
         ".html": {
-          "relative_path": "godot.html",
-          "hash": "ThESVlDddOz/XPJEWzUGcA=="
+          "relative_path": "godot.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -71,7 +60,6 @@
           "relative_path": "images/UnityStateWindow.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -79,11 +67,9 @@
       "source_relative_path": "index.md",
       "output": {
         ".html": {
-          "relative_path": "index.html",
-          "hash": "LNYS8cJLkHiSVqtQLYRrSQ=="
+          "relative_path": "index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -91,11 +77,9 @@
       "source_relative_path": "obj/api/Responsible.Bdd.IBddStep.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Bdd.IBddStep.html",
-          "hash": "LUf0tVaPlxgIK6VcP3nnWw=="
+          "relative_path": "api/Responsible.Bdd.IBddStep.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -103,11 +87,9 @@
       "source_relative_path": "obj/api/Responsible.Bdd.Keywords.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Bdd.Keywords.html",
-          "hash": "J3jMS8Sm2L7Q9KgmxaclLw=="
+          "relative_path": "api/Responsible.Bdd.Keywords.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -115,11 +97,9 @@
       "source_relative_path": "obj/api/Responsible.Bdd.ScenarioBuilder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Bdd.ScenarioBuilder.html",
-          "hash": "ulFdU3BvESV1cwJ/FQguzA=="
+          "relative_path": "api/Responsible.Bdd.ScenarioBuilder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -127,11 +107,9 @@
       "source_relative_path": "obj/api/Responsible.Bdd.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Bdd.html",
-          "hash": "KEplx9C0W8o+zLA+lQkAuA=="
+          "relative_path": "api/Responsible.Bdd.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -139,11 +117,9 @@
       "source_relative_path": "obj/api/Responsible.BddExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.BddExtensions.html",
-          "hash": "Abx51PgzJ35zh1QvOboUoA=="
+          "relative_path": "api/Responsible.BddExtensions.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -151,11 +127,9 @@
       "source_relative_path": "obj/api/Responsible.Context.RunContext.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Context.RunContext.html",
-          "hash": "msgy/qSSXEUNbH8teYRcAA=="
+          "relative_path": "api/Responsible.Context.RunContext.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -163,11 +137,9 @@
       "source_relative_path": "obj/api/Responsible.Context.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Context.html",
-          "hash": "yEQ8jZRpsF2hyL3N4MTDoA=="
+          "relative_path": "api/Responsible.Context.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -175,11 +147,9 @@
       "source_relative_path": "obj/api/Responsible.Docs.Inherit.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Docs.Inherit.html",
-          "hash": "KlOaSXv9ZfZOGzBxdF0sCA=="
+          "relative_path": "api/Responsible.Docs.Inherit.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -187,11 +157,9 @@
       "source_relative_path": "obj/api/Responsible.Docs.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Docs.html",
-          "hash": "GQ/FVfOQRswdnzRZfqRbJg=="
+          "relative_path": "api/Responsible.Docs.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -199,11 +167,9 @@
       "source_relative_path": "obj/api/Responsible.IExternalResultSource.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.IExternalResultSource.html",
-          "hash": "lOUtvgAQR3Rz+He6KVOUnw=="
+          "relative_path": "api/Responsible.IExternalResultSource.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -211,11 +177,9 @@
       "source_relative_path": "obj/api/Responsible.IFailureListener.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.IFailureListener.html",
-          "hash": "/f9mjZ5YNXXQzxJaRJn2jQ=="
+          "relative_path": "api/Responsible.IFailureListener.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -223,11 +187,9 @@
       "source_relative_path": "obj/api/Responsible.IGlobalContextProvider.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.IGlobalContextProvider.html",
-          "hash": "IacIDFMoTtL1UsTS8zD5pw=="
+          "relative_path": "api/Responsible.IGlobalContextProvider.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -235,11 +197,9 @@
       "source_relative_path": "obj/api/Responsible.IOptionalTestResponder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.IOptionalTestResponder.html",
-          "hash": "QpZYYP9B4fe/+Ue0n2Pawg=="
+          "relative_path": "api/Responsible.IOptionalTestResponder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -247,11 +207,9 @@
       "source_relative_path": "obj/api/Responsible.ITestInstruction-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.ITestInstruction-1.html",
-          "hash": "h+SExsfzo17SxIdxEns68w=="
+          "relative_path": "api/Responsible.ITestInstruction-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -259,11 +217,9 @@
       "source_relative_path": "obj/api/Responsible.ITestOperation-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.ITestOperation-1.html",
-          "hash": "Rj72m8PZoPDkFf7cSpugIg=="
+          "relative_path": "api/Responsible.ITestOperation-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -271,11 +227,9 @@
       "source_relative_path": "obj/api/Responsible.ITestResponder-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.ITestResponder-1.html",
-          "hash": "r/PVPaDGiDOZH4wjV6P7vw=="
+          "relative_path": "api/Responsible.ITestResponder-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -283,11 +237,9 @@
       "source_relative_path": "obj/api/Responsible.ITestScheduler.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.ITestScheduler.html",
-          "hash": "hMzC52KPtO10puXvKus5tA=="
+          "relative_path": "api/Responsible.ITestScheduler.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -295,11 +247,9 @@
       "source_relative_path": "obj/api/Responsible.ITestWaitCondition-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.ITestWaitCondition-1.html",
-          "hash": "7DmjXfUyg3dWpjGkCdHWlg=="
+          "relative_path": "api/Responsible.ITestWaitCondition-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -307,11 +257,9 @@
       "source_relative_path": "obj/api/Responsible.LinqSupport.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.LinqSupport.html",
-          "hash": "vM0QfYJi20awPIuFOk/zHQ=="
+          "relative_path": "api/Responsible.LinqSupport.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -319,11 +267,9 @@
       "source_relative_path": "obj/api/Responsible.OptionalTestResponder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.OptionalTestResponder.html",
-          "hash": "2+tIKrszIcKbnaEm0Gz7/g=="
+          "relative_path": "api/Responsible.OptionalTestResponder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -331,11 +277,9 @@
       "source_relative_path": "obj/api/Responsible.RepetitionLimitExceededException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.RepetitionLimitExceededException.html",
-          "hash": "yVLrhJUTX+Gf5sIZZJ00Jg=="
+          "relative_path": "api/Responsible.RepetitionLimitExceededException.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -343,11 +287,9 @@
       "source_relative_path": "obj/api/Responsible.Responsibly.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Responsibly.html",
-          "hash": "ptioKJlwYDnxJ51GJxWQQQ=="
+          "relative_path": "api/Responsible.Responsibly.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -355,11 +297,9 @@
       "source_relative_path": "obj/api/Responsible.State.ITestOperationState-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.ITestOperationState-1.html",
-          "hash": "Jvly+Scco/ttePQPS/VL5Q=="
+          "relative_path": "api/Responsible.State.ITestOperationState-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -367,11 +307,9 @@
       "source_relative_path": "obj/api/Responsible.State.ITestOperationState.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.ITestOperationState.html",
-          "hash": "24K8UuYvFprmc3QgX5q5/g=="
+          "relative_path": "api/Responsible.State.ITestOperationState.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -379,11 +317,9 @@
       "source_relative_path": "obj/api/Responsible.State.StateStringBuilder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.StateStringBuilder.html",
-          "hash": "GaDbpEK1lRYoZfpvvlD7Sw=="
+          "relative_path": "api/Responsible.State.StateStringBuilder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -391,11 +327,9 @@
       "source_relative_path": "obj/api/Responsible.State.TestOperationStateTransition.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.TestOperationStateTransition.html",
-          "hash": "O1hlj8URzyUwHru0nMWHdA=="
+          "relative_path": "api/Responsible.State.TestOperationStateTransition.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -403,11 +337,9 @@
       "source_relative_path": "obj/api/Responsible.State.TestOperationStatus.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.TestOperationStatus.html",
-          "hash": "Z9WaNEcx2cBFjJa8gQcjBA=="
+          "relative_path": "api/Responsible.State.TestOperationStatus.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -415,11 +347,9 @@
       "source_relative_path": "obj/api/Responsible.State.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.State.html",
-          "hash": "4hqeb8IAlOhG2+uChbVr9g=="
+          "relative_path": "api/Responsible.State.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -427,11 +357,9 @@
       "source_relative_path": "obj/api/Responsible.TestFailureException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestFailureException.html",
-          "hash": "O9IudaZhyuwX9XBrm9qb9w=="
+          "relative_path": "api/Responsible.TestFailureException.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -439,11 +367,9 @@
       "source_relative_path": "obj/api/Responsible.TestInstruction.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestInstruction.html",
-          "hash": "1MauZtrXjmPzNSL7FimBTQ=="
+          "relative_path": "api/Responsible.TestInstruction.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -451,11 +377,9 @@
       "source_relative_path": "obj/api/Responsible.TestInstructionExecutor.StateNotificationCallback.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestInstructionExecutor.StateNotificationCallback.html",
-          "hash": "lOIcA1ZnKq7z0a06HZ6I9w=="
+          "relative_path": "api/Responsible.TestInstructionExecutor.StateNotificationCallback.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -463,11 +387,9 @@
       "source_relative_path": "obj/api/Responsible.TestInstructionExecutor.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestInstructionExecutor.html",
-          "hash": "22IGo0E40B1gGblXZJHTnw=="
+          "relative_path": "api/Responsible.TestInstructionExecutor.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -475,11 +397,9 @@
       "source_relative_path": "obj/api/Responsible.TestOperationState.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestOperationState.html",
-          "hash": "m8fawzRcF5zFxo9tcJichQ=="
+          "relative_path": "api/Responsible.TestOperationState.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -487,11 +407,9 @@
       "source_relative_path": "obj/api/Responsible.TestResponder.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestResponder.html",
-          "hash": "sVy+TOA2RyHAuqBrE7qR/Q=="
+          "relative_path": "api/Responsible.TestResponder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -499,11 +417,9 @@
       "source_relative_path": "obj/api/Responsible.TestWaitCondition.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.TestWaitCondition.html",
-          "hash": "1h5UdNRsRGvunT3bxb8YOA=="
+          "relative_path": "api/Responsible.TestWaitCondition.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -511,11 +427,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.TestOperationYieldInstruction-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.TestOperationYieldInstruction-1.html",
-          "hash": "Z0NfpoFraV04ZC1oYtE+hQ=="
+          "relative_path": "api/Responsible.Unity.TestOperationYieldInstruction-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -523,11 +437,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.UnhandledLogMessageException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.UnhandledLogMessageException.html",
-          "hash": "n8GRenjp7v+k/jgDrLgeNw=="
+          "relative_path": "api/Responsible.Unity.UnhandledLogMessageException.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -535,11 +447,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.UnityErrorLogInterceptor.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.UnityErrorLogInterceptor.html",
-          "hash": "JqpLJKivfoIPzC+PxuKDcg=="
+          "relative_path": "api/Responsible.Unity.UnityErrorLogInterceptor.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -547,11 +457,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.UnityFailureListener.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.UnityFailureListener.html",
-          "hash": "BWdWt/pkziEf0+OJHKMtCw=="
+          "relative_path": "api/Responsible.Unity.UnityFailureListener.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -559,11 +467,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.UnityTestInstructionExecutor.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.UnityTestInstructionExecutor.html",
-          "hash": "dcrScxslAJaBHDVSSIHdSw=="
+          "relative_path": "api/Responsible.Unity.UnityTestInstructionExecutor.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -571,11 +477,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.UnityTestScheduler.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.UnityTestScheduler.html",
-          "hash": "pYYqVZunfar/7YOlSRvwIQ=="
+          "relative_path": "api/Responsible.Unity.UnityTestScheduler.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -583,11 +487,9 @@
       "source_relative_path": "obj/api/Responsible.Unity.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Unity.html",
-          "hash": "55Wr4fhpgzeHJvvvOTUGig=="
+          "relative_path": "api/Responsible.Unity.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -595,11 +497,9 @@
       "source_relative_path": "obj/api/Responsible.Utilities.IMultipleTaskAwaiter-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Utilities.IMultipleTaskAwaiter-1.html",
-          "hash": "8VN+HG2ufM/jOSKp8ejPAQ=="
+          "relative_path": "api/Responsible.Utilities.IMultipleTaskAwaiter-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -607,11 +507,9 @@
       "source_relative_path": "obj/api/Responsible.Utilities.IMultipleTaskSource-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Utilities.IMultipleTaskSource-1.html",
-          "hash": "0uPayJe/tsAa7eITbXy6dA=="
+          "relative_path": "api/Responsible.Utilities.IMultipleTaskSource-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -619,11 +517,9 @@
       "source_relative_path": "obj/api/Responsible.Utilities.IndentedStringBuilder-1.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Utilities.IndentedStringBuilder-1.html",
-          "hash": "21pMxMtqcRaSeUJVWMygig=="
+          "relative_path": "api/Responsible.Utilities.IndentedStringBuilder-1.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -631,11 +527,9 @@
       "source_relative_path": "obj/api/Responsible.Utilities.RetryingPoller.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Utilities.RetryingPoller.html",
-          "hash": "Y9qEBohmlSybaJN3eHXK9w=="
+          "relative_path": "api/Responsible.Utilities.RetryingPoller.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -643,11 +537,9 @@
       "source_relative_path": "obj/api/Responsible.Utilities.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.Utilities.html",
-          "hash": "LmrmuU58PWSTnbZuB5CPOA=="
+          "relative_path": "api/Responsible.Utilities.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -655,11 +547,29 @@
       "source_relative_path": "obj/api/Responsible.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Responsible.html",
-          "hash": "jlqtpSw92d2w6na8y4COhg=="
+          "relative_path": "api/Responsible.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -667,65 +577,12 @@
       "source_relative_path": "unity.md",
       "output": {
         ".html": {
-          "relative_path": "unity.html",
-          "hash": "caJJKpK35F9Av9yNUdo/jA=="
+          "relative_path": "unity.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     }
   ],
-  "incremental_info": [
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Disable incremental build by force rebuild option.",
-        "incrementalPhase": "build",
-        "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "ForceRebuild"
-      },
-      "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 7,
-          "skipped_file_count": 0
-        },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 55,
-          "skipped_file_count": 0
-        },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        }
-      }
-    },
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: it's disabled.",
-        "incrementalPhase": "postProcessing",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {}
-    }
-  ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"

@@ -26,13 +26,13 @@ references:
   fullName: Responsible.Bdd.Keywords
   nameWithType: Keywords
 - uid: Responsible.Bdd.Keywords.And(System.String,Responsible.ITestInstruction{System.Object})
-  name: And(String, ITestInstruction<Object>)
+  name: And(string, ITestInstruction<object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_And_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Bdd.Keywords.And(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: And(String, ITestInstruction(Of Object))
-  fullName: Responsible.Bdd.Keywords.And(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Bdd.Keywords.And(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Keywords.And(String, ITestInstruction<Object>)
+  fullName: Responsible.Bdd.Keywords.And(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Bdd.Keywords.And(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Keywords.And(string, ITestInstruction<object>)
   nameWithType.vb: Keywords.And(String, ITestInstruction(Of Object))
 - uid: Responsible.Bdd.Keywords.And*
   name: And
@@ -42,13 +42,13 @@ references:
   fullName: Responsible.Bdd.Keywords.And
   nameWithType: Keywords.And
 - uid: Responsible.Bdd.Keywords.But(System.String,Responsible.ITestInstruction{System.Object})
-  name: But(String, ITestInstruction<Object>)
+  name: But(string, ITestInstruction<object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_But_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Bdd.Keywords.But(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: But(String, ITestInstruction(Of Object))
-  fullName: Responsible.Bdd.Keywords.But(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Bdd.Keywords.But(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Keywords.But(String, ITestInstruction<Object>)
+  fullName: Responsible.Bdd.Keywords.But(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Bdd.Keywords.But(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Keywords.But(string, ITestInstruction<object>)
   nameWithType.vb: Keywords.But(String, ITestInstruction(Of Object))
 - uid: Responsible.Bdd.Keywords.But*
   name: But
@@ -58,13 +58,13 @@ references:
   fullName: Responsible.Bdd.Keywords.But
   nameWithType: Keywords.But
 - uid: Responsible.Bdd.Keywords.Given(System.String,Responsible.ITestInstruction{System.Object})
-  name: Given(String, ITestInstruction<Object>)
+  name: Given(string, ITestInstruction<object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Given_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Bdd.Keywords.Given(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: Given(String, ITestInstruction(Of Object))
-  fullName: Responsible.Bdd.Keywords.Given(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Bdd.Keywords.Given(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Keywords.Given(String, ITestInstruction<Object>)
+  fullName: Responsible.Bdd.Keywords.Given(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Bdd.Keywords.Given(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Keywords.Given(string, ITestInstruction<object>)
   nameWithType.vb: Keywords.Given(String, ITestInstruction(Of Object))
 - uid: Responsible.Bdd.Keywords.Given*
   name: Given
@@ -80,11 +80,14 @@ references:
   fullName: Responsible.Bdd.Keywords.Pending
   nameWithType: Keywords.Pending
 - uid: Responsible.Bdd.Keywords.Scenario(System.String,System.String,System.String,System.Int32)
-  name: Scenario(String, String, String, Int32)
+  name: Scenario(string, string, string, int)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Scenario_System_String_System_String_System_String_System_Int32_
   commentId: M:Responsible.Bdd.Keywords.Scenario(System.String,System.String,System.String,System.Int32)
-  fullName: Responsible.Bdd.Keywords.Scenario(System.String, System.String, System.String, System.Int32)
-  nameWithType: Keywords.Scenario(String, String, String, Int32)
+  name.vb: Scenario(String, String, String, Integer)
+  fullName: Responsible.Bdd.Keywords.Scenario(string, string, string, int)
+  fullName.vb: Responsible.Bdd.Keywords.Scenario(String, String, String, Integer)
+  nameWithType: Keywords.Scenario(string, string, string, int)
+  nameWithType.vb: Keywords.Scenario(String, String, String, Integer)
 - uid: Responsible.Bdd.Keywords.Scenario*
   name: Scenario
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Scenario_
@@ -93,13 +96,13 @@ references:
   fullName: Responsible.Bdd.Keywords.Scenario
   nameWithType: Keywords.Scenario
 - uid: Responsible.Bdd.Keywords.Then(System.String,Responsible.ITestInstruction{System.Object})
-  name: Then(String, ITestInstruction<Object>)
+  name: Then(string, ITestInstruction<object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_Then_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Bdd.Keywords.Then(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: Then(String, ITestInstruction(Of Object))
-  fullName: Responsible.Bdd.Keywords.Then(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Bdd.Keywords.Then(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Keywords.Then(String, ITestInstruction<Object>)
+  fullName: Responsible.Bdd.Keywords.Then(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Bdd.Keywords.Then(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Keywords.Then(string, ITestInstruction<object>)
   nameWithType.vb: Keywords.Then(String, ITestInstruction(Of Object))
 - uid: Responsible.Bdd.Keywords.Then*
   name: Then
@@ -109,13 +112,13 @@ references:
   fullName: Responsible.Bdd.Keywords.Then
   nameWithType: Keywords.Then
 - uid: Responsible.Bdd.Keywords.When(System.String,Responsible.ITestInstruction{System.Object})
-  name: When(String, ITestInstruction<Object>)
+  name: When(string, ITestInstruction<object>)
   href: api/Responsible.Bdd.Keywords.html#Responsible_Bdd_Keywords_When_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Bdd.Keywords.When(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: When(String, ITestInstruction(Of Object))
-  fullName: Responsible.Bdd.Keywords.When(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Bdd.Keywords.When(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Keywords.When(String, ITestInstruction<Object>)
+  fullName: Responsible.Bdd.Keywords.When(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Bdd.Keywords.When(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Keywords.When(string, ITestInstruction<object>)
   nameWithType.vb: Keywords.When(String, ITestInstruction(Of Object))
 - uid: Responsible.Bdd.Keywords.When*
   name: When
@@ -131,14 +134,14 @@ references:
   fullName: Responsible.Bdd.ScenarioBuilder
   nameWithType: ScenarioBuilder
 - uid: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
-  name: WithSteps(IBddStep[])
+  name: WithSteps(params IBddStep[])
   href: api/Responsible.Bdd.ScenarioBuilder.html#Responsible_Bdd_ScenarioBuilder_WithSteps_Responsible_Bdd_IBddStep___
   commentId: M:Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
-  name.vb: WithSteps(IBddStep())
-  fullName: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep[])
-  fullName.vb: Responsible.Bdd.ScenarioBuilder.WithSteps(Responsible.Bdd.IBddStep())
-  nameWithType: ScenarioBuilder.WithSteps(IBddStep[])
-  nameWithType.vb: ScenarioBuilder.WithSteps(IBddStep())
+  name.vb: WithSteps(ParamArray IBddStep())
+  fullName: Responsible.Bdd.ScenarioBuilder.WithSteps(params Responsible.Bdd.IBddStep[])
+  fullName.vb: Responsible.Bdd.ScenarioBuilder.WithSteps(ParamArray Responsible.Bdd.IBddStep())
+  nameWithType: ScenarioBuilder.WithSteps(params IBddStep[])
+  nameWithType.vb: ScenarioBuilder.WithSteps(ParamArray IBddStep())
 - uid: Responsible.Bdd.ScenarioBuilder.WithSteps*
   name: WithSteps
   href: api/Responsible.Bdd.ScenarioBuilder.html#Responsible_Bdd_ScenarioBuilder_WithSteps_
@@ -153,14 +156,14 @@ references:
   fullName: Responsible.BddExtensions
   nameWithType: BddExtensions
 - uid: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor,Responsible.Bdd.ScenarioBuilder,Responsible.Bdd.IBddStep[])
-  name: RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep[])
+  name: RunScenario(TestInstructionExecutor, ScenarioBuilder, params IBddStep[])
   href: api/Responsible.BddExtensions.html#Responsible_BddExtensions_RunScenario_Responsible_TestInstructionExecutor_Responsible_Bdd_ScenarioBuilder_Responsible_Bdd_IBddStep___
   commentId: M:Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor,Responsible.Bdd.ScenarioBuilder,Responsible.Bdd.IBddStep[])
-  name.vb: RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep())
-  fullName: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, Responsible.Bdd.IBddStep[])
-  fullName.vb: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, Responsible.Bdd.IBddStep())
-  nameWithType: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep[])
-  nameWithType.vb: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, IBddStep())
+  name.vb: RunScenario(TestInstructionExecutor, ScenarioBuilder, ParamArray IBddStep())
+  fullName: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, params Responsible.Bdd.IBddStep[])
+  fullName.vb: Responsible.BddExtensions.RunScenario(Responsible.TestInstructionExecutor, Responsible.Bdd.ScenarioBuilder, ParamArray Responsible.Bdd.IBddStep())
+  nameWithType: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, params IBddStep[])
+  nameWithType.vb: BddExtensions.RunScenario(TestInstructionExecutor, ScenarioBuilder, ParamArray IBddStep())
 - uid: Responsible.BddExtensions.RunScenario*
   name: RunScenario
   href: api/Responsible.BddExtensions.html#Responsible_BddExtensions_RunScenario_
@@ -193,13 +196,13 @@ references:
   fullName: Responsible.Docs.Inherit
   nameWithType: Inherit
 - uid: Responsible.Docs.Inherit.BddKeyword(System.String,Responsible.ITestInstruction{System.Object})
-  name: BddKeyword(String, ITestInstruction<Object>)
+  name: BddKeyword(string, ITestInstruction<object>)
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_BddKeyword_System_String_Responsible_ITestInstruction_System_Object__
   commentId: M:Responsible.Docs.Inherit.BddKeyword(System.String,Responsible.ITestInstruction{System.Object})
   name.vb: BddKeyword(String, ITestInstruction(Of Object))
-  fullName: Responsible.Docs.Inherit.BddKeyword(System.String, Responsible.ITestInstruction<System.Object>)
-  fullName.vb: Responsible.Docs.Inherit.BddKeyword(System.String, Responsible.ITestInstruction(Of System.Object))
-  nameWithType: Inherit.BddKeyword(String, ITestInstruction<Object>)
+  fullName: Responsible.Docs.Inherit.BddKeyword(string, Responsible.ITestInstruction<object>)
+  fullName.vb: Responsible.Docs.Inherit.BddKeyword(String, Responsible.ITestInstruction(Of Object))
+  nameWithType: Inherit.BddKeyword(string, ITestInstruction<object>)
   nameWithType.vb: Inherit.BddKeyword(String, ITestInstruction(Of Object))
 - uid: Responsible.Docs.Inherit.BddKeyword*
   name: BddKeyword
@@ -215,42 +218,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Docs.Inherit.CallerMember
   nameWithType: Inherit.CallerMember
-- uid: Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
-  name: CallerMember<T>(T, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__1___0_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
-  name.vb: CallerMember(Of T)(T, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMember<T>(T, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T)(T, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMember<T>(T, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMember(Of T)(T, String, String, Int32)
-- uid: Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
-  name: CallerMember<T1, T2>(T1, T2, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__2___0___1_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
-  name.vb: CallerMember(Of T1, T2)(T1, T2, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2>(T1, T2, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2)(T1, T2, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMember<T1, T2>(T1, T2, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMember(Of T1, T2)(T1, T2, String, String, Int32)
-- uid: Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
-  name: CallerMember<T1, T2, T3>(T1, T2, T3, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__3___0___1___2_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
-  name.vb: CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Int32)
-- uid: Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
-  name: CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__4___0___1___2___3_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
-  name.vb: CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Int32)
 - uid: Responsible.Docs.Inherit.CallerMemberWithDescription*
   name: CallerMemberWithDescription
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescription_
@@ -258,15 +225,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Docs.Inherit.CallerMemberWithDescription
   nameWithType: Inherit.CallerMemberWithDescription
-- uid: Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
-  name: CallerMemberWithDescription<T>(String, T, String, String, Int32)
-  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescription__1_System_String___0_System_String_System_String_System_Int32_
-  commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
-  name.vb: CallerMemberWithDescription(Of T)(String, T, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMemberWithDescription<T>(System.String, T, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescription(Of T)(System.String, T, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMemberWithDescription<T>(String, T, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMemberWithDescription(Of T)(String, T, String, String, Int32)
 - uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext*
   name: CallerMemberWithDescriptionAndContext
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext_
@@ -275,23 +233,32 @@ references:
   fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext
   nameWithType: Inherit.CallerMemberWithDescriptionAndContext
 - uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``1(System.String,``0,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name: CallerMemberWithDescriptionAndContext<T>(String, T, Action<StateStringBuilder>, String, String, Int32)
+  name: CallerMemberWithDescriptionAndContext<T>(string, T, Action<StateStringBuilder>, string, string, int)
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext__1_System_String___0_System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
   commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``1(System.String,``0,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name.vb: CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T>(System.String, T, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T)(System.String, T, System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T>(String, T, Action<StateStringBuilder>, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Int32)
+  name.vb: CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T>(string, T, System.Action<Responsible.State.StateStringBuilder>, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T)(String, T, System.Action(Of Responsible.State.StateStringBuilder), String, String, Integer)
+  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T>(string, T, Action<StateStringBuilder>, string, string, int)
+  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T)(String, T, Action(Of StateStringBuilder), String, String, Integer)
 - uid: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``2(System.String,``0,``1,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name: CallerMemberWithDescriptionAndContext<T1, T2>(String, T1, T2, Action<StateStringBuilder>, String, String, Int32)
+  name: CallerMemberWithDescriptionAndContext<T1, T2>(string, T1, T2, Action<StateStringBuilder>, string, string, int)
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescriptionAndContext__2_System_String___0___1_System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
   commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext``2(System.String,``0,``1,System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name.vb: CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(System.String, T1, T2, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(System.String, T1, T2, System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(String, T1, T2, Action<StateStringBuilder>, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Int32)
+  name.vb: CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(string, T1, T2, System.Action<Responsible.State.StateStringBuilder>, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, System.Action(Of Responsible.State.StateStringBuilder), String, String, Integer)
+  nameWithType: Inherit.CallerMemberWithDescriptionAndContext<T1, T2>(string, T1, T2, Action<StateStringBuilder>, string, string, int)
+  nameWithType.vb: Inherit.CallerMemberWithDescriptionAndContext(Of T1, T2)(String, T1, T2, Action(Of StateStringBuilder), String, String, Integer)
+- uid: Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
+  name: CallerMemberWithDescription<T>(string, T, string, string, int)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithDescription__1_System_String___0_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMemberWithDescription``1(System.String,``0,System.String,System.String,System.Int32)
+  name.vb: CallerMemberWithDescription(Of T)(String, T, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithDescription<T>(string, T, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithDescription(Of T)(String, T, String, String, Integer)
+  nameWithType: Inherit.CallerMemberWithDescription<T>(string, T, string, string, int)
+  nameWithType.vb: Inherit.CallerMemberWithDescription(Of T)(String, T, String, String, Integer)
 - uid: Responsible.Docs.Inherit.CallerMemberWithExecutor*
   name: CallerMemberWithExecutor
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor_
@@ -300,14 +267,50 @@ references:
   fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor
   nameWithType: Inherit.CallerMemberWithExecutor
 - uid: Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name: CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, string, string, int)
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMemberWithExecutor__1___0_Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.Docs.Inherit.CallerMemberWithExecutor``1(``0,Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor<T>(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithExecutor(Of T)(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: Inherit.CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
-  nameWithType.vb: Inherit.CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name.vb: CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMemberWithExecutor<T>(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMemberWithExecutor(Of T)(T, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: Inherit.CallerMemberWithExecutor<T>(T, TestInstructionExecutor, CancellationToken, string, string, int)
+  nameWithType.vb: Inherit.CallerMemberWithExecutor(Of T)(T, TestInstructionExecutor, CancellationToken, String, String, Integer)
+- uid: Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
+  name: CallerMember<T>(T, string, string, int)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__1___0_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``1(``0,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T)(T, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMember<T>(T, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T)(T, String, String, Integer)
+  nameWithType: Inherit.CallerMember<T>(T, string, string, int)
+  nameWithType.vb: Inherit.CallerMember(Of T)(T, String, String, Integer)
+- uid: Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2>(T1, T2, string, string, int)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__2___0___1_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``2(``0,``1,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2)(T1, T2, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2>(T1, T2, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2)(T1, T2, String, String, Integer)
+  nameWithType: Inherit.CallerMember<T1, T2>(T1, T2, string, string, int)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2)(T1, T2, String, String, Integer)
+- uid: Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2, T3>(T1, T2, T3, string, string, int)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__3___0___1___2_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``3(``0,``1,``2,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Integer)
+  nameWithType: Inherit.CallerMember<T1, T2, T3>(T1, T2, T3, string, string, int)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3)(T1, T2, T3, String, String, Integer)
+- uid: Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
+  name: CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, string, string, int)
+  href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_CallerMember__4___0___1___2___3_System_String_System_String_System_Int32_
+  commentId: M:Responsible.Docs.Inherit.CallerMember``4(``0,``1,``2,``3,System.String,System.String,System.Int32)
+  name.vb: CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Integer)
+  nameWithType: Inherit.CallerMember<T1, T2, T3, T4>(T1, T2, T3, T4, string, string, int)
+  nameWithType.vb: Inherit.CallerMember(Of T1, T2, T3, T4)(T1, T2, T3, T4, String, String, Integer)
 - uid: Responsible.Docs.Inherit.YieldInstruction*
   name: YieldInstruction
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_YieldInstruction_
@@ -316,14 +319,14 @@ references:
   fullName: Responsible.Docs.Inherit.YieldInstruction
   nameWithType: Inherit.YieldInstruction
 - uid: Responsible.Docs.Inherit.YieldInstruction``1(``0,Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: YieldInstruction<T>(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name: YieldInstruction<T>(T, TestInstructionExecutor, bool, CancellationToken, string, string, int)
   href: api/Responsible.Docs.Inherit.html#Responsible_Docs_Inherit_YieldInstruction__1___0_Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.Docs.Inherit.YieldInstruction``1(``0,Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  fullName: Responsible.Docs.Inherit.YieldInstruction<T>(T, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Docs.Inherit.YieldInstruction(Of T)(T, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: Inherit.YieldInstruction<T>(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  nameWithType.vb: Inherit.YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name.vb: YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
+  fullName: Responsible.Docs.Inherit.YieldInstruction<T>(T, Responsible.TestInstructionExecutor, bool, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.Docs.Inherit.YieldInstruction(Of T)(T, Responsible.TestInstructionExecutor, Boolean, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: Inherit.YieldInstruction<T>(T, TestInstructionExecutor, bool, CancellationToken, string, string, int)
+  nameWithType.vb: Inherit.YieldInstruction(Of T)(T, TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
 - uid: Responsible.IExternalResultSource
   name: IExternalResultSource
   href: api/Responsible.IExternalResultSource.html
@@ -353,11 +356,14 @@ references:
   fullName: Responsible.IFailureListener
   nameWithType: IFailureListener
 - uid: Responsible.IFailureListener.OperationFailed(System.Exception,System.String)
-  name: OperationFailed(Exception, String)
+  name: OperationFailed(Exception, string)
   href: api/Responsible.IFailureListener.html#Responsible_IFailureListener_OperationFailed_System_Exception_System_String_
   commentId: M:Responsible.IFailureListener.OperationFailed(System.Exception,System.String)
-  fullName: Responsible.IFailureListener.OperationFailed(System.Exception, System.String)
-  nameWithType: IFailureListener.OperationFailed(Exception, String)
+  name.vb: OperationFailed(Exception, String)
+  fullName: Responsible.IFailureListener.OperationFailed(System.Exception, string)
+  fullName.vb: Responsible.IFailureListener.OperationFailed(System.Exception, String)
+  nameWithType: IFailureListener.OperationFailed(Exception, string)
+  nameWithType.vb: IFailureListener.OperationFailed(Exception, String)
 - uid: Responsible.IFailureListener.OperationFailed*
   name: OperationFailed
   href: api/Responsible.IFailureListener.html#Responsible_IFailureListener_OperationFailed_
@@ -523,15 +529,6 @@ references:
   isSpec: "True"
   fullName: Responsible.OptionalTestResponder.Until
   nameWithType: OptionalTestResponder.Until
-- uid: Responsible.OptionalTestResponder.Until``1(Responsible.IOptionalTestResponder,Responsible.ITestWaitCondition{``0},System.String,System.String,System.Int32)
-  name: Until<T>(IOptionalTestResponder, ITestWaitCondition<T>, String, String, Int32)
-  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_Until__1_Responsible_IOptionalTestResponder_Responsible_ITestWaitCondition___0__System_String_System_String_System_Int32_
-  commentId: M:Responsible.OptionalTestResponder.Until``1(Responsible.IOptionalTestResponder,Responsible.ITestWaitCondition{``0},System.String,System.String,System.Int32)
-  name.vb: Until(Of T)(IOptionalTestResponder, ITestWaitCondition(Of T), String, String, Int32)
-  fullName: Responsible.OptionalTestResponder.Until<T>(Responsible.IOptionalTestResponder, Responsible.ITestWaitCondition<T>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.OptionalTestResponder.Until(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestWaitCondition(Of T), System.String, System.String, System.Int32)
-  nameWithType: OptionalTestResponder.Until<T>(IOptionalTestResponder, ITestWaitCondition<T>, String, String, Int32)
-  nameWithType.vb: OptionalTestResponder.Until(Of T)(IOptionalTestResponder, ITestWaitCondition(Of T), String, String, Int32)
 - uid: Responsible.OptionalTestResponder.UntilReadyTo*
   name: UntilReadyTo
   href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilReadyTo_
@@ -540,14 +537,23 @@ references:
   fullName: Responsible.OptionalTestResponder.UntilReadyTo
   nameWithType: OptionalTestResponder.UntilReadyTo
 - uid: Responsible.OptionalTestResponder.UntilReadyTo``1(Responsible.IOptionalTestResponder,Responsible.ITestResponder{``0},System.String,System.String,System.Int32)
-  name: UntilReadyTo<T>(IOptionalTestResponder, ITestResponder<T>, String, String, Int32)
+  name: UntilReadyTo<T>(IOptionalTestResponder, ITestResponder<T>, string, string, int)
   href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilReadyTo__1_Responsible_IOptionalTestResponder_Responsible_ITestResponder___0__System_String_System_String_System_Int32_
   commentId: M:Responsible.OptionalTestResponder.UntilReadyTo``1(Responsible.IOptionalTestResponder,Responsible.ITestResponder{``0},System.String,System.String,System.Int32)
-  name.vb: UntilReadyTo(Of T)(IOptionalTestResponder, ITestResponder(Of T), String, String, Int32)
-  fullName: Responsible.OptionalTestResponder.UntilReadyTo<T>(Responsible.IOptionalTestResponder, Responsible.ITestResponder<T>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.OptionalTestResponder.UntilReadyTo(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestResponder(Of T), System.String, System.String, System.Int32)
-  nameWithType: OptionalTestResponder.UntilReadyTo<T>(IOptionalTestResponder, ITestResponder<T>, String, String, Int32)
-  nameWithType.vb: OptionalTestResponder.UntilReadyTo(Of T)(IOptionalTestResponder, ITestResponder(Of T), String, String, Int32)
+  name.vb: UntilReadyTo(Of T)(IOptionalTestResponder, ITestResponder(Of T), String, String, Integer)
+  fullName: Responsible.OptionalTestResponder.UntilReadyTo<T>(Responsible.IOptionalTestResponder, Responsible.ITestResponder<T>, string, string, int)
+  fullName.vb: Responsible.OptionalTestResponder.UntilReadyTo(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestResponder(Of T), String, String, Integer)
+  nameWithType: OptionalTestResponder.UntilReadyTo<T>(IOptionalTestResponder, ITestResponder<T>, string, string, int)
+  nameWithType.vb: OptionalTestResponder.UntilReadyTo(Of T)(IOptionalTestResponder, ITestResponder(Of T), String, String, Integer)
+- uid: Responsible.OptionalTestResponder.Until``1(Responsible.IOptionalTestResponder,Responsible.ITestWaitCondition{``0},System.String,System.String,System.Int32)
+  name: Until<T>(IOptionalTestResponder, ITestWaitCondition<T>, string, string, int)
+  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_Until__1_Responsible_IOptionalTestResponder_Responsible_ITestWaitCondition___0__System_String_System_String_System_Int32_
+  commentId: M:Responsible.OptionalTestResponder.Until``1(Responsible.IOptionalTestResponder,Responsible.ITestWaitCondition{``0},System.String,System.String,System.Int32)
+  name.vb: Until(Of T)(IOptionalTestResponder, ITestWaitCondition(Of T), String, String, Integer)
+  fullName: Responsible.OptionalTestResponder.Until<T>(Responsible.IOptionalTestResponder, Responsible.ITestWaitCondition<T>, string, string, int)
+  fullName.vb: Responsible.OptionalTestResponder.Until(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestWaitCondition(Of T), String, String, Integer)
+  nameWithType: OptionalTestResponder.Until<T>(IOptionalTestResponder, ITestWaitCondition<T>, string, string, int)
+  nameWithType.vb: OptionalTestResponder.Until(Of T)(IOptionalTestResponder, ITestWaitCondition(Of T), String, String, Integer)
 - uid: Responsible.RepetitionLimitExceededException
   name: RepetitionLimitExceededException
   href: api/Responsible.RepetitionLimitExceededException.html
@@ -561,11 +567,14 @@ references:
   fullName: Responsible.Responsibly
   nameWithType: Responsibly
 - uid: Responsible.Responsibly.Do(System.String,System.Action,System.String,System.String,System.Int32)
-  name: Do(String, Action, String, String, Int32)
+  name: Do(string, Action, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_Do_System_String_System_Action_System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.Do(System.String,System.Action,System.String,System.String,System.Int32)
-  fullName: Responsible.Responsibly.Do(System.String, System.Action, System.String, System.String, System.Int32)
-  nameWithType: Responsibly.Do(String, Action, String, String, Int32)
+  name.vb: Do(String, Action, String, String, Integer)
+  fullName: Responsible.Responsibly.Do(string, System.Action, string, string, int)
+  fullName.vb: Responsible.Responsibly.Do(String, System.Action, String, String, Integer)
+  nameWithType: Responsibly.Do(string, Action, string, string, int)
+  nameWithType.vb: Responsibly.Do(String, Action, String, String, Integer)
 - uid: Responsible.Responsibly.Do*
   name: Do
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_Do_
@@ -581,14 +590,14 @@ references:
   fullName: Responsible.Responsibly.DoAndReturn
   nameWithType: Responsibly.DoAndReturn
 - uid: Responsible.Responsibly.DoAndReturn``1(System.String,System.Func{``0},System.String,System.String,System.Int32)
-  name: DoAndReturn<T>(String, Func<T>, String, String, Int32)
+  name: DoAndReturn<T>(string, Func<T>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_DoAndReturn__1_System_String_System_Func___0__System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.DoAndReturn``1(System.String,System.Func{``0},System.String,System.String,System.Int32)
-  name.vb: DoAndReturn(Of T)(String, Func(Of T), String, String, Int32)
-  fullName: Responsible.Responsibly.DoAndReturn<T>(System.String, System.Func<T>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.DoAndReturn(Of T)(System.String, System.Func(Of T), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.DoAndReturn<T>(String, Func<T>, String, String, Int32)
-  nameWithType.vb: Responsibly.DoAndReturn(Of T)(String, Func(Of T), String, String, Int32)
+  name.vb: DoAndReturn(Of T)(String, Func(Of T), String, String, Integer)
+  fullName: Responsible.Responsibly.DoAndReturn<T>(string, System.Func<T>, string, string, int)
+  fullName.vb: Responsible.Responsibly.DoAndReturn(Of T)(String, System.Func(Of T), String, String, Integer)
+  nameWithType: Responsibly.DoAndReturn<T>(string, Func<T>, string, string, int)
+  nameWithType.vb: Responsibly.DoAndReturn(Of T)(String, Func(Of T), String, String, Integer)
 - uid: Responsible.Responsibly.RespondToAllOf*
   name: RespondToAllOf
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_RespondToAllOf_
@@ -597,14 +606,14 @@ references:
   fullName: Responsible.Responsibly.RespondToAllOf
   nameWithType: Responsibly.RespondToAllOf
 - uid: Responsible.Responsibly.RespondToAllOf``1(Responsible.ITestResponder{``0}[])
-  name: RespondToAllOf<T>(ITestResponder<T>[])
+  name: RespondToAllOf<T>(params ITestResponder<T>[])
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_RespondToAllOf__1_Responsible_ITestResponder___0____
   commentId: M:Responsible.Responsibly.RespondToAllOf``1(Responsible.ITestResponder{``0}[])
-  name.vb: RespondToAllOf(Of T)(ITestResponder(Of T)())
-  fullName: Responsible.Responsibly.RespondToAllOf<T>(Responsible.ITestResponder<T>[])
-  fullName.vb: Responsible.Responsibly.RespondToAllOf(Of T)(Responsible.ITestResponder(Of T)())
-  nameWithType: Responsibly.RespondToAllOf<T>(ITestResponder<T>[])
-  nameWithType.vb: Responsibly.RespondToAllOf(Of T)(ITestResponder(Of T)())
+  name.vb: RespondToAllOf(Of T)(ParamArray ITestResponder(Of T)())
+  fullName: Responsible.Responsibly.RespondToAllOf<T>(params Responsible.ITestResponder<T>[])
+  fullName.vb: Responsible.Responsibly.RespondToAllOf(Of T)(ParamArray Responsible.ITestResponder(Of T)())
+  nameWithType: Responsibly.RespondToAllOf<T>(params ITestResponder<T>[])
+  nameWithType.vb: Responsibly.RespondToAllOf(Of T)(ParamArray ITestResponder(Of T)())
 - uid: Responsible.Responsibly.RespondToAnyOf*
   name: RespondToAnyOf
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_RespondToAnyOf_
@@ -613,14 +622,14 @@ references:
   fullName: Responsible.Responsibly.RespondToAnyOf
   nameWithType: Responsibly.RespondToAnyOf
 - uid: Responsible.Responsibly.RespondToAnyOf``1(Responsible.ITestResponder{``0}[])
-  name: RespondToAnyOf<T>(ITestResponder<T>[])
+  name: RespondToAnyOf<T>(params ITestResponder<T>[])
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_RespondToAnyOf__1_Responsible_ITestResponder___0____
   commentId: M:Responsible.Responsibly.RespondToAnyOf``1(Responsible.ITestResponder{``0}[])
-  name.vb: RespondToAnyOf(Of T)(ITestResponder(Of T)())
-  fullName: Responsible.Responsibly.RespondToAnyOf<T>(Responsible.ITestResponder<T>[])
-  fullName.vb: Responsible.Responsibly.RespondToAnyOf(Of T)(Responsible.ITestResponder(Of T)())
-  nameWithType: Responsibly.RespondToAnyOf<T>(ITestResponder<T>[])
-  nameWithType.vb: Responsibly.RespondToAnyOf(Of T)(ITestResponder(Of T)())
+  name.vb: RespondToAnyOf(Of T)(ParamArray ITestResponder(Of T)())
+  fullName: Responsible.Responsibly.RespondToAnyOf<T>(params Responsible.ITestResponder<T>[])
+  fullName.vb: Responsible.Responsibly.RespondToAnyOf(Of T)(ParamArray Responsible.ITestResponder(Of T)())
+  nameWithType: Responsibly.RespondToAnyOf<T>(params ITestResponder<T>[])
+  nameWithType.vb: Responsibly.RespondToAnyOf(Of T)(ParamArray ITestResponder(Of T)())
 - uid: Responsible.Responsibly.Return*
   name: Return
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_Return_
@@ -629,14 +638,14 @@ references:
   fullName: Responsible.Responsibly.Return
   nameWithType: Responsibly.Return
 - uid: Responsible.Responsibly.Return``1(``0,System.String,System.String,System.Int32)
-  name: Return<T>(T, String, String, Int32)
+  name: Return<T>(T, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_Return__1___0_System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.Return``1(``0,System.String,System.String,System.Int32)
-  name.vb: Return(Of T)(T, String, String, Int32)
-  fullName: Responsible.Responsibly.Return<T>(T, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.Return(Of T)(T, System.String, System.String, System.Int32)
-  nameWithType: Responsibly.Return<T>(T, String, String, Int32)
-  nameWithType.vb: Responsibly.Return(Of T)(T, String, String, Int32)
+  name.vb: Return(Of T)(T, String, String, Integer)
+  fullName: Responsible.Responsibly.Return<T>(T, string, string, int)
+  fullName.vb: Responsible.Responsibly.Return(Of T)(T, String, String, Integer)
+  nameWithType: Responsibly.Return<T>(T, string, string, int)
+  nameWithType.vb: Responsibly.Return(Of T)(T, String, String, Integer)
 - uid: Responsible.Responsibly.WaitForAllOf*
   name: WaitForAllOf
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForAllOf_
@@ -645,23 +654,23 @@ references:
   fullName: Responsible.Responsibly.WaitForAllOf
   nameWithType: Responsibly.WaitForAllOf
 - uid: Responsible.Responsibly.WaitForAllOf``1(Responsible.ITestWaitCondition{``0}[])
-  name: WaitForAllOf<T>(ITestWaitCondition<T>[])
+  name: WaitForAllOf<T>(params ITestWaitCondition<T>[])
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForAllOf__1_Responsible_ITestWaitCondition___0____
   commentId: M:Responsible.Responsibly.WaitForAllOf``1(Responsible.ITestWaitCondition{``0}[])
-  name.vb: WaitForAllOf(Of T)(ITestWaitCondition(Of T)())
-  fullName: Responsible.Responsibly.WaitForAllOf<T>(Responsible.ITestWaitCondition<T>[])
-  fullName.vb: Responsible.Responsibly.WaitForAllOf(Of T)(Responsible.ITestWaitCondition(Of T)())
-  nameWithType: Responsibly.WaitForAllOf<T>(ITestWaitCondition<T>[])
-  nameWithType.vb: Responsibly.WaitForAllOf(Of T)(ITestWaitCondition(Of T)())
+  name.vb: WaitForAllOf(Of T)(ParamArray ITestWaitCondition(Of T)())
+  fullName: Responsible.Responsibly.WaitForAllOf<T>(params Responsible.ITestWaitCondition<T>[])
+  fullName.vb: Responsible.Responsibly.WaitForAllOf(Of T)(ParamArray Responsible.ITestWaitCondition(Of T)())
+  nameWithType: Responsibly.WaitForAllOf<T>(params ITestWaitCondition<T>[])
+  nameWithType.vb: Responsibly.WaitForAllOf(Of T)(ParamArray ITestWaitCondition(Of T)())
 - uid: Responsible.Responsibly.WaitForCondition(System.String,System.Func{System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name: WaitForCondition(String, Func<Boolean>, Action<StateStringBuilder>, String, String, Int32)
+  name: WaitForCondition(string, Func<bool>, Action<StateStringBuilder>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCondition_System_String_System_Func_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForCondition(System.String,System.Func{System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name.vb: WaitForCondition(String, Func(Of Boolean), Action(Of StateStringBuilder), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForCondition(System.String, System.Func<System.Boolean>, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForCondition(System.String, System.Func(Of System.Boolean), System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForCondition(String, Func<Boolean>, Action<StateStringBuilder>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForCondition(String, Func(Of Boolean), Action(Of StateStringBuilder), String, String, Int32)
+  name.vb: WaitForCondition(String, Func(Of Boolean), Action(Of StateStringBuilder), String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForCondition(string, System.Func<bool>, System.Action<Responsible.State.StateStringBuilder>, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForCondition(String, System.Func(Of Boolean), System.Action(Of Responsible.State.StateStringBuilder), String, String, Integer)
+  nameWithType: Responsibly.WaitForCondition(string, Func<bool>, Action<StateStringBuilder>, string, string, int)
+  nameWithType.vb: Responsibly.WaitForCondition(String, Func(Of Boolean), Action(Of StateStringBuilder), String, String, Integer)
 - uid: Responsible.Responsibly.WaitForCondition*
   name: WaitForCondition
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCondition_
@@ -677,14 +686,14 @@ references:
   fullName: Responsible.Responsibly.WaitForConditionOn
   nameWithType: Responsibly.WaitForConditionOn
 - uid: Responsible.Responsibly.WaitForConditionOn``1(System.String,System.Func{``0},System.Func{``0,System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name: WaitForConditionOn<T>(String, Func<T>, Func<T, Boolean>, Action<StateStringBuilder>, String, String, Int32)
+  name: WaitForConditionOn<T>(string, Func<T>, Func<T, bool>, Action<StateStringBuilder>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForConditionOn__1_System_String_System_Func___0__System_Func___0_System_Boolean__System_Action_Responsible_State_StateStringBuilder__System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForConditionOn``1(System.String,System.Func{``0},System.Func{``0,System.Boolean},System.Action{Responsible.State.StateStringBuilder},System.String,System.String,System.Int32)
-  name.vb: WaitForConditionOn(Of T)(String, Func(Of T), Func(Of T, Boolean), Action(Of StateStringBuilder), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForConditionOn<T>(System.String, System.Func<T>, System.Func<T, System.Boolean>, System.Action<Responsible.State.StateStringBuilder>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForConditionOn(Of T)(System.String, System.Func(Of T), System.Func(Of T, System.Boolean), System.Action(Of Responsible.State.StateStringBuilder), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForConditionOn<T>(String, Func<T>, Func<T, Boolean>, Action<StateStringBuilder>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForConditionOn(Of T)(String, Func(Of T), Func(Of T, Boolean), Action(Of StateStringBuilder), String, String, Int32)
+  name.vb: WaitForConditionOn(Of T)(String, Func(Of T), Func(Of T, Boolean), Action(Of StateStringBuilder), String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForConditionOn<T>(string, System.Func<T>, System.Func<T, bool>, System.Action<Responsible.State.StateStringBuilder>, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForConditionOn(Of T)(String, System.Func(Of T), System.Func(Of T, Boolean), System.Action(Of Responsible.State.StateStringBuilder), String, String, Integer)
+  nameWithType: Responsibly.WaitForConditionOn<T>(string, Func<T>, Func<T, bool>, Action<StateStringBuilder>, string, string, int)
+  nameWithType.vb: Responsibly.WaitForConditionOn(Of T)(String, Func(Of T), Func(Of T, Boolean), Action(Of StateStringBuilder), String, String, Integer)
 - uid: Responsible.Responsibly.WaitForConstraint*
   name: WaitForConstraint
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForConstraint_
@@ -693,23 +702,23 @@ references:
   fullName: Responsible.Responsibly.WaitForConstraint
   nameWithType: Responsibly.WaitForConstraint
 - uid: Responsible.Responsibly.WaitForConstraint``1(System.String,System.Func{``0},NUnit.Framework.Constraints.IResolveConstraint,System.String,System.String,System.Int32)
-  name: WaitForConstraint<T>(String, Func<T>, IResolveConstraint, String, String, Int32)
+  name: WaitForConstraint<T>(string, Func<T>, IResolveConstraint, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForConstraint__1_System_String_System_Func___0__NUnit_Framework_Constraints_IResolveConstraint_System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForConstraint``1(System.String,System.Func{``0},NUnit.Framework.Constraints.IResolveConstraint,System.String,System.String,System.Int32)
-  name.vb: WaitForConstraint(Of T)(String, Func(Of T), IResolveConstraint, String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForConstraint<T>(System.String, System.Func<T>, NUnit.Framework.Constraints.IResolveConstraint, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForConstraint(Of T)(System.String, System.Func(Of T), NUnit.Framework.Constraints.IResolveConstraint, System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForConstraint<T>(String, Func<T>, IResolveConstraint, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForConstraint(Of T)(String, Func(Of T), IResolveConstraint, String, String, Int32)
+  name.vb: WaitForConstraint(Of T)(String, Func(Of T), IResolveConstraint, String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForConstraint<T>(string, System.Func<T>, NUnit.Framework.Constraints.IResolveConstraint, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForConstraint(Of T)(String, System.Func(Of T), NUnit.Framework.Constraints.IResolveConstraint, String, String, Integer)
+  nameWithType: Responsibly.WaitForConstraint<T>(string, Func<T>, IResolveConstraint, string, string, int)
+  nameWithType.vb: Responsibly.WaitForConstraint(Of T)(String, Func(Of T), IResolveConstraint, String, String, Integer)
 - uid: Responsible.Responsibly.WaitForCoroutine(System.String,System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)
-  name: WaitForCoroutine(String, Func<IEnumerator>, String, String, Int32)
+  name: WaitForCoroutine(string, Func<IEnumerator>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutine_System_String_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForCoroutine(System.String,System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)
-  name.vb: WaitForCoroutine(String, Func(Of IEnumerator), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForCoroutine(System.String, System.Func<System.Collections.IEnumerator>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForCoroutine(System.String, System.Func(Of System.Collections.IEnumerator), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForCoroutine(String, Func<IEnumerator>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForCoroutine(String, Func(Of IEnumerator), String, String, Int32)
+  name.vb: WaitForCoroutine(String, Func(Of IEnumerator), String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForCoroutine(string, System.Func<System.Collections.IEnumerator>, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForCoroutine(String, System.Func(Of System.Collections.IEnumerator), String, String, Integer)
+  nameWithType: Responsibly.WaitForCoroutine(string, Func<IEnumerator>, string, string, int)
+  nameWithType.vb: Responsibly.WaitForCoroutine(String, Func(Of IEnumerator), String, String, Integer)
 - uid: Responsible.Responsibly.WaitForCoroutine*
   name: WaitForCoroutine
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutine_
@@ -718,14 +727,14 @@ references:
   fullName: Responsible.Responsibly.WaitForCoroutine
   nameWithType: Responsibly.WaitForCoroutine
 - uid: Responsible.Responsibly.WaitForCoroutineMethod(System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)
-  name: WaitForCoroutineMethod(Func<IEnumerator>, String, String, Int32)
+  name: WaitForCoroutineMethod(Func<IEnumerator>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutineMethod_System_Func_System_Collections_IEnumerator__System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForCoroutineMethod(System.Func{System.Collections.IEnumerator},System.String,System.String,System.Int32)
-  name.vb: WaitForCoroutineMethod(Func(Of IEnumerator), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForCoroutineMethod(System.Func<System.Collections.IEnumerator>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForCoroutineMethod(System.Func(Of System.Collections.IEnumerator), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForCoroutineMethod(Func<IEnumerator>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForCoroutineMethod(Func(Of IEnumerator), String, String, Int32)
+  name.vb: WaitForCoroutineMethod(Func(Of IEnumerator), String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForCoroutineMethod(System.Func<System.Collections.IEnumerator>, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForCoroutineMethod(System.Func(Of System.Collections.IEnumerator), String, String, Integer)
+  nameWithType: Responsibly.WaitForCoroutineMethod(Func<IEnumerator>, string, string, int)
+  nameWithType.vb: Responsibly.WaitForCoroutineMethod(Func(Of IEnumerator), String, String, Integer)
 - uid: Responsible.Responsibly.WaitForCoroutineMethod*
   name: WaitForCoroutineMethod
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForCoroutineMethod_
@@ -734,11 +743,14 @@ references:
   fullName: Responsible.Responsibly.WaitForCoroutineMethod
   nameWithType: Responsibly.WaitForCoroutineMethod
 - uid: Responsible.Responsibly.WaitForFrames(System.Int32,System.String,System.String,System.Int32)
-  name: WaitForFrames(Int32, String, String, Int32)
+  name: WaitForFrames(int, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForFrames_System_Int32_System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForFrames(System.Int32,System.String,System.String,System.Int32)
-  fullName: Responsible.Responsibly.WaitForFrames(System.Int32, System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForFrames(Int32, String, String, Int32)
+  name.vb: WaitForFrames(Integer, String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForFrames(int, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForFrames(Integer, String, String, Integer)
+  nameWithType: Responsibly.WaitForFrames(int, string, string, int)
+  nameWithType.vb: Responsibly.WaitForFrames(Integer, String, String, Integer)
 - uid: Responsible.Responsibly.WaitForFrames*
   name: WaitForFrames
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForFrames_
@@ -747,11 +759,14 @@ references:
   fullName: Responsible.Responsibly.WaitForFrames
   nameWithType: Responsibly.WaitForFrames
 - uid: Responsible.Responsibly.WaitForSeconds(System.Double,System.String,System.String,System.Int32)
-  name: WaitForSeconds(Double, String, String, Int32)
+  name: WaitForSeconds(double, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForSeconds_System_Double_System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForSeconds(System.Double,System.String,System.String,System.Int32)
-  fullName: Responsible.Responsibly.WaitForSeconds(System.Double, System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForSeconds(Double, String, String, Int32)
+  name.vb: WaitForSeconds(Double, String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForSeconds(double, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForSeconds(Double, String, String, Integer)
+  nameWithType: Responsibly.WaitForSeconds(double, string, string, int)
+  nameWithType.vb: Responsibly.WaitForSeconds(Double, String, String, Integer)
 - uid: Responsible.Responsibly.WaitForSeconds*
   name: WaitForSeconds
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForSeconds_
@@ -767,14 +782,14 @@ references:
   fullName: Responsible.Responsibly.WaitForTask
   nameWithType: Responsibly.WaitForTask
 - uid: Responsible.Responsibly.WaitForTask``1(System.String,System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.String,System.String,System.Int32)
-  name: WaitForTask<T>(String, Func<CancellationToken, Task<T>>, String, String, Int32)
+  name: WaitForTask<T>(string, Func<CancellationToken, Task<T>>, string, string, int)
   href: api/Responsible.Responsibly.html#Responsible_Responsibly_WaitForTask__1_System_String_System_Func_System_Threading_CancellationToken_System_Threading_Tasks_Task___0___System_String_System_String_System_Int32_
   commentId: M:Responsible.Responsibly.WaitForTask``1(System.String,System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.String,System.String,System.Int32)
-  name.vb: WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Int32)
-  fullName: Responsible.Responsibly.WaitForTask<T>(System.String, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<T>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.Responsibly.WaitForTask(Of T)(System.String, System.Func(Of System.Threading.CancellationToken, System.Threading.Tasks.Task(Of T)), System.String, System.String, System.Int32)
-  nameWithType: Responsibly.WaitForTask<T>(String, Func<CancellationToken, Task<T>>, String, String, Int32)
-  nameWithType.vb: Responsibly.WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Int32)
+  name.vb: WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Integer)
+  fullName: Responsible.Responsibly.WaitForTask<T>(string, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<T>>, string, string, int)
+  fullName.vb: Responsible.Responsibly.WaitForTask(Of T)(String, System.Func(Of System.Threading.CancellationToken, System.Threading.Tasks.Task(Of T)), String, String, Integer)
+  nameWithType: Responsibly.WaitForTask<T>(string, Func<CancellationToken, Task<T>>, string, string, int)
+  nameWithType.vb: Responsibly.WaitForTask(Of T)(String, Func(Of CancellationToken, Task(Of T)), String, String, Integer)
 - uid: Responsible.State
   name: Responsible.State
   href: api/Responsible.State.html
@@ -847,11 +862,14 @@ references:
   fullName: Responsible.State.StateStringBuilder
   nameWithType: StateStringBuilder
 - uid: Responsible.State.StateStringBuilder.AddDetails(System.String)
-  name: AddDetails(String)
+  name: AddDetails(string)
   href: api/Responsible.State.StateStringBuilder.html#Responsible_State_StateStringBuilder_AddDetails_System_String_
   commentId: M:Responsible.State.StateStringBuilder.AddDetails(System.String)
-  fullName: Responsible.State.StateStringBuilder.AddDetails(System.String)
-  nameWithType: StateStringBuilder.AddDetails(String)
+  name.vb: AddDetails(String)
+  fullName: Responsible.State.StateStringBuilder.AddDetails(string)
+  fullName.vb: Responsible.State.StateStringBuilder.AddDetails(String)
+  nameWithType: StateStringBuilder.AddDetails(string)
+  nameWithType.vb: StateStringBuilder.AddDetails(String)
 - uid: Responsible.State.StateStringBuilder.AddDetails*
   name: AddDetails
   href: api/Responsible.State.StateStringBuilder.html#Responsible_State_StateStringBuilder_AddDetails_
@@ -860,13 +878,13 @@ references:
   fullName: Responsible.State.StateStringBuilder.AddDetails
   nameWithType: StateStringBuilder.AddDetails
 - uid: Responsible.State.StateStringBuilder.AddNestedDetails(System.String,System.Action{Responsible.State.StateStringBuilder})
-  name: AddNestedDetails(String, Action<StateStringBuilder>)
+  name: AddNestedDetails(string, Action<StateStringBuilder>)
   href: api/Responsible.State.StateStringBuilder.html#Responsible_State_StateStringBuilder_AddNestedDetails_System_String_System_Action_Responsible_State_StateStringBuilder__
   commentId: M:Responsible.State.StateStringBuilder.AddNestedDetails(System.String,System.Action{Responsible.State.StateStringBuilder})
   name.vb: AddNestedDetails(String, Action(Of StateStringBuilder))
-  fullName: Responsible.State.StateStringBuilder.AddNestedDetails(System.String, System.Action<Responsible.State.StateStringBuilder>)
-  fullName.vb: Responsible.State.StateStringBuilder.AddNestedDetails(System.String, System.Action(Of Responsible.State.StateStringBuilder))
-  nameWithType: StateStringBuilder.AddNestedDetails(String, Action<StateStringBuilder>)
+  fullName: Responsible.State.StateStringBuilder.AddNestedDetails(string, System.Action<Responsible.State.StateStringBuilder>)
+  fullName.vb: Responsible.State.StateStringBuilder.AddNestedDetails(String, System.Action(Of Responsible.State.StateStringBuilder))
+  nameWithType: StateStringBuilder.AddNestedDetails(string, Action<StateStringBuilder>)
   nameWithType.vb: StateStringBuilder.AddNestedDetails(String, Action(Of StateStringBuilder))
 - uid: Responsible.State.StateStringBuilder.AddNestedDetails*
   name: AddNestedDetails
@@ -935,23 +953,23 @@ references:
   fullName: Responsible.TestInstruction.ContinueWith
   nameWithType: TestInstruction.ContinueWith
 - uid: Responsible.TestInstruction.ContinueWith``2(Responsible.ITestInstruction{``0},Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
-  name: ContinueWith<T1, T2>(ITestInstruction<T1>, ITestInstruction<T2>, String, String, Int32)
+  name: ContinueWith<T1, T2>(ITestInstruction<T1>, ITestInstruction<T2>, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__Responsible_ITestInstruction___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.ContinueWith``2(Responsible.ITestInstruction{``0},Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
-  name.vb: ContinueWith(Of T1, T2)(ITestInstruction(Of T1), ITestInstruction(Of T2), String, String, Int32)
-  fullName: Responsible.TestInstruction.ContinueWith<T1, T2>(Responsible.ITestInstruction<T1>, Responsible.ITestInstruction<T2>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ContinueWith(Of T1, T2)(Responsible.ITestInstruction(Of T1), Responsible.ITestInstruction(Of T2), System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ContinueWith<T1, T2>(ITestInstruction<T1>, ITestInstruction<T2>, String, String, Int32)
-  nameWithType.vb: TestInstruction.ContinueWith(Of T1, T2)(ITestInstruction(Of T1), ITestInstruction(Of T2), String, String, Int32)
+  name.vb: ContinueWith(Of T1, T2)(ITestInstruction(Of T1), ITestInstruction(Of T2), String, String, Integer)
+  fullName: Responsible.TestInstruction.ContinueWith<T1, T2>(Responsible.ITestInstruction<T1>, Responsible.ITestInstruction<T2>, string, string, int)
+  fullName.vb: Responsible.TestInstruction.ContinueWith(Of T1, T2)(Responsible.ITestInstruction(Of T1), Responsible.ITestInstruction(Of T2), String, String, Integer)
+  nameWithType: TestInstruction.ContinueWith<T1, T2>(ITestInstruction<T1>, ITestInstruction<T2>, string, string, int)
+  nameWithType.vb: TestInstruction.ContinueWith(Of T1, T2)(ITestInstruction(Of T1), ITestInstruction(Of T2), String, String, Integer)
 - uid: Responsible.TestInstruction.ContinueWith``2(Responsible.ITestInstruction{``0},System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
-  name: ContinueWith<T1, T2>(ITestInstruction<T1>, Func<T1, ITestInstruction<T2>>, String, String, Int32)
+  name: ContinueWith<T1, T2>(ITestInstruction<T1>, Func<T1, ITestInstruction<T2>>, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ContinueWith__2_Responsible_ITestInstruction___0__System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.ContinueWith``2(Responsible.ITestInstruction{``0},System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
-  name.vb: ContinueWith(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, ITestInstruction(Of T2)), String, String, Int32)
-  fullName: Responsible.TestInstruction.ContinueWith<T1, T2>(Responsible.ITestInstruction<T1>, System.Func<T1, Responsible.ITestInstruction<T2>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ContinueWith(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, Responsible.ITestInstruction(Of T2)), System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ContinueWith<T1, T2>(ITestInstruction<T1>, Func<T1, ITestInstruction<T2>>, String, String, Int32)
-  nameWithType.vb: TestInstruction.ContinueWith(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, ITestInstruction(Of T2)), String, String, Int32)
+  name.vb: ContinueWith(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, ITestInstruction(Of T2)), String, String, Integer)
+  fullName: Responsible.TestInstruction.ContinueWith<T1, T2>(Responsible.ITestInstruction<T1>, System.Func<T1, Responsible.ITestInstruction<T2>>, string, string, int)
+  fullName.vb: Responsible.TestInstruction.ContinueWith(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, Responsible.ITestInstruction(Of T2)), String, String, Integer)
+  nameWithType: TestInstruction.ContinueWith<T1, T2>(ITestInstruction<T1>, Func<T1, ITestInstruction<T2>>, string, string, int)
+  nameWithType.vb: TestInstruction.ContinueWith(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, ITestInstruction(Of T2)), String, String, Integer)
 - uid: Responsible.TestInstruction.GroupedAs*
   name: GroupedAs
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs_
@@ -960,13 +978,13 @@ references:
   fullName: Responsible.TestInstruction.GroupedAs
   nameWithType: TestInstruction.GroupedAs
 - uid: Responsible.TestInstruction.GroupedAs``1(Responsible.ITestInstruction{``0},System.String)
-  name: GroupedAs<T>(ITestInstruction<T>, String)
+  name: GroupedAs<T>(ITestInstruction<T>, string)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_GroupedAs__1_Responsible_ITestInstruction___0__System_String_
   commentId: M:Responsible.TestInstruction.GroupedAs``1(Responsible.ITestInstruction{``0},System.String)
   name.vb: GroupedAs(Of T)(ITestInstruction(Of T), String)
-  fullName: Responsible.TestInstruction.GroupedAs<T>(Responsible.ITestInstruction<T>, System.String)
-  fullName.vb: Responsible.TestInstruction.GroupedAs(Of T)(Responsible.ITestInstruction(Of T), System.String)
-  nameWithType: TestInstruction.GroupedAs<T>(ITestInstruction<T>, String)
+  fullName: Responsible.TestInstruction.GroupedAs<T>(Responsible.ITestInstruction<T>, string)
+  fullName.vb: Responsible.TestInstruction.GroupedAs(Of T)(Responsible.ITestInstruction(Of T), String)
+  nameWithType: TestInstruction.GroupedAs<T>(ITestInstruction<T>, string)
   nameWithType.vb: TestInstruction.GroupedAs(Of T)(ITestInstruction(Of T), String)
 - uid: Responsible.TestInstruction.RepeatUntil*
   name: RepeatUntil
@@ -976,14 +994,14 @@ references:
   fullName: Responsible.TestInstruction.RepeatUntil
   nameWithType: TestInstruction.RepeatUntil
 - uid: Responsible.TestInstruction.RepeatUntil``2(Responsible.ITestInstruction{``1},Responsible.ITestWaitCondition{``0},System.Int32,System.String,System.String,System.Int32)
-  name: RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, Int32, String, String, Int32)
+  name: RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, int, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RepeatUntil__2_Responsible_ITestInstruction___1__Responsible_ITestWaitCondition___0__System_Int32_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.RepeatUntil``2(Responsible.ITestInstruction{``1},Responsible.ITestWaitCondition{``0},System.Int32,System.String,System.String,System.Int32)
-  name.vb: RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Int32, String, String, Int32)
-  fullName: Responsible.TestInstruction.RepeatUntil<TWait, TInstruction>(Responsible.ITestInstruction<TInstruction>, Responsible.ITestWaitCondition<TWait>, System.Int32, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.RepeatUntil(Of TWait, TInstruction)(Responsible.ITestInstruction(Of TInstruction), Responsible.ITestWaitCondition(Of TWait), System.Int32, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, Int32, String, String, Int32)
-  nameWithType.vb: TestInstruction.RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Int32, String, String, Int32)
+  name.vb: RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Integer, String, String, Integer)
+  fullName: Responsible.TestInstruction.RepeatUntil<TWait, TInstruction>(Responsible.ITestInstruction<TInstruction>, Responsible.ITestWaitCondition<TWait>, int, string, string, int)
+  fullName.vb: Responsible.TestInstruction.RepeatUntil(Of TWait, TInstruction)(Responsible.ITestInstruction(Of TInstruction), Responsible.ITestWaitCondition(Of TWait), Integer, String, String, Integer)
+  nameWithType: TestInstruction.RepeatUntil<TWait, TInstruction>(ITestInstruction<TInstruction>, ITestWaitCondition<TWait>, int, string, string, int)
+  nameWithType.vb: TestInstruction.RepeatUntil(Of TWait, TInstruction)(ITestInstruction(Of TInstruction), ITestWaitCondition(Of TWait), Integer, String, String, Integer)
 - uid: Responsible.TestInstruction.RunAsLoop*
   name: RunAsLoop
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop_
@@ -992,14 +1010,14 @@ references:
   fullName: Responsible.TestInstruction.RunAsLoop
   nameWithType: TestInstruction.RunAsLoop
 - uid: Responsible.TestInstruction.RunAsLoop``1(Responsible.ITestInstruction{``0},System.Action,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, String, String, Int32)
+  name: RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsLoop__1_Responsible_ITestInstruction___0__System_Action_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.RunAsLoop``1(Responsible.ITestInstruction{``0},System.Action,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Int32)
-  fullName: Responsible.TestInstruction.RunAsLoop<T>(Responsible.ITestInstruction<T>, System.Action, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.RunAsLoop(Of T)(Responsible.ITestInstruction(Of T), System.Action, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestInstruction.RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Int32)
+  name.vb: RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Integer)
+  fullName: Responsible.TestInstruction.RunAsLoop<T>(Responsible.ITestInstruction<T>, System.Action, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestInstruction.RunAsLoop(Of T)(Responsible.ITestInstruction(Of T), System.Action, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestInstruction.RunAsLoop<T>(ITestInstruction<T>, Action, CancellationToken, string, string, int)
+  nameWithType.vb: TestInstruction.RunAsLoop(Of T)(ITestInstruction(Of T), Action, CancellationToken, String, String, Integer)
 - uid: Responsible.TestInstruction.RunAsSimulatedUpdateLoop*
   name: RunAsSimulatedUpdateLoop
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsSimulatedUpdateLoop_
@@ -1008,14 +1026,14 @@ references:
   fullName: Responsible.TestInstruction.RunAsSimulatedUpdateLoop
   nameWithType: TestInstruction.RunAsSimulatedUpdateLoop
 - uid: Responsible.TestInstruction.RunAsSimulatedUpdateLoop``1(Responsible.ITestInstruction{``0},System.Double,System.Action{System.TimeSpan},System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, Double, Action<TimeSpan>, CancellationToken, String, String, Int32)
+  name: RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, double, Action<TimeSpan>, CancellationToken, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_RunAsSimulatedUpdateLoop__1_Responsible_ITestInstruction___0__System_Double_System_Action_System_TimeSpan__System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.RunAsSimulatedUpdateLoop``1(Responsible.ITestInstruction{``0},System.Double,System.Action{System.TimeSpan},System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Int32)
-  fullName: Responsible.TestInstruction.RunAsSimulatedUpdateLoop<T>(Responsible.ITestInstruction<T>, System.Double, System.Action<System.TimeSpan>, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.RunAsSimulatedUpdateLoop(Of T)(Responsible.ITestInstruction(Of T), System.Double, System.Action(Of System.TimeSpan), System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, Double, Action<TimeSpan>, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestInstruction.RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Int32)
+  name.vb: RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Integer)
+  fullName: Responsible.TestInstruction.RunAsSimulatedUpdateLoop<T>(Responsible.ITestInstruction<T>, double, System.Action<System.TimeSpan>, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestInstruction.RunAsSimulatedUpdateLoop(Of T)(Responsible.ITestInstruction(Of T), Double, System.Action(Of System.TimeSpan), System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestInstruction.RunAsSimulatedUpdateLoop<T>(ITestInstruction<T>, double, Action<TimeSpan>, CancellationToken, string, string, int)
+  nameWithType.vb: TestInstruction.RunAsSimulatedUpdateLoop(Of T)(ITestInstruction(Of T), Double, Action(Of TimeSpan), CancellationToken, String, String, Integer)
 - uid: Responsible.TestInstruction.Select*
   name: Select
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Select_
@@ -1024,23 +1042,23 @@ references:
   fullName: Responsible.TestInstruction.Select
   nameWithType: TestInstruction.Select
 - uid: Responsible.TestInstruction.Select``2(Responsible.ITestInstruction{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name: Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, String, String, Int32)
+  name: Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Select__2_Responsible_ITestInstruction___0__System_Func___0___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.Select``2(Responsible.ITestInstruction{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name.vb: Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Int32)
-  fullName: Responsible.TestInstruction.Select<T1, T2>(Responsible.ITestInstruction<T1>, System.Func<T1, T2>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.Select(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, String, String, Int32)
-  nameWithType.vb: TestInstruction.Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Int32)
+  name.vb: Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Integer)
+  fullName: Responsible.TestInstruction.Select<T1, T2>(Responsible.ITestInstruction<T1>, System.Func<T1, T2>, string, string, int)
+  fullName.vb: Responsible.TestInstruction.Select(Of T1, T2)(Responsible.ITestInstruction(Of T1), System.Func(Of T1, T2), String, String, Integer)
+  nameWithType: TestInstruction.Select<T1, T2>(ITestInstruction<T1>, Func<T1, T2>, string, string, int)
+  nameWithType.vb: TestInstruction.Select(Of T1, T2)(ITestInstruction(Of T1), Func(Of T1, T2), String, String, Integer)
 - uid: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32,System.String)
-  name: Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32, String)
+  name: Sequence(IEnumerable<ITestInstruction<object>>, string, string, int, string)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_System_Collections_Generic_IEnumerable_Responsible_ITestInstruction_System_Object___System_String_System_String_System_Int32_System_String_
   commentId: M:Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable{Responsible.ITestInstruction{System.Object}},System.String,System.String,System.Int32,System.String)
-  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32, String)
-  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<System.Object>>, System.String, System.String, System.Int32, System.String)
-  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of System.Object)), System.String, System.String, System.Int32, System.String)
-  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<Object>>, String, String, Int32, String)
-  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Int32, String)
+  name.vb: Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Integer, String)
+  fullName: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable<Responsible.ITestInstruction<object>>, string, string, int, string)
+  fullName.vb: Responsible.TestInstruction.Sequence(System.Collections.Generic.IEnumerable(Of Responsible.ITestInstruction(Of Object)), String, String, Integer, String)
+  nameWithType: TestInstruction.Sequence(IEnumerable<ITestInstruction<object>>, string, string, int, string)
+  nameWithType.vb: TestInstruction.Sequence(IEnumerable(Of ITestInstruction(Of Object)), String, String, Integer, String)
 - uid: Responsible.TestInstruction.Sequence*
   name: Sequence
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_Sequence_
@@ -1056,14 +1074,14 @@ references:
   fullName: Responsible.TestInstruction.ToTask
   nameWithType: TestInstruction.ToTask
 - uid: Responsible.TestInstruction.ToTask``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name: ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToTask__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.ToTask``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
-  fullName: Responsible.TestInstruction.ToTask<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ToTask(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestInstruction.ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name.vb: ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Integer)
+  fullName: Responsible.TestInstruction.ToTask<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestInstruction.ToTask(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestInstruction.ToTask<T>(ITestInstruction<T>, TestInstructionExecutor, CancellationToken, string, string, int)
+  nameWithType.vb: TestInstruction.ToTask(Of T)(ITestInstruction(Of T), TestInstructionExecutor, CancellationToken, String, String, Integer)
 - uid: Responsible.TestInstruction.ToYieldInstruction*
   name: ToYieldInstruction
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction_
@@ -1072,14 +1090,14 @@ references:
   fullName: Responsible.TestInstruction.ToYieldInstruction
   nameWithType: TestInstruction.ToYieldInstruction
 - uid: Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name: ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, bool, CancellationToken, string, string, int)
   href: api/Responsible.TestInstruction.html#Responsible_TestInstruction_ToYieldInstruction__1_Responsible_ITestInstruction___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestInstruction.ToYieldInstruction``1(Responsible.ITestInstruction{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  fullName: Responsible.TestInstruction.ToYieldInstruction<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestInstruction.ToYieldInstruction(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestInstruction.ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestInstruction.ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name.vb: ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
+  fullName: Responsible.TestInstruction.ToYieldInstruction<T>(Responsible.ITestInstruction<T>, Responsible.TestInstructionExecutor, bool, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestInstruction.ToYieldInstruction(Of T)(Responsible.ITestInstruction(Of T), Responsible.TestInstructionExecutor, Boolean, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestInstruction.ToYieldInstruction<T>(ITestInstruction<T>, TestInstructionExecutor, bool, CancellationToken, string, string, int)
+  nameWithType.vb: TestInstruction.ToYieldInstruction(Of T)(ITestInstruction(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
 - uid: Responsible.TestInstructionExecutor
   name: TestInstructionExecutor
   href: api/Responsible.TestInstructionExecutor.html
@@ -1090,18 +1108,21 @@ references:
   name: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList<Type>)
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_Responsible_ITestScheduler_Responsible_IExternalResultSource_Responsible_IFailureListener_Responsible_IGlobalContextProvider_System_Collections_Generic_IReadOnlyList_System_Type__
   commentId: M:Responsible.TestInstructionExecutor.#ctor(Responsible.ITestScheduler,Responsible.IExternalResultSource,Responsible.IFailureListener,Responsible.IGlobalContextProvider,System.Collections.Generic.IReadOnlyList{System.Type})
-  name.vb: TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
+  name.vb: New(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
   fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider, System.Collections.Generic.IReadOnlyList<System.Type>)
-  fullName.vb: Responsible.TestInstructionExecutor.TestInstructionExecutor(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider, System.Collections.Generic.IReadOnlyList(Of System.Type))
+  fullName.vb: Responsible.TestInstructionExecutor.New(Responsible.ITestScheduler, Responsible.IExternalResultSource, Responsible.IFailureListener, Responsible.IGlobalContextProvider, System.Collections.Generic.IReadOnlyList(Of System.Type))
   nameWithType: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList<Type>)
-  nameWithType.vb: TestInstructionExecutor.TestInstructionExecutor(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
+  nameWithType.vb: TestInstructionExecutor.New(ITestScheduler, IExternalResultSource, IFailureListener, IGlobalContextProvider, IReadOnlyList(Of Type))
 - uid: Responsible.TestInstructionExecutor.#ctor*
   name: TestInstructionExecutor
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor__ctor_
   commentId: Overload:Responsible.TestInstructionExecutor.#ctor
   isSpec: "True"
+  name.vb: New
   fullName: Responsible.TestInstructionExecutor.TestInstructionExecutor
+  fullName.vb: Responsible.TestInstructionExecutor.New
   nameWithType: TestInstructionExecutor.TestInstructionExecutor
+  nameWithType.vb: TestInstructionExecutor.New
 - uid: Responsible.TestInstructionExecutor.Dispose
   name: Dispose()
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_Dispose
@@ -1122,7 +1143,7 @@ references:
   fullName: Responsible.TestInstructionExecutor.StateNotificationCallback
   nameWithType: TestInstructionExecutor.StateNotificationCallback
 - uid: Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
-  name: SubscribeToStates(TestInstructionExecutor.StateNotificationCallback)
+  name: SubscribeToStates(StateNotificationCallback)
   href: api/Responsible.TestInstructionExecutor.html#Responsible_TestInstructionExecutor_SubscribeToStates_Responsible_TestInstructionExecutor_StateNotificationCallback_
   commentId: M:Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
   fullName: Responsible.TestInstructionExecutor.SubscribeToStates(Responsible.TestInstructionExecutor.StateNotificationCallback)
@@ -1148,14 +1169,14 @@ references:
   fullName: Responsible.TestOperationState.ToTask
   nameWithType: TestOperationState.ToTask
 - uid: Responsible.TestOperationState.ToTask``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name: ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, string, string, int)
   href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToTask__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestOperationState.ToTask``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
-  fullName: Responsible.TestOperationState.ToTask<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestOperationState.ToTask(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestOperationState.ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestOperationState.ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Int32)
+  name.vb: ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Integer)
+  fullName: Responsible.TestOperationState.ToTask<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestOperationState.ToTask(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestOperationState.ToTask<T>(ITestOperationState<T>, TestInstructionExecutor, CancellationToken, string, string, int)
+  nameWithType.vb: TestOperationState.ToTask(Of T)(ITestOperationState(Of T), TestInstructionExecutor, CancellationToken, String, String, Integer)
 - uid: Responsible.TestOperationState.ToYieldInstruction*
   name: ToYieldInstruction
   href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToYieldInstruction_
@@ -1164,14 +1185,14 @@ references:
   fullName: Responsible.TestOperationState.ToYieldInstruction
   nameWithType: TestOperationState.ToYieldInstruction
 - uid: Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name: ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name: ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, bool, CancellationToken, string, string, int)
   href: api/Responsible.TestOperationState.html#Responsible_TestOperationState_ToYieldInstruction__1_Responsible_State_ITestOperationState___0__Responsible_TestInstructionExecutor_System_Boolean_System_Threading_CancellationToken_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestOperationState.ToYieldInstruction``1(Responsible.State.ITestOperationState{``0},Responsible.TestInstructionExecutor,System.Boolean,System.Threading.CancellationToken,System.String,System.String,System.Int32)
-  name.vb: ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  fullName: Responsible.TestOperationState.ToYieldInstruction<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestOperationState.ToYieldInstruction(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, System.Boolean, System.Threading.CancellationToken, System.String, System.String, System.Int32)
-  nameWithType: TestOperationState.ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
-  nameWithType.vb: TestOperationState.ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Int32)
+  name.vb: ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
+  fullName: Responsible.TestOperationState.ToYieldInstruction<T>(Responsible.State.ITestOperationState<T>, Responsible.TestInstructionExecutor, bool, System.Threading.CancellationToken, string, string, int)
+  fullName.vb: Responsible.TestOperationState.ToYieldInstruction(Of T)(Responsible.State.ITestOperationState(Of T), Responsible.TestInstructionExecutor, Boolean, System.Threading.CancellationToken, String, String, Integer)
+  nameWithType: TestOperationState.ToYieldInstruction<T>(ITestOperationState<T>, TestInstructionExecutor, bool, CancellationToken, string, string, int)
+  nameWithType.vb: TestOperationState.ToYieldInstruction(Of T)(ITestOperationState(Of T), TestInstructionExecutor, Boolean, CancellationToken, String, String, Integer)
 - uid: Responsible.TestResponder
   name: TestResponder
   href: api/Responsible.TestResponder.html
@@ -1202,14 +1223,14 @@ references:
   fullName: Responsible.TestResponder.ExpectWithinSeconds
   nameWithType: TestResponder.ExpectWithinSeconds
 - uid: Responsible.TestResponder.ExpectWithinSeconds``1(Responsible.ITestResponder{``0},System.Double,System.String,System.String,System.Int32)
-  name: ExpectWithinSeconds<T>(ITestResponder<T>, Double, String, String, Int32)
+  name: ExpectWithinSeconds<T>(ITestResponder<T>, double, string, string, int)
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_ExpectWithinSeconds__1_Responsible_ITestResponder___0__System_Double_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestResponder.ExpectWithinSeconds``1(Responsible.ITestResponder{``0},System.Double,System.String,System.String,System.Int32)
-  name.vb: ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Int32)
-  fullName: Responsible.TestResponder.ExpectWithinSeconds<T>(Responsible.ITestResponder<T>, System.Double, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestResponder.ExpectWithinSeconds(Of T)(Responsible.ITestResponder(Of T), System.Double, System.String, System.String, System.Int32)
-  nameWithType: TestResponder.ExpectWithinSeconds<T>(ITestResponder<T>, Double, String, String, Int32)
-  nameWithType.vb: TestResponder.ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Int32)
+  name.vb: ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Integer)
+  fullName: Responsible.TestResponder.ExpectWithinSeconds<T>(Responsible.ITestResponder<T>, double, string, string, int)
+  fullName.vb: Responsible.TestResponder.ExpectWithinSeconds(Of T)(Responsible.ITestResponder(Of T), Double, String, String, Integer)
+  nameWithType: TestResponder.ExpectWithinSeconds<T>(ITestResponder<T>, double, string, string, int)
+  nameWithType.vb: TestResponder.ExpectWithinSeconds(Of T)(ITestResponder(Of T), Double, String, String, Integer)
 - uid: Responsible.TestResponder.Optionally*
   name: Optionally
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Optionally_
@@ -1234,14 +1255,14 @@ references:
   fullName: Responsible.TestResponder.Repeatedly
   nameWithType: TestResponder.Repeatedly
 - uid: Responsible.TestResponder.Repeatedly``1(Responsible.ITestResponder{``0},System.Int32,System.String,System.String,System.Int32)
-  name: Repeatedly<T>(ITestResponder<T>, Int32, String, String, Int32)
+  name: Repeatedly<T>(ITestResponder<T>, int, string, string, int)
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Repeatedly__1_Responsible_ITestResponder___0__System_Int32_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestResponder.Repeatedly``1(Responsible.ITestResponder{``0},System.Int32,System.String,System.String,System.Int32)
-  name.vb: Repeatedly(Of T)(ITestResponder(Of T), Int32, String, String, Int32)
-  fullName: Responsible.TestResponder.Repeatedly<T>(Responsible.ITestResponder<T>, System.Int32, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestResponder.Repeatedly(Of T)(Responsible.ITestResponder(Of T), System.Int32, System.String, System.String, System.Int32)
-  nameWithType: TestResponder.Repeatedly<T>(ITestResponder<T>, Int32, String, String, Int32)
-  nameWithType.vb: TestResponder.Repeatedly(Of T)(ITestResponder(Of T), Int32, String, String, Int32)
+  name.vb: Repeatedly(Of T)(ITestResponder(Of T), Integer, String, String, Integer)
+  fullName: Responsible.TestResponder.Repeatedly<T>(Responsible.ITestResponder<T>, int, string, string, int)
+  fullName.vb: Responsible.TestResponder.Repeatedly(Of T)(Responsible.ITestResponder(Of T), Integer, String, String, Integer)
+  nameWithType: TestResponder.Repeatedly<T>(ITestResponder<T>, int, string, string, int)
+  nameWithType.vb: TestResponder.Repeatedly(Of T)(ITestResponder(Of T), Integer, String, String, Integer)
 - uid: Responsible.TestResponder.Select*
   name: Select
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Select_
@@ -1250,14 +1271,14 @@ references:
   fullName: Responsible.TestResponder.Select
   nameWithType: TestResponder.Select
 - uid: Responsible.TestResponder.Select``2(Responsible.ITestResponder{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name: Select<T1, T2>(ITestResponder<T1>, Func<T1, T2>, String, String, Int32)
+  name: Select<T1, T2>(ITestResponder<T1>, Func<T1, T2>, string, string, int)
   href: api/Responsible.TestResponder.html#Responsible_TestResponder_Select__2_Responsible_ITestResponder___0__System_Func___0___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestResponder.Select``2(Responsible.ITestResponder{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name.vb: Select(Of T1, T2)(ITestResponder(Of T1), Func(Of T1, T2), String, String, Int32)
-  fullName: Responsible.TestResponder.Select<T1, T2>(Responsible.ITestResponder<T1>, System.Func<T1, T2>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestResponder.Select(Of T1, T2)(Responsible.ITestResponder(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
-  nameWithType: TestResponder.Select<T1, T2>(ITestResponder<T1>, Func<T1, T2>, String, String, Int32)
-  nameWithType.vb: TestResponder.Select(Of T1, T2)(ITestResponder(Of T1), Func(Of T1, T2), String, String, Int32)
+  name.vb: Select(Of T1, T2)(ITestResponder(Of T1), Func(Of T1, T2), String, String, Integer)
+  fullName: Responsible.TestResponder.Select<T1, T2>(Responsible.ITestResponder<T1>, System.Func<T1, T2>, string, string, int)
+  fullName.vb: Responsible.TestResponder.Select(Of T1, T2)(Responsible.ITestResponder(Of T1), System.Func(Of T1, T2), String, String, Integer)
+  nameWithType: TestResponder.Select<T1, T2>(ITestResponder<T1>, Func<T1, T2>, string, string, int)
+  nameWithType.vb: TestResponder.Select(Of T1, T2)(ITestResponder(Of T1), Func(Of T1, T2), String, String, Integer)
 - uid: Responsible.TestWaitCondition
   name: TestWaitCondition
   href: api/Responsible.TestWaitCondition.html
@@ -1272,23 +1293,23 @@ references:
   fullName: Responsible.TestWaitCondition.AndThen
   nameWithType: TestWaitCondition.AndThen
 - uid: Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},Responsible.ITestWaitCondition{``1},System.String,System.String,System.Int32)
-  name: AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, ITestWaitCondition<TSecond>, String, String, Int32)
+  name: AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, ITestWaitCondition<TSecond>, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__Responsible_ITestWaitCondition___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},Responsible.ITestWaitCondition{``1},System.String,System.String,System.Int32)
-  name.vb: AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), ITestWaitCondition(Of TSecond), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.AndThen<TFirst, TSecond>(Responsible.ITestWaitCondition<TFirst>, Responsible.ITestWaitCondition<TSecond>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.AndThen(Of TFirst, TSecond)(Responsible.ITestWaitCondition(Of TFirst), Responsible.ITestWaitCondition(Of TSecond), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, ITestWaitCondition<TSecond>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), ITestWaitCondition(Of TSecond), String, String, Int32)
+  name.vb: AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), ITestWaitCondition(Of TSecond), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.AndThen<TFirst, TSecond>(Responsible.ITestWaitCondition<TFirst>, Responsible.ITestWaitCondition<TSecond>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.AndThen(Of TFirst, TSecond)(Responsible.ITestWaitCondition(Of TFirst), Responsible.ITestWaitCondition(Of TSecond), String, String, Integer)
+  nameWithType: TestWaitCondition.AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, ITestWaitCondition<TSecond>, string, string, int)
+  nameWithType.vb: TestWaitCondition.AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), ITestWaitCondition(Of TSecond), String, String, Integer)
 - uid: Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},System.Func{``0,Responsible.ITestWaitCondition{``1}},System.String,System.String,System.Int32)
-  name: AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, Func<TFirst, ITestWaitCondition<TSecond>>, String, String, Int32)
+  name: AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, Func<TFirst, ITestWaitCondition<TSecond>>, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_AndThen__2_Responsible_ITestWaitCondition___0__System_Func___0_Responsible_ITestWaitCondition___1___System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.AndThen``2(Responsible.ITestWaitCondition{``0},System.Func{``0,Responsible.ITestWaitCondition{``1}},System.String,System.String,System.Int32)
-  name.vb: AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), Func(Of TFirst, ITestWaitCondition(Of TSecond)), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.AndThen<TFirst, TSecond>(Responsible.ITestWaitCondition<TFirst>, System.Func<TFirst, Responsible.ITestWaitCondition<TSecond>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.AndThen(Of TFirst, TSecond)(Responsible.ITestWaitCondition(Of TFirst), System.Func(Of TFirst, Responsible.ITestWaitCondition(Of TSecond)), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, Func<TFirst, ITestWaitCondition<TSecond>>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), Func(Of TFirst, ITestWaitCondition(Of TSecond)), String, String, Int32)
+  name.vb: AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), Func(Of TFirst, ITestWaitCondition(Of TSecond)), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.AndThen<TFirst, TSecond>(Responsible.ITestWaitCondition<TFirst>, System.Func<TFirst, Responsible.ITestWaitCondition<TSecond>>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.AndThen(Of TFirst, TSecond)(Responsible.ITestWaitCondition(Of TFirst), System.Func(Of TFirst, Responsible.ITestWaitCondition(Of TSecond)), String, String, Integer)
+  nameWithType: TestWaitCondition.AndThen<TFirst, TSecond>(ITestWaitCondition<TFirst>, Func<TFirst, ITestWaitCondition<TSecond>>, string, string, int)
+  nameWithType.vb: TestWaitCondition.AndThen(Of TFirst, TSecond)(ITestWaitCondition(Of TFirst), Func(Of TFirst, ITestWaitCondition(Of TSecond)), String, String, Integer)
 - uid: Responsible.TestWaitCondition.BoxResult*
   name: BoxResult
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_BoxResult_
@@ -1313,14 +1334,14 @@ references:
   fullName: Responsible.TestWaitCondition.ExpectWithinSeconds
   nameWithType: TestWaitCondition.ExpectWithinSeconds
 - uid: Responsible.TestWaitCondition.ExpectWithinSeconds``1(Responsible.ITestWaitCondition{``0},System.Double,System.String,System.String,System.Int32)
-  name: ExpectWithinSeconds<T>(ITestWaitCondition<T>, Double, String, String, Int32)
+  name: ExpectWithinSeconds<T>(ITestWaitCondition<T>, double, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ExpectWithinSeconds__1_Responsible_ITestWaitCondition___0__System_Double_System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.ExpectWithinSeconds``1(Responsible.ITestWaitCondition{``0},System.Double,System.String,System.String,System.Int32)
-  name.vb: ExpectWithinSeconds(Of T)(ITestWaitCondition(Of T), Double, String, String, Int32)
-  fullName: Responsible.TestWaitCondition.ExpectWithinSeconds<T>(Responsible.ITestWaitCondition<T>, System.Double, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.ExpectWithinSeconds(Of T)(Responsible.ITestWaitCondition(Of T), System.Double, System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.ExpectWithinSeconds<T>(ITestWaitCondition<T>, Double, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.ExpectWithinSeconds(Of T)(ITestWaitCondition(Of T), Double, String, String, Int32)
+  name.vb: ExpectWithinSeconds(Of T)(ITestWaitCondition(Of T), Double, String, String, Integer)
+  fullName: Responsible.TestWaitCondition.ExpectWithinSeconds<T>(Responsible.ITestWaitCondition<T>, double, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.ExpectWithinSeconds(Of T)(Responsible.ITestWaitCondition(Of T), Double, String, String, Integer)
+  nameWithType: TestWaitCondition.ExpectWithinSeconds<T>(ITestWaitCondition<T>, double, string, string, int)
+  nameWithType.vb: TestWaitCondition.ExpectWithinSeconds(Of T)(ITestWaitCondition(Of T), Double, String, String, Integer)
 - uid: Responsible.TestWaitCondition.Select*
   name: Select
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_Select_
@@ -1329,14 +1350,14 @@ references:
   fullName: Responsible.TestWaitCondition.Select
   nameWithType: TestWaitCondition.Select
 - uid: Responsible.TestWaitCondition.Select``2(Responsible.ITestWaitCondition{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name: Select<T1, T2>(ITestWaitCondition<T1>, Func<T1, T2>, String, String, Int32)
+  name: Select<T1, T2>(ITestWaitCondition<T1>, Func<T1, T2>, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_Select__2_Responsible_ITestWaitCondition___0__System_Func___0___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.Select``2(Responsible.ITestWaitCondition{``0},System.Func{``0,``1},System.String,System.String,System.Int32)
-  name.vb: Select(Of T1, T2)(ITestWaitCondition(Of T1), Func(Of T1, T2), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.Select<T1, T2>(Responsible.ITestWaitCondition<T1>, System.Func<T1, T2>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.Select(Of T1, T2)(Responsible.ITestWaitCondition(Of T1), System.Func(Of T1, T2), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.Select<T1, T2>(ITestWaitCondition<T1>, Func<T1, T2>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.Select(Of T1, T2)(ITestWaitCondition(Of T1), Func(Of T1, T2), String, String, Int32)
+  name.vb: Select(Of T1, T2)(ITestWaitCondition(Of T1), Func(Of T1, T2), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.Select<T1, T2>(Responsible.ITestWaitCondition<T1>, System.Func<T1, T2>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.Select(Of T1, T2)(Responsible.ITestWaitCondition(Of T1), System.Func(Of T1, T2), String, String, Integer)
+  nameWithType: TestWaitCondition.Select<T1, T2>(ITestWaitCondition<T1>, Func<T1, T2>, string, string, int)
+  nameWithType.vb: TestWaitCondition.Select(Of T1, T2)(ITestWaitCondition(Of T1), Func(Of T1, T2), String, String, Integer)
 - uid: Responsible.TestWaitCondition.ThenRespondWith*
   name: ThenRespondWith
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWith_
@@ -1344,24 +1365,6 @@ references:
   isSpec: "True"
   fullName: Responsible.TestWaitCondition.ThenRespondWith
   nameWithType: TestWaitCondition.ThenRespondWith
-- uid: Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
-  name: ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, String, ITestInstruction<TResult>, String, String, Int32)
-  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_Responsible_ITestInstruction___1__System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
-  name.vb: ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, ITestInstruction(Of TResult), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.ThenRespondWith<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, System.String, Responsible.ITestInstruction<TResult>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.ThenRespondWith(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), System.String, Responsible.ITestInstruction(Of TResult), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, String, ITestInstruction<TResult>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, ITestInstruction(Of TResult), String, String, Int32)
-- uid: Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
-  name: ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, String, Func<TWait, ITestInstruction<TResult>>, String, String, Int32)
-  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_
-  commentId: M:Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
-  name.vb: ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, ITestInstruction(Of TResult)), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.ThenRespondWith<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, System.String, System.Func<TWait, Responsible.ITestInstruction<TResult>>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.ThenRespondWith(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), System.String, System.Func(Of TWait, Responsible.ITestInstruction(Of TResult)), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, String, Func<TWait, ITestInstruction<TResult>>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, ITestInstruction(Of TResult)), String, String, Int32)
 - uid: Responsible.TestWaitCondition.ThenRespondWithAction*
   name: ThenRespondWithAction
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWithAction_
@@ -1370,14 +1373,14 @@ references:
   fullName: Responsible.TestWaitCondition.ThenRespondWithAction
   nameWithType: TestWaitCondition.ThenRespondWithAction
 - uid: Responsible.TestWaitCondition.ThenRespondWithAction``1(Responsible.ITestWaitCondition{``0},System.String,System.Action{``0},System.String,System.String,System.Int32)
-  name: ThenRespondWithAction<TWait>(ITestWaitCondition<TWait>, String, Action<TWait>, String, String, Int32)
+  name: ThenRespondWithAction<TWait>(ITestWaitCondition<TWait>, string, Action<TWait>, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWithAction__1_Responsible_ITestWaitCondition___0__System_String_System_Action___0__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.ThenRespondWithAction``1(Responsible.ITestWaitCondition{``0},System.String,System.Action{``0},System.String,System.String,System.Int32)
-  name.vb: ThenRespondWithAction(Of TWait)(ITestWaitCondition(Of TWait), String, Action(Of TWait), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.ThenRespondWithAction<TWait>(Responsible.ITestWaitCondition<TWait>, System.String, System.Action<TWait>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.ThenRespondWithAction(Of TWait)(Responsible.ITestWaitCondition(Of TWait), System.String, System.Action(Of TWait), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.ThenRespondWithAction<TWait>(ITestWaitCondition<TWait>, String, Action<TWait>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.ThenRespondWithAction(Of TWait)(ITestWaitCondition(Of TWait), String, Action(Of TWait), String, String, Int32)
+  name.vb: ThenRespondWithAction(Of TWait)(ITestWaitCondition(Of TWait), String, Action(Of TWait), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.ThenRespondWithAction<TWait>(Responsible.ITestWaitCondition<TWait>, string, System.Action<TWait>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.ThenRespondWithAction(Of TWait)(Responsible.ITestWaitCondition(Of TWait), String, System.Action(Of TWait), String, String, Integer)
+  nameWithType: TestWaitCondition.ThenRespondWithAction<TWait>(ITestWaitCondition<TWait>, string, Action<TWait>, string, string, int)
+  nameWithType.vb: TestWaitCondition.ThenRespondWithAction(Of TWait)(ITestWaitCondition(Of TWait), String, Action(Of TWait), String, String, Integer)
 - uid: Responsible.TestWaitCondition.ThenRespondWithFunc*
   name: ThenRespondWithFunc
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWithFunc_
@@ -1386,14 +1389,32 @@ references:
   fullName: Responsible.TestWaitCondition.ThenRespondWithFunc
   nameWithType: TestWaitCondition.ThenRespondWithFunc
 - uid: Responsible.TestWaitCondition.ThenRespondWithFunc``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,``1},System.String,System.String,System.Int32)
-  name: ThenRespondWithFunc<TWait, TResult>(ITestWaitCondition<TWait>, String, Func<TWait, TResult>, String, String, Int32)
+  name: ThenRespondWithFunc<TWait, TResult>(ITestWaitCondition<TWait>, string, Func<TWait, TResult>, string, string, int)
   href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWithFunc__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0___1__System_String_System_String_System_Int32_
   commentId: M:Responsible.TestWaitCondition.ThenRespondWithFunc``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,``1},System.String,System.String,System.Int32)
-  name.vb: ThenRespondWithFunc(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, TResult), String, String, Int32)
-  fullName: Responsible.TestWaitCondition.ThenRespondWithFunc<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, System.String, System.Func<TWait, TResult>, System.String, System.String, System.Int32)
-  fullName.vb: Responsible.TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), System.String, System.Func(Of TWait, TResult), System.String, System.String, System.Int32)
-  nameWithType: TestWaitCondition.ThenRespondWithFunc<TWait, TResult>(ITestWaitCondition<TWait>, String, Func<TWait, TResult>, String, String, Int32)
-  nameWithType.vb: TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, TResult), String, String, Int32)
+  name.vb: ThenRespondWithFunc(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, TResult), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.ThenRespondWithFunc<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, string, System.Func<TWait, TResult>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), String, System.Func(Of TWait, TResult), String, String, Integer)
+  nameWithType: TestWaitCondition.ThenRespondWithFunc<TWait, TResult>(ITestWaitCondition<TWait>, string, Func<TWait, TResult>, string, string, int)
+  nameWithType.vb: TestWaitCondition.ThenRespondWithFunc(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, TResult), String, String, Integer)
+- uid: Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
+  name: ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, string, ITestInstruction<TResult>, string, string, int)
+  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_Responsible_ITestInstruction___1__System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,Responsible.ITestInstruction{``1},System.String,System.String,System.Int32)
+  name.vb: ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, ITestInstruction(Of TResult), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.ThenRespondWith<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, string, Responsible.ITestInstruction<TResult>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.ThenRespondWith(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), String, Responsible.ITestInstruction(Of TResult), String, String, Integer)
+  nameWithType: TestWaitCondition.ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, string, ITestInstruction<TResult>, string, string, int)
+  nameWithType.vb: TestWaitCondition.ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, ITestInstruction(Of TResult), String, String, Integer)
+- uid: Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
+  name: ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, string, Func<TWait, ITestInstruction<TResult>>, string, string, int)
+  href: api/Responsible.TestWaitCondition.html#Responsible_TestWaitCondition_ThenRespondWith__2_Responsible_ITestWaitCondition___0__System_String_System_Func___0_Responsible_ITestInstruction___1___System_String_System_String_System_Int32_
+  commentId: M:Responsible.TestWaitCondition.ThenRespondWith``2(Responsible.ITestWaitCondition{``0},System.String,System.Func{``0,Responsible.ITestInstruction{``1}},System.String,System.String,System.Int32)
+  name.vb: ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, ITestInstruction(Of TResult)), String, String, Integer)
+  fullName: Responsible.TestWaitCondition.ThenRespondWith<TWait, TResult>(Responsible.ITestWaitCondition<TWait>, string, System.Func<TWait, Responsible.ITestInstruction<TResult>>, string, string, int)
+  fullName.vb: Responsible.TestWaitCondition.ThenRespondWith(Of TWait, TResult)(Responsible.ITestWaitCondition(Of TWait), String, System.Func(Of TWait, Responsible.ITestInstruction(Of TResult)), String, String, Integer)
+  nameWithType: TestWaitCondition.ThenRespondWith<TWait, TResult>(ITestWaitCondition<TWait>, string, Func<TWait, ITestInstruction<TResult>>, string, string, int)
+  nameWithType.vb: TestWaitCondition.ThenRespondWith(Of TWait, TResult)(ITestWaitCondition(Of TWait), String, Func(Of TWait, ITestInstruction(Of TResult)), String, String, Integer)
 - uid: Responsible.Unity
   name: Responsible.Unity
   href: api/Responsible.Unity.html
@@ -1460,23 +1481,6 @@ references:
   fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).Error
   nameWithType: TestOperationYieldInstruction<T>.Error
   nameWithType.vb: TestOperationYieldInstruction(Of T).Error
-- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
-  name: keepWaiting
-  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting
-  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
-  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
-  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
-  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
-  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
-- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting*
-  name: keepWaiting
-  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting_
-  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
-  isSpec: "True"
-  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
-  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
-  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
-  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
 - uid: Responsible.Unity.TestOperationYieldInstruction`1.Result
   name: Result
   href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_Result
@@ -1511,6 +1515,23 @@ references:
   fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).WasCanceled
   nameWithType: TestOperationYieldInstruction<T>.WasCanceled
   nameWithType.vb: TestOperationYieldInstruction(Of T).WasCanceled
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  name: keepWaiting
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting
+  commentId: P:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
+  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
+  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
+- uid: Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting*
+  name: keepWaiting
+  href: api/Responsible.Unity.TestOperationYieldInstruction-1.html#Responsible_Unity_TestOperationYieldInstruction_1_keepWaiting_
+  commentId: Overload:Responsible.Unity.TestOperationYieldInstruction`1.keepWaiting
+  isSpec: "True"
+  fullName: Responsible.Unity.TestOperationYieldInstruction<T>.keepWaiting
+  fullName.vb: Responsible.Unity.TestOperationYieldInstruction(Of T).keepWaiting
+  nameWithType: TestOperationYieldInstruction<T>.keepWaiting
+  nameWithType.vb: TestOperationYieldInstruction(Of T).keepWaiting
 - uid: Responsible.Unity.UnhandledLogMessageException
   name: UnhandledLogMessageException
   href: api/Responsible.Unity.UnhandledLogMessageException.html
@@ -1559,11 +1580,14 @@ references:
   fullName: Responsible.Unity.UnityFailureListener
   nameWithType: UnityFailureListener
 - uid: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception,System.String)
-  name: OperationFailed(Exception, String)
+  name: OperationFailed(Exception, string)
   href: api/Responsible.Unity.UnityFailureListener.html#Responsible_Unity_UnityFailureListener_OperationFailed_System_Exception_System_String_
   commentId: M:Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception,System.String)
-  fullName: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception, System.String)
-  nameWithType: UnityFailureListener.OperationFailed(Exception, String)
+  name.vb: OperationFailed(Exception, String)
+  fullName: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception, string)
+  fullName.vb: Responsible.Unity.UnityFailureListener.OperationFailed(System.Exception, String)
+  nameWithType: UnityFailureListener.OperationFailed(Exception, string)
+  nameWithType.vb: UnityFailureListener.OperationFailed(Exception, String)
 - uid: Responsible.Unity.UnityFailureListener.OperationFailed*
   name: OperationFailed
   href: api/Responsible.Unity.UnityFailureListener.html#Responsible_Unity_UnityFailureListener_OperationFailed_
@@ -1578,18 +1602,24 @@ references:
   fullName: Responsible.Unity.UnityTestInstructionExecutor
   nameWithType: UnityTestInstructionExecutor
 - uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean,Responsible.IGlobalContextProvider)
-  name: UnityTestInstructionExecutor(Boolean, IGlobalContextProvider)
+  name: UnityTestInstructionExecutor(bool, IGlobalContextProvider)
   href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_System_Boolean_Responsible_IGlobalContextProvider_
   commentId: M:Responsible.Unity.UnityTestInstructionExecutor.#ctor(System.Boolean,Responsible.IGlobalContextProvider)
-  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor(System.Boolean, Responsible.IGlobalContextProvider)
-  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor(Boolean, IGlobalContextProvider)
+  name.vb: New(Boolean, IGlobalContextProvider)
+  fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor(bool, Responsible.IGlobalContextProvider)
+  fullName.vb: Responsible.Unity.UnityTestInstructionExecutor.New(Boolean, Responsible.IGlobalContextProvider)
+  nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor(bool, IGlobalContextProvider)
+  nameWithType.vb: UnityTestInstructionExecutor.New(Boolean, IGlobalContextProvider)
 - uid: Responsible.Unity.UnityTestInstructionExecutor.#ctor*
   name: UnityTestInstructionExecutor
   href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor__ctor_
   commentId: Overload:Responsible.Unity.UnityTestInstructionExecutor.#ctor
   isSpec: "True"
+  name.vb: New
   fullName: Responsible.Unity.UnityTestInstructionExecutor.UnityTestInstructionExecutor
+  fullName.vb: Responsible.Unity.UnityTestInstructionExecutor.New
   nameWithType: UnityTestInstructionExecutor.UnityTestInstructionExecutor
+  nameWithType.vb: UnityTestInstructionExecutor.New
 - uid: Responsible.Unity.UnityTestInstructionExecutor.Dispose
   name: Dispose()
   href: api/Responsible.Unity.UnityTestInstructionExecutor.html#Responsible_Unity_UnityTestInstructionExecutor_Dispose
@@ -1648,57 +1678,6 @@ references:
   isSpec: "True"
   fullName: Responsible.Unity.UnityTestScheduler.Dispose
   nameWithType: UnityTestScheduler.Dispose
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
-  name: ITestScheduler.FrameNow
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_FrameNow
-  commentId: P:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
-  name.vb: Responsible.ITestScheduler.FrameNow
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.FrameNow
-  nameWithType: UnityTestScheduler.ITestScheduler.FrameNow
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.FrameNow
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow*
-  name: ITestScheduler.FrameNow
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_FrameNow_
-  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#FrameNow
-  isSpec: "True"
-  name.vb: Responsible.ITestScheduler.FrameNow
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.FrameNow
-  nameWithType: UnityTestScheduler.ITestScheduler.FrameNow
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.FrameNow
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback(System.Action)
-  name: ITestScheduler.RegisterPollCallback(Action)
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_RegisterPollCallback_System_Action_
-  commentId: M:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback(System.Action)
-  name.vb: Responsible.ITestScheduler.RegisterPollCallback(Action)
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback(System.Action)
-  nameWithType: UnityTestScheduler.ITestScheduler.RegisterPollCallback(Action)
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback(Action)
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback*
-  name: ITestScheduler.RegisterPollCallback
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_RegisterPollCallback_
-  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#RegisterPollCallback
-  isSpec: "True"
-  name.vb: Responsible.ITestScheduler.RegisterPollCallback
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback
-  nameWithType: UnityTestScheduler.ITestScheduler.RegisterPollCallback
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.RegisterPollCallback
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
-  name: ITestScheduler.TimeNow
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_TimeNow
-  commentId: P:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
-  name.vb: Responsible.ITestScheduler.TimeNow
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.TimeNow
-  nameWithType: UnityTestScheduler.ITestScheduler.TimeNow
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.TimeNow
-- uid: Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow*
-  name: ITestScheduler.TimeNow
-  href: api/Responsible.Unity.UnityTestScheduler.html#Responsible_Unity_UnityTestScheduler_Responsible_ITestScheduler_TimeNow_
-  commentId: Overload:Responsible.Unity.UnityTestScheduler.Responsible#ITestScheduler#TimeNow
-  isSpec: "True"
-  name.vb: Responsible.ITestScheduler.TimeNow
-  fullName: Responsible.Unity.UnityTestScheduler.Responsible.ITestScheduler.TimeNow
-  nameWithType: UnityTestScheduler.ITestScheduler.TimeNow
-  nameWithType.vb: UnityTestScheduler.Responsible.ITestScheduler.TimeNow
 - uid: Responsible.Utilities
   name: Responsible.Utilities
   href: api/Responsible.Utilities.html
