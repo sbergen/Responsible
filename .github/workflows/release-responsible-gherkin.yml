@@ -14,11 +14,11 @@ jobs:
         id: nuget-version
         run: |
           version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' src/ResponsibleGherkin/ResponsibleGherkin.csproj)
-          echo "::set-output name=version::${version}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Parse tag version
         id: tag-version
-        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\/responsible-gherkin-v/}"
+        run: echo "version=${GITHUB_REF/refs\/tags\/responsible-gherkin-v/}" >> "$GITHUB_OUTPUT"
 
       - name: Check that the versions match
         run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.tag-version.outputs.version }}

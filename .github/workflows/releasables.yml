@@ -99,7 +99,7 @@ jobs:
         id: nuget-version
         run: |
           version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' com.beatwaves.responsible/Runtime/Responsible.csproj)
-          echo "::set-output name=version::${version}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Get latest changelog entry
         id: changelog
@@ -124,7 +124,7 @@ jobs:
 
       - name: Create tag name
         id: create-tag-name
-        run: echo "::set-output name=tag::v${{ steps.nuget-version.outputs.version }}"
+        run: echo "tag=v${{ steps.nuget-version.outputs.version }}" >> "$GITHUB_OUTPUT"
 
   release:
     runs-on: ubuntu-latest

@@ -110,7 +110,7 @@ jobs:
         id: run-tests
         run: |
           dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults --settings runsettings.xml --logger "trx"
-          echo "::set-output name=tests::TestResults/*.trx"
+          echo "tests=TestResults/*.trx" >> "$GITHUB_OUTPUT"
 
       - name: Push to testspace
         if: ${{ always() }}
