@@ -36,7 +36,7 @@ namespace Responsible.Tests
 
 			state.ToTask(this.Executor); // Complete task
 
-			var lines = state.ToString().Split(Environment.NewLine);
+			var lines = state.ToString()!.Split(Environment.NewLine);
 			CollectionAssert.Contains(
 				lines,
 				" ",
