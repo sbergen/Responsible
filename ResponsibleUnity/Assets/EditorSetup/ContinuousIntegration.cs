@@ -27,9 +27,26 @@ namespace Responsible.EditorSetup
         public static async void BuildDocumentation()
         {
 	        var returnCode = 0;
+            string stdout;
 
 	        try
 	        {
+                // Mark directory as safe for git if running in GitHub Actions
+                // See e.g. https://github.com/actions/runner/issues/2033
+                const string githubWorkspace = "/github/workspace";
+                if (RepositoryPath == githubWorkspace)
+                {
+                    (returnCode, stdout) = RunCommand(
+                        workingDir: RepositoryPath,
+                        command: "git",
+                        "config", "--global", "--add", "safe.directory", githubWorkspace);
+
+                    if (returnCode != 0)
+                    {
+                        Debug.LogError($"Setting git directory as safe failed:\n{stdout}");
+                    }
+                }
+
 		        Debug.Log("Updating failure example...");
 		        File.WriteAllText(
 			        Path.Combine(DocFxDir, "failure.md"),
@@ -39,7 +56,6 @@ namespace Responsible.EditorSetup
 		        SyncSolution();
 
 		        Debug.Log("Building documentation...");
-		        string stdout;
 		        (returnCode, stdout) = RunCommand(
 			        workingDir: DocFxDir,
 			        command: "docfx",
