@@ -9,6 +9,8 @@ Experimental features are also **not** under semantic versioning.
 
 ## [Unreleased]
 
+## [4.5.0] - 2024-05-25
+
 ### Added
 - Added support for Unity 2022
 - Added `RepeatUntil` extension on test instruction
@@ -159,7 +161,8 @@ Experimental features are also **not** under semantic versioning.
 ### Added
 - Initial public release with basic functionality.
 
-[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/sbergen/Responsible/compare/v4.5.0...HEAD
+[4.5.0]: https://github.com/sbergen/Responsible/releases/tag/v4.5.0
 [4.4.0]: https://github.com/sbergen/Responsible/releases/tag/v4.4.0
 [4.3.0]: https://github.com/sbergen/Responsible/releases/tag/v4.3.0
 [4.2.0]: https://github.com/sbergen/Responsible/releases/tag/v4.2.0
