@@ -32,7 +32,6 @@ namespace Responsible.Tests
 		[Test]
 		public void BoxedTestInstruction_DoesNotThrow_WhenSuccessful()
 		{
-
 			this.returnTrue.BoxResult().ToTask(this.Executor).AssertSynchronousResult()
 				.Should().Be(true);
 		}
