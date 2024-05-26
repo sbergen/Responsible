@@ -90,10 +90,9 @@ jobs:
 
       - name: Read current Unity package version
         id: unity-version
-        uses: notiz-dev/github-action-json-property@release
-        with:
-          path: com.beatwaves.responsible/package.json
-          prop_path: 'version'
+        run: |
+          version=$(jq -r .version com.beatwaves.responsible/package.json)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Read current NuGet package version
         id: nuget-version
@@ -110,14 +109,14 @@ jobs:
           CHANGELOG: ${{ steps.changelog.outputs.changes }}
         run: |
           echo "Previous release version: ${{ steps.latest-release-version.outputs.result }}"
-          echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.prop }}"
+          echo "Current version from Unity package.json: ${{ steps.unity-version.outputs.version }}"
           echo "Current version from NuGet package: ${{ steps.nuget-version.outputs.version }}"
           echo "Current version from CHANGELOG.md: ${{ steps.changelog.outputs.version }}"
           echo "Changes in changelog:"
           echo $CHANGELOG
 
       - name: Check that Unity version is up to date with changelog
-        run: test ${{ steps.unity-version.outputs.prop }} = ${{ steps.changelog.outputs.version }}
+        run: test ${{ steps.unity-version.outputs.version }} = ${{ steps.changelog.outputs.version }}
 
       - name: Check that NuGet version is up to date with changelog
         run: test ${{ steps.nuget-version.outputs.version }} = ${{ steps.changelog.outputs.version }}
