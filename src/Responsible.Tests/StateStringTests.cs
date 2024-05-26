@@ -103,7 +103,7 @@ namespace Responsible.Tests
 				"Description:",
 				b => b.AddDetails("first line\nsecond line"));
 
-			builder.ToString().ReplaceLineEndings("\n").Should()
+			builder.ToString().Replace("\r\n", "\n").Should()
 				.Be("Description:\n  first line\n  second line");
 		}
 

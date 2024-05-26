@@ -1,5 +1,6 @@
 {
     "name": "Responsible.Tests",
+    "rootNamespace": "Responsible.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
@@ -12,7 +13,7 @@
     "precompiledReferences": [
         "nunit.framework.dll",
         "NSubstitute.dll",
-        "System.Threading.Tasks.Extensions.dll"
+        "FluentAssertions.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
