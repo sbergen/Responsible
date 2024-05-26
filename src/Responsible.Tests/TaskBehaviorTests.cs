@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Responsible.Tests
@@ -21,7 +22,7 @@ namespace Responsible.Tests
 				task.Exception,
 				"Expecting Unity 2021 && 2022 to still be broken: If this test fails, remove the workarounds 🎉");
 #else
-			Assert.IsInstanceOf<AggregateException>(task.Exception);
+			task.Exception.Should().BeOfType<AggregateException>();
 #endif
 		}
 
@@ -31,7 +32,7 @@ namespace Responsible.Tests
 			using (ExecutionContext.SuppressFlow())
 			{
 				var task = FaultTaskAfterCancellation();
-				Assert.IsInstanceOf<AggregateException>(task.Exception);
+				task.Exception.Should().BeOfType<AggregateException>();
 			}
 		}
 

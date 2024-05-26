@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Utilities;
@@ -28,10 +29,10 @@ namespace Responsible.Tests
 			this.poller.RegisterPollCallback(() => ++called);
 
 			this.poller.Poll();
-			Assert.AreEqual(1, called);
+			called.Should().Be(1);
 
 			this.poller.Poll();
-			Assert.AreEqual(2, called);
+			called.Should().Be(2);
 		}
 
 		[Test]
@@ -41,7 +42,7 @@ namespace Responsible.Tests
 			this.poller.RegisterPollCallback(() => ++called).Dispose();
 
 			this.poller.Poll();
-			Assert.AreEqual(0, called);
+			called.Should().Be(0);
 		}
 
 		[Test]

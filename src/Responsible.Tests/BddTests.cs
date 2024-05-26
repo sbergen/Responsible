@@ -7,6 +7,7 @@ using Responsible.Bdd;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
 using static Responsible.Bdd.Keywords;
+using FluentAssertions;
 
 namespace Responsible.Tests
 {
@@ -50,9 +51,8 @@ namespace Responsible.Tests
 		public void Scenario_ExecutesAllSteps()
 		{
 			this.scenario.ToTask(this.Executor);
-			Assert.AreEqual(
-				(true, true, true, true, true),
-				(this.givenExecuted, this.andExecuted, this.whenExecuted, this.thenExecuted, this.butExecuted));
+			(this.givenExecuted, this.andExecuted, this.whenExecuted, this.thenExecuted, this.butExecuted)
+				.Should().Be((true, true, true, true, true));
 		}
 
 		[Test]
@@ -82,8 +82,8 @@ namespace Responsible.Tests
 				.ContinueWith(Do("Continue", () => didContinue = true))
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(didContinue, "Pending should terminate test early");
-			Assert.IsTrue(task.IsCanceled, "Task should be canceled after Pending is executed");
+			didContinue.Should().BeFalse("Pending should terminate test early");
+			task.IsCanceled.Should().BeTrue("Task should be canceled after Pending is executed");
 		}
 
 		[Test]
@@ -101,7 +101,7 @@ namespace Responsible.Tests
 				Given("G", Do("G", () => this.givenExecuted = true)),
 				When("W", Do("W", () => this.whenExecuted = true)));
 
-			Assert.AreEqual((true, true), (this.givenExecuted, this.whenExecuted));
+			(this.givenExecuted, this.whenExecuted).Should().Be((true, true));
 		}
 
 		// The keywords below are considered omissible from the instruction stacks, they only show up in the
@@ -124,7 +124,7 @@ namespace Responsible.Tests
 
 			state.ToTask(this.Executor);
 
-			StringAssert.DoesNotContain($"[{methodName}]", state.ToString());
+			state.ToString().Should().NotContain($"[{methodName}]");
 		}
 
 		// Partially for implementation detail reasons, and partially because it's nice to at least see
@@ -139,9 +139,7 @@ namespace Responsible.Tests
 
 			state.ToTask(this.Executor);
 
-			StringAssert.Contains(
-				$"[{nameof(Scenario)}] {GetCallerDetails()}",
-				state.ToString());
+			state.ToString().Should().Contain($"[{nameof(Scenario)}] {GetCallerDetails()}");
 		}
 
 		private static string GetCallerDetails(

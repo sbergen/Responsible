@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FluentAssertions;
 using JetBrains.Annotations;
 using NUnit.Framework;
 using Responsible.State;
@@ -37,8 +38,7 @@ namespace Responsible.Tests
 			state.ToTask(this.Executor); // Complete task
 
 			var lines = state.ToString()!.Split(Environment.NewLine);
-			CollectionAssert.Contains(
-				lines,
+			lines.Should().Contain(
 				" ",
 				"Blank lines should contain a space, so that Unity does not strip it");
 		}
@@ -59,13 +59,13 @@ namespace Responsible.Tests
 				state.ToTask(this.Executor);
 				var stateString = state.ToString();
 
-				StringAssert.Contains(details, stateString);
+				stateString.Should().Contain(details);
 			}
 			else
 			{
 				var stateString = state.ToString();
 
-				StringAssert.DoesNotContain(details, stateString);
+				stateString.Should().NotContain(details);
 				AssertNoEmptyLines(stateString);
 			}
 		}
@@ -82,15 +82,15 @@ namespace Responsible.Tests
 				state.ToTask(this.Executor);
 				var stateString = state.ToString();
 
-				StringAssert.Contains(noContextText, stateString);
-				StringAssert.Contains(considerText, stateString);
+				stateString.Should().Contain(noContextText);
+				stateString.Should().Contain(considerText);
 			}
 			else
 			{
 				var stateString = state.ToString();
 
-				StringAssert.DoesNotContain(noContextText, stateString);
-				StringAssert.DoesNotContain(considerText, stateString);
+				stateString.Should().NotContain(noContextText);
+				stateString.Should().NotContain(considerText);
 				AssertNoEmptyLines(stateString);
 			}
 		}
@@ -103,9 +103,8 @@ namespace Responsible.Tests
 				"Description:",
 				b => b.AddDetails("first line\nsecond line"));
 
-			Assert.AreEqual(
-				"Description:\n  first line\n  second line",
-				builder.ToString().Replace("\r\n", "\n"));
+			builder.ToString().Replace("\r\n", "\n").Should()
+				.Be("Description:\n  first line\n  second line");
 		}
 
 		[AssertionMethod]
@@ -115,10 +114,8 @@ namespace Responsible.Tests
 				.Split('\n')
 				.Select(s => s.Trim())
 				.Count(string.IsNullOrEmpty);
-			Assert.AreEqual(
-				0,
-				emptyLineCount,
-				$"String should not contain empty lines, was:\n{str}");
+			emptyLineCount.Should()
+				.Be(0, $"String should not contain empty lines, was:\n{str}");
 		}
 	}
 }

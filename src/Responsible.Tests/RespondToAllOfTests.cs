@@ -1,7 +1,7 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -30,21 +30,15 @@ namespace Responsible.Tests
 		[Test]
 		public void RespondToAllOf_Completes_WhenAllCompleted()
 		{
-			Assert.AreEqual(
-				(false, false, false),
-				(this.responder1.CompletedRespond, this.responder2.CompletedRespond, this.Completed),
-				"None should have completed");
+			(this.responder1.CompletedRespond, this.responder2.CompletedRespond, this.Completed)
+				.Should().Be((false, false, false), "none should have completed");
 
 			this.responder1.AllowFullCompletion();
 			this.responder2.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
-			Assert.AreEqual(
-				(true, true, true),
-				(this.responder1.CompletedRespond,
-					this.responder2.CompletedRespond,
-					this.Completed),
-				"Everything should have completed");
+			(this.responder1.CompletedRespond, this.responder2.CompletedRespond, this.Completed)
+				.Should().Be((true, true, true), "everything should have completed");
 		}
 
 		[Test]
@@ -59,24 +53,20 @@ namespace Responsible.Tests
 			second.MayRespond = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.AreEqual(
-				(true, false, false),
-				(first.StartedToRespond, second.StartedToRespond, this.Completed),
-				"Second should not have started to respond");
+			(first.StartedToRespond, second.StartedToRespond, this.Completed)
+				.Should().Be((true, false, false), "second should not have started to respond");
 
 			first.MayComplete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(second.StartedToRespond, "Second should have started to respond");
+			second.StartedToRespond.Should().BeTrue("second should have started to respond");
 			this.AdvanceDefaultFrame();
 
 			second.MayComplete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.AreEqual(
-				(true, true, true),
-				(first.CompletedRespond, second.CompletedRespond, this.Completed),
-				"Everything should have completed");
+			(first.CompletedRespond, second.CompletedRespond, this.Completed)
+				.Should().Be((true, true, true), "everything should have completed");
 
 			this.AssertResult();
 		}
@@ -95,7 +85,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 
@@ -116,7 +106,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -144,22 +134,20 @@ namespace Responsible.Tests
 					.ToTask(this.Executor, cts.Token);
 
 				var exception = await AwaitFailureExceptionForUnity(canceledTask);
-				Assert.IsInstanceOf<TaskCanceledException>(exception.InnerException);
+				exception.InnerException.Should().BeOfType<TaskCanceledException>();
 			}
 		}
 
 		private void AssertResult()
 		{
-			Assert.IsFalse(this.task.IsFaulted);
-			Assert.IsTrue(this.task.IsCompleted);
+			this.task.IsFaulted.Should().BeFalse();
+			this.task.IsCompleted.Should().BeTrue();
 
-			Assert.AreEqual(
-				new[] { typeof(TestDataBase), typeof(TestDataDerived)},
-				this.task.AssertSynchronousResult().Select(r => r.GetType()).ToArray());
-
-			Assert.AreEqual(
-				new[] { 1, 2 },
-				this.task.AssertSynchronousResult().Select(r => r.Value).ToArray());
+			this.task.AssertSynchronousResult().Should().BeEquivalentTo(new[]
+			{
+				new TestDataBase(1),
+				new TestDataDerived(2),
+			});
 		}
 	}
 }

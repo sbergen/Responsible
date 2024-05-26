@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -31,16 +32,15 @@ namespace Responsible.Tests
 		[Test]
 		public void BoxedTestInstruction_DoesNotThrow_WhenSuccessful()
 		{
-			Assert.AreEqual(
-				true,
-				this.returnTrue.BoxResult().ToTask(this.Executor).AssertSynchronousResult());
+			this.returnTrue.BoxResult().ToTask(this.Executor).AssertSynchronousResult()
+				.Should().Be(true);
 		}
 
 		[Test]
 		public async Task BoxedTestInstruction_HasError_WhenInstructionHasError()
 		{
 			var task = this.throwError.BoxResult().ToTask(this.Executor);
-			Assert.NotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -52,11 +52,11 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -68,10 +68,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -84,11 +84,11 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -101,11 +101,11 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 
 			this.complete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -118,10 +118,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 	}
 }

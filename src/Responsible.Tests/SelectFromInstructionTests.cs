@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -15,7 +16,7 @@ namespace Responsible.Tests
 				.Select(val => val * 2)
 				.ToTask(this.Executor)
 				.AssertSynchronousResult();
-			Assert.AreEqual(4, result);
+			result.Should().Be(4);
 		}
 
 		[Test]
@@ -24,7 +25,7 @@ namespace Responsible.Tests
 			var task = Return(2)
 				.Select<int, int>(_ => throw new Exception("Fail!"))
 				.ToTask(this.Executor);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]

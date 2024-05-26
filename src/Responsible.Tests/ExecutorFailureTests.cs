@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.State;
@@ -34,7 +35,7 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
@@ -56,7 +57,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Is<Exception>(e => e.Message == ExceptionMessage),
 				Arg.Is<string>(str => str.Contains(ExceptionMessage)));

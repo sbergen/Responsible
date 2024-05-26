@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -22,15 +23,18 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(10)
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsCompleted, "Should not be completed before condition is met");
+			task.IsCompleted.Should()
+				.BeFalse("it should not be completed before condition is met");
 			this.AdvanceDefaultFrame();
 
 			// Completes on next frame
 			boxedBool = true;
-			Assert.IsFalse(task.IsCompleted, "Should not be completed before poller is run");
+			task.IsCompleted.Should().BeFalse(
+				"it should not be completed before poller is run");
 			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(task.IsCompleted, "Should be completed after polling");
+			task.IsCompleted.Should().BeTrue(
+				"it should be completed after polling");
 		}
 
 		[Test]
@@ -41,15 +45,18 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(10)
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsCompleted, "Should not be completed before condition is met");
+			task.IsCompleted.Should().BeFalse(
+				"it should not be completed before condition is met");
 			this.AdvanceDefaultFrame();
 
 			// Completes on next frame
 			fulfilled = true;
-			Assert.IsFalse(task.IsCompleted, "Should not be completed before poller is run");
+			task.IsCompleted.Should().BeFalse(
+				"it should not be completed before poller is run");
 			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(task.IsCompleted, "Should be completed after polling");
+			task.IsCompleted.Should().BeTrue(
+				"it should be completed after polling");
 		}
 
 		[Test]
@@ -60,7 +67,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor)
 				.Wait(TimeSpan.Zero);
 
-			Assert.IsTrue(result);
+			result.Should().BeTrue();
 		}
 
 		[Test]
@@ -76,7 +83,7 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(OneSecond);
 
 			var exception = await AwaitFailureExceptionForUnity(task);
-			StringAssert.Contains("Should be in output", exception.Message);
+			exception.Message.Should().Contain("Should be in output");
 		}
 
 		[Test]
@@ -97,7 +104,7 @@ namespace Responsible.Tests
 			polled = false;
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(polled, "Should not be polled after completion");
+			polled.Should().BeFalse("condition should not be polled after completion");
 		}
 
 		[Test]
@@ -119,7 +126,7 @@ namespace Responsible.Tests
 				polled = false; // Reset after initial check
 				tokenSource.Cancel();
 				this.AdvanceDefaultFrame();
-				Assert.IsFalse(polled, "Should not be polled after cancellation");
+				polled.Should().BeFalse("condition should not be polled after cancellation");
 			}
 		}
 
@@ -141,7 +148,7 @@ namespace Responsible.Tests
 					.ToTask(this.Executor, tokenSource.Token);
 
 				this.AdvanceDefaultFrame();
-				Assert.IsFalse(polled, "Should not be polled if canceled before execution");
+				polled.Should().BeFalse("condition should not be polled if canceled before execution");
 			}
 		}
 
@@ -168,7 +175,8 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 
-			Assert.IsFalse(extraContextRequested, "Should not request extra context when canceled");
+			extraContextRequested.Should().BeFalse(
+				"extra context should not be request when canceled");
 
 			var error = await AwaitFailureExceptionForUnity(task);
 			StateAssert.StringContainsInOrder(error.Message)

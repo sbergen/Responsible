@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.State;
 
@@ -15,9 +16,7 @@ namespace Responsible.Tests
 		{
 			var builder = new StateStringBuilder();
 			builder.AddNestedDetails("Primary", b => b.AddDetails("Nested1\nNested2"));
-			Assert.AreEqual(
-				$"Primary{NewLine}  Nested1{NewLine}  Nested2",
-				builder.ToString());
+			builder.ToString().Should().Be($"Primary{NewLine}  Nested1{NewLine}  Nested2");
 		}
 
 		[Test]
@@ -33,9 +32,8 @@ namespace Responsible.Tests
 				});
 			builder.AddDetails("Five");
 
-			Assert.AreEqual(
-				$"One{NewLine}  Two{NewLine}    Three{NewLine}  Four{NewLine}Five",
-				builder.ToString());
+			builder.ToString().Should()
+				.Be($"One{NewLine}  Two{NewLine}    Three{NewLine}  Four{NewLine}Five");
 		}
 	}
 }

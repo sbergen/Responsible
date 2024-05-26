@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
@@ -38,30 +39,30 @@ namespace Responsible.Tests
 		public void ExternalResult_IsReturned_WhenReturnedEarly()
 		{
 			var task = NeverZero.ToTask(this.Executor);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			this.completionSource.SetResult(42);
-			Assert.AreEqual(42, task.AssertSynchronousResult());
+			task.AssertSynchronousResult().Should().Be(42);
 		}
 
 		[Test]
 		public async Task ExternalResult_CausesFailure_WhenErroredEarly()
 		{
 			var task = NeverZero.ToTask(this.Executor);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			var exception = new Exception("Test Exception");
 			this.completionSource.SetException(exception);
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.AreSame(exception, error.InnerException);
+			error.InnerException.Should().BeSameAs(exception);
 		}
 
 		[Test]
 		public void ExternalResult_IsCanceled_WhenFinished()
 		{
 			var task = Return(42).ToTask(this.Executor);
-			Assert.IsTrue(task.IsCompleted);
-			Assert.IsTrue(this.cancellationToken.IsCancellationRequested);
+			task.IsCompleted.Should().BeTrue();
+			this.cancellationToken.IsCancellationRequested.Should().BeTrue();
 			Assert.DoesNotThrow(() => this.completionSource.SetResult(0));
 		}
 
@@ -88,7 +89,7 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 
-			Assert.IsFalse(polled);
+			polled.Should().BeFalse();
 		}
 	}
 }

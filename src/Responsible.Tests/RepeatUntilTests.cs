@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -23,10 +24,10 @@ namespace Responsible.Tests
 
 			this.AdvanceDefaultFrame();
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted, "condition should not yet be completed");
+			task.IsCompleted.Should().BeFalse("the condition should not yet be completed");
 
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted, "condition should be completed");
+			task.IsCompleted.Should().BeTrue("the condition should be completed");
 		}
 
 		[Test]
@@ -39,8 +40,8 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsTrue(task.IsCompleted, "condition should be immediately");
-			Assert.AreEqual(0, executionCount, "no instruction executions should happen");
+			task.IsCompleted.Should().BeTrue("the condition should be completed immediately");
+			executionCount.Should().Be(0, "no instruction executions should happen");
 		}
 
 		[Test]
@@ -56,7 +57,7 @@ namespace Responsible.Tests
 			cts.Cancel();
 
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
+			error.InnerException.Should().BeOfType<TaskCanceledException>();
 		}
 
 		[Test]
@@ -70,10 +71,10 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.AreEqual(3, executionCount);
-			Assert.IsInstanceOf<RepetitionLimitExceededException>(error.InnerException);
-			// ReSharper disable once PossibleNullReferenceException, checked above
-			StringAssert.Contains("3", error.InnerException.Message);
+			executionCount.Should().Be(3);
+			error.InnerException.Should()
+				.BeOfType<RepetitionLimitExceededException>()
+				.Subject.Message.Should().Contain("3");
 		}
 
 		[Test]
@@ -132,7 +133,7 @@ namespace Responsible.Tests
 				.Details("REPEATEDLY EXECUTING")
 				.Completed("increment count");
 
-			StringAssert.DoesNotContain("...", stateString);
+			stateString.Should().NotContain("...");
 		}
 	}
 }

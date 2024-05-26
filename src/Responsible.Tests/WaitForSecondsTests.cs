@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -10,11 +11,11 @@ namespace Responsible.Tests
 		public void WaitForSeconds_Completes_AfterTimeout()
 		{
 			var task = WaitForSeconds(2).ToTask(this.Executor);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]

@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -9,9 +10,8 @@ namespace Responsible.Tests
 		[Test]
 		public void LinqQuery_WorksAsExpected()
 		{
-			Assert.AreEqual(
-				10,
-				BuildQuery().ToTask(this.Executor).AssertSynchronousResult());
+			BuildQuery().ToTask(this.Executor).AssertSynchronousResult()
+				.Should().Be(10);
 		}
 
 		private static ITestInstruction<int> BuildQuery() =>

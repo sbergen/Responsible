@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -40,19 +41,19 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(this.startedToReact);
-			Assert.IsFalse(task.IsCompleted);
+			this.startedToReact.Should().BeFalse();
+			task.IsCompleted.Should().BeFalse();
 
 			this.readyToReact = true;
 
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(this.startedToReact);
-			Assert.IsFalse(task.IsCompleted);
+			this.startedToReact.Should().BeTrue();
+			task.IsCompleted.Should().BeFalse();
 
 			this.readyToComplete = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(this.startedToReact);
-			Assert.IsTrue(task.IsCompleted);
+			this.startedToReact.Should().BeTrue();
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -84,14 +85,14 @@ namespace Responsible.Tests
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 			this.readyToReact = true;
 			this.Scheduler.AdvanceFrame(TimeSpan.Zero);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			// After this we have waited 4 seconds, which is more than either of the individual timeouts
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
 			this.readyToComplete = true;
 			this.Scheduler.AdvanceFrame(TimeSpan.Zero);
 
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]

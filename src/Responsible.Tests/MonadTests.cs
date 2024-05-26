@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -39,8 +40,7 @@ namespace Responsible.Tests
 		}
 
 		private void AssertEqual<T>(ITestInstruction<T> left, ITestInstruction<T> right)
-			=> Assert.AreEqual(
-				left.ToTask(this.Executor).AssertSynchronousResult(),
+			=> left.ToTask(this.Executor).AssertSynchronousResult().Should().Be(
 				right.ToTask(this.Executor).AssertSynchronousResult());
 	}
 }

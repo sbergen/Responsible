@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -26,8 +27,8 @@ namespace Responsible.Tests
 					});
 
 			// On Unity (and older .NET), FromSeconds discards sub-millisecond information
-			Assert.AreEqual(TimeSpan.FromTicks((int)Math.Round(TimeSpan.TicksPerSecond / 60.0)), frameDuration);
-			Assert.AreEqual(60, frameCount);
+			frameDuration.Should().Be(TimeSpan.FromTicks((int)Math.Round(TimeSpan.TicksPerSecond / 60.0)));
+			frameCount.Should().Be(60);
 		}
 
 		[Test]
@@ -42,7 +43,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.RunAsLoop(() => ++frame);
 
-			Assert.AreEqual(10, result);
+			result.Should().Be(10);
 		}
 
 		[Test]
@@ -68,7 +69,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(0)
 				.RunAsLoop(() => { }));
 
-			Assert.IsInstanceOf<TimeoutException>(exception?.InnerException);
+			exception?.InnerException.Should().BeOfType<TimeoutException>();
 			AssertMessageContainsOperationNameTag(exception);
 		}
 
@@ -82,7 +83,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.RunAsLoop(() => { }));
 
-			Assert.AreEqual(TestExceptionMessage, exception?.InnerException?.Message);
+			exception?.InnerException?.Message.Should().Be(TestExceptionMessage);
 			AssertMessageContainsOperationNameTag(exception);
 		}
 
@@ -94,13 +95,11 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.RunAsLoop(() => throw new Exception(TestExceptionMessage)));
 
-			Assert.AreEqual(TestExceptionMessage, exception?.InnerException?.Message);
+			exception?.InnerException?.Message.Should().Be(TestExceptionMessage);
 			// Can't (currently, easily) get the current instruction from this to include the instruction stack
 		}
 
 		private static void AssertMessageContainsOperationNameTag(TestFailureException exception) =>
-			StringAssert.Contains(
-				$"[{nameof(TestInstruction.RunAsLoop)}]",
-				exception.Message);
+			exception.Message.Should().Contain($"[{nameof(TestInstruction.RunAsLoop)}]");
 	}
 }

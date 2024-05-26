@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.State;
 using Responsible.Tests.Utilities;
@@ -27,7 +28,7 @@ namespace Responsible.Tests
 		[Test]
 		public void BuildingInitialState_DoesNotExecuteTask()
 		{
-			Assert.IsFalse(this.taskStarted);
+			this.taskStarted.Should().BeFalse();
 			StateAssert.StringContainsInOrder(this.state.ToString()).NotStarted(Description);
 		}
 
@@ -36,7 +37,7 @@ namespace Responsible.Tests
 		{
 			this.state.ToTask(this.Executor);
 
-			Assert.IsTrue(this.taskStarted);
+			this.taskStarted.Should().BeTrue();
 			StateAssert.StringContainsInOrder(this.state.ToString()).Waiting(Description);
 		}
 
@@ -47,8 +48,8 @@ namespace Responsible.Tests
 			this.completionSource.SetResult(42);
 
 			StateAssert.StringContainsInOrder(this.state.ToString()).Completed(Description);
-			Assert.IsTrue(task.IsCompleted);
-			Assert.AreEqual(42, task.Result);
+			task.IsCompleted.Should().BeTrue();
+			task.Result.Should().Be(42);
 		}
 
 		[Test]
@@ -60,7 +61,7 @@ namespace Responsible.Tests
 
 			StateAssert.StringContainsInOrder(this.state.ToString()).Failed(Description);
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.AreSame(exception, error.InnerException);
+			error.InnerException.Should().BeSameAs(exception);
 		}
 
 		[Test]
@@ -73,7 +74,7 @@ namespace Responsible.Tests
 				var error = await AwaitFailureExceptionForUnity(task);
 
 				StateAssert.StringContainsInOrder(this.state.ToString()).Canceled(Description);
-				Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
+				error.InnerException.Should().BeOfType<TaskCanceledException>();
 			}
 		}
 
