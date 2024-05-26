@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -9,21 +10,17 @@ namespace Responsible.Tests
 		[Test]
 		public void Return_ReturnsCorrectValue()
 		{
-			var value = 42;
-			var returnInstruction = Return(value);
-			Assert.AreEqual(
-				42,
-				returnInstruction
-					.ToTask(this.Executor)
-					.AssertSynchronousResult());
+			Return(42)
+				.ToTask(this.Executor)
+				.AssertSynchronousResult()
+				.Should().Be(42);
 		}
 
 		[Test]
 		public void ToString_RetrunsCorrectValue()
 		{
-			Assert.AreEqual(
-				"[ ] Return '42'",
-				Return(42).CreateState().ToString());
+			Return(42).CreateState().ToString()
+				.Should().Be("[ ] Return '42'");
 		}
 	}
 }

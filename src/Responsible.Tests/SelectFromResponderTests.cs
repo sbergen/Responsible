@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 
@@ -27,7 +28,7 @@ namespace Responsible.Tests
 		{
 			this.responder.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
-			Assert.AreEqual(4, this.task.AssertSynchronousResult());
+			this.task.AssertSynchronousResult().Should().Be(4);
 		}
 
 		[Test]
@@ -35,7 +36,7 @@ namespace Responsible.Tests
 		{
 			this.responder.AllowCompletionWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -43,7 +44,7 @@ namespace Responsible.Tests
 		{
 			this.responder.CompleteWaitWithError(new Exception("Fail!"));
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 		[Test]

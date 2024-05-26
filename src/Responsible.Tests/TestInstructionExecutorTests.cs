@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using static Responsible.Responsibly;
 
@@ -21,7 +22,7 @@ namespace Responsible.Tests
 			var task = Never.ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Executor.Dispose();
 			var exception = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<TaskCanceledException>(exception.InnerException);
+			exception.InnerException.Should().BeOfType<TaskCanceledException>();
 		}
 
 		[Test]
@@ -29,7 +30,7 @@ namespace Responsible.Tests
 		{
 			this.Executor.Dispose();
 			var task = Return(0).ToTask(this.Executor);
-			Assert.IsInstanceOf<ObjectDisposedException>(task.Exception?.InnerException);
+			(task.Exception?.InnerException).Should().BeOfType<ObjectDisposedException>();
 		}
 
 		[Test]
@@ -39,9 +40,9 @@ namespace Responsible.Tests
 			var task1 = state.ToTask(this.Executor);
 			var task2 = state.ToTask(this.Executor);
 
-			Assert.IsFalse(task1.IsFaulted);
+			task1.IsFaulted.Should().BeFalse();
 			var exception = await AwaitFailureExceptionForUnity(task2);
-			Assert.IsInstanceOf<InvalidOperationException>(exception.InnerException);
+			exception.InnerException.Should().BeOfType<InvalidOperationException>();
 		}
 
 		[Test]
@@ -51,7 +52,7 @@ namespace Responsible.Tests
 					"Call Assert.Ignore",
 					() => Assert.Ignore("This test is ignored"))
 				.ToTask(this.Executor);
-			Assert.IsInstanceOf<IgnoreException>(task.Exception?.InnerException);
+			(task.Exception?.InnerException).Should().BeOfType<IgnoreException>();
 		}
 	}
 }

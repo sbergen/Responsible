@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.State;
 using static Responsible.Responsibly;
@@ -30,9 +31,9 @@ namespace Responsible.Tests
 		public void StateNotifications_PublishesStarted_WhenOperationStarted()
 		{
 			var wait = WaitForFrames(0);
-			Assert.IsNull(this.notification);
+			this.notification.Should().BeNull();
 			wait.ToTask(this.Executor);
-			Assert.AreEqual(TestOperationStateTransition.Started, this.notification?.type);
+			this.notification?.type.Should().Be(TestOperationStateTransition.Started);
 		}
 
 		[Test]
@@ -44,14 +45,14 @@ namespace Responsible.Tests
 
 			await AwaitFailureExceptionForUnity(task);
 
-			Assert.AreEqual(TestOperationStateTransition.Finished, this.notification?.type);
+			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
 		public void StateNotifications_PublishesFinished_WhenOperationCompleted()
 		{
 			ImmediateTrue.ExpectWithinSeconds(1).ToTask(this.Executor);
-			Assert.AreEqual(TestOperationStateTransition.Finished, this.notification?.type);
+			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
@@ -59,7 +60,7 @@ namespace Responsible.Tests
 		{
 			Do("Throw error", () => throw new Exception())
 				.ToTask(this.Executor);
-			Assert.AreEqual(TestOperationStateTransition.Finished, this.notification?.type);
+			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
@@ -75,11 +76,11 @@ namespace Responsible.Tests
 
 			tokenSource1.Cancel();
 			await AwaitFailureExceptionForUnity(task1);
-			Assert.AreEqual(state1, this.notification?.state);
+			this.notification?.state.Should().Be(state1);
 
 			tokenSource2.Cancel();
 			await AwaitFailureExceptionForUnity(task2);
-			Assert.AreEqual(state2, this.notification?.state);
+			this.notification?.state.Should().Be(state2);
 		}
 	}
 }

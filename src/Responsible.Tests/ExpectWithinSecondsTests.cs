@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -17,10 +18,10 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 			this.Scheduler.AdvanceFrame(OneSecond);
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<TimeoutException>(error.InnerException);
+			error.InnerException.Should().BeOfType<TimeoutException>();
 		}
 
 		[Test]
@@ -33,7 +34,7 @@ namespace Responsible.Tests
 
 			cts.Cancel();
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
+			error.InnerException.Should().BeOfType<TaskCanceledException>();
 		}
 
 		[Test]
@@ -92,9 +93,9 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -108,12 +109,12 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsFalse(task.IsFaulted);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsFaulted.Should().BeFalse();
+			task.IsCompleted.Should().BeFalse();
 
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsFalse(task.IsFaulted);
-			Assert.IsTrue(task.IsCompleted);
+			task.IsFaulted.Should().BeFalse();
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -169,17 +170,13 @@ namespace Responsible.Tests
 			detailsAssert(exception.Message);
 
 			var multipleFailuresDescription =
-				$"Should contain only singe failure details, but was:\n{exception.Message}";
+				$"there should only be a single failure details, but was:\n{exception.Message}";
 
-			Assert.AreEqual(
-				1,
-				Regex.Matches(exception.Message, "Failed with").Count,
-				multipleFailuresDescription);
+			Regex.Matches(exception.Message, "Failed with").Count
+				.Should().Be(1, multipleFailuresDescription);
 
-			Assert.AreEqual(
-				1,
-				Regex.Matches(exception.Message, "Test operation stack").Count,
-				multipleFailuresDescription);
+			Regex.Matches(exception.Message, "Test operation stack").Count
+				.Should().Be(1, multipleFailuresDescription);
 			}
 	}
 }

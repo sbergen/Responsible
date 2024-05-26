@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using static Responsible.Responsibly;
 
@@ -23,9 +24,7 @@ namespace Responsible.Tests
 				})
 				.ToTask(this.Executor);
 
-			Assert.AreEqual(
-				(true, true, true),
-				(completed1, completed2, completed3));
+			(completed1, completed2, completed3).Should().Be((true, true, true));
 		}
 
 		[Test]
@@ -43,10 +42,8 @@ namespace Responsible.Tests
 				})
 				.ToTask(this.Executor);
 
-			Assert.AreEqual(
-				(true, false),
-				(completed1, completed2));
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(completed1, completed2).Should().Be((true, false));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 	}
 }

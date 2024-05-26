@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -51,9 +52,8 @@ namespace Responsible.Tests
 
 			await AwaitTaskCompletionForUnity(this.task);
 
-			Assert.AreEqual(
-				(true, completeFirst, !completeFirst),
-				(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
+			(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond)
+				.Should().Be((true, completeFirst, !completeFirst));
 		}
 
 		[Test]
@@ -75,9 +75,8 @@ namespace Responsible.Tests
 
 			await AwaitTaskCompletionForUnity(this.task);
 
-			Assert.AreEqual(
-				(true, false, false),
-				(this.task.IsCompleted, this.responder1.StartedToRespond, this.responder2.StartedToRespond));
+			(this.task.IsCompleted, this.responder1.StartedToRespond, this.responder2.StartedToRespond)
+				.Should().Be((true, false, false));
 		}
 
 		[Test]
@@ -87,9 +86,8 @@ namespace Responsible.Tests
 			this.responder2.MayRespond = true;
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(
-				this.responder1.StartedToRespond && this.responder2.StartedToRespond,
-				"Only one responder should start while the other is executing");
+			(this.responder1.StartedToRespond && this.responder2.StartedToRespond)
+				.Should().BeFalse("only one responder should start while the other is executing");
 
 			// Complete everything
 			this.mayComplete = true;
@@ -97,9 +95,8 @@ namespace Responsible.Tests
 			this.responder2.MayComplete = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.AreEqual(
-				(true, true, true),
-				(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond));
+			(this.task.IsCompleted, this.responder1.CompletedRespond, this.responder2.CompletedRespond)
+				.Should().Be((true, true, true));
 		}
 
 		// This exists to test the boxing conversion bypass case, when it's not necessary

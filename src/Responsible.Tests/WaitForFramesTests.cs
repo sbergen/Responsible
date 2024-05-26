@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -11,22 +12,22 @@ namespace Responsible.Tests
 		{
 			var task = WaitForFrames(2).ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame(); // This frame
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame(); // First frame
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame(); // Second frame
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
 		public void WaitForFrames_CompletesAfterThisFrame_WithZeroFrames()
 		{
 			var task = WaitForFrames(0).ToTask(this.Executor);
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame(); // This frame
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]

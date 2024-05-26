@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -23,7 +24,7 @@ namespace Responsible.Tests
 		{
 			this.groupedAsInstruction.ToTask(this.Executor);
 
-			Assert.IsTrue(this.executed);
+			this.executed.Should().BeTrue();
 		}
 
 		[Test]
@@ -61,9 +62,8 @@ namespace Responsible.Tests
 
 			state.ToTask(this.Executor);
 
-			StringAssert.DoesNotContain(
-				$"[{nameof(TestInstruction.GroupedAs)}]",
-				state.ToString());
+			state.ToString().Should().NotContain(
+				$"[{nameof(TestInstruction.GroupedAs)}]");
 		}
 	}
 }

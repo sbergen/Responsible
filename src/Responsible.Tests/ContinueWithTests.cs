@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -44,7 +45,7 @@ namespace Responsible.Tests
 			var task = this.ContinueWithNothing(ErrorInstruction, strategy)
 				.ToTask(this.Executor);
 
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -70,11 +71,12 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsFaulted);
+			task.IsFaulted.Should().BeFalse();
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.AreSame(TestException, (await AwaitFailureExceptionForUnity(task)).InnerException);
+			(await AwaitFailureExceptionForUnity(task)).InnerException
+				.Should().BeSameAs(TestException);
 		}
 
 		[Test]
@@ -84,15 +86,15 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			this.mayCompleteFirst = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			this.mayCompleteSecond = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]

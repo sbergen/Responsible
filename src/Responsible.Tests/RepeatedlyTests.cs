@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -49,7 +50,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor));
 
-			Assert.AreEqual(0, this.executionCount);
+			this.executionCount.Should().Be(0);
 		}
 
 		[Test]
@@ -65,7 +66,7 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 
 			await AwaitTaskCompletionForUnity(task);
-			Assert.AreEqual(0, this.executionCount);
+			this.executionCount.Should().Be(0);
 		}
 
 		[Test]
@@ -83,7 +84,7 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 
 			await AwaitTaskCompletionForUnity(task);
-			Assert.AreEqual(1, this.executionCount);
+			this.executionCount.Should().Be(1);
 		}
 
 		[Test]
@@ -103,7 +104,7 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 
 			await AwaitTaskCompletionForUnity(task);
-			Assert.AreEqual(2, this.executionCount);
+			this.executionCount.Should().Be(2);
 		}
 
 		[Test]
@@ -143,7 +144,7 @@ namespace Responsible.Tests
 			}
 
 			await AwaitTaskCompletionForUnity(task);
-			Assert.AreEqual(5, count);
+			count.Should().Be(5);
 		}
 
 		[Test]
@@ -159,7 +160,7 @@ namespace Responsible.Tests
 			cts.Cancel();
 
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<TaskCanceledException>(error.InnerException);
+			error.InnerException.Should().BeOfType<TaskCanceledException>();
 		}
 
 		[Test]
@@ -173,12 +174,11 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
-			Assert.AreEqual(10, execCount);
+			execCount.Should().Be(10);
 
 			var error = await AwaitFailureExceptionForUnity(task);
-			Assert.IsInstanceOf<RepetitionLimitExceededException>(error.InnerException);
-			// ReSharper disable once PossibleNullReferenceException, checked above
-			StringAssert.Contains("10", error.InnerException.Message);
+			error.InnerException.Should().BeOfType<RepetitionLimitExceededException>()
+				.Subject.Message.Should().Contain("10");
 		}
 
 		[Test]

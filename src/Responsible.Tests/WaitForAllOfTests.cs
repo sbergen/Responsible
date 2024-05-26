@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -25,24 +26,23 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(10)
 				.ToTask(this.Executor);
 
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame();
 
 			fulfilled1 = true;
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame();
 
 			fulfilled2 = true;
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame();
 
 			fulfilled3 = true;
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 			this.AdvanceDefaultFrame();
 
-			Assert.AreEqual(
-				new[] { true, true, true },
-				task.AssertSynchronousResult());
+			task.AssertSynchronousResult()
+				.Should().BeEquivalentTo(new[] { true, true, true });
 		}
 
 		[Test]
@@ -53,9 +53,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor)
 				.AssertSynchronousResult();
 
-			Assert.AreEqual(
-				new[] { true, true, true },
-				result);
+			result.Should().BeEquivalentTo(new[] { true, true, true });
 		}
 
 		[Test]
@@ -81,14 +79,14 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
-			Assert.IsFalse(task.IsFaulted);
+			task.IsCompleted.Should().BeFalse();
+			task.IsFaulted.Should().BeFalse();
 
 			canThrow = true;
 			this.AdvanceDefaultFrame();
 
 			var exception = await AwaitFailureExceptionForUnity(task);
-			Assert.AreSame(expectedException, exception.InnerException);
+			exception.InnerException.Should().BeSameAs(expectedException);
 		}
 
 		[Test]

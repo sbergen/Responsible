@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -18,22 +19,22 @@ namespace Responsible.Tests
 			var task = WaitForCondition("First", () => cond1)
 				.AndThen(WaitForCondition("Second", () =>
 				{
-					Assert.IsTrue(cond1);
+					cond1.Should().BeTrue();
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			cond1 = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			cond2 = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -45,22 +46,22 @@ namespace Responsible.Tests
 			var task = WaitForCondition("First", () => cond1)
 				.AndThen(_ => WaitForCondition("Second", () =>
 				{
-					Assert.IsTrue(cond1);
+					cond1.Should().BeTrue();
 					return cond2;
 				}))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			cond1 = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(task.IsCompleted);
+			task.IsCompleted.Should().BeFalse();
 
 			cond2 = true;
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(task.IsCompleted);
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -68,7 +69,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -76,7 +77,7 @@ namespace Responsible.Tests
 		{
 			var task = Never.AndThen(_ => ImmediateTrue).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -84,7 +85,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -92,7 +93,7 @@ namespace Responsible.Tests
 		{
 			var task = ImmediateTrue.AndThen(_ => Never).ExpectWithinSeconds(1).ToTask(this.Executor);
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
@@ -105,7 +106,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var exception = await AwaitFailureExceptionForUnity(task);
-			Assert.AreSame(expectedException, exception.InnerException);
+			exception.InnerException.Should().BeSameAs(expectedException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
 				.Failed("...")
@@ -124,7 +125,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			var exception = await AwaitFailureExceptionForUnity(task);
-			Assert.AreSame(expectedException, exception.InnerException);
+			exception.InnerException.Should().BeSameAs(expectedException);
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("True")
 				.Failed("throw")

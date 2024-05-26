@@ -1,6 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 using JetBrains.Annotations;
 using NSubstitute;
 using NUnit.Framework;
@@ -54,8 +55,8 @@ namespace Responsible.Tests
 			var task = Do("Throw", () => throw new Exception())
 				.ToTask(this.Executor);
 			var lines = (await AwaitFailureExceptionForUnity(task)).Message.Split('\n');
-			CollectionAssert.Contains(lines, " ");
-			CollectionAssert.DoesNotContain(lines, "");
+			lines.Should().Contain(" ");
+			lines.Should().NotContain("");
 		}
 
 		[Test]
@@ -89,8 +90,9 @@ namespace Responsible.Tests
 		private static async Task ExpectOperatorCountInError(Task task, string operatorName, int count)
 		{
 			var message = (await AwaitFailureExceptionForUnity(task)).Message;
-			var sequenceCount = Regex.Matches(message, $@"\[{operatorName}\]").Count;
-			Assert.AreEqual(count, sequenceCount, $"[{operatorName}] should occur {count} time(s) in the error message: {message}");
+			Regex.Matches(message, $@"\[{operatorName}\]").Count.Should().Be(
+				count,
+				$"[{operatorName}] should occur {count} time(s) in the error message: {message}");
 		}
 	}
 }

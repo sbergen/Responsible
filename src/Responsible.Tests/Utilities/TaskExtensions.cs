@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using NUnit.Framework;
+using FluentAssertions;
 
 namespace Responsible.Tests.Utilities
 {
@@ -7,7 +7,7 @@ namespace Responsible.Tests.Utilities
 	{
 		public static T AssertSynchronousResult<T>(this Task<T> task)
 		{
-			Assert.IsTrue(task.Wait(0), "Expecting synchronous result in task");
+			task.Wait(0).Should().BeTrue("expecting synchronous result in task");
 			return task.Result;
 		}
 	}

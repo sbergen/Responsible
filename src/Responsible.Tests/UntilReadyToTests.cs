@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 
@@ -37,16 +38,20 @@ namespace Responsible.Tests
 			// Adcvnce a few times to be safe
 			this.AdvanceDefaultFrame();
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(this.first.StartedToRespond, "Second should not have started to respond");
-			Assert.IsFalse(this.task.IsCompleted, "Full operation should not be completed before response is complete");
+			this.first.StartedToRespond.Should()
+				.BeFalse("second should not have started to respond");
+			this.task.IsCompleted.Should()
+				.BeFalse("full operation should not be completed before response is complete");
 
 			this.second.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
 			await AwaitTaskCompletionForUnity(this.task);
 
-			Assert.IsTrue(this.second.CompletedRespond, "Second should have completed");
-			Assert.IsTrue(this.task.IsCompleted, "Full operation should have completed");
+			this.second.CompletedRespond.Should()
+				.BeTrue("second should have completed");
+			this.task.IsCompleted.Should()
+				.BeTrue("full operation should have completed");
 		}
 
 		[Test]
@@ -57,19 +62,18 @@ namespace Responsible.Tests
 			this.second.MayRespond = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsFalse(
-				this.second.StartedToRespond,
-				"Second should not have started to respond before first completed");
+			this.second.StartedToRespond.Should().BeFalse(
+				"second should not have started to respond before first completed");
 
 			this.first.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(this.first.CompletedRespond, "First should be completed");
-			Assert.IsTrue(this.second.StartedToRespond, "Second should have started to respond");
+			this.first.CompletedRespond.Should().BeTrue("first should be completed");
+			this.second.StartedToRespond.Should().BeTrue("second should have started to respond");
 
 			this.second.AllowFullCompletion();
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(this.second.CompletedRespond, "Second should have completed response");
+			this.second.CompletedRespond.Should().BeTrue("second should have completed response");
 		}
 
 		[Test]
@@ -86,14 +90,14 @@ namespace Responsible.Tests
 			}
 
 			this.AdvanceDefaultFrame();
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 		[Test]
 		public async Task UntilReadyToRespond_TimesOut_AsExpected()
 		{
 			this.Scheduler.AdvanceFrame(OneSecond);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(this.task));
+			(await AwaitFailureExceptionForUnity(this.task)).Should().NotBeNull();
 		}
 
 		[Test]

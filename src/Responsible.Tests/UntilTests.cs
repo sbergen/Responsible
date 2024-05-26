@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
 using static Responsible.Responsibly;
@@ -33,7 +34,7 @@ namespace Responsible.Tests
 			readyToReact = true;
 
 			this.AdvanceDefaultFrame();
-			Assert.IsTrue(startedToReact);
+			startedToReact.Should().BeTrue();
 
 			shouldContinue = true;
 
@@ -42,8 +43,8 @@ namespace Responsible.Tests
 			mayCompleteReaction = true;
 			this.AdvanceDefaultFrame();
 
-			Assert.IsTrue(reactionCompleted);
-			Assert.IsTrue(task.IsCompleted);
+			reactionCompleted.Should().BeTrue();
+			task.IsCompleted.Should().BeTrue();
 		}
 
 		[Test]
@@ -75,17 +76,16 @@ namespace Responsible.Tests
 			this.AdvanceDefaultFrame();
 			this.AdvanceDefaultFrame();
 			this.AdvanceDefaultFrame();
-			Assert.IsFalse(firstCompleted);
-			Assert.IsFalse(secondCompleted);
+			firstCompleted.Should().BeFalse();
+			secondCompleted.Should().BeFalse();
 
 			cond2 = true;
 			this.AdvanceDefaultFrame();
 
 			await AwaitTaskCompletionForUnity(task);
 
-			Assert.AreEqual(
-				(false, true, true),
-				(firstCompleted, secondCompleted, task.IsCompleted));
+			(firstCompleted, secondCompleted, task.IsCompleted)
+				.Should().Be((false, true, true));
 		}
 
 		[Test]
@@ -102,8 +102,8 @@ namespace Responsible.Tests
 
 			this.Scheduler.AdvanceFrame(OneSecond);
 
-			Assert.IsFalse(completed);
-			Assert.IsNotNull(await AwaitFailureExceptionForUnity(task));
+			completed.Should().BeFalse();
+			(await AwaitFailureExceptionForUnity(task)).Should().NotBeNull();
 		}
 
 		[Test]
