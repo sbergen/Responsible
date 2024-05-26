@@ -33,7 +33,7 @@ namespace Responsible.Tests
 			var wait = WaitForFrames(0);
 			this.notification.Should().BeNull();
 			wait.ToTask(this.Executor);
-			this.notification?.type.Should().Be(TestOperationStateTransition.Started);
+			(this.notification?.type).Should().Be(TestOperationStateTransition.Started);
 		}
 
 		[Test]
@@ -45,14 +45,14 @@ namespace Responsible.Tests
 
 			await AwaitFailureExceptionForUnity(task);
 
-			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
+			(this.notification?.type).Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
 		public void StateNotifications_PublishesFinished_WhenOperationCompleted()
 		{
 			ImmediateTrue.ExpectWithinSeconds(1).ToTask(this.Executor);
-			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
+			(this.notification?.type).Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
@@ -60,7 +60,7 @@ namespace Responsible.Tests
 		{
 			Do("Throw error", () => throw new Exception())
 				.ToTask(this.Executor);
-			this.notification?.type.Should().Be(TestOperationStateTransition.Finished);
+			(this.notification?.type).Should().Be(TestOperationStateTransition.Finished);
 		}
 
 		[Test]
@@ -76,11 +76,11 @@ namespace Responsible.Tests
 
 			tokenSource1.Cancel();
 			await AwaitFailureExceptionForUnity(task1);
-			this.notification?.state.Should().Be(state1);
+			(this.notification?.state).Should().Be(state1);
 
 			tokenSource2.Cancel();
 			await AwaitFailureExceptionForUnity(task2);
-			this.notification?.state.Should().Be(state2);
+			(this.notification?.state).Should().Be(state2);
 		}
 	}
 }
