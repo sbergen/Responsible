@@ -12,6 +12,7 @@ namespace Responsible.Tests
 	public class WaitForConditionTests : ResponsibleTestBase
 	{
 		[Test]
+		[Obsolete]
 		public void WaitForConditionOn_Completes_OnlyWhenConditionIsTrueOnReturnedObject()
 		{
 			object boxedBool = null;
@@ -182,6 +183,48 @@ namespace Responsible.Tests
 			StateAssert.StringContainsInOrder(error.Message)
 				.Canceled("Should be canceled")
 				.FailureDetails();
+		}
+
+		[Test]
+		public void WaitForPredicate_DoesNotCallExtraContext_WhenNotExecuted()
+		{
+			var extraContextRequested = false;
+
+			var state = WaitForPredicate(
+					"Not executed",
+					() => false,
+					_ => false,
+					(_, _) => extraContextRequested = true)
+				.ExpectWithinSeconds(1)
+				.CreateState();
+
+			var stateString = state.ToString();
+			extraContextRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public async Task WaitForPredicate_ContainsCorrectDetailsFromLastValue_WhenTimedOut()
+		{
+			var state = 0;
+			var checkCount = 0;
+			var task = WaitForPredicate(
+					"With details",
+					() => ++state,
+					val =>
+					{
+						++checkCount;
+						return val == 42;
+					},
+					(builder, val) => builder.AddDetails($"Expected 42, but got {val}"))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
+
+			var error = await AwaitFailureExceptionForUnity(task);
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("With details")
+				.Details($"Expected 42, but got {checkCount}");
 		}
 
 

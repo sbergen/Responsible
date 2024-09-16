@@ -24,6 +24,40 @@ namespace Responsible
 	{
 		/// <summary>
 		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
+		/// and check <paramref name="predicate"/> on the returned object.
+		/// Will complete once the predicate returns true,
+		/// returning the last value returned by <paramref name="getObject"/>.
+		/// </summary>
+		/// <returns>
+		/// A wait condition, which completes with the value last returned from <paramref name="getObject"/>,
+		/// when <paramref name="predicate"/> returns true for it.
+		/// </returns>
+		/// <param name="getObject">Function that returns the object to test <paramref name="predicate"/> on.</param>
+		/// <param name="predicate">Condition to check with the return value of <paramref name="getObject"/>.</param>
+		/// <param name="extraContext">
+		/// Action for producing extra context into state descriptions.
+		/// The last value returned by <paramref name="getObject"/> is passed as the second argument.
+		/// </param>
+		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T1, T2, T3}"/>
+		[Pure]
+		public static ITestWaitCondition<T> WaitForPredicate<T>(
+			string description,
+			Func<T> getObject,
+			Func<T, bool> predicate,
+			Action<StateStringBuilder, T> extraContext = null,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new PollingWaitCondition<T>(
+				description,
+				getObject,
+				predicate,
+				extraContext,
+				new SourceContext(nameof(WaitForPredicate), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
+		/// Constructs a wait condition, which will call <paramref name="getObject"/> on every frame,
 		/// and check <paramref name="condition"/> on the returned object.
 		/// Will complete once the condition returns true,
 		/// returning the last value returned by <paramref name="getObject"/>.
@@ -37,6 +71,7 @@ namespace Responsible
 		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T1, T2}"/>
 		[Pure]
+		[Obsolete("Doesn't allow using the latest state in extra context. Use WaitForPredicate instead.", error: false)]
 		public static ITestWaitCondition<T> WaitForConditionOn<T>(
 			string description,
 			Func<T> getObject,
@@ -49,7 +84,7 @@ namespace Responsible
 				description,
 				getObject,
 				condition,
-				extraContext,
+				extraContext.DiscardingState<T>(),
 				new SourceContext(nameof(WaitForConditionOn), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
@@ -73,7 +108,7 @@ namespace Responsible
 				description,
 				() => Unit.Instance,
 				_ => condition(),
-				extraContext,
+				extraContext.DiscardingState<object>(),
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
