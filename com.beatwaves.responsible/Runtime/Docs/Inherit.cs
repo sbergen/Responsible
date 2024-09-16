@@ -106,8 +106,8 @@ namespace Responsible.Docs
 		public void CallerMemberWithDescription<T1, T2, T3>(
 			string description,
 			T1 arg1,
-			T1 arg2,
-			T1 arg3,
+			T2 arg2,
+			T3 arg3,
 			string memberName = "",
 			string sourceFilePath = "",
 			int sourceLineNumber = 0)

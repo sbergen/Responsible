@@ -198,7 +198,7 @@ namespace Responsible.Tests
 				.ExpectWithinSeconds(1)
 				.CreateState();
 
-			var stateString = state.ToString();
+			_ = state.ToString();
 			extraContextRequested.Should().BeFalse();
 		}
 
