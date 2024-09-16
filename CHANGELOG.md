@@ -9,6 +9,12 @@ Experimental features are also **not** under semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- `WaitForPredicate`, which takes the latest polled state value as an argument to the extra context builder.
+
+### Deprecated
+- `WaitForConditionOn` was deprecated in favor or `WaitForPredicate`.
+
 ## [4.5.0] - 2024-05-25
 
 ### Added
