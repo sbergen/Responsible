@@ -36,7 +36,7 @@ namespace Responsible.Tests
 		{
 			var frame = 0;
 			var result = Responsibly
-				.WaitForConditionOn(
+				.WaitForPredicate(
 					"Frame to be 10",
 					() => frame,
 					f => f == 10)

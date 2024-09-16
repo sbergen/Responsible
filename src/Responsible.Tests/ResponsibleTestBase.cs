@@ -10,10 +10,10 @@ namespace Responsible.Tests
 	public class ResponsibleTestBase
 	{
 		protected static readonly ITestWaitCondition<bool> ImmediateTrue =
-			WaitForConditionOn("True", () => true, val => val);
+			WaitForPredicate("True", () => true, val => val);
 
 		protected static readonly ITestWaitCondition<bool> Never =
-			WaitForConditionOn("Never", () => false, _ => false);
+			WaitForPredicate("Never", () => false, _ => false);
 
 		protected static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
 		protected static readonly TimeSpan OneFrame = TimeSpan.FromSeconds(1.0 / 60);

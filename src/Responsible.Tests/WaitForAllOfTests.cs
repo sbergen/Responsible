@@ -20,9 +20,9 @@ namespace Responsible.Tests
 			bool Id(bool val) => val;
 
 			var task = WaitForAllOf(
-					WaitForConditionOn("cond 1", () => fulfilled1, Id),
-					WaitForConditionOn("cond 2", () => fulfilled2, Id),
-					WaitForConditionOn("cond 3", () => fulfilled3, Id))
+					WaitForPredicate("cond 1", () => fulfilled1, Id),
+					WaitForPredicate("cond 2", () => fulfilled2, Id),
+					WaitForPredicate("cond 3", () => fulfilled3, Id))
 				.ExpectWithinSeconds(10)
 				.ToTask(this.Executor);
 

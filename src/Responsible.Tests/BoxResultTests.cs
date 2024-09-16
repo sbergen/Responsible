@@ -18,7 +18,7 @@ namespace Responsible.Tests
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			this.waitForComplete = WaitForConditionOn("Wait", () => this.complete, val => val);
+			this.waitForComplete = WaitForPredicate("Wait", () => this.complete, val => val);
 			this.returnTrue = DoAndReturn("Set completed", () => true);
 			this.throwError = DoAndReturn<int>("Throw error", () => throw new Exception(""));
 		}
