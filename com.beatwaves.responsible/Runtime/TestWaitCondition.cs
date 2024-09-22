@@ -258,5 +258,18 @@ namespace Responsible
 		public static ITestWaitCondition<object> BoxResult<T>(this ITestWaitCondition<T> condition)
 			where T : struct
 			=> new BoxedWaitCondition<T>(condition);
+
+		[Pure]
+		public static ITestWaitCondition<T> AsCustomCondition<T>(
+			this ITestWaitCondition<T> condition,
+			string description,
+			string callerMemberName,
+			string sourceFilePath,
+			int sourceLineNumber,
+			[CallerMemberName] string customConditionName = "")
+			=> new CustomWaitCondition<T>(
+				condition,
+				description,
+				new SourceContext(customConditionName, callerMemberName, sourceFilePath, sourceLineNumber));
 	}
 }
