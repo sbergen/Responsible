@@ -75,26 +75,28 @@ namespace Responsible.UnityTests
 			}
 		}
 
-		[Test]
-		public void WaitForCoroutine_ContainsCorrectDescription()
+		[UnityTest]
+		public IEnumerator WaitForCoroutine_ContainsCorrectDescription()
 		{
 			var instruction = Responsibly
 				.WaitForCoroutine("Manual", this.ThrowImmediately)
 				.ExpectWithinSeconds(1)
 				.ToYieldInstruction(this.Executor);
 
+			yield return null;
 			Assert.IsTrue(instruction.CompletedWithError);
 			StringAssert.Contains("Manual (Coroutine)", instruction.Error.Message);
 		}
 
-		[Test]
-		public void WaitForCoroutineMethod_ContainsCorrectDescription()
+		[UnityTest]
+		public IEnumerator WaitForCoroutineMethod_ContainsCorrectDescription()
 		{
 			var instruction = Responsibly
 				.WaitForCoroutineMethod(this.ThrowImmediately)
 				.ExpectWithinSeconds(1)
 				.ToYieldInstruction(this.Executor);
 
+			yield return null;
 			Assert.IsTrue(instruction.CompletedWithError);
 			StringAssert.Contains("ThrowImmediately (Coroutine)", instruction.Error.Message);
 		}
@@ -116,8 +118,8 @@ namespace Responsible.UnityTests
 				Does.Match(@"\[✓\] CompleteAfterOneFrame.*\n.*\[!\] ThrowImmediately"));
 		}
 
-		[Test]
-		public void WaitForCoroutine_ThrowsWithInvalidExecutor()
+		[UnityTest]
+		public IEnumerator WaitForCoroutine_ThrowsWithInvalidExecutor()
 		{
 			var nonUnityExecutor = new TestInstructionExecutor(new MockTestScheduler());
 			var instruction = Responsibly
@@ -125,6 +127,7 @@ namespace Responsible.UnityTests
 				.ExpectWithinSeconds(1)
 				.ToYieldInstruction(nonUnityExecutor);
 
+			yield return null;
 			Assert.IsTrue(instruction.CompletedWithError);
 			StringAssert.Contains(nameof(MonoBehaviour), instruction.Error.Message);
 		}

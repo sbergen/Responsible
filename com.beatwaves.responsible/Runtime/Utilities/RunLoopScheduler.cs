@@ -12,7 +12,7 @@ namespace Responsible.Utilities
 
 		public IExternalResultSource ExternalResultSource => this.runLoopExceptionSource;
 
-		public void Run(Action<TTickArgument> tick)
+		public void Run(Action<TTickArgument> tick, CancellationTokenSource cts)
 		{
 			try
 			{
@@ -22,6 +22,9 @@ namespace Responsible.Utilities
 			}
 			catch (Exception e)
 			{
+				// This only affects Unity, so no .NET test will catch the mutation
+				// Stryker disable once statement
+				cts.Cancel();
 				this.runLoopExceptionSource.SetException(e);
 			}
 		}

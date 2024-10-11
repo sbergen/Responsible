@@ -27,14 +27,6 @@ namespace Responsible.Tests.Utilities
 		public AssertStateString Waiting(string description) => this.DetailsWithMarker('.', description);
 		public AssertStateString Canceled(string description) => this.DetailsWithMarker('-', description);
 
-		// Work around Unity 2021 cancellation happening asynchronously (but within same frame)
-		public AssertStateString JustCanceled(string description) =>
-#if UNITY_2021_3_OR_NEWER // Not sure about the exact version this started happening :/
-			this.Waiting(description);
-#else
-			this.Canceled(description);
-#endif
-
 		public AssertStateString FailureDetails() => this.Details("Failed with:");
 
 		// An empty line requires whitespace to work nicely with Unity

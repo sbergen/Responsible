@@ -239,7 +239,7 @@ namespace Responsible
 		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
 		/// <returns>The result of the test instruction, if it completes successfully.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3,T4}"/>
-		public static T RunAsSimulatedUpdateLoop<T>(
+		public static Task<T> RunAsSimulatedUpdateLoop<T>(
 			this ITestInstruction<T> instruction,
 			double framesPerSecond,
 			Action<TimeSpan> tick,
@@ -269,7 +269,7 @@ namespace Responsible
 		/// <typeparam name="T">Return type of the instruction to execute.</typeparam>
 		/// <returns>The result of the test instruction, if it completes successfully.</returns>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1,T2,T3}"/>
-		public static T RunAsLoop<T>(
+		public static Task<T> RunAsLoop<T>(
 			this ITestInstruction<T> instruction,
 			Action tick,
 			CancellationToken cancellationToken = default,
@@ -282,7 +282,7 @@ namespace Responsible
 				new GenericRunLoopScheduler(),
 				new SourceContext(nameof(RunAsLoop), memberName, sourceFilePath, sourceLineNumber));
 
-		private static T RunAsLoop<T, TTickArgument>(
+		private static async Task<T> RunAsLoop<T, TTickArgument>(
 			this ITestInstruction<T> instruction,
 			Action<TTickArgument> tick,
 			CancellationToken cancellationToken,
@@ -292,13 +292,17 @@ namespace Responsible
 			using (var executor = new TestInstructionExecutor(scheduler, scheduler.ExternalResultSource))
 			{
 				var task = executor.RunInstruction(instruction.CreateState(), sourceContext, cancellationToken);
-
-				while (!task.IsCompleted)
+				var cts = new CancellationTokenSource();
+				while (!task.IsFaulted && !task.IsCompleted && !cts.Token.IsCancellationRequested)
 				{
-					scheduler.Run(tick);
+					scheduler.Run(tick, cts);
+
+					// This only affects Unity, so no .NET test will catch the mutation
+					// Stryker disable once statement
+					await Task.Yield(); // Let the test instruction execution process errors
 				}
 
-				return task.GetAwaiter().GetResult();
+				return await task;
 			}
 		}
 	}

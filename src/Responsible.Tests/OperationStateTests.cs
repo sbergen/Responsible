@@ -36,7 +36,7 @@ namespace Responsible.Tests
 			StateAssert.StringContainsInOrder(exception.Message)
 				.Failed("EXPECT WITHIN")
 				.Completed(description)
-				.JustCanceled(description);
+				.Canceled(description);
 		}
 
 	}

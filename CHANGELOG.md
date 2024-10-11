@@ -9,6 +9,13 @@ Experimental features are also **not** under semantic versioning.
 
 ## [Unreleased]
 
+### Changed
+- Breaking change: `RunAs(Simulated)Loop` is now an `async` method.
+  This had to be done to support Unity's async cancellation state to propagate to state strings. 
+
+### Fixed
+- Fix instructions that were canceled because of a failure not showing up as canceled on Unity.
+
 ## [4.5.0] - 2024-05-25
 
 ### Added

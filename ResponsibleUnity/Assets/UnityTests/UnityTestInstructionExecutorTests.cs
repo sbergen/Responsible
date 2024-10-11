@@ -13,41 +13,42 @@ namespace Responsible.UnityTests
 {
 	public class UnityTestInstructionExecutorTests
 	{
-		[Test]
-		public void Errors_AreLogged_WhenLogErrorsIsTrue()
+		[UnityTest]
+		public IEnumerator Errors_AreLogged_WhenLogErrorsIsTrue()
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: true))
 			{
 				var message = "Should be in log";
-				Responsibly
+				yield return Responsibly
 					.Do("Throw exception", () => throw new Exception(message))
-					.ToYieldInstruction(executor, throwOnError: false); // Should complete synchronously
+					.ToYieldInstruction(executor, throwOnError: false);
 				LogAssert.Expect(LogType.Error, new Regex(message));
 			}
 		}
 
-		[Test]
-		public void UnhandledErrorLog_IsLoggedAsWarning_WhenLogErrorsIsTrue()
+		[UnityTest]
+		public IEnumerator UnhandledErrorLog_IsLoggedAsWarning_WhenLogErrorsIsTrue()
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: true))
 			{
 				var expected = "expected message";
-				Responsibly
+				yield return Responsibly
 					.Do("Throw exception", () => Debug.LogError(expected))
-					.ToYieldInstruction(executor, throwOnError: false); // Should complete synchronously
+					.ToYieldInstruction(executor, throwOnError: false);
 
 				LogAssert.Expect(LogType.Warning, new Regex(expected)); // The one from us
 			}
 		}
 
-		[Test]
-		public void Errors_AreNotLogged_WhenLogErrorsIsFalse()
+		[UnityTest]
+		public IEnumerator Errors_AreNotLogged_WhenLogErrorsIsFalse()
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: false))
 			{
 				var instruction = Responsibly
 					.Do("Throw exception", () => throw new Exception())
 					.ToYieldInstruction(executor, throwOnError: false);
+				yield return null;
 				Assert.IsTrue(instruction.CompletedWithError);
 				// Should not fail the test with logged errors
 			}
@@ -64,17 +65,17 @@ namespace Responsible.UnityTests
 			}
 		}
 
-		[Test]
-		public void GlobalContext_IsIncludedInErrors()
+		[UnityTest]
+		public IEnumerator GlobalContext_IsIncludedInErrors()
 		{
 			var globalContextProvider = Substitute.For<IGlobalContextProvider>();
 			globalContextProvider.BuildGlobalContext(Arg.Do(
 				(StateStringBuilder builder) => builder.AddDetails("Global details")));
 			using (var executor = new UnityTestInstructionExecutor(globalContextProvider: globalContextProvider))
 			{
-				Responsibly
+				yield return Responsibly
 					.Do("Throw exception", () => throw new Exception())
-					.ToYieldInstruction(executor, throwOnError: false); // Should complete synchronously
+					.ToYieldInstruction(executor, throwOnError: false);
 				LogAssert.Expect(LogType.Error, new Regex("Global details"));
 			}
 		}
@@ -128,8 +129,8 @@ namespace Responsible.UnityTests
 			Assert.AreEqual(1, pollCount, "Should not poll after being disposed");
 		}
 
-		[Test]
-		public void LoggingError_CausesFailureSynchronously()
+		[UnityTest]
+		public IEnumerator LoggingError_CausesFailureAtEndOfFrame()
 		{
 			using (var executor = new UnityTestInstructionExecutor(logErrors: false))
 			{
@@ -140,6 +141,7 @@ namespace Responsible.UnityTests
 
 				Debug.LogError("Should fail the instruction");
 
+				yield return null;
 				Assert.IsTrue(yieldInstruction.CompletedWithError);
 			}
 		}
