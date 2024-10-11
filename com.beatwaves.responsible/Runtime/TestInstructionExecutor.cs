@@ -140,6 +140,8 @@ namespace Responsible
 						throw;
 					}
 
+					await Task.Yield();
+
 					var message = e is TimeoutException
 						? this.MakeTimeoutMessage(rootState)
 						: this.MakeErrorMessage(rootState, e);

@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using Responsible.Tests.Utilities;
@@ -11,15 +13,15 @@ namespace Responsible.Tests
 		private const string TestExceptionMessage = "Test exception";
 
 		[Test]
-		public void RunAsSimulatedUpdateLoop_UsesSimulatedFrameDurationForTime()
+		public async Task RunAsSimulatedUpdateLoop_UsesSimulatedFrameDurationForTime()
 		{
 			var frameCount = 0;
 			TimeSpan frameDuration = default;
 
-			_ = Responsibly
+			_ = await Responsibly
 				.WaitForSeconds(1)
 				.RunAsSimulatedUpdateLoop(
-					60,
+					framesPerSecond: 60,
 					duration =>
 					{
 						++frameCount;
@@ -32,10 +34,10 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RunAsLoop_CompletesWithExpectedValue()
+		public async Task RunAsLoop_CompletesWithExpectedValue()
 		{
 			var frame = 0;
-			var result = Responsibly
+			var result = await Responsibly
 				.WaitForConditionOn(
 					"Frame to be 10",
 					() => frame,
@@ -47,53 +49,61 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void RunLoopFrameCount_ContainsExpectedValues()
+		public async Task RunLoopFrameCount_ContainsExpectedValues()
 		{
 			var frame = -1;
-			var exception = Assert.Throws<TestFailureException>(() => Responsibly
+			Func<Task> run = async () => await Responsibly
 				.WaitForCondition("frame", () => frame == 10)
 				.ExpectWithinSeconds(1)
 				.ContinueWith(Do("Throw", () => throw new Exception()))
-				.RunAsLoop(() => ++frame));
+				.RunAsLoop(() => ++frame);
+			var exception = (await run.Should().ThrowAsync<TestFailureException>())
+				.Subject.Single();
 
-			StateAssert.StringContainsInOrder(exception?.Message)
+			StateAssert.StringContainsInOrder(exception.Message)
 				.Completed("frame")
 				.Details("≈ 10 frames");
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsProperException_WhenTimedOut()
+		public async Task RunAsLoop_ThrowsProperException_WhenTimedOut()
 		{
-			var exception = Assert.Throws<TestFailureException>(() => Responsibly
+			Func<Task> run = async () => await Responsibly
 				.WaitForCondition("Never", () => false)
 				.ExpectWithinSeconds(0)
-				.RunAsLoop(() => { }));
+				.RunAsLoop(() => { });
+			var exception = (await run.Should().ThrowAsync<TestFailureException>())
+				.Subject.Single();
 
 			exception?.InnerException.Should().BeOfType<TimeoutException>();
 			AssertMessageContainsOperationNameTag(exception);
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsProperException_WhenInstructionThrows()
+		public async Task RunAsLoop_ThrowsProperException_WhenInstructionThrows()
 		{
-			var exception = Assert.Throws<TestFailureException>(() => Responsibly
+			Func<Task> run = async () => await Responsibly
 				.WaitForCondition(
 					"Throw",
 					() => throw new Exception(TestExceptionMessage))
 				.ExpectWithinSeconds(1)
-				.RunAsLoop(() => { }));
+				.RunAsLoop(() => { });
+			var exception = (await run.Should().ThrowAsync<TestFailureException>())
+				.Subject.Single();
 
 			exception?.InnerException?.Message.Should().Be(TestExceptionMessage);
 			AssertMessageContainsOperationNameTag(exception);
 		}
 
 		[Test]
-		public void RunAsLoop_ThrowsProperException_WhenRunLoopThrows()
+		public async Task RunAsLoop_ThrowsProperException_WhenRunLoopThrows()
 		{
-			var exception = Assert.Throws<TestFailureException>(() => Responsibly
+			Func<Task> run = async () => await Responsibly
 				.WaitForCondition("Never", () => false)
 				.ExpectWithinSeconds(1)
-				.RunAsLoop(() => throw new Exception(TestExceptionMessage)));
+				.RunAsLoop(() => throw new Exception(TestExceptionMessage));
+			var exception = (await run.Should().ThrowAsync<TestFailureException>())
+				.Subject.Single();
 
 			exception?.InnerException?.Message.Should().Be(TestExceptionMessage);
 			// Can't (currently, easily) get the current instruction from this to include the instruction stack

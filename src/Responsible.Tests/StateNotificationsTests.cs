@@ -56,10 +56,17 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void StateNotifications_PublishesFinished_WhenOperationFailed()
+		public async Task StateNotifications_PublishesFinished_WhenOperationFailed()
 		{
-			Do("Throw error", () => throw new Exception())
-				.ToTask(this.Executor);
+			try
+			{
+				await Do("Throw error", () => throw new Exception()).ToTask(this.Executor);
+			}
+			catch
+			{
+				// Ignore, it's expected
+			}
+			
 			(this.notification?.type).Should().Be(TestOperationStateTransition.Finished);
 		}
 

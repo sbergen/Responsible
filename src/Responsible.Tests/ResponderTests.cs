@@ -109,7 +109,7 @@ namespace Responsible.Tests
 			StateAssert.StringContainsInOrder(message)
 				.Failed("Response CONDITION EXPECTED WITHIN")
 				.Details("WAIT FOR")
-				.JustCanceled("Condition")
+				.Canceled("Condition")
 				.Details("THEN RESPOND WITH ...");
 		}
 	}

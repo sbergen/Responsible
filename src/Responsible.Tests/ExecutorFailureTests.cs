@@ -44,7 +44,7 @@ namespace Responsible.Tests
 			StateAssert
 				.StringContainsInOrder(receivedMessage)
 				.Details("timed out")
-				.JustCanceled("NO")
+				.Canceled("NO")
 				.Completed("YES");
 		}
 
@@ -64,9 +64,9 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Executor_NotifiesWaitContext_WhenWaitTimesOut()
+		public async Task Executor_NotifiesWaitContext_WhenWaitTimesOut()
 		{
-			WaitForCondition(
+			_ = WaitForCondition(
 					"Never",
 					() => false,
 					builder => builder.AddNestedDetails(
@@ -76,6 +76,7 @@ namespace Responsible.Tests
 				.ToTask(this.Executor);
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
+			await Task.Yield(); // Let Unity handle cancellation
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),
@@ -85,13 +86,19 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Executor_RequestsGlobalContext_OnFailure()
+		public async Task Executor_RequestsGlobalContext_OnFailure()
 		{
 			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
-			Do("Throw", () => throw new Exception())
-				.ToTask(this.Executor);
+			try
+			{
+				await Do("Throw", () => throw new Exception()).ToTask(this.Executor);
+			}
+			catch
+			{
+				// Expected, ignore
+			}			
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<Exception>(),
@@ -101,16 +108,17 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Executor_RequestsGlobalContext_OnTimeout()
+		public async Task Executor_RequestsGlobalContext_OnTimeout()
 		{
 			this.GlobalContextProvider.BuildGlobalContext(Arg.Do<StateStringBuilder>(
 				b => b.AddDetails("Global details")));
 
-			WaitForCondition("Never", () => false)
+			_ = WaitForCondition("Never", () => false)
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
 			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
+			await Task.Yield(); // Let Unity handle cancellation
 
 			this.FailureListener.Received(1).OperationFailed(
 				Arg.Any<TimeoutException>(),

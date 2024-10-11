@@ -100,8 +100,9 @@ namespace Responsible.UnityTests
 
 			yield return yieldInstruction;
 
-			// Completes one frame "late", because of Update ordering
-			Assert.AreEqual(this.completedOnFrame + 1, Time.frameCount);
+			// Completes two frames "late", because of Update ordering
+			// and the async cancellation that Unity does
+			Assert.AreEqual(this.completedOnFrame + 2, Time.frameCount);
 
 			object unused;
 			Assert.IsFalse(yieldInstruction.WasCanceled);
