@@ -8,6 +8,7 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
+	// This comment was added to test a Codecov oddity...
 	public class AndThenTests : ResponsibleTestBase
 	{
 		[Test]
