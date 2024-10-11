@@ -22,6 +22,8 @@ namespace Responsible.Utilities
 			}
 			catch (Exception e)
 			{
+				// This only affects Unity, so no .NET test will catch the mutation
+				// Stryker disable once statement
 				cts.Cancel();
 				this.runLoopExceptionSource.SetException(e);
 			}

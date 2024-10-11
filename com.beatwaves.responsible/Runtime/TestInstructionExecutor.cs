@@ -140,6 +140,8 @@ namespace Responsible
 						throw;
 					}
 
+					// This only affects Unity, so no .NET test will catch the mutation
+					// Stryker disable once statement
 					await Task.Yield();
 
 					var message = e is TimeoutException

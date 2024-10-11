@@ -296,6 +296,9 @@ namespace Responsible
 				while (!task.IsFaulted && !task.IsCompleted && !cts.Token.IsCancellationRequested)
 				{
 					scheduler.Run(tick, cts);
+
+					// This only affects Unity, so no .NET test will catch the mutation
+					// Stryker disable once statement
 					await Task.Yield(); // Let the test instruction execution process errors
 				}
 
