@@ -15,7 +15,7 @@ namespace Responsible.Utilities
 			this.taskFactory = taskFactory;
 		}
 
-		public IMultipleTaskAwaiter<T> Start(CancellationToken cancellationToken)
+		IMultipleTaskAwaiter<T> IMultipleTaskSource<T>.Start(CancellationToken cancellationToken)
 		{
 			return new Awaiter(this.taskFactory, cancellationToken);
 		}

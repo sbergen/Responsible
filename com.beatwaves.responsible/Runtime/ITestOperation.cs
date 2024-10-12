@@ -34,6 +34,6 @@ namespace Responsible
 		/// </remarks>
 		[Pure]
 		[NotNull]
-		ITestOperationState<T> CreateState();
+		public ITestOperationState<T> CreateState();
 	}
 }

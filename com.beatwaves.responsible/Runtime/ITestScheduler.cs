@@ -15,7 +15,7 @@ namespace Responsible
 		/// Used for waiting for frames, and for providing state details for operations.
 		/// </summary>
 		/// <value>Current frame value.</value>
-		int FrameNow { get; }
+		public int FrameNow { get; }
 
 		/// <summary>
 		/// Returns the current time.
@@ -26,7 +26,7 @@ namespace Responsible
 		/// <remarks>
 		/// This exists mostly so that it can be mocked in internal Responsible tests.
 		/// </remarks>
-		DateTimeOffset TimeNow { get; }
+		public DateTimeOffset TimeNow { get; }
 
 		/// <summary>
 		/// Registers a poll callback to be called at least once per frame.
@@ -35,6 +35,6 @@ namespace Responsible
 		/// </summary>
 		/// <param name="action">Action to call at least once on every frame.</param>
 		/// <returns>A disposable instance, which must unregister the callback when disposed.</returns>
-		IDisposable RegisterPollCallback(Action action);
+		public IDisposable RegisterPollCallback(Action action);
 	}
 }
