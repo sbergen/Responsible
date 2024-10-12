@@ -101,6 +101,19 @@ namespace Responsible.Docs
 		{
 		}
 
+		/// <inheritdoc cref="CallerMember{T1, T2, T3, T4}"/>
+		/// <param name="description">Description of the operation, to be included in the state output.</param>
+		public void CallerMemberWithDescription<T1, T2, T3>(
+			string description,
+			T1 arg1,
+			T2 arg2,
+			T3 arg3,
+			string memberName = "",
+			string sourceFilePath = "",
+			int sourceLineNumber = 0)
+		{
+		}
+
 		/// <inheritdoc cref="CallerMember{T1, T2, T3}"/>
 		/// <param name="description">Description of the operation, to be included in the state output.</param>
 		/// <param name="extraContext">Action for producing extra context into state descriptions.</param>

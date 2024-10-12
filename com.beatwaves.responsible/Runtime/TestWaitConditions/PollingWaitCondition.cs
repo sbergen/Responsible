@@ -14,7 +14,7 @@ namespace Responsible.TestWaitConditions
 			string description,
 			Func<T> getConditionState,
 			Func<T, bool> condition,
-			[CanBeNull] Action<StateStringBuilder> extraContext,
+			[CanBeNull] Action<StateStringBuilder, T> extraContext,
 			SourceContext sourceContext)
 			: base(() => new State(description, getConditionState, condition, extraContext, sourceContext))
 		{
@@ -24,6 +24,7 @@ namespace Responsible.TestWaitConditions
 		{
 			private readonly Func<T> getConditionState;
 			private readonly Func<T, bool> condition;
+			private T lastPolledValue;
 
 			public string Description { get; }
 			public Action<StateStringBuilder> ExtraContext { get; }
@@ -32,14 +33,16 @@ namespace Responsible.TestWaitConditions
 				string description,
 				Func<T> getConditionState,
 				Func<T, bool> condition,
-				[CanBeNull] Action<StateStringBuilder> extraContext,
+				[CanBeNull] Action<StateStringBuilder, T> extraContext,
 				SourceContext sourceContext)
 				: base(sourceContext)
 			{
 				this.Description = description;
-				this.getConditionState = getConditionState;
+				this.getConditionState = () => this.lastPolledValue = getConditionState();
 				this.condition = condition;
-				this.ExtraContext = extraContext;
+				this.ExtraContext = extraContext != null
+					? b => extraContext(b, this.lastPolledValue)
+					: null;
 			}
 
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)

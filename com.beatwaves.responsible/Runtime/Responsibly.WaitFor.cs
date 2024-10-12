@@ -34,14 +34,18 @@ namespace Responsible
 		/// </returns>
 		/// <param name="getObject">Function that returns the object to test <paramref name="condition"/> on.</param>
 		/// <param name="condition">Condition to check with the return value of <paramref name="getObject"/>.</param>
+		/// <param name="extraContext">
+		/// Action for producing extra context into state descriptions.
+		/// The last value returned by <paramref name="getObject"/> is passed as the second argument.
+		/// </param>
 		/// <typeparam name="T">Type of the object to wait on, and result of the returned wait condition.</typeparam>
-		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescriptionAndContext{T1, T2}"/>
+		/// <inheritdoc cref="Docs.Inherit.CallerMemberWithDescription{T1, T2, T3}"/>
 		[Pure]
 		public static ITestWaitCondition<T> WaitForConditionOn<T>(
 			string description,
 			Func<T> getObject,
 			Func<T, bool> condition,
-			Action<StateStringBuilder> extraContext = null,
+			Action<StateStringBuilder, T> extraContext = null,
 			[CallerMemberName] string memberName = "",
 			[CallerFilePath] string sourceFilePath = "",
 			[CallerLineNumber] int sourceLineNumber = 0)
@@ -73,7 +77,7 @@ namespace Responsible
 				description,
 				() => Unit.Instance,
 				_ => condition(),
-				extraContext,
+				extraContext.DiscardingState<object>(),
 				new SourceContext(nameof(WaitForCondition), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
