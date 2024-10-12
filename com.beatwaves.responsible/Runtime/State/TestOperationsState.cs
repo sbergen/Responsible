@@ -8,42 +8,44 @@ namespace Responsible.State
 	internal abstract class TestOperationState<T> : ITestOperationState<T>
 	{
 		private readonly SourceContext? sourceContext;
+		private TestOperationStatus status = TestOperationStatus.NotExecuted.Instance;
 
-		public TestOperationStatus Status { get; private set; } = TestOperationStatus.NotExecuted.Instance;
+		TestOperationStatus ITestOperationState.Status => this.status;
 
 		protected TestOperationState(SourceContext? sourceContext)
 		{
 			this.sourceContext = sourceContext;
 		}
 
-		public async Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken)
+		async Task<TResult> ITestOperationState<T>.ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken)
 		{
 			var nestedRunContext = this.sourceContext != null
 				? runContext.MakeNested(this.sourceContext.Value)
 				: runContext;
-			this.Status = new TestOperationStatus.Waiting(this.Status, runContext.MakeWaitContext());
+			this.status = new TestOperationStatus.Waiting(this.status, runContext.MakeWaitContext());
 
 			try
 			{
 				var result = await this.ExecuteInner(nestedRunContext, cancellationToken);
-				this.Status = new TestOperationStatus.Completed(this.Status);
+				this.status = new TestOperationStatus.Completed(this.status);
 				return (TResult)(object)result; // See the Execute extension method for why this is safe.
 			}
 			catch (OperationCanceledException)
 			{
-				this.Status = new TestOperationStatus.Canceled(this.Status);
+				this.status = new TestOperationStatus.Canceled(this.status);
 				throw;
 			}
 			catch (Exception e)
 			{
-				this.Status = new TestOperationStatus.Failed(this.Status, e, nestedRunContext.SourceContext);
+				this.status = new TestOperationStatus.Failed(this.status, e, nestedRunContext.SourceContext);
 				throw;
 			}
 		}
 
 		protected abstract Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken);
 
-		public abstract void BuildDescription(StateStringBuilder builder);
+		void ITestOperationState.BuildDescription(StateStringBuilder builder) => this.BuildDescription(builder);
+		protected abstract void BuildDescription(StateStringBuilder builder);
 
 		public override string ToString() => StateStringBuilder.MakeState(this);
 	}

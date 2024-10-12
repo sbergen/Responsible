@@ -48,7 +48,7 @@ namespace Responsible.TestWaitConditions
 					this.condition,
 					cancellationToken);
 
-			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
+			protected override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 		}
 	}
 }

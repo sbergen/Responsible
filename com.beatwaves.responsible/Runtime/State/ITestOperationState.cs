@@ -11,16 +11,16 @@ namespace Responsible.State
 	public interface ITestOperationState
 	{
 		/// <summary>
-		/// Current status of the test operation. Intended for internal use only.
+		/// Current status of the test operation.
 		/// </summary>
 		/// <value>The current state of this test operation run.</value>
-		TestOperationStatus Status { get; }
+		internal TestOperationStatus Status { get; }
 
 		/// <summary>
 		/// Adds a detailed description of the operation to the builder.
 		/// </summary>
 		/// <param name="builder">State string builder to append the description of this operation state to.</param>
-		void BuildDescription(StateStringBuilder builder);
+		internal void BuildDescription(StateStringBuilder builder);
 	}
 
 	/// <summary>
@@ -40,8 +40,6 @@ namespace Responsible.State
 	{
 		/// <summary>
 		/// Starts execution of the the operation this state was created from.
-		///
-		/// Intended for internal use only.
 		/// </summary>
 		/// <param name="runContext">The test operation run context this run is part of.</param>
 		/// <param name="cancellationToken">Cancellation token for canceling the run.</param>
@@ -53,7 +51,7 @@ namespace Responsible.State
 		/// we have to use this unsafe method. However, it is used only from an extension method,
 		/// which does the correct type inference for us, so overall, things are safe.
 		/// </remarks>
-		Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken);
+		internal Task<TResult> ExecuteUnsafe<TResult>(RunContext runContext, CancellationToken cancellationToken);
 			// where T : TResult <-- not supported in C#
 	}
 }

@@ -19,6 +19,6 @@ namespace Responsible.Utilities
 		/// Cancellation token passed to all the tasks started by this source.
 		/// </param>
 		/// <returns>A multiple task awaiter for the deferred tasks in this source.</returns>
-		IMultipleTaskAwaiter<T> Start(CancellationToken cancellationToken);
+		internal IMultipleTaskAwaiter<T> Start(CancellationToken cancellationToken);
 	}
 }

@@ -57,7 +57,7 @@ namespace Responsible.Unity
 					obj => this.constraint.ApplyTo(obj).IsSuccess,
 					cancellationToken);
 
-			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
+			protected override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 
 			private void AddDetails(StateStringBuilder stateBuilder)
 			{

@@ -38,7 +38,7 @@ namespace Responsible.TestInstructions
 				return await instruction.Execute(runContext, cancellationToken);
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddExpectWithin(this, this.timeout, this.responder);
 		}
 	}

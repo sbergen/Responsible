@@ -19,7 +19,7 @@ namespace Responsible.Utilities
 			this.taskFactories = deferredTasks.ToList();
 		}
 
-		public IMultipleTaskAwaiter<T> Start(CancellationToken cancellationToken)
+		IMultipleTaskAwaiter<T> IMultipleTaskSource<T>.Start(CancellationToken cancellationToken)
 			=> MultipleTaskAwaiter.Make(this.taskFactories
 				.Select(factory => factory(cancellationToken)));
 	}

@@ -14,6 +14,6 @@ namespace Responsible
 		/// <param name="failureMessage">
 		/// Message detailing the failure, including the state of the operation.
 		/// </param>
-		void OperationFailed(Exception exception, string failureMessage);
+		public void OperationFailed(Exception exception, string failureMessage);
 	}
 }

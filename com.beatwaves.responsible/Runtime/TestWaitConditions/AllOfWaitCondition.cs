@@ -38,7 +38,7 @@ namespace Responsible.TestWaitConditions
 			}
 
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren(
 					"WAIT FOR ALL OF",
 					this,

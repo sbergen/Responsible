@@ -30,7 +30,7 @@ namespace Responsible.TestWaitConditions
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 				=> this.taskRunner(cancellationToken);
 
-			public override void BuildDescription(StateStringBuilder builder)
+			protected override void BuildDescription(StateStringBuilder builder)
 				=> builder.AddWait(this);
 		}
 	}

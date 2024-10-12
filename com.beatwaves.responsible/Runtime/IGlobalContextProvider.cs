@@ -11,6 +11,6 @@ namespace Responsible
 		/// Add any details that might be useful as global context to include when test operations fail.
 		/// </summary>
 		/// <param name="contextBuilder">The string builder to use to build the context.</param>
-		void BuildGlobalContext(StateStringBuilder contextBuilder);
+		public void BuildGlobalContext(StateStringBuilder contextBuilder);
 	}
 }

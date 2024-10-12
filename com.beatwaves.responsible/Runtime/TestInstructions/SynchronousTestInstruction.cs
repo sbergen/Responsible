@@ -28,7 +28,7 @@ namespace Responsible.TestInstructions
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken)
 				=> Task.FromResult(this.action());
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddInstruction(this, this.description);
 		}
 	}

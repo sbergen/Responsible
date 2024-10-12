@@ -46,7 +46,7 @@ namespace Responsible.TestWaitConditions
 				return results;
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddToPreviousLineWithChildren(" ALL OF", this.responders);
 		}
 	}

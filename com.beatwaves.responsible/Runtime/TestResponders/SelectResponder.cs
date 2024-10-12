@@ -43,7 +43,7 @@ namespace Responsible.TestResponders
 				return this.selectState;
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddSelect<T1, T2>(
 					this.responder,
 					this.selectState?.SelectStatus ?? TestOperationStatus.NotExecuted.Instance);

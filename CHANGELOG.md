@@ -11,7 +11,10 @@ Experimental features are also **not** under semantic versioning.
 
 ### Changed
 - Breaking change: `RunAs(Simulated)Loop` is now an `async` method.
-  This had to be done to support Unity's async cancellation state to propagate to state strings. 
+  This had to be done to support Unity's async cancellation state to propagate to state strings.
+- Breaking change: Make interface members that were always only intended for internal use internal.
+  This was not possible before C#8, but now that we no longer support older Unity versions,
+  it can be done, allowing more flexibility to change things without breaking things in the future.
 
 ### Fixed
 - Fix instructions that were canceled because of a failure not showing up as canceled on Unity.

@@ -22,6 +22,6 @@ namespace Responsible
 		/// </param>
 		/// <typeparam name="T">Type of the test instruction being executed.</typeparam>
 		/// <returns>A task which will cause early failure or completion of the executed test instruction.</returns>
-		Task<T> GetExternalResult<T>(CancellationToken cancellationToken);
+		public Task<T> GetExternalResult<T>(CancellationToken cancellationToken);
 	}
 }

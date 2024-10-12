@@ -12,10 +12,8 @@ namespace Responsible.State
 	/// * Completed
 	/// * Failed
 	/// * Canceled
-	///
-	/// Not intended for public use.
 	/// </summary>
-	public abstract class TestOperationStatus
+	internal abstract class TestOperationStatus
 	{
 		internal abstract string MakeStatusLine(string description);
 

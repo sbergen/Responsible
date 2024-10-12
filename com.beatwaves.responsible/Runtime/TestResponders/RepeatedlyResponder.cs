@@ -53,7 +53,7 @@ namespace Responsible.TestResponders
 					}));
 			}
 
-			public override void BuildDescription(StateStringBuilder builder)
+			protected override void BuildDescription(StateStringBuilder builder)
 			{
 				if (!this.states.Any())
 				{

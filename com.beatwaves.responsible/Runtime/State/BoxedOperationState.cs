@@ -26,7 +26,7 @@ namespace Responsible.State
 			return this.boxingSelector(result);
 		}
 
-		public override void BuildDescription(StateStringBuilder builder) => this.state.BuildDescription(builder);
+		protected override void BuildDescription(StateStringBuilder builder) => this.state.BuildDescription(builder);
 	}
 
 	internal class BoxedOperationState<T> : BoxedOperationState<T, object>

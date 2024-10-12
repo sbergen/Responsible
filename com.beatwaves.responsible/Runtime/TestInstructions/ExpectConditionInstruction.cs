@@ -35,7 +35,7 @@ namespace Responsible.TestInstructions
 					cancellationToken,
 					ct => this.condition.Execute(runContext, ct));
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddExpectWithin(this, this.timeout, this.condition);
 		}
 	}

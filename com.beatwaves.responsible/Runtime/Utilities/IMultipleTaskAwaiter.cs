@@ -9,7 +9,7 @@ namespace Responsible.Utilities
 	/// Intended only for internal use, but is public, because it's visible from other interfaces.
 	/// </remarks>
 	/// <typeparam name="T">Type of the tasks that this instance yields.</typeparam>
-	public interface IMultipleTaskAwaiter<T>
+	internal interface IMultipleTaskAwaiter<T>
 	{
 		/// <summary>
 		/// Determines if there are more tasks to await for.
