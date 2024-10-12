@@ -2,9 +2,8 @@ namespace Responsible.Context
 {
 	/// <summary>
 	/// Represents the context in which a test operation is run from.
-	/// Only for internal use.
 	/// </summary>
-	public readonly struct RunContext
+	internal readonly struct RunContext
 	{
 		internal readonly ITestScheduler Scheduler;
 		internal readonly SourceContext SourceContext;
