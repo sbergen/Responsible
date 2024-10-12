@@ -35,7 +35,7 @@ namespace Responsible.State
 			return await this.selectState.Execute(runContext, cancellationToken);
 		}
 
-		public override void BuildDescription(StateStringBuilder builder) =>
+		protected override void BuildDescription(StateStringBuilder builder) =>
 			builder.AddSelect<T1, T2>(this.first, this.SelectStatus);
 	}
 }

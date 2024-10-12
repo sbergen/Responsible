@@ -97,7 +97,7 @@ namespace Responsible.Unity
 				HandleImpossibleConcurrentCancellation(cancellationToken, completionSource);
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
+			protected override void BuildDescription(StateStringBuilder builder) => builder.AddWait(this);
 
 			[ExcludeFromCodeCoverage]
 			private static void HandleImpossibleConcurrentCancellation(

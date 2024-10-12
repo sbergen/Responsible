@@ -40,7 +40,7 @@ namespace Responsible.TestWaitConditions
 				return await this.continuation.Execute(firstResult, runContext, cancellationToken);
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, this.continuation.State);
 		}
 	}

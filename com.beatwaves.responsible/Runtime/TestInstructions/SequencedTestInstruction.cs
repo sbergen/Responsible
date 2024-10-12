@@ -38,7 +38,7 @@ namespace Responsible.TestInstructions
 				return await this.second.Execute(runContext, cancellationToken);
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddContinuation(this.first, new ContinuationState.Available(this.second));
 		}
 	}

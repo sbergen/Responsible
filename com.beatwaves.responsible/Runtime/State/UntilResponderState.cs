@@ -52,7 +52,7 @@ namespace Responsible.State
 			}
 		}
 
-		public override void BuildDescription(StateStringBuilder builder) =>
+		protected override void BuildDescription(StateStringBuilder builder) =>
 			builder.AddUntilResponder(
 				"RESPOND TO",
 				this.respondTo,

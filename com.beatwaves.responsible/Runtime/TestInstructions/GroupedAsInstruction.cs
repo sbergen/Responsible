@@ -31,7 +31,7 @@ namespace Responsible.TestInstructions
 			protected override Task<T> ExecuteInner(RunContext runContext, CancellationToken cancellationToken) =>
 				this.state.Execute(runContext, cancellationToken);
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddParentWithChildren(this.description, this, new[] { this.state });
 		}
 	}

@@ -33,7 +33,7 @@ namespace Responsible.TestInstructions
 					cancellationToken);
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddInstruction(this, $"WAIT FOR {this.wholeFramesToWaitFor} FRAME(S)");
 		}
 	}

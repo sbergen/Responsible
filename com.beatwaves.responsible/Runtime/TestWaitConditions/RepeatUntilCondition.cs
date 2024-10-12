@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Responsible.Context;
@@ -37,7 +37,7 @@ namespace Responsible.TestWaitConditions
 				this.waitState = condition.CreateState();
 			}
 
-			public override void BuildDescription(StateStringBuilder builder)
+			protected override void BuildDescription(StateStringBuilder builder)
 			{
 				builder.AddNestedDetails("UNTIL", this.waitState.BuildDescription);
 				builder.AddNestedDetails("REPEATEDLY EXECUTING", b =>

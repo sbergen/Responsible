@@ -18,8 +18,8 @@ namespace Responsible.EditorTests
 			this.Exception = exception;
 		}
 
-		public TestOperationStatus Status => throw new NotImplementedException();
-		public void BuildDescription(StateStringBuilder builder) => throw new NotImplementedException();
+		TestOperationStatus ITestOperationState.Status => throw new NotImplementedException();
+		void ITestOperationState.BuildDescription(StateStringBuilder builder) => throw new NotImplementedException();
 
 		public override string ToString() => this.Exception != null
 			? throw this.Exception

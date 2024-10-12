@@ -48,7 +48,7 @@ namespace Responsible.TestResponders
 				return instruction;
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) => builder.AddResponder(this);
+			protected override void BuildDescription(StateStringBuilder builder) => builder.AddResponder(this);
 		}
 	}
 }

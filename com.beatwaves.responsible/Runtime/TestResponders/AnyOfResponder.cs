@@ -36,7 +36,7 @@ namespace Responsible.TestResponders
 				return Task.FromResult(MultipleTaskSource.Make(this.responders.Select(MakeLauncher)));
 			}
 
-			public override void BuildDescription(StateStringBuilder builder) =>
+			protected override void BuildDescription(StateStringBuilder builder) =>
 				builder.AddToPreviousLineWithChildren(" ANY OF", this.responders);
 		}
 	}
