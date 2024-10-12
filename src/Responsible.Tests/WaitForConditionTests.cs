@@ -184,6 +184,48 @@ namespace Responsible.Tests
 				.FailureDetails();
 		}
 
+		[Test]
+		public void WaitForConditionOn_DoesNotCallExtraContext_WhenNotExecuted()
+		{
+			var extraContextRequested = false;
+
+			var state = WaitForConditionOn(
+					"Not executed",
+					() => false,
+					_ => false,
+					(_, _) => extraContextRequested = true)
+				.ExpectWithinSeconds(1)
+				.CreateState();
+
+			_ = state.ToString();
+			extraContextRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public async Task WaitForConditionOn_ContainsCorrectDetailsFromLastValue_WhenTimedOut()
+		{
+			var state = 0;
+			var checkCount = 0;
+			var task = WaitForConditionOn(
+					"With details",
+					() => ++state,
+					val =>
+					{
+						++checkCount;
+						return val == 42;
+					},
+					(builder, val) => builder.AddDetails($"Expected 42, but got {val}"))
+				.ExpectWithinSeconds(1)
+				.ToTask(this.Executor);
+
+			this.Scheduler.AdvanceFrame(TimeSpan.FromSeconds(2));
+
+			var error = await AwaitFailureExceptionForUnity(task);
+			StateAssert.StringContainsInOrder(error.Message)
+				.Failed("With details")
+				.Details($"Expected 42, but got {checkCount}");
+		}
+
 
 		[Test]
 		public void InlinedOutput_IsGeneratedForInitialState_WhenExpected()
