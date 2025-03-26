@@ -9,6 +9,9 @@ Experimental features are also **not** under semantic versioning.
 
 ## [Unreleased]
 
+### Added
+- Added `UntilCompleted` operator, which allows executing optional responders until an instruction is completed.
+
 ## [4.5.0] - 2024-05-25
 
 ### Added
@@ -18,7 +21,7 @@ Experimental features are also **not** under semantic versioning.
 
 ### Changed
 - Never collapse responders in state strings (even when completed or not executed).
-  More info is better here. 
+  More info is better here.
 - `Responsible.Bdd` no longer considered experimental.
 
 ### Fixed
