@@ -39,6 +39,40 @@ namespace Responsible
 				new SourceContext(nameof(Until), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
+		/// Executes responders in <paramref name="respondTo"/>,
+		/// until a test instruction execution is completed.
+		/// All responders are guaranteed to either complete or not start execution at all.
+		/// No responders are required to execute.
+		/// A failure in any of the responders, or the instruction,
+		/// will also cause the returned wait condition to complete with a failure.
+		/// </summary>
+		/// <returns>
+		/// A wait condition which completes with the value of <paramref name="instruction"/>
+		/// once it and all started responders have completed.
+		/// </returns>
+		/// <param name="respondTo">
+		/// Optional responders to execute until <paramref name="instruction"/> is completed.
+		/// </param>
+		/// <param name="instruction">
+		/// Instruction until the completion of which responders in <paramref name="respondTo"/> are executed.
+		/// </param>
+		/// <typeparam name="T">
+		/// Result type of both <paramref name="instruction"/>, and the returned wait condition.
+		/// </typeparam>
+		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
+		[Pure]
+		public static ITestWaitCondition<T> UntilCompleted<T>(
+			this IOptionalTestResponder respondTo,
+			ITestInstruction<T> instruction,
+			[CallerMemberName] string memberName = "",
+			[CallerFilePath] string sourceFilePath = "",
+			[CallerLineNumber] int sourceLineNumber = 0)
+			=> new UntilResponder<T>(
+				respondTo,
+				instruction,
+				new SourceContext(nameof(UntilCompleted), memberName, sourceFilePath, sourceLineNumber));
+
+		/// <summary>
 		/// Executes responders in <paramref name="respondTo"/>, until <paramref name="untilReady"/> is ready to execute,
 		/// and continues executing <paramref name="untilReady"/> afterwards.
 		/// All responders are guaranteed to either complete or not start execution at all.
