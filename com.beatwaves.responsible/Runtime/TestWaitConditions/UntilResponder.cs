@@ -16,5 +16,17 @@ namespace Responsible.TestWaitConditions
 				sourceContext))
 		{
 		}
+
+		public UntilResponder(
+			IOptionalTestResponder responder,
+			ITestInstruction<T> instruction,
+			SourceContext sourceContext)
+			: base(() => new UntilResponderState<T>(
+				"UNTIL COMPLETED",
+				responder.CreateState(),
+				instruction.CreateState(),
+				sourceContext))
+		{
+		}
 	}
 }
