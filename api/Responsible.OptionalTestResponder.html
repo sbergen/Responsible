@@ -299,8 +299,8 @@
   </div>
   <h3 id="methods">Methods
 </h3>
-  <a id="Responsible_OptionalTestResponder_UntilCompleted_" data-uid="Responsible.OptionalTestResponder.UntilCompleted*"></a>
-  <h4 id="Responsible_OptionalTestResponder_UntilCompleted__1_Responsible_IOptionalTestResponder_Responsible_ITestInstruction___0__System_String_System_String_System_Int32_" data-uid="Responsible.OptionalTestResponder.UntilCompleted``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)">UntilCompleted&lt;T&gt;(IOptionalTestResponder, ITestInstruction&lt;T&gt;, string, string, int)</h4>
+  <a id="Responsible_OptionalTestResponder_UntilCompletionOf_" data-uid="Responsible.OptionalTestResponder.UntilCompletionOf*"></a>
+  <h4 id="Responsible_OptionalTestResponder_UntilCompletionOf__1_Responsible_IOptionalTestResponder_Responsible_ITestInstruction___0__System_String_System_String_System_Int32_" data-uid="Responsible.OptionalTestResponder.UntilCompletionOf``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)">UntilCompletionOf&lt;T&gt;(IOptionalTestResponder, ITestInstruction&lt;T&gt;, string, string, int)</h4>
   <div class="markdown level1 summary"><p>Executes responders in <code class="paramref">respondTo</code>,
 until a test instruction execution is completed.
 All responders are guaranteed to either complete or not start execution at all.
@@ -312,7 +312,7 @@ will also cause the returned wait condition to complete with a failure.</p>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Pure]
-public static ITestWaitCondition&lt;T&gt; UntilCompleted&lt;T&gt;(this IOptionalTestResponder respondTo, ITestInstruction&lt;T&gt; instruction, string memberName = &quot;&quot;, string sourceFilePath = &quot;&quot;, int sourceLineNumber = 0)</code></pre>
+public static ITestWaitCondition&lt;T&gt; UntilCompletionOf&lt;T&gt;(this IOptionalTestResponder respondTo, ITestInstruction&lt;T&gt; instruction, string memberName = &quot;&quot;, string sourceFilePath = &quot;&quot;, int sourceLineNumber = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">

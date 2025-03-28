@@ -529,22 +529,22 @@ references:
   isSpec: "True"
   fullName: Responsible.OptionalTestResponder.Until
   nameWithType: OptionalTestResponder.Until
-- uid: Responsible.OptionalTestResponder.UntilCompleted*
-  name: UntilCompleted
-  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilCompleted_
-  commentId: Overload:Responsible.OptionalTestResponder.UntilCompleted
+- uid: Responsible.OptionalTestResponder.UntilCompletionOf*
+  name: UntilCompletionOf
+  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilCompletionOf_
+  commentId: Overload:Responsible.OptionalTestResponder.UntilCompletionOf
   isSpec: "True"
-  fullName: Responsible.OptionalTestResponder.UntilCompleted
-  nameWithType: OptionalTestResponder.UntilCompleted
-- uid: Responsible.OptionalTestResponder.UntilCompleted``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)
-  name: UntilCompleted<T>(IOptionalTestResponder, ITestInstruction<T>, string, string, int)
-  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilCompleted__1_Responsible_IOptionalTestResponder_Responsible_ITestInstruction___0__System_String_System_String_System_Int32_
-  commentId: M:Responsible.OptionalTestResponder.UntilCompleted``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)
-  name.vb: UntilCompleted(Of T)(IOptionalTestResponder, ITestInstruction(Of T), String, String, Integer)
-  fullName: Responsible.OptionalTestResponder.UntilCompleted<T>(Responsible.IOptionalTestResponder, Responsible.ITestInstruction<T>, string, string, int)
-  fullName.vb: Responsible.OptionalTestResponder.UntilCompleted(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestInstruction(Of T), String, String, Integer)
-  nameWithType: OptionalTestResponder.UntilCompleted<T>(IOptionalTestResponder, ITestInstruction<T>, string, string, int)
-  nameWithType.vb: OptionalTestResponder.UntilCompleted(Of T)(IOptionalTestResponder, ITestInstruction(Of T), String, String, Integer)
+  fullName: Responsible.OptionalTestResponder.UntilCompletionOf
+  nameWithType: OptionalTestResponder.UntilCompletionOf
+- uid: Responsible.OptionalTestResponder.UntilCompletionOf``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)
+  name: UntilCompletionOf<T>(IOptionalTestResponder, ITestInstruction<T>, string, string, int)
+  href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilCompletionOf__1_Responsible_IOptionalTestResponder_Responsible_ITestInstruction___0__System_String_System_String_System_Int32_
+  commentId: M:Responsible.OptionalTestResponder.UntilCompletionOf``1(Responsible.IOptionalTestResponder,Responsible.ITestInstruction{``0},System.String,System.String,System.Int32)
+  name.vb: UntilCompletionOf(Of T)(IOptionalTestResponder, ITestInstruction(Of T), String, String, Integer)
+  fullName: Responsible.OptionalTestResponder.UntilCompletionOf<T>(Responsible.IOptionalTestResponder, Responsible.ITestInstruction<T>, string, string, int)
+  fullName.vb: Responsible.OptionalTestResponder.UntilCompletionOf(Of T)(Responsible.IOptionalTestResponder, Responsible.ITestInstruction(Of T), String, String, Integer)
+  nameWithType: OptionalTestResponder.UntilCompletionOf<T>(IOptionalTestResponder, ITestInstruction<T>, string, string, int)
+  nameWithType.vb: OptionalTestResponder.UntilCompletionOf(Of T)(IOptionalTestResponder, ITestInstruction(Of T), String, String, Integer)
 - uid: Responsible.OptionalTestResponder.UntilReadyTo*
   name: UntilReadyTo
   href: api/Responsible.OptionalTestResponder.html#Responsible_OptionalTestResponder_UntilReadyTo_
