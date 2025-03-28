@@ -61,7 +61,7 @@ namespace Responsible
 		/// </typeparam>
 		/// <inheritdoc cref="Docs.Inherit.CallerMember{T1, T2}"/>
 		[Pure]
-		public static ITestWaitCondition<T> UntilCompleted<T>(
+		public static ITestWaitCondition<T> UntilCompletionOf<T>(
 			this IOptionalTestResponder respondTo,
 			ITestInstruction<T> instruction,
 			[CallerMemberName] string memberName = "",
@@ -70,7 +70,7 @@ namespace Responsible
 			=> new UntilResponder<T>(
 				respondTo,
 				instruction,
-				new SourceContext(nameof(UntilCompleted), memberName, sourceFilePath, sourceLineNumber));
+				new SourceContext(nameof(UntilCompletionOf), memberName, sourceFilePath, sourceLineNumber));
 
 		/// <summary>
 		/// Executes responders in <paramref name="respondTo"/>, until <paramref name="untilReady"/> is ready to execute,
