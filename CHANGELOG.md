@@ -10,7 +10,7 @@ Experimental features are also **not** under semantic versioning.
 ## [Unreleased]
 
 ### Added
-- Added `UntilCompleted` operator, which allows executing optional responders until an instruction is completed.
+- Added `UntilCompletionOf` operator, which allows executing optional responders until an instruction is completed.
 
 ## [4.5.0] - 2024-05-25
 

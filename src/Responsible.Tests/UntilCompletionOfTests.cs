@@ -7,10 +7,10 @@ using static Responsible.Responsibly;
 
 namespace Responsible.Tests
 {
-	internal sealed class UntilCompletedTests : ResponsibleTestBase
+	internal sealed class UntilCompletionOfTests : ResponsibleTestBase
 	{
 		[Test]
-		public void Until_CompletesResponder_WhenReadyBeforeCompletion()
+		public void UntilCompletionOf_CompletesResponder_WhenReadyBeforeCompletion()
 		{
 			var readyToReact = false;
 			var startedToReact = false;
@@ -26,7 +26,7 @@ namespace Responsible.Tests
 			var respondUntil = WaitForCondition("Ready", () => readyToReact)
 				.ThenRespondWith("React", react)
 				.Optionally()
-				.UntilCompleted(WaitForCondition("Continue", () => shouldContinue)
+				.UntilCompletionOf(WaitForCondition("Continue", () => shouldContinue)
 					.ExpectWithinSeconds(1))
 				.ExpectWithinSeconds(1);
 
@@ -49,7 +49,7 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public async Task Until_DoesNotExecute_IfConditionIsMetFirst()
+		public async Task UntilCompletionOf_DoesNotExecute_IfConditionIsMetFirst()
 		{
 			var cond1 = false;
 			var untilCond = false;
@@ -61,7 +61,7 @@ namespace Responsible.Tests
 			var task = WaitForCondition("Wait for first cond", () => cond1)
 				.ThenRespondWithAction("First response", _ => firstCompleted = true)
 				.Optionally()
-				.UntilCompleted(WaitForCondition("Until cond", () => untilCond)
+				.UntilCompletionOf(WaitForCondition("Until cond", () => untilCond)
 					.ExpectWithinSeconds(1))
 				.ThenRespondWith("Second response", WaitForCondition("Second cond", () => cond2)
 					.ExpectWithinSeconds(1)
@@ -91,14 +91,14 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public async Task Until_TimesOut_AsExpected()
+		public async Task UntilCompletionOf_TimesOut_AsExpected()
 		{
 			var completed = false;
 
 			var task = Never
 				.ThenRespondWithAction("complete", _ => completed = true)
 				.Optionally()
-				.UntilCompleted(Never.ExpectWithinSeconds(100))
+				.UntilCompletionOf(Never.ExpectWithinSeconds(100))
 				.ExpectWithinSeconds(1)
 				.ToTask(this.Executor);
 
@@ -109,12 +109,12 @@ namespace Responsible.Tests
 		}
 
 		[Test]
-		public void Until_Description_MatchesExpected()
+		public void UntilCompletionOf_Description_MatchesExpected()
 		{
 			var state = Never
 				.ThenRespondWithAction("complete", _ => { })
 				.Optionally()
-				.UntilCompleted(Never.ExpectWithinSeconds(100))
+				.UntilCompletionOf(Never.ExpectWithinSeconds(100))
 				.CreateState();
 
 			StateAssert.StringContainsInOrder(state.ToString())
