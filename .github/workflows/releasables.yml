@@ -125,6 +125,15 @@ jobs:
         id: create-tag-name
         run: echo "tag=v${{ steps.nuget-version.outputs.version }}" >> "$GITHUB_OUTPUT"
 
+  debug:
+    runs-on: ubuntu-latest
+    needs: [ version-info ]
+    steps:
+      - name: Print outputs from needs
+        run: |
+          echo "Old version ${{ needs.version-info.outputs.old-version }}"
+          echo "New version ${{ needs.version-info.outputs.new-version }}"
+
   release:
     runs-on: ubuntu-latest
     name: Create Release
@@ -156,6 +165,9 @@ jobs:
           zip -r com.beatwaves.responsible.zip com.beatwaves.responsible
           zip -r ResponsibleDocs.zip ResponsibleDocs
 
+      - name: Publish NuGet package
+        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
+
       - uses: softprops/action-gh-release@v2
         with:
           fail_on_unmatched_files: true
@@ -165,6 +177,3 @@ jobs:
             ResponsibleDocs.zip
             com.beatwaves.responsible.zip
             Beatwaves.Responsible.*.nupkg
-
-      - name: Publish NuGet package
-        run: dotnet nuget push Beatwaves.Responsible.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_PUBLISH_KEY }}
