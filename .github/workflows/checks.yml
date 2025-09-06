@@ -24,7 +24,7 @@ jobs:
 
       - name: Parse major unity version
         id: major-unity-version
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           UNITY_VERSION: ${{ matrix.unityVersion }}
         with:
