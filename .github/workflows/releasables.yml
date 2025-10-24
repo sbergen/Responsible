@@ -152,12 +152,12 @@ jobs:
           dotnet-version: '8'
 
       - name: Download Docs
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Docs
 
       - name: Download NuGet package
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: nupkg
 
