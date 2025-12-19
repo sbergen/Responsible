@@ -72,14 +72,14 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Unity Test Results ${{ matrix.unityVersion }}
           path: ${{ steps.tests.outputs.artifactsPath }}
 
       - name: Archive coverage results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Unity Coverage Results ${{ matrix.unityVersion }}
           path: ${{ steps.tests.outputs.coveragePath }}
@@ -126,7 +126,7 @@ jobs:
 
       - name: Archive test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: netstandard Test Results
           path: src/TestResults
@@ -173,7 +173,7 @@ jobs:
 
       - name: Archive ReSharper run
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ReSharper
           path: src/inspect.xml
